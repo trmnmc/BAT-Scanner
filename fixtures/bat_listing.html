@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+  Representative fixture for a single BaT listing page, trimmed to the parts the
+  engagement parser reads. DOM shapes mirror the real page captured 2026-06-20:
+    - "N watchers" text
+    - a listing-stats table with a "Bids" row
+    - a comments header rendered as "<N> Comments"
+  `views` is intentionally absent (BaT does not publish a view count here).
+-->
+<html><head><title>1985 Porsche 911 Carrera Coupe</title></head><body>
+<div class="listing-watchers">
+  <span class="listing-watchers-count">1,728 watchers</span>
+</div>
+
+<table class="listing-stats " id="listing-bid" data-listing-bid-id="116070319">
+  <tbody>
+    <tr class="listing-stats-stat" id="current-bid-row">
+      <td class="listing-stats-label current-bid-label">Current Bid</td>
+      <td class="listing-stats-value current-bid-value">
+        <span data-listing-current="116070319"><strong>USD $70,500</strong></span>
+      </td>
+    </tr>
+    <tr class="listing-stats-stat">
+      <td class="listing-stats-label">Time Left</td>
+      <td class="listing-stats-value">5 days</td>
+    </tr>
+    <tr class="listing-stats-stat">
+      <td class="listing-stats-label">Bids</td>
+      <td class="listing-stats-value">45</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="comments-section">
+  <h2 class="comments-title" data-realtime_id="116070319">
+    <span data-realtime_prop="comments-updated.display">56 Comments</span>
+  </h2>
+</div>
+</body></html>

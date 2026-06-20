@@ -1,0 +1,3 @@
+# Runtime has NO dependencies (stdlib only) so `python -m scraper` runs anywhere.
+# These are only for running the test suite.
+pytest>=7.0

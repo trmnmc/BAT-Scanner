@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# transient atomic-write temp files
+data/.auctions-*.json
+data/.comps-*.json
+.gstack/

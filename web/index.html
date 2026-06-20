@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BaT Value Map</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0f1115; color: #e7e9ee;
+  }
+  header { padding: 14px 18px 6px; }
+  h1 { font-size: 18px; font-weight: 600; margin: 0; }
+  .sub { font-size: 12px; color: #9aa0ad; margin-top: 3px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 8px 18px 4px; font-size: 13px; }
+  .controls label { color: #9aa0ad; }
+  select { background: #1a1d24; color: #e7e9ee; border: 1px solid #2a2e38; border-radius: 6px; padding: 5px 8px; font-size: 13px; }
+  #chart { width: 100%; height: 78vh; min-height: 480px; }
+  #status { padding: 24px 18px; color: #9aa0ad; font-size: 14px; line-height: 1.6; }
+  code { background: #1a1d24; padding: 1px 6px; border-radius: 4px; }
+  .hint { padding: 2px 18px 10px; font-size: 12px; color: #7b8190; }
+</style>
+</head>
+<body>
+<header>
+  <h1>BaT Value Map</h1>
+  <div class="sub" id="meta">loading…</div>
+</header>
+<div class="controls">
+  <span><label for="ymetric">Heat axis:</label>
+    <select id="ymetric">
+      <option value="comments">Comments</option>
+      <option value="watchers">Watchers</option>
+      <option value="deal">Deal % vs comps</option>
+    </select>
+  </span>
+  <span><label for="xmetric">Price axis:</label>
+    <select id="xmetric">
+      <option value="log">Log</option>
+      <option value="linear">Linear</option>
+    </select>
+  </span>
+  <span><label for="markers">Markers:</label>
+    <select id="markers">
+      <option value="dots">Dots</option>
+      <option value="photos">Photos</option>
+    </select>
+  </span>
+  <span class="hint">Click the legend to toggle a category · hover for the photo · click a car to open its BaT listing · drag/scroll to zoom</span>
+</div>
+<div id="chart"></div>
+<div id="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<script>
+const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
+const CATEGORY_COLORS = {
+  "air-cooled-911-family": "#5b8def",
+  "60s-muscle":            "#e2553b",
+  "80s-90s-japanese":      "#28b487",
+  "vintage-trucks":        "#c9943a",
+  "german-wagons":         "#9b6cd6",
+};
+const CATEGORY_LABELS = {
+  "air-cooled-911-family": "Air-cooled 911",
+  "60s-muscle":            "60s muscle",
+  "80s-90s-japanese":      "80s–90s JDM",
+  "vintage-trucks":        "Vintage trucks",
+  "german-wagons":         "German wagons",
+};
+
+const statusEl = document.getElementById("status");
+const metaEl = document.getElementById("meta");
+const chart = echarts.init(document.getElementById("chart"), "dark");
+window.addEventListener("resize", () => chart.resize());
+
+let SNAPSHOT = null;
+
+async function loadData() {
+  for (const p of DATA_PATHS) {
+    try {
+      const r = await fetch(p, { cache: "no-store" });
+      if (r.ok) return await r.json();
+    } catch (e) { /* try next */ }
+  }
+  return null;
+}
+
+function fmtMoney(n) {
+  return n == null ? "—" : "$" + Number(n).toLocaleString();
+}
+
+function buildSeries(snapshot, yMetric, markers) {
+  const usePhotos = markers === "photos";
+  const byCat = {};
+  for (const a of snapshot.auctions) {
+    const price = a.bid && a.bid.amount;
+    if (!price || price <= 0) continue;                 // log axis needs price > 0
+    if (!a.category_ids || a.category_ids.length === 0) continue;
+    let heat;
+    if (yMetric === "deal") {
+      if (!a.value || a.value.deal_pct == null) continue;   // only cars with a comp estimate
+      heat = Math.round(a.value.deal_pct * 100);
+    } else {
+      heat = (a.engagement && a.engagement[yMetric]) || 0;
+    }
+    const photo = usePhotos && a.thumbnail_url;
+    const isDeal = !!(a.value && a.value.is_deal);          // ending soon + under comps + enough comps
+    const dotSize = isDeal ? 19 : 13;
+    for (const cid of a.category_ids) {
+      (byCat[cid] = byCat[cid] || []).push({
+        value: [price, heat],
+        symbol: photo ? "image://" + a.thumbnail_url : "circle",
+        symbolSize: photo ? [48, 36] : dotSize,
+        // colored dots by default; flagged deals get a gold ring
+        itemStyle: photo
+          ? { borderColor: isDeal ? "#ffd54a" : (CATEGORY_COLORS[cid] || "#888"), borderWidth: isDeal ? 3 : 2 }
+          : { color: CATEGORY_COLORS[cid] || "#888", opacity: 0.85,
+              borderColor: isDeal ? "#ffd54a" : "#0f1115", borderWidth: isDeal ? 3 : 1 },
+        _t: a.title, _y: a.year, _p: price,
+        _c: (a.engagement && a.engagement.comments),
+        _w: (a.engagement && a.engagement.watchers),
+        _img: a.thumbnail_url, _url: a.listing_url, _v: a.value,
+      });
+    }
+  }
+  return Object.keys(byCat).sort().map(cid => ({
+    name: CATEGORY_LABELS[cid] || cid,
+    type: "scatter",
+    data: byCat[cid],
+    color: CATEGORY_COLORS[cid] || "#888",
+    emphasis: { focus: "series" },
+    large: false,
+  }));
+}
+
+function render() {
+  const yMetric = document.getElementById("ymetric").value;
+  const xType = document.getElementById("xmetric").value === "linear" ? "value" : "log";
+  const markers = document.getElementById("markers").value;
+  const series = buildSeries(SNAPSHOT, yMetric, markers);
+  chart.setOption({
+    tooltip: {
+      trigger: "item",
+      backgroundColor: "#16181f", borderColor: "#2a2e38", textStyle: { color: "#e7e9ee" },
+      formatter: (p) => {
+        const d = p.data;
+        const img = d._img ? `<img src="${d._img}" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : "";
+        let vline = "";
+        const v = d._v;
+        if (v && v.fair_value) {
+          const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
+          vline = `Fair value: ${fmtMoney(v.fair_value)} <span style="color:#9aa0ad">(${v.n_comps} comps, ${v.basis})</span><br>`;
+          if (below != null) vline += `Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
+            + (v.is_deal ? ` · <b style="color:#ffd54a">DEAL — ending soon</b>` : "") + `<br>`;
+          if (v.appreciation_pct != null) vline += `Recent trend: ${v.appreciation_pct >= 0 ? "+" : ""}${Math.round(v.appreciation_pct * 100)}%<br>`;
+        }
+        return `${img}<b>${d._y || ""} ${d._t || ""}</b><br>`
+          + `Bid: ${fmtMoney(d._p)}<br>`
+          + `Comments: ${d._c ?? "—"} · Watchers: ${d._w ?? "—"}<br>`
+          + vline
+          + `<span style="color:#9aa0ad">click to open listing</span>`;
+      },
+    },
+    legend: {
+      top: 4, textStyle: { color: "#c7ccd6" }, inactiveColor: "#4a4f5a",
+    },
+    grid: { left: 64, right: 28, top: 44, bottom: 56 },
+    xAxis: {
+      type: xType, name: "Bid price (USD)", nameLocation: "middle", nameGap: 34,
+      axisLabel: { formatter: (v) => "$" + (v >= 1000 ? (v/1000) + "k" : v) },
+      splitLine: { lineStyle: { color: "#1c1f27" } },
+      min: xType === "log" ? 1000 : 0,
+    },
+    yAxis: {
+      type: "value", name: (yMetric === "watchers" ? "Watchers" : "Comments") + " (heat) →",
+      nameLocation: "middle", nameGap: 44,
+      splitLine: { lineStyle: { color: "#1c1f27" } },
+    },
+    dataZoom: [
+      { type: "inside", xAxisIndex: 0, filterMode: "none" },
+      { type: "inside", yAxisIndex: 0, filterMode: "none" },
+    ],
+    series,
+  }, true);
+}
+
+chart.on("click", (p) => { if (p.data && p.data._url) window.open(p.data._url, "_blank"); });
+document.getElementById("ymetric").addEventListener("change", render);
+document.getElementById("xmetric").addEventListener("change", render);
+document.getElementById("markers").addEventListener("change", render);
+
+(async function init() {
+  SNAPSHOT = await loadData();
+  if (!SNAPSHOT) {
+    chart.dispose();
+    statusEl.innerHTML =
+      "Couldn't load <code>data/auctions.json</code>.<br><br>"
+      + "Run the scraper, then serve over http (file:// is blocked by the browser):<br>"
+      + "<code>python -m scraper</code><br>"
+      + "<code>python3 -m http.server</code> &nbsp;then open <code>http://localhost:8000/web/</code>";
+    metaEl.textContent = "no data";
+    return;
+  }
+  const tagged = SNAPSHOT.auctions.filter(a => a.category_ids && a.category_ids.length);
+  const enriched = tagged.filter(a => a.engagement && a.engagement.comments != null).length;
+  metaEl.innerHTML = `${tagged.length} cars across ${new Set(tagged.flatMap(a=>a.category_ids)).size} categories `
+    + `· ${enriched} with engagement · ${SNAPSHOT.auctions.length} live total `
+    + `· scraped ${SNAPSHOT.scraped_at ? new Date(SNAPSHOT.scraped_at).toLocaleString() : "?"}`;
+  if (!tagged.length) {
+    statusEl.innerHTML = "Snapshot loaded but no categorized cars to plot.";
+    return;
+  }
+  render();
+})();
+</script>
+</body>
+</html>

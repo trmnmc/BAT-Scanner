@@ -1,0 +1,10 @@
+[project]
+name = "bat-value-map-scraper"
+version = "0.2.0"
+description = "Phase 0/1 scraper for the BaT Value Map (live auction data -> validated JSON snapshot)"
+requires-python = ">=3.9"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"

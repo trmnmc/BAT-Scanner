@@ -1,0 +1,42 @@
+name: Update BaT data
+
+# Refreshes the live board + engagement, grows the comp pool, recomputes value,
+# and commits the data so GitHub Pages serves a fresh map. Runs daily and on demand.
+on:
+  schedule:
+    - cron: "0 13 * * *"     # 13:00 UTC daily (~6am Pacific)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write             # the job commits data/ back to the repo
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # No pip install: the scraper is stdlib-only.
+      - name: Scrape, enrich, harvest comps, compute value
+        run: python -m scraper --harvest-comps
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/auctions.json data/comps.json
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "data: refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi

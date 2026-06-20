@@ -1,0 +1,1691 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-06-20T20:50:37Z",
+  "count": 140,
+  "comps": [
+    {
+      "id": 115117526,
+      "title": "347 Stroker–Powered 1974 Ford Bronco Ranger",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1974,
+      "price": 76500,
+      "sold_ts": 1781980318,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114028638,
+      "title": "21-Years-Owned RoW 1979 Porsche 930 Turbo",
+      "make": "porsche",
+      "model": "930",
+      "year": 1979,
+      "price": 127911,
+      "sold_ts": 1781980207,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 116162675,
+      "title": "1979 Porsche 911SC Targa",
+      "make": "porsche",
+      "model": "911sc",
+      "year": 1979,
+      "price": 82000,
+      "sold_ts": 1781979799,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 108045909,
+      "title": "502-Powered 1969 Chevrolet Chevelle Malibu Sport Coupe",
+      "make": "chevrolet",
+      "model": "chevelle",
+      "year": 1969,
+      "price": 43000,
+      "sold_ts": 1781978431,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114376594,
+      "title": "1969 Ford F-250 Highboy 4&#215;4 4-Speed",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1969,
+      "price": 77000,
+      "sold_ts": 1781978400,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 116070319,
+      "title": "1985 Porsche 911 Carrera Coupe",
+      "make": "porsche",
+      "model": "911",
+      "year": 1985,
+      "price": 91000,
+      "sold_ts": 1781978003,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115903406,
+      "title": "1978 International Harvester Scout II Traveler Midas 345 4×4",
+      "make": "international-harvester",
+      "model": "scout",
+      "year": 1978,
+      "price": 11100,
+      "sold_ts": 1781977904,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114384508,
+      "title": "L98-Powered 1969 Chevrolet Camaro Convertible",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1969,
+      "price": 61500,
+      "sold_ts": 1781977330,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115687684,
+      "title": "1967 Toyota Land Cruiser FJ40",
+      "make": "toyota",
+      "model": "land",
+      "year": 1967,
+      "price": 33000,
+      "sold_ts": 1781976638,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 107866650,
+      "title": "One-Owner Modified 1993 Toyota Supra Turbo 6-Speed",
+      "make": "toyota",
+      "model": "supra",
+      "year": 1993,
+      "price": 81500,
+      "sold_ts": 1781976600,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 112825548,
+      "title": "Original-Owner 1999 Mazda MX-5 Miata 5-Speed",
+      "make": "mazda",
+      "model": "mx-5",
+      "year": 1999,
+      "price": 16777,
+      "sold_ts": 1781976170,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115791871,
+      "title": "1993 Mazda RX-7 5-Speed",
+      "make": "mazda",
+      "model": "rx-7",
+      "year": 1993,
+      "price": 35750,
+      "sold_ts": 1781974937,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 116193681,
+      "title": "1965 Ford Ranchero Deluxe 289 4-Speed",
+      "make": "ford",
+      "model": "ranchero",
+      "year": 1965,
+      "price": 26250,
+      "sold_ts": 1781900416,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 116188107,
+      "title": "1987 Toyota Pickup SR5 XtraCab 4×4 5-Speed",
+      "make": "toyota",
+      "model": "pickup",
+      "year": 1987,
+      "price": 62000,
+      "sold_ts": 1781900231,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115204589,
+      "title": "1997 Toyota Land Cruiser FZJ80 Collector’s Edition",
+      "make": "toyota",
+      "model": "land",
+      "year": 1997,
+      "price": 22000,
+      "sold_ts": 1781899923,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 102677280,
+      "title": "27-Years-Owned 1967 Dodge Charger 383",
+      "make": "dodge",
+      "model": "charger",
+      "year": 1967,
+      "price": 8800,
+      "sold_ts": 1781899603,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115525348,
+      "title": "383-Powered 1966 Chevrolet C10 Pickup",
+      "make": "chevrolet",
+      "model": "c10",
+      "year": 1966,
+      "price": 52100,
+      "sold_ts": 1781899140,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 116030226,
+      "title": "351-Powered 1976 Ford Bronco 4-Speed",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1976,
+      "price": 39500,
+      "sold_ts": 1781897311,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115581176,
+      "title": "1995 Porsche 911 Carrera Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1995,
+      "price": 81000,
+      "sold_ts": 1781897197,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114032482,
+      "title": "1973 Chevrolet C10 Custom Deluxe Project",
+      "make": "chevrolet",
+      "model": "c10",
+      "year": 1973,
+      "price": 6000,
+      "sold_ts": 1781897100,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 109845322,
+      "title": "1992 Porsche 911 Carrera 2 Targa 5-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1992,
+      "price": 184036,
+      "sold_ts": 1781896382,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 116078867,
+      "title": "26k-Mile 1996 Mitsubishi Eclipse GS-T Spyder 5-Speed",
+      "make": "mitsubishi",
+      "model": "eclipse",
+      "year": 1996,
+      "price": 16150,
+      "sold_ts": 1781896295,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 116321940,
+      "title": "1967 Pontiac GTO Convertible",
+      "make": "pontiac",
+      "model": "gto",
+      "year": 1967,
+      "price": 71000,
+      "sold_ts": 1781896260,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115297405,
+      "title": "1956 Willys CJ-5",
+      "make": "willys",
+      "model": "cj-5",
+      "year": 1956,
+      "price": 9500,
+      "sold_ts": 1781895842,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115674716,
+      "title": "1968 Ford Mustang GT Convertible 302 4-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1968,
+      "price": 47000,
+      "sold_ts": 1781895798,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115092557,
+      "title": "351-Powered 1956 Ford F-350 Flatbed",
+      "make": "ford",
+      "model": "f-350",
+      "year": 1956,
+      "price": 11600,
+      "sold_ts": 1781895770,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115609256,
+      "title": "1968 Buick GS 400 Convertible Project",
+      "make": "buick",
+      "model": "gs",
+      "year": 1968,
+      "price": 11500,
+      "sold_ts": 1781895600,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115745239,
+      "title": "1986 Jeep Grand Wagoneer",
+      "make": "jeep",
+      "model": "grand",
+      "year": 1986,
+      "price": 9765,
+      "sold_ts": 1781895341,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114659841,
+      "title": "1995 Acura NSX-T 5-Speed",
+      "make": "acura",
+      "model": "nsx-t",
+      "year": 1995,
+      "price": 86000,
+      "sold_ts": 1781895239,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 116095409,
+      "title": "2018 BMW 328d xDrive Sports Wagon",
+      "make": "bmw",
+      "model": "328d",
+      "year": 2018,
+      "price": 19500,
+      "sold_ts": 1781895099,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 114120929,
+      "title": "1991 Nissan Figaro",
+      "make": "nissan",
+      "model": "figaro",
+      "year": 1991,
+      "price": 5400,
+      "sold_ts": 1781894848,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 116290243,
+      "title": "Coyote-Powered 1969 Ford Bronco by Vintage Broncos",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1969,
+      "price": 160000,
+      "sold_ts": 1781894550,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114540767,
+      "title": "1966 Ford Mustang Convertible 289",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1966,
+      "price": 29750,
+      "sold_ts": 1781894380,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 112931965,
+      "title": "RSR-Style, 3.8L-Powered 1977 Porsche 911 Carrera 3.0 Coupe G50",
+      "make": "porsche",
+      "model": "911",
+      "year": 1977,
+      "price": 100000,
+      "sold_ts": 1781893800,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114167807,
+      "title": "502-Powered 1972 Chevrolet C10 Pickup",
+      "make": "chevrolet",
+      "model": "c10",
+      "year": 1972,
+      "price": 89500,
+      "sold_ts": 1781893696,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114836512,
+      "title": "27-Years-Owned 1990 Mazda MX-5 Miata",
+      "make": "mazda",
+      "model": "mx-5",
+      "year": 1990,
+      "price": 10800,
+      "sold_ts": 1781892195,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 114412533,
+      "title": "L92-Powered 1979 International Harvester Scout II",
+      "make": "international-harvester",
+      "model": "scout",
+      "year": 1979,
+      "price": 158000,
+      "sold_ts": 1781892074,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115953669,
+      "title": "21-Years-Owned 1989 Porsche 911 Carrera Coupe G50",
+      "make": "porsche",
+      "model": "911",
+      "year": 1989,
+      "price": 92911,
+      "sold_ts": 1781891690,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115589591,
+      "title": "5.7L LT1-Powered 1972 Chevrolet Chevelle Malibu Convertible",
+      "make": "chevrolet",
+      "model": "chevelle",
+      "year": 1972,
+      "price": 67500,
+      "sold_ts": 1781891391,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114810790,
+      "title": "35-Years-Owned 1969 Chevrolet Camaro Z11 Pace Car Convertible",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1969,
+      "price": 53000,
+      "sold_ts": 1781890734,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115582536,
+      "title": "1976 Ford Bronco 302",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1976,
+      "price": 70777,
+      "sold_ts": 1781890570,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114833496,
+      "title": "21-Years-Owned, 427 Side-Oiler-Powered 1968 Shelby Mustang GT500 Fastback",
+      "make": "shelby",
+      "model": "mustang",
+      "year": 1968,
+      "price": 205000,
+      "sold_ts": 1781815398,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 113458974,
+      "title": "Vortec-Powered 1989 Toyota Land Cruiser FJ62",
+      "make": "toyota",
+      "model": "land",
+      "year": 1989,
+      "price": 20000,
+      "sold_ts": 1781813627,
+      "category_ids": [
+        "80s-90s-japanese",
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 116083359,
+      "title": "1970 Volkswagen Type 2 Kombi 23-Window Conversion",
+      "make": "volkswagen",
+      "model": "type",
+      "year": 1970,
+      "price": 54500,
+      "sold_ts": 1781813442,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 115727984,
+      "title": "1997 Toyota Land Cruiser FZJ80 40th Anniversary",
+      "make": "toyota",
+      "model": "land",
+      "year": 1997,
+      "price": 26750,
+      "sold_ts": 1781812453,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115693451,
+      "title": "1997 Porsche 911 Carrera S Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1997,
+      "price": 146000,
+      "sold_ts": 1781812397,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115550177,
+      "title": "12k-Mile 2021 Audi RS6 Avant",
+      "make": "audi",
+      "model": "rs6",
+      "year": 2021,
+      "price": 100000,
+      "sold_ts": 1781812159,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 115066587,
+      "title": "1979 Jeep CJ-7 Golden Eagle",
+      "make": "jeep",
+      "model": "cj-7",
+      "year": 1979,
+      "price": 18500,
+      "sold_ts": 1781811469,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115676370,
+      "title": "1977 Ford F-250 SuperCab Dually Hauler",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1977,
+      "price": 20750,
+      "sold_ts": 1781811300,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114758676,
+      "title": "1960 Ford F-100 3-Speed",
+      "make": "ford",
+      "model": "f-100",
+      "year": 1960,
+      "price": 18000,
+      "sold_ts": 1781811023,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115391418,
+      "title": "2005 Mercedes-Benz E55 AMG Wagon",
+      "make": "mercedes-benz",
+      "model": "e55",
+      "year": 2005,
+      "price": 33000,
+      "sold_ts": 1781810629,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 115723240,
+      "title": "3.6L-Powered, 935-Style 1968 Porsche 912 Coupe 5-Speed",
+      "make": "porsche",
+      "model": "912",
+      "year": 1968,
+      "price": 90912,
+      "sold_ts": 1781810264,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114904806,
+      "title": "1977 Toyota Land Cruiser FJ40",
+      "make": "toyota",
+      "model": "land",
+      "year": 1977,
+      "price": 91000,
+      "sold_ts": 1781809943,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114214020,
+      "title": "2014 Mercedes-Benz E350 4MATIC Wagon",
+      "make": "mercedes-benz",
+      "model": "e350",
+      "year": 2014,
+      "price": 14251,
+      "sold_ts": 1781809629,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 112646625,
+      "title": "300-Powered 1962 Ford F-100 Custom 4-Speed",
+      "make": "ford",
+      "model": "f-100",
+      "year": 1962,
+      "price": 17500,
+      "sold_ts": 1781809392,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 116231825,
+      "title": "4.6L-Powered 1993 Land Rover Defender 110 NAS",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1993,
+      "price": 101000,
+      "sold_ts": 1781809195,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114506137,
+      "title": "1988 Toyota Pickup 4&#215;4 5-Speed",
+      "make": "toyota",
+      "model": "pickup",
+      "year": 1988,
+      "price": 15500,
+      "sold_ts": 1781808480,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115674375,
+      "title": "1967 Ford Mustang Coupe 3-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1967,
+      "price": 10577,
+      "sold_ts": 1781808040,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114256608,
+      "title": "20-Years-Owned 1967 International Harvester Scout 800 Pickup 4&#215;4 4-Speed",
+      "make": "international-harvester",
+      "model": "scout",
+      "year": 1967,
+      "price": 16500,
+      "sold_ts": 1781807781,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115759803,
+      "title": "1969 Porsche 911E Targa 5-Speed",
+      "make": "porsche",
+      "model": "911e",
+      "year": 1969,
+      "price": 66000,
+      "sold_ts": 1781807003,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115645242,
+      "title": "360-Powered 1941 Dodge WC Pickup",
+      "make": "dodge",
+      "model": "wc",
+      "year": 1941,
+      "price": 29000,
+      "sold_ts": 1781806807,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 110647982,
+      "title": "Supercharged 1987 Suzuki Samurai Hardtop",
+      "make": "suzuki",
+      "model": "samurai",
+      "year": 1987,
+      "price": 8000,
+      "sold_ts": 1781805317,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 114943688,
+      "title": "1996 Toyota Land Cruiser HZJ75 Troopy Diesel 5-Speed",
+      "make": "toyota",
+      "model": "land",
+      "year": 1996,
+      "price": 29000,
+      "sold_ts": 1781804754,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 114908787,
+      "title": "1969 Ford Bronco 3-Speed",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1969,
+      "price": 40000,
+      "sold_ts": 1781804275,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115495914,
+      "title": "350-Powered 1981 Jeep CJ-5",
+      "make": "jeep",
+      "model": "cj-5",
+      "year": 1981,
+      "price": 8500,
+      "sold_ts": 1781804026,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 113345786,
+      "title": "1985 Porsche 911 Carrera Coupe",
+      "make": "porsche",
+      "model": "911",
+      "year": 1985,
+      "price": 66000,
+      "sold_ts": 1781803889,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114960318,
+      "title": "6.2L LT-Powered 1972 Chevrolet C20 Pickup",
+      "make": "chevrolet",
+      "model": "c20",
+      "year": 1972,
+      "price": 45625,
+      "sold_ts": 1781803877,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115818221,
+      "title": "1995 Ford Bronco Eddie Bauer",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1995,
+      "price": 27500,
+      "sold_ts": 1781803558,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115541479,
+      "title": "1987 Porsche 911 Turbo M505 Cabriolet Slant Nose",
+      "make": "porsche",
+      "model": "911",
+      "year": 1987,
+      "price": 260000,
+      "sold_ts": 1781802697,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115067504,
+      "title": "1998 Porsche 911 Carrera Cabriolet 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1998,
+      "price": 65500,
+      "sold_ts": 1781726710,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115206789,
+      "title": "1955 Chevrolet 3600 Pickup 4-Speed",
+      "make": "chevrolet",
+      "model": "3600",
+      "year": 1955,
+      "price": 9250,
+      "sold_ts": 1781726225,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 112173880,
+      "title": "1999 Toyota Land Cruiser UZJ100",
+      "make": "toyota",
+      "model": "land",
+      "year": 1999,
+      "price": 27250,
+      "sold_ts": 1781726209,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115505614,
+      "title": "39k-Mile 2004 Mercedes-Benz E320 Wagon 4MATIC",
+      "make": "mercedes-benz",
+      "model": "e320",
+      "year": 2004,
+      "price": 14000,
+      "sold_ts": 1781725762,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 115555949,
+      "title": "36-Years-Owned 1972 Pontiac Firebird 350 4-Speed",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1972,
+      "price": 26000,
+      "sold_ts": 1781725563,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115162548,
+      "title": "408-Powered 1967 Ford Mustang GT Fastback",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1967,
+      "price": 84000,
+      "sold_ts": 1781725011,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 113304672,
+      "title": "35-Years-Family-Owned 1976 Jeep CJ-5 Renegade V8",
+      "make": "jeep",
+      "model": "cj-5",
+      "year": 1976,
+      "price": 8200,
+      "sold_ts": 1781724518,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114793605,
+      "title": "1968 Ford Bronco Sport 289",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1968,
+      "price": 35000,
+      "sold_ts": 1781724113,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114219659,
+      "title": "1969 Porsche 911T Coupe 5-Speed Project",
+      "make": "porsche",
+      "model": "911t",
+      "year": 1969,
+      "price": 31250,
+      "sold_ts": 1781723512,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115306551,
+      "title": "1975 Porsche 911 Carrera Targa 5-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1975,
+      "price": 120000,
+      "sold_ts": 1781722781,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115968326,
+      "title": "RoW 1986 Porsche 911 Carrera Cabriolet Project",
+      "make": "porsche",
+      "model": "911",
+      "year": 1986,
+      "price": 37700,
+      "sold_ts": 1781722132,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115689995,
+      "title": "1991 Toyota MR2 Turbo 5-Speed",
+      "make": "toyota",
+      "model": "mr2",
+      "year": 1991,
+      "price": 23750,
+      "sold_ts": 1781720395,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 113269568,
+      "title": "1972 Chevrolet K5 Blazer CST 4×4 4-Speed",
+      "make": "chevrolet",
+      "model": "k5",
+      "year": 1972,
+      "price": 71000,
+      "sold_ts": 1781719589,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114303642,
+      "title": "32k-Mile 1994 Porsche 911 Carrera 2 Cabriolet 5-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1994,
+      "price": 91000,
+      "sold_ts": 1781718959,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115226804,
+      "title": "1986 Toyota MR2",
+      "make": "toyota",
+      "model": "mr2",
+      "year": 1986,
+      "price": 5000,
+      "sold_ts": 1781717700,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 114476610,
+      "title": "Single-Family-Owned 1995 Ford Bronco XLT Sport",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1995,
+      "price": 26000,
+      "sold_ts": 1781717569,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115770507,
+      "title": "6.2L-Powered 1993 Chevrolet C1500 Pickup",
+      "make": "chevrolet",
+      "model": "c1500",
+      "year": 1993,
+      "price": 19250,
+      "sold_ts": 1781717461,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 111710991,
+      "title": "One-Family-Owned 1968 Chevrolet Camaro Coupe Project",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1968,
+      "price": 26200,
+      "sold_ts": 1781717387,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114835031,
+      "title": "1985 Toyota Pickup 4WD 5-Speed",
+      "make": "toyota",
+      "model": "pickup",
+      "year": 1985,
+      "price": 13750,
+      "sold_ts": 1781717107,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115650115,
+      "title": "1974 International Harvester Scout II Traveltop",
+      "make": "international-harvester",
+      "model": "scout",
+      "year": 1974,
+      "price": 18500,
+      "sold_ts": 1781639635,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114206990,
+      "title": "1976 Porsche 912E",
+      "make": "porsche",
+      "model": "912e",
+      "year": 1976,
+      "price": 47500,
+      "sold_ts": 1781639100,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115528915,
+      "title": "350-Powered 1952 Chevrolet 3100 Pickup",
+      "make": "chevrolet",
+      "model": "3100",
+      "year": 1952,
+      "price": 44000,
+      "sold_ts": 1781638481,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115049933,
+      "title": "35-Years-Owned, 2.3L-Powered 1971 Porsche 911T Coupe 5-Speed",
+      "make": "porsche",
+      "model": "911t",
+      "year": 1971,
+      "price": 49888,
+      "sold_ts": 1781636980,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115249937,
+      "title": "1982 Jeep CJ-7",
+      "make": "jeep",
+      "model": "cj-7",
+      "year": 1982,
+      "price": 16250,
+      "sold_ts": 1781636610,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 101257639,
+      "title": "383-Powered 1980 Jeep CJ-5",
+      "make": "jeep",
+      "model": "cj-5",
+      "year": 1980,
+      "price": 10750,
+      "sold_ts": 1781636077,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114537217,
+      "title": "1985 Toyota Pickup 4&#215;4 5-Speed",
+      "make": "toyota",
+      "model": "pickup",
+      "year": 1985,
+      "price": 26500,
+      "sold_ts": 1781635940,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115831416,
+      "title": "1993 Ford F-250 XLT SuperCab 7.5L 4×4",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1993,
+      "price": 17750,
+      "sold_ts": 1781635886,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115707277,
+      "title": "1962 Ford F-100 Custom 3-Speed",
+      "make": "ford",
+      "model": "f-100",
+      "year": 1962,
+      "price": 12000,
+      "sold_ts": 1781635080,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115227963,
+      "title": "1969 Ford Torino GT Convertible 390 4-Speed",
+      "make": "ford",
+      "model": "torino",
+      "year": 1969,
+      "price": 25500,
+      "sold_ts": 1781634479,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115216972,
+      "title": "1994 Ford Bronco Eddie Bauer",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1994,
+      "price": 37500,
+      "sold_ts": 1781633790,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 113797808,
+      "title": "1969 Ford F-250 Ranger Camper Special",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1969,
+      "price": 18250,
+      "sold_ts": 1781632987,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 111633624,
+      "title": "Modified 1990 Nissan 240SX SE Hatchback 5-Speed Project",
+      "make": "nissan",
+      "model": "240sx",
+      "year": 1990,
+      "price": 11500,
+      "sold_ts": 1781632676,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115181546,
+      "title": "29k-Mile 1999 Mazda MX-5 Miata 5-Speed",
+      "make": "mazda",
+      "model": "mx-5",
+      "year": 1999,
+      "price": 13000,
+      "sold_ts": 1781632190,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115300924,
+      "title": "1969 Plymouth Road Runner Coupe Hemi",
+      "make": "plymouth",
+      "model": "road",
+      "year": 1969,
+      "price": 98000,
+      "sold_ts": 1781631715,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115602178,
+      "title": "1983 Porsche 911SC Targa",
+      "make": "porsche",
+      "model": "911sc",
+      "year": 1983,
+      "price": 45500,
+      "sold_ts": 1781631686,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115428550,
+      "title": "1985 Porsche 911 Carrera Cabriolet",
+      "make": "porsche",
+      "model": "911",
+      "year": 1985,
+      "price": 46250,
+      "sold_ts": 1781631550,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115001277,
+      "title": "1970 Chevrolet Chevelle SS 454 LS5 Sport Coupe",
+      "make": "chevrolet",
+      "model": "chevelle",
+      "year": 1970,
+      "price": 82500,
+      "sold_ts": 1781631446,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 113864115,
+      "title": "454-Powered 1969 Chevrolet Camaro Coupe 4-Speed",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1969,
+      "price": 54000,
+      "sold_ts": 1781630830,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 112779155,
+      "title": "1965 Ford Mustang Convertible 3-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1965,
+      "price": 13500,
+      "sold_ts": 1781630527,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115648524,
+      "title": "1983 Mazda RX-7 GSL",
+      "make": "mazda",
+      "model": "rx-7",
+      "year": 1983,
+      "price": 7900,
+      "sold_ts": 1781553976,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 114775836,
+      "title": "48k-Mile 1990 Mazda MX-5 Miata",
+      "make": "mazda",
+      "model": "mx-5",
+      "year": 1990,
+      "price": 12345,
+      "sold_ts": 1781552829,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115935285,
+      "title": "1977 Land Rover 88 Series III Santana",
+      "make": "land-rover",
+      "model": "88",
+      "year": 1977,
+      "price": 19770,
+      "sold_ts": 1781552220,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 105045066,
+      "title": "1949 Ford F-1 Pickup",
+      "make": "ford",
+      "model": "f-1",
+      "year": 1949,
+      "price": 17000,
+      "sold_ts": 1781552067,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114612194,
+      "title": "1993 Porsche 911 Carrera 4 Coupe 30th Anniversary Jubilee Edition",
+      "make": "porsche",
+      "model": "911",
+      "year": 1993,
+      "price": 340964,
+      "sold_ts": 1781550817,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114786365,
+      "title": "1979 Jeep CJ-7 Renegade",
+      "make": "jeep",
+      "model": "cj-7",
+      "year": 1979,
+      "price": 14000,
+      "sold_ts": 1781550485,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 100037316,
+      "title": "32-Years-Owned, 3F-Powered 1982 Toyota Land Cruiser FJ60",
+      "make": "toyota",
+      "model": "land",
+      "year": 1982,
+      "price": 19000,
+      "sold_ts": 1781549983,
+      "category_ids": [
+        "80s-90s-japanese",
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115167761,
+      "title": "2011 BMW 328i xDrive Sports Wagon 6-Speed",
+      "make": "bmw",
+      "model": "328i",
+      "year": 2011,
+      "price": 16500,
+      "sold_ts": 1781549861,
+      "category_ids": [
+        "german-wagons"
+      ]
+    },
+    {
+      "id": 115687655,
+      "title": "Twin-Plug 3.0L-Powered 1973 Porsche 911T Coupe 5-Speed Race Car",
+      "make": "porsche",
+      "model": "911t",
+      "year": 1973,
+      "price": 48000,
+      "sold_ts": 1781549834,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115084200,
+      "title": "Coyote-Powered 1973 Ford Bronco by Highline Classics",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1973,
+      "price": 168000,
+      "sold_ts": 1781549733,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115837878,
+      "title": "1983 Toyota Land Cruiser FJ45 Pickup",
+      "make": "toyota",
+      "model": "land",
+      "year": 1983,
+      "price": 22500,
+      "sold_ts": 1781548870,
+      "category_ids": [
+        "80s-90s-japanese",
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 113192019,
+      "title": "Original-Owner 1993 Mazda RX-7 Touring",
+      "make": "mazda",
+      "model": "rx-7",
+      "year": 1993,
+      "price": 29751,
+      "sold_ts": 1781548404,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 113746304,
+      "title": "22-Years-Owned 1988 Porsche 911 Carrera Cabriolet G50",
+      "make": "porsche",
+      "model": "911",
+      "year": 1988,
+      "price": 72500,
+      "sold_ts": 1781548122,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 115324461,
+      "title": "1972 Chevrolet K20 Cheyenne Pickup 4×4",
+      "make": "chevrolet",
+      "model": "k20",
+      "year": 1972,
+      "price": 40500,
+      "sold_ts": 1781548033,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114676310,
+      "title": "1999 Toyota Land Cruiser UZJ100",
+      "make": "toyota",
+      "model": "land",
+      "year": 1999,
+      "price": 29500,
+      "sold_ts": 1781546089,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115761524,
+      "title": "302-Powered 1966 Ford Ranchero",
+      "make": "ford",
+      "model": "ranchero",
+      "year": 1966,
+      "price": 12500,
+      "sold_ts": 1781546084,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 113512524,
+      "title": "1968 Chevrolet Chevelle SS 396 Sport Coupe L78 4-Speed",
+      "make": "chevrolet",
+      "model": "chevelle",
+      "year": 1968,
+      "price": 43500,
+      "sold_ts": 1781545888,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 113757410,
+      "title": "Supercharged Coyote-Powered 1968 Ford Mustang GT500CR 5-Speed by Classic Recreations",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1968,
+      "price": 220000,
+      "sold_ts": 1781545140,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115465575,
+      "title": "1967 Shelby Mustang GT500 Fastback",
+      "make": "shelby",
+      "model": "mustang",
+      "year": 1967,
+      "price": 290000,
+      "sold_ts": 1781544419,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115470715,
+      "title": "1997 Porsche 911 Carrera 4S Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1997,
+      "price": 185993,
+      "sold_ts": 1781543733,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114905347,
+      "title": "6.0L Vortec-Powered 1960 Willys Jeep Pickup 4&#215;4",
+      "make": "willys",
+      "model": "jeep",
+      "year": 1960,
+      "price": 16250,
+      "sold_ts": 1781459328,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114073960,
+      "title": "1960 Ford F-100 Custom Cab 3-Speed",
+      "make": "ford",
+      "model": "f-100",
+      "year": 1960,
+      "price": 15151,
+      "sold_ts": 1781459313,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115257030,
+      "title": "1987 Toyota Pickup XtraCab 4×4 5-Speed",
+      "make": "toyota",
+      "model": "pickup",
+      "year": 1987,
+      "price": 10000,
+      "sold_ts": 1781458645,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 113109511,
+      "title": "1991 Land Rover Defender 90 200Tdi",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1991,
+      "price": 29000,
+      "sold_ts": 1781458184,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115498972,
+      "title": "1999 Toyota Land Cruiser UZJ100",
+      "make": "toyota",
+      "model": "land",
+      "year": 1999,
+      "price": 15750,
+      "sold_ts": 1781457942,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115606614,
+      "title": "53-Years-Family-Owned 1966 Ford Mustang Coupe 289",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1966,
+      "price": 24250,
+      "sold_ts": 1781457917,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114732401,
+      "title": "Customized, 392-Powered 1968 Ford Mustang Fastback 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1968,
+      "price": 64000,
+      "sold_ts": 1781457870,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115244272,
+      "title": "1993 Land Rover Defender 110 200Tdi 5-Speed",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1993,
+      "price": 70000,
+      "sold_ts": 1781457659,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 112755762,
+      "title": "1989 Porsche 911 Carrera Targa G50",
+      "make": "porsche",
+      "model": "911",
+      "year": 1989,
+      "price": 70500,
+      "sold_ts": 1781457489,
+      "category_ids": [
+        "air-cooled-911-family"
+      ]
+    },
+    {
+      "id": 114266952,
+      "title": "1983 Jeep CJ-5 4-Speed",
+      "make": "jeep",
+      "model": "cj-5",
+      "year": 1983,
+      "price": 18000,
+      "sold_ts": 1781457126,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 112451655,
+      "title": "1982 Toyota Land Cruiser FJ60",
+      "make": "toyota",
+      "model": "land",
+      "year": 1982,
+      "price": 28500,
+      "sold_ts": 1781456857,
+      "category_ids": [
+        "80s-90s-japanese",
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115790812,
+      "title": "1973 Ford F-250 Custom Explorer 4-Speed",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1973,
+      "price": 27000,
+      "sold_ts": 1781379099,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    }
+  ]
+}

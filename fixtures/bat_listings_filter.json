@@ -1,0 +1,15 @@
+{
+  "is_default_keyword_filter": true,
+  "items_per_page": 36,
+  "items_total": 121930,
+  "page_current": 1,
+  "pages_total": 3387,
+  "items": [
+    {"id": 116070319, "title": "1985 Porsche 911 Carrera Coupe", "year": "1985", "current_bid": 70500, "currency": "USD", "comments": "44", "watchers": "210 Watchers", "views": "5,300 Views", "timestamp_end": 4102444800, "sold_text": ""},
+    {"id": 200000001, "title": "1976 Porsche 912E Coupe", "year": "1976", "current_bid": 28000, "currency": "USD", "comments": "8", "watchers": "30 Watchers", "views": "900 Views", "timestamp_end": 4102444800, "sold_text": ""},
+    {"id": 200000002, "title": "1989 Porsche 930 Turbo Coupe", "year": "1989", "current_bid": 99000, "currency": "USD", "comments": "61", "watchers": "180 Watchers", "views": "4,100 Views", "timestamp_end": 4102444800, "sold_text": ""},
+    {"id": 200000003, "title": "1995 Porsche 993 Carrera Coupe 6-Speed", "year": "1995", "current_bid": 81000, "currency": "USD", "comments": "52", "watchers": "240 Watchers", "views": "6,000 Views", "timestamp_end": 4102444800, "sold_text": ""},
+    {"id": 200000004, "title": "1973 Porsche 911 Carrera RS", "year": "1973", "current_bid": 250000, "currency": "USD", "comments": "120", "watchers": "500 Watchers", "views": "12,000 Views", "timestamp_end": 4102444800, "sold_text": ""},
+    {"id": 999999001, "title": "1991 BMW M3 (unrelated, should be ignored by the join)", "year": "1991", "current_bid": 41000, "currency": "USD", "comments": "12", "watchers": "60 Watchers", "views": "1,500 Views", "timestamp_end": 4102444800, "sold_text": ""}
+  ]
+}
