@@ -1,0 +1,46 @@
+name: Tests
+
+# Fixture-based CI: Python tests, Node module tests, and the snapshot verifier.
+# Runs on code changes only — data-only refresh commits (data/**) are ignored so the
+# daily "Update BaT data" job does not trigger a redundant test run.
+# No live scraping or network enrichment happens here.
+on:
+  push:
+    paths-ignore:
+      - "data/**"
+      - "**/*.md"
+  pull_request:
+    paths-ignore:
+      - "data/**"
+      - "**/*.md"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python test deps
+        run: pip install -r requirements-dev.txt
+
+      - name: Python tests
+        run: python -m pytest
+
+      - name: Node module tests
+        run: node --test web/*.test.js
+
+      - name: Snapshot verifier (committed data)
+        run: node tools/verify_snapshot.js

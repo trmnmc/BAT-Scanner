@@ -40,15 +40,35 @@ python -m scraper --only air-cooled-911-family   # focus a run (metadata only; n
 `--no-enrich` means "don't hit the network this run," **not** "erase enrichment": the cache
 from the previous snapshot is still carried forward.
 
-## Tests
+## Tests & validation
+
+One-time setup:
 
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r requirements-dev.txt
-python -m pytest
 ```
 
-Tests run entirely against committed fixtures (no network).
+The standard validation suite (run before completing any change):
+
+```bash
+python -m pytest                 # Python unit tests (fixtures only, no network)
+node --test web/*.test.js        # pure-JS frontend module tests
+node tools/verify_snapshot.js    # map invariants on the committed snapshot
+git diff --check                 # no whitespace/conflict markers
+```
+
+Whenever Python snapshot generation changes, also rebuild from fixtures and re-verify:
+
+```bash
+python -m scraper --offline --out /tmp/bat-auctions.json
+node tools/verify_snapshot.js /tmp/bat-auctions.json
+```
+
+All tests run entirely against committed fixtures (no network). CI runs the same suite
+on every code push and pull request (`.github/workflows/test.yml`); data-only refresh
+commits under `data/` are intentionally excluded. The separate `update.yml` workflow only
+refreshes and commits data and never runs during tests.
 
 ## Map (web/)
 
