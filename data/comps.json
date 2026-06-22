@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T04:49:10Z",
-  "count": 837,
+  "generated_at": "2026-06-22T17:43:09Z",
+  "count": 852,
   "comps": [
     {
       "id": 115117526,
@@ -8680,6 +8680,160 @@
       "year": 1957,
       "price": 39500,
       "sold_ts": 1782062746,
+      "category_ids": []
+    },
+    {
+      "id": 115184559,
+      "title": "2007 Lexus LS460 L",
+      "make": "lexus",
+      "model": "ls460",
+      "year": 2007,
+      "price": 18000,
+      "sold_ts": 1782150040,
+      "category_ids": []
+    },
+    {
+      "id": 112916368,
+      "title": "OM606-Powered 1982 Mercedes-Benz 300GD 5-Speed",
+      "make": "mercedes-benz",
+      "model": "300gd",
+      "year": 1982,
+      "price": 69696,
+      "sold_ts": 1782150020,
+      "category_ids": []
+    },
+    {
+      "id": 116368915,
+      "title": "1969 Honda Z50A Mini Trail",
+      "make": "honda",
+      "model": "z50a",
+      "year": 1969,
+      "price": 4000,
+      "sold_ts": 1782149977,
+      "category_ids": []
+    },
+    {
+      "id": 115420271,
+      "title": "35k-Mile 2004 Ford Mustang SVT Cobra Mystichrome Convertible",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2004,
+      "price": 41000,
+      "sold_ts": 1782149859,
+      "category_ids": []
+    },
+    {
+      "id": 114986425,
+      "title": "Coyote-Powered 1969 Ford Bronco",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1969,
+      "price": 198000,
+      "sold_ts": 1782149757,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115732895,
+      "title": "One-Owner 2006 Vespa GTS 250 i.e.",
+      "make": "vespa",
+      "model": "gts",
+      "year": 2006,
+      "price": 4500,
+      "sold_ts": 1782149645,
+      "category_ids": []
+    },
+    {
+      "id": 115670266,
+      "title": "1989 Jeep Grand Wagoneer",
+      "make": "jeep",
+      "model": "grand",
+      "year": 1989,
+      "price": 76000,
+      "sold_ts": 1782149477,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115451876,
+      "title": "1957 Mercedes-Benz 190SL",
+      "make": "mercedes-benz",
+      "model": "190sl",
+      "year": 1957,
+      "price": 89500,
+      "sold_ts": 1782149467,
+      "category_ids": []
+    },
+    {
+      "id": 115990893,
+      "title": "1963 Chevrolet Corvette Split-Window Coupe L76 327/340 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1963,
+      "price": 118500,
+      "sold_ts": 1782149459,
+      "category_ids": []
+    },
+    {
+      "id": 113720446,
+      "title": "2016 BMW M6 Gran Coupe",
+      "make": "bmw",
+      "model": "m6",
+      "year": 2016,
+      "price": 32250,
+      "sold_ts": 1782149301,
+      "category_ids": []
+    },
+    {
+      "id": 116067680,
+      "title": "1992 Toyota Tercel DX",
+      "make": "toyota",
+      "model": "tercel",
+      "year": 1992,
+      "price": 5760,
+      "sold_ts": 1782149199,
+      "category_ids": []
+    },
+    {
+      "id": 108779706,
+      "title": "1968 Ferrari 365 GT 2+2",
+      "make": "ferrari",
+      "model": "365",
+      "year": 1968,
+      "price": 255000,
+      "sold_ts": 1782148827,
+      "category_ids": []
+    },
+    {
+      "id": 115277514,
+      "title": "1971 Jaguar XKE Series II Coupe",
+      "make": "jaguar",
+      "model": "xke",
+      "year": 1971,
+      "price": 63000,
+      "sold_ts": 1782148554,
+      "category_ids": []
+    },
+    {
+      "id": 115492725,
+      "title": "19k-Mile 2008 Lamborghini Murcielago LP640 Coupe",
+      "make": "lamborghini",
+      "model": "murcielago",
+      "year": 2008,
+      "price": 501000,
+      "sold_ts": 1782147900,
+      "category_ids": []
+    },
+    {
+      "id": 115192061,
+      "title": "2.5L-Powered 1972 Volvo 1800E 5-Speed Roadster Conversion",
+      "make": "volvo",
+      "model": "1800e",
+      "year": 1972,
+      "price": 11000,
+      "sold_ts": 1781977777,
       "category_ids": []
     }
   ]
