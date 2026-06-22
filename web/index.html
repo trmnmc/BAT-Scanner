@@ -1346,6 +1346,21 @@ function setupFilters(cars) {
 }
 
 (async function init() {
+  // Self-heal a stale cached script: a freshly-deployed index.html can load against an OLD cached
+  // map-data.js that lacks newer exports (e.g. clampNum) -> render() throws -> blank chart. Detect
+  // the mismatch and do ONE cache-busted reload; the ?fresh= already in the URL guards the loop.
+  const scriptsStale = !window.BATMapData || typeof BATMapData.clampNum !== "function"
+                    || !window.BATFilters || !window.BATSearch;
+  const alreadyRetried = location.search.indexOf("fresh=") !== -1;
+  if (scriptsStale && !alreadyRetried) {
+    location.replace(location.pathname + "?fresh=" + Date.now());   // fresh index.html + fresh ?v= scripts
+    return;
+  }
+  if (scriptsStale) {
+    statusEl.innerHTML = "The map's scripts didn't load correctly — a cached file looks stale.<br>"
+      + "Please hard-refresh to clear it: <b>Cmd/Ctrl + Shift + R</b>.";
+    return;
+  }
   SNAPSHOT = await loadData();
   if (!SNAPSHOT) {
     chart.dispose();
