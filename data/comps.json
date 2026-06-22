@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-20T20:50:37Z",
-  "count": 140,
+  "generated_at": "2026-06-21T20:56:28Z",
+  "count": 835,
   "comps": [
     {
       "id": 115117526,
@@ -1686,6 +1686,6979 @@
       "category_ids": [
         "vintage-trucks"
       ]
+    },
+    {
+      "id": 115014233,
+      "title": "1999 BMW M Roadster",
+      "make": "bmw",
+      "model": "m",
+      "year": 1999,
+      "price": 9200,
+      "sold_ts": 1782067734,
+      "category_ids": []
+    },
+    {
+      "id": 115901582,
+      "title": "1995 Land Rover Defender 110 300Tdi",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1995,
+      "price": 26500,
+      "sold_ts": 1782067467,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 114083917,
+      "title": "Single-Family-Owned 2015 Chevrolet Camaro Z/28",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 2015,
+      "price": 49500,
+      "sold_ts": 1782067371,
+      "category_ids": []
+    },
+    {
+      "id": 115436046,
+      "title": "2006 BMW M5",
+      "make": "bmw",
+      "model": "m5",
+      "year": 2006,
+      "price": 13250,
+      "sold_ts": 1782067074,
+      "category_ids": []
+    },
+    {
+      "id": 115775433,
+      "title": "6k-Mile 2009 Aston Martin DBS 6-Speed",
+      "make": "aston-martin",
+      "model": "dbs",
+      "year": 2009,
+      "price": 200000,
+      "sold_ts": 1782066977,
+      "category_ids": []
+    },
+    {
+      "id": 113226940,
+      "title": "29-Years-Owned 1981 Chevrolet Corvette Project",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1981,
+      "price": 5500,
+      "sold_ts": 1782066900,
+      "category_ids": []
+    },
+    {
+      "id": 111699163,
+      "title": "2000 Dodge Ram 3500 Camper Conversion",
+      "make": "dodge",
+      "model": "ram",
+      "year": 2000,
+      "price": 7400,
+      "sold_ts": 1782066860,
+      "category_ids": []
+    },
+    {
+      "id": 115172392,
+      "title": "Original-Owner 2000 Acura Integra Type R",
+      "make": "acura",
+      "model": "integra",
+      "year": 2000,
+      "price": 40000,
+      "sold_ts": 1782066840,
+      "category_ids": []
+    },
+    {
+      "id": 114916158,
+      "title": "2002 Toyota Land Cruiser UZJ100",
+      "make": "toyota",
+      "model": "land",
+      "year": 2002,
+      "price": 16850,
+      "sold_ts": 1782066825,
+      "category_ids": []
+    },
+    {
+      "id": 115334732,
+      "title": "43k-Mile 2006 Dodge Ram 2500 SLT Big Horn Quad Cab Cummins",
+      "make": "dodge",
+      "model": "ram",
+      "year": 2006,
+      "price": 27500,
+      "sold_ts": 1782066654,
+      "category_ids": []
+    },
+    {
+      "id": 109387407,
+      "title": "1969 Mercedes-Benz 280SL",
+      "make": "mercedes-benz",
+      "model": "280sl",
+      "year": 1969,
+      "price": 118000,
+      "sold_ts": 1782066534,
+      "category_ids": []
+    },
+    {
+      "id": 110985167,
+      "title": "1997 Jeep Cherokee SE 4&#215;4 5-Speed",
+      "make": "jeep",
+      "model": "cherokee",
+      "year": 1997,
+      "price": 12500,
+      "sold_ts": 1782066094,
+      "category_ids": []
+    },
+    {
+      "id": 115472733,
+      "title": "43k-Mile 2002 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 2002,
+      "price": 29250,
+      "sold_ts": 1782065928,
+      "category_ids": []
+    },
+    {
+      "id": 115479748,
+      "title": "Custom LS3-Powered 1962 Chevrolet Bel Air Sport Coupe",
+      "make": "chevrolet",
+      "model": "bel",
+      "year": 1962,
+      "price": 137000,
+      "sold_ts": 1782065904,
+      "category_ids": []
+    },
+    {
+      "id": 109600985,
+      "title": "28-Years-Owned 1990 Mercedes-Benz 560SEC",
+      "make": "mercedes-benz",
+      "model": "560sec",
+      "year": 1990,
+      "price": 26000,
+      "sold_ts": 1782065869,
+      "category_ids": []
+    },
+    {
+      "id": 115330222,
+      "title": "31k-Mile 1983 Mercedes-Benz 380SL",
+      "make": "mercedes-benz",
+      "model": "380sl",
+      "year": 1983,
+      "price": 24000,
+      "sold_ts": 1782065573,
+      "category_ids": []
+    },
+    {
+      "id": 115201908,
+      "title": "1986 Honda CB700SC Nighthawk S",
+      "make": "honda",
+      "model": "cb700sc",
+      "year": 1986,
+      "price": 5011,
+      "sold_ts": 1782065416,
+      "category_ids": []
+    },
+    {
+      "id": 115646227,
+      "title": "2006 Dodge Magnum SRT8",
+      "make": "dodge",
+      "model": "magnum",
+      "year": 2006,
+      "price": 14125,
+      "sold_ts": 1782065365,
+      "category_ids": []
+    },
+    {
+      "id": 115732375,
+      "title": "1991 Acura NSX 5-Speed",
+      "make": "acura",
+      "model": "nsx",
+      "year": 1991,
+      "price": 101000,
+      "sold_ts": 1782065178,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115335718,
+      "title": "One-Owner, 6k-Mile 2007 Ford Mustang Shelby GT500 Super Snake Convertible",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2007,
+      "price": 65000,
+      "sold_ts": 1782065160,
+      "category_ids": []
+    },
+    {
+      "id": 115242437,
+      "title": "2003 Porsche Boxster 5-Speed",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2003,
+      "price": 13000,
+      "sold_ts": 1782064970,
+      "category_ids": []
+    },
+    {
+      "id": 113357749,
+      "title": "Fuel-Injected, BluePrint 408-Powered 1965 Ford Mustang Convertible 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1965,
+      "price": 53500,
+      "sold_ts": 1782064958,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114808754,
+      "title": "24k-Mile 2001 Porsche 911 Turbo Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2001,
+      "price": 101000,
+      "sold_ts": 1782064957,
+      "category_ids": []
+    },
+    {
+      "id": 116059193,
+      "title": "1998 Toyota Tacoma SR5 XtraCab V6 4&#215;4 5-Speed",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 1998,
+      "price": 10500,
+      "sold_ts": 1782064886,
+      "category_ids": []
+    },
+    {
+      "id": 112869786,
+      "title": "35k-Mile 2013 BMW Z4 sDrive35is",
+      "make": "bmw",
+      "model": "z4",
+      "year": 2013,
+      "price": 23500,
+      "sold_ts": 1782064800,
+      "category_ids": []
+    },
+    {
+      "id": 107405120,
+      "title": "1999 Toyota Land Cruiser HZJ71 5-Speed",
+      "make": "toyota",
+      "model": "land",
+      "year": 1999,
+      "price": 36000,
+      "sold_ts": 1782064718,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 115781605,
+      "title": "2019 Harley-Davidson Sportster Iron 1200 &#8220;Muscle R2&#8221; by Cohn Racers",
+      "make": "harley-davidson",
+      "model": "sportster",
+      "year": 2019,
+      "price": 29000,
+      "sold_ts": 1782064678,
+      "category_ids": []
+    },
+    {
+      "id": 115729351,
+      "title": "Original-Owner 2008 Saab 9-3 SportCombi 2.0T 6-Speed",
+      "make": "saab",
+      "model": "9-3",
+      "year": 2008,
+      "price": 8100,
+      "sold_ts": 1782064673,
+      "category_ids": []
+    },
+    {
+      "id": 115650361,
+      "title": "1969 Chevrolet Camaro Coupe Project",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1969,
+      "price": 33750,
+      "sold_ts": 1782064672,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115606122,
+      "title": "1984 Pontiac Fiero SE 4-Speed",
+      "make": "pontiac",
+      "model": "fiero",
+      "year": 1984,
+      "price": 3300,
+      "sold_ts": 1782064604,
+      "category_ids": []
+    },
+    {
+      "id": 114297932,
+      "title": "2019 Porsche Panamera 4",
+      "make": "porsche",
+      "model": "panamera",
+      "year": 2019,
+      "price": 40250,
+      "sold_ts": 1782064581,
+      "category_ids": []
+    },
+    {
+      "id": 115765360,
+      "title": "1970 Chevrolet Chevelle Malibu Sport Coupe 350",
+      "make": "chevrolet",
+      "model": "chevelle",
+      "year": 1970,
+      "price": 50200,
+      "sold_ts": 1782064457,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 114984590,
+      "title": "2021 BMW S1000XR",
+      "make": "bmw",
+      "model": "s1000xr",
+      "year": 2021,
+      "price": 11500,
+      "sold_ts": 1782064381,
+      "category_ids": []
+    },
+    {
+      "id": 115455830,
+      "title": "45k-Mile 2015 Audi A8L 4.0T",
+      "make": "audi",
+      "model": "a8l",
+      "year": 2015,
+      "price": 23500,
+      "sold_ts": 1782064241,
+      "category_ids": []
+    },
+    {
+      "id": 115485197,
+      "title": "Original-Owner 2010 Dodge Viper SRT-10 Coupe",
+      "make": "dodge",
+      "model": "viper",
+      "year": 2010,
+      "price": 100000,
+      "sold_ts": 1782064200,
+      "category_ids": []
+    },
+    {
+      "id": 114882800,
+      "title": "K20-Powered 1983 Nissan Skyline RS-X Turbo 6-Speed",
+      "make": "nissan",
+      "model": "skyline",
+      "year": 1983,
+      "price": 23250,
+      "sold_ts": 1782064200,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 113785997,
+      "title": "2006 Lexus GX470",
+      "make": "lexus",
+      "model": "gx470",
+      "year": 2006,
+      "price": 18500,
+      "sold_ts": 1782064164,
+      "category_ids": []
+    },
+    {
+      "id": 116017678,
+      "title": "1999 Mercedes-Benz S500",
+      "make": "mercedes-benz",
+      "model": "s500",
+      "year": 1999,
+      "price": 15600,
+      "sold_ts": 1782063993,
+      "category_ids": []
+    },
+    {
+      "id": 114333038,
+      "title": "28-Years-Owned 1997 Pontiac Firebird Trans Am Coupe",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1997,
+      "price": 10000,
+      "sold_ts": 1782063900,
+      "category_ids": []
+    },
+    {
+      "id": 116129188,
+      "title": "2010 Ford Mustang Roush 540RH 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2010,
+      "price": 22500,
+      "sold_ts": 1782063835,
+      "category_ids": []
+    },
+    {
+      "id": 115158569,
+      "title": "2013 Porsche Cayenne Diesel",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2013,
+      "price": 14360,
+      "sold_ts": 1782063817,
+      "category_ids": []
+    },
+    {
+      "id": 114776007,
+      "title": "Twin-Turbocharged 408-Powered 1970 Chevrolet C10 Pickup",
+      "make": "chevrolet",
+      "model": "c10",
+      "year": 1970,
+      "price": 64500,
+      "sold_ts": 1782063374,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115814641,
+      "title": "383-Powered 1959 Chevrolet Corvette",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1959,
+      "price": 95000,
+      "sold_ts": 1782063330,
+      "category_ids": []
+    },
+    {
+      "id": 116250648,
+      "title": "Original-Owner 1978 Ford Granada ESS V8 2-Door Sedan",
+      "make": "ford",
+      "model": "granada",
+      "year": 1978,
+      "price": 4000,
+      "sold_ts": 1782063240,
+      "category_ids": []
+    },
+    {
+      "id": 115815522,
+      "title": "1964.5 Ford Mustang Coupe 260",
+      "make": "5",
+      "model": "ford",
+      "year": 1964,
+      "price": 17000,
+      "sold_ts": 1782063120,
+      "category_ids": []
+    },
+    {
+      "id": 115911002,
+      "title": "16k-Mile 2000 Ford Mustang Convertible",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2000,
+      "price": 10250,
+      "sold_ts": 1782063083,
+      "category_ids": []
+    },
+    {
+      "id": 115994109,
+      "title": "1958 BMW Isetta 600",
+      "make": "bmw",
+      "model": "isetta",
+      "year": 1958,
+      "price": 25000,
+      "sold_ts": 1782062955,
+      "category_ids": []
+    },
+    {
+      "id": 116277604,
+      "title": "1978 Honda XR75",
+      "make": "honda",
+      "model": "xr75",
+      "year": 1978,
+      "price": 1500,
+      "sold_ts": 1782062940,
+      "category_ids": []
+    },
+    {
+      "id": 114876235,
+      "title": "1998 Nissan Skyline 25GT Turbo Coupe 5-Speed",
+      "make": "nissan",
+      "model": "skyline",
+      "year": 1998,
+      "price": 42500,
+      "sold_ts": 1782062816,
+      "category_ids": [
+        "80s-90s-japanese"
+      ]
+    },
+    {
+      "id": 114636576,
+      "title": "2001 Honda Acty SDX Van 4WD 5-Speed",
+      "make": "honda",
+      "model": "acty",
+      "year": 2001,
+      "price": 8000,
+      "sold_ts": 1782062773,
+      "category_ids": []
+    },
+    {
+      "id": 115877226,
+      "title": "Modified 1994 Lotus Esprit S4",
+      "make": "lotus",
+      "model": "esprit",
+      "year": 1994,
+      "price": 33500,
+      "sold_ts": 1782062569,
+      "category_ids": []
+    },
+    {
+      "id": 115668927,
+      "title": "1981 Porsche 924 Turbo 5-Speed",
+      "make": "porsche",
+      "model": "924",
+      "year": 1981,
+      "price": 9540,
+      "sold_ts": 1782062520,
+      "category_ids": []
+    },
+    {
+      "id": 116123121,
+      "title": "37k-Mile 1999 Mercedes-Benz C43 AMG",
+      "make": "mercedes-benz",
+      "model": "c43",
+      "year": 1999,
+      "price": 25000,
+      "sold_ts": 1782062400,
+      "category_ids": []
+    },
+    {
+      "id": 115396171,
+      "title": "2024 Ram 2500 Laramie Night Crew Cab Cummins 4×4 w/Bowen Customs Camper Bed",
+      "make": "ram",
+      "model": "2500",
+      "year": 2024,
+      "price": 81000,
+      "sold_ts": 1782062391,
+      "category_ids": []
+    },
+    {
+      "id": 115648591,
+      "title": "2006 Infiniti G35",
+      "make": "infiniti",
+      "model": "g35",
+      "year": 2006,
+      "price": 8800,
+      "sold_ts": 1782062375,
+      "category_ids": []
+    },
+    {
+      "id": 115652456,
+      "title": "24k-Mile 2004 Volkswagen Passat W8 4Motion Sedan 6-Speed",
+      "make": "volkswagen",
+      "model": "passat",
+      "year": 2004,
+      "price": 9708,
+      "sold_ts": 1782062316,
+      "category_ids": []
+    },
+    {
+      "id": 115340890,
+      "title": "2012 Land Rover Range Rover HSE Luxury",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2012,
+      "price": 14000,
+      "sold_ts": 1782062100,
+      "category_ids": []
+    },
+    {
+      "id": 115855317,
+      "title": "1952 Bentley Mark VI",
+      "make": "bentley",
+      "model": "mark",
+      "year": 1952,
+      "price": 22500,
+      "sold_ts": 1782062040,
+      "category_ids": []
+    },
+    {
+      "id": 115688952,
+      "title": "1978 Ford Bronco Custom",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1978,
+      "price": 62000,
+      "sold_ts": 1782061906,
+      "category_ids": [
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 113860126,
+      "title": "45k-Mile 2006 BMW M5",
+      "make": "bmw",
+      "model": "m5",
+      "year": 2006,
+      "price": 22500,
+      "sold_ts": 1782061879,
+      "category_ids": []
+    },
+    {
+      "id": 116114508,
+      "title": "1964 Ford Galaxie Country Sedan 390",
+      "make": "ford",
+      "model": "galaxie",
+      "year": 1964,
+      "price": 28250,
+      "sold_ts": 1782061816,
+      "category_ids": []
+    },
+    {
+      "id": 115623635,
+      "title": "1994 Toyota Land Cruiser FZJ80",
+      "make": "toyota",
+      "model": "land",
+      "year": 1994,
+      "price": 32000,
+      "sold_ts": 1782061758,
+      "category_ids": [
+        "80s-90s-japanese",
+        "vintage-trucks"
+      ]
+    },
+    {
+      "id": 115890294,
+      "title": "1991 Mercedes-Benz 300SL",
+      "make": "mercedes-benz",
+      "model": "300sl",
+      "year": 1991,
+      "price": 13650,
+      "sold_ts": 1781981125,
+      "category_ids": []
+    },
+    {
+      "id": 114228346,
+      "title": "2012 Porsche 911 Turbo S Cabriolet",
+      "make": "porsche",
+      "model": "911",
+      "year": 2012,
+      "price": 92000,
+      "sold_ts": 1781980247,
+      "category_ids": []
+    },
+    {
+      "id": 116041823,
+      "title": "10k-Mile 2004 Mercedes-Benz SL55 AMG",
+      "make": "mercedes-benz",
+      "model": "sl55",
+      "year": 2004,
+      "price": 33000,
+      "sold_ts": 1781980074,
+      "category_ids": []
+    },
+    {
+      "id": 71058552,
+      "title": "5k-Mile 1997 Land Rover Defender 90 NAS",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1997,
+      "price": 120000,
+      "sold_ts": 1781979944,
+      "category_ids": []
+    },
+    {
+      "id": 115698088,
+      "title": "47k-Mile 1990 Chevrolet Corvette ZR-1",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1990,
+      "price": 32750,
+      "sold_ts": 1781979654,
+      "category_ids": []
+    },
+    {
+      "id": 112670162,
+      "title": "9k-Mile 2008 Lamborghini Gallardo Spyder 6-Speed",
+      "make": "lamborghini",
+      "model": "gallardo",
+      "year": 2008,
+      "price": 261000,
+      "sold_ts": 1781979315,
+      "category_ids": []
+    },
+    {
+      "id": 115882983,
+      "title": "2002 Toyota Tacoma Limited Double Cab TRD V6 4&#215;4",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2002,
+      "price": 20500,
+      "sold_ts": 1781979302,
+      "category_ids": []
+    },
+    {
+      "id": 115873348,
+      "title": "8k-Mile 2013 Volkswagen Eos Sport",
+      "make": "volkswagen",
+      "model": "eos",
+      "year": 2013,
+      "price": 20250,
+      "sold_ts": 1781979112,
+      "category_ids": []
+    },
+    {
+      "id": 115483403,
+      "title": "2009 Porsche Cayenne Turbo S",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2009,
+      "price": 22250,
+      "sold_ts": 1781979102,
+      "category_ids": []
+    },
+    {
+      "id": 115196023,
+      "title": "2011 Subaru Impreza WRX STi Limited",
+      "make": "subaru",
+      "model": "impreza",
+      "year": 2011,
+      "price": 13000,
+      "sold_ts": 1781978858,
+      "category_ids": []
+    },
+    {
+      "id": 112504183,
+      "title": "2006 BMW 330Ci Convertible",
+      "make": "bmw",
+      "model": "330ci",
+      "year": 2006,
+      "price": 13350,
+      "sold_ts": 1781978504,
+      "category_ids": []
+    },
+    {
+      "id": 115640486,
+      "title": "1960 Mercedes-Benz 190SL Project",
+      "make": "mercedes-benz",
+      "model": "190sl",
+      "year": 1960,
+      "price": 40750,
+      "sold_ts": 1781978414,
+      "category_ids": []
+    },
+    {
+      "id": 114896827,
+      "title": "1994 BMW R100GS PD",
+      "make": "bmw",
+      "model": "r100gs",
+      "year": 1994,
+      "price": 9000,
+      "sold_ts": 1781978390,
+      "category_ids": []
+    },
+    {
+      "id": 115642543,
+      "title": "7k-Mile Supercharged 2006 Ford Mustang Roush Stage 2 Coupe 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2006,
+      "price": 24756,
+      "sold_ts": 1781978382,
+      "category_ids": []
+    },
+    {
+      "id": 115876051,
+      "title": "1963 Chevrolet Corvette Split-Window Coupe L84 327/360 Fuelie 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1963,
+      "price": 242000,
+      "sold_ts": 1781978281,
+      "category_ids": []
+    },
+    {
+      "id": 115964742,
+      "title": "39k-Mile 2009 Porsche 911 Turbo Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2009,
+      "price": 165000,
+      "sold_ts": 1781978160,
+      "category_ids": []
+    },
+    {
+      "id": 106099014,
+      "title": "1999 Chevrolet Tahoe LS 4×4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 1999,
+      "price": 10800,
+      "sold_ts": 1781978131,
+      "category_ids": []
+    },
+    {
+      "id": 116395062,
+      "title": "1965 Chevrolet Corvette Convertible",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1965,
+      "price": 41000,
+      "sold_ts": 1781977995,
+      "category_ids": []
+    },
+    {
+      "id": 116035984,
+      "title": "2001 Ford Excursion XLT V10 4×4",
+      "make": "ford",
+      "model": "excursion",
+      "year": 2001,
+      "price": 11250,
+      "sold_ts": 1781977860,
+      "category_ids": []
+    },
+    {
+      "id": 115675580,
+      "title": "23k-Mile 2006 Dodge Ram 2500 Laramie Quad Cab 4×4 Cummins",
+      "make": "dodge",
+      "model": "ram",
+      "year": 2006,
+      "price": 41000,
+      "sold_ts": 1781977841,
+      "category_ids": []
+    },
+    {
+      "id": 115749314,
+      "title": "2011 Lotus Elise R",
+      "make": "lotus",
+      "model": "elise",
+      "year": 2011,
+      "price": 54000,
+      "sold_ts": 1781977718,
+      "category_ids": []
+    },
+    {
+      "id": 116348263,
+      "title": "1964.5 Ford Mustang Convertible 3-Speed Project",
+      "make": "5",
+      "model": "ford",
+      "year": 1964,
+      "price": 8600,
+      "sold_ts": 1781977650,
+      "category_ids": []
+    },
+    {
+      "id": 115413341,
+      "title": "40-Years-Owned 1981 Lancia Beta Coupe 2000 5-Speed Project",
+      "make": "lancia",
+      "model": "beta",
+      "year": 1981,
+      "price": 2600,
+      "sold_ts": 1781977485,
+      "category_ids": []
+    },
+    {
+      "id": 113778846,
+      "title": "Ex–Bondurant School 1995 Ford Mustang GT Coupe 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1995,
+      "price": 12600,
+      "sold_ts": 1781977405,
+      "category_ids": []
+    },
+    {
+      "id": 115528608,
+      "title": "27k-Mile 2007 BMW 328i Convertible",
+      "make": "bmw",
+      "model": "328i",
+      "year": 2007,
+      "price": 13600,
+      "sold_ts": 1781977253,
+      "category_ids": []
+    },
+    {
+      "id": 110060359,
+      "title": "2006 Porsche 911 Carrera S Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2006,
+      "price": 61000,
+      "sold_ts": 1781977161,
+      "category_ids": []
+    },
+    {
+      "id": 114930820,
+      "title": "1999 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 1999,
+      "price": 19750,
+      "sold_ts": 1781977150,
+      "category_ids": []
+    },
+    {
+      "id": 113798368,
+      "title": "1998 GMC Suburban K2500 SLT 7.4L 4×4",
+      "make": "gmc",
+      "model": "suburban",
+      "year": 1998,
+      "price": 16389,
+      "sold_ts": 1781977080,
+      "category_ids": []
+    },
+    {
+      "id": 115310582,
+      "title": "1989 Mercedes-Benz 560SL",
+      "make": "mercedes-benz",
+      "model": "560sl",
+      "year": 1989,
+      "price": 38500,
+      "sold_ts": 1781977043,
+      "category_ids": []
+    },
+    {
+      "id": 114462570,
+      "title": "1960 Austin-Healey 3000 BT7 Mk I",
+      "make": "austin-healey",
+      "model": "3000",
+      "year": 1960,
+      "price": 37000,
+      "sold_ts": 1781977028,
+      "category_ids": []
+    },
+    {
+      "id": 115705771,
+      "title": "25-Years-Owned 1957 Chevrolet Corvette 3-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1957,
+      "price": 80000,
+      "sold_ts": 1781977026,
+      "category_ids": []
+    },
+    {
+      "id": 114727684,
+      "title": "1984 BMW R65LS",
+      "make": "bmw",
+      "model": "r65ls",
+      "year": 1984,
+      "price": 3500,
+      "sold_ts": 1781976748,
+      "category_ids": []
+    },
+    {
+      "id": 115857601,
+      "title": "48k-Mile 2006 Porsche 911 Carrera 4S Cabriolet 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2006,
+      "price": 70000,
+      "sold_ts": 1781976660,
+      "category_ids": []
+    },
+    {
+      "id": 116000295,
+      "title": "1987 Alfa Romeo Spider Veloce",
+      "make": "alfa-romeo",
+      "model": "spider",
+      "year": 1987,
+      "price": 16750,
+      "sold_ts": 1781976541,
+      "category_ids": []
+    },
+    {
+      "id": 115218177,
+      "title": "LS1-Powered 1980 Pontiac Firebird Trans Am",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1980,
+      "price": 35255,
+      "sold_ts": 1781976528,
+      "category_ids": []
+    },
+    {
+      "id": 115255113,
+      "title": "10k-Mile 2005 Mercedes-Benz E320 CDI",
+      "make": "mercedes-benz",
+      "model": "e320",
+      "year": 2005,
+      "price": 20000,
+      "sold_ts": 1781976182,
+      "category_ids": []
+    },
+    {
+      "id": 115838958,
+      "title": "1988 Honda ZB50",
+      "make": "honda",
+      "model": "zb50",
+      "year": 1988,
+      "price": 3500,
+      "sold_ts": 1781976180,
+      "category_ids": []
+    },
+    {
+      "id": 115354477,
+      "title": "9k-Mile 1988 Ford Mustang GT 5.0 Convertible 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1988,
+      "price": 31750,
+      "sold_ts": 1781976129,
+      "category_ids": []
+    },
+    {
+      "id": 115002022,
+      "title": "1993 Buick Roadmaster Estate Wagon",
+      "make": "buick",
+      "model": "roadmaster",
+      "year": 1993,
+      "price": 17100,
+      "sold_ts": 1781976128,
+      "category_ids": []
+    },
+    {
+      "id": 114792796,
+      "title": "2012 Jeep Wrangler Unlimited Sport 6-Speed",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2012,
+      "price": 14500,
+      "sold_ts": 1781975860,
+      "category_ids": []
+    },
+    {
+      "id": 115021240,
+      "title": "2015 Porsche Cayenne Diesel",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2015,
+      "price": 25888,
+      "sold_ts": 1781975820,
+      "category_ids": []
+    },
+    {
+      "id": 113373751,
+      "title": "1971 Datsun 240Z 4-Speed",
+      "make": "datsun",
+      "model": "240z",
+      "year": 1971,
+      "price": 21000,
+      "sold_ts": 1781975631,
+      "category_ids": []
+    },
+    {
+      "id": 114137355,
+      "title": "11k-Mile 1998 Ferrari 355 F1 Berlinetta",
+      "make": "ferrari",
+      "model": "355",
+      "year": 1998,
+      "price": 255000,
+      "sold_ts": 1781975588,
+      "category_ids": []
+    },
+    {
+      "id": 114781630,
+      "title": "17k-Mile Supercharged 2002 Pontiac Firebird Trans Am WS6 Coupe",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 2002,
+      "price": 41000,
+      "sold_ts": 1781975460,
+      "category_ids": []
+    },
+    {
+      "id": 116076022,
+      "title": "33k-Mile 2007 Maserati Quattroporte Sport GT",
+      "make": "maserati",
+      "model": "quattroporte",
+      "year": 2007,
+      "price": 9900,
+      "sold_ts": 1781975396,
+      "category_ids": []
+    },
+    {
+      "id": 115931690,
+      "title": "24k-Mile 2003 Chevrolet Silverado 2500HD LT Crew Cab 4×4",
+      "make": "chevrolet",
+      "model": "silverado",
+      "year": 2003,
+      "price": 40050,
+      "sold_ts": 1781975160,
+      "category_ids": []
+    },
+    {
+      "id": 116095263,
+      "title": "2004 Audi A4 Cabriolet 1.8T",
+      "make": "audi",
+      "model": "a4",
+      "year": 2004,
+      "price": 8350,
+      "sold_ts": 1781975123,
+      "category_ids": []
+    },
+    {
+      "id": 115644712,
+      "title": "2002 Audi TT Coupe ALMS Commemorative Edition Quattro 6-Speed",
+      "make": "audi",
+      "model": "tt",
+      "year": 2002,
+      "price": 15750,
+      "sold_ts": 1781974999,
+      "category_ids": []
+    },
+    {
+      "id": 113862215,
+      "title": "Original-Owner 1999 Ferrari 550 Maranello",
+      "make": "ferrari",
+      "model": "550",
+      "year": 1999,
+      "price": 507000,
+      "sold_ts": 1781901341,
+      "category_ids": []
+    },
+    {
+      "id": 113907887,
+      "title": "2000 BMW 750iL",
+      "make": "bmw",
+      "model": "750il",
+      "year": 2000,
+      "price": 13253,
+      "sold_ts": 1781900361,
+      "category_ids": []
+    },
+    {
+      "id": 116188993,
+      "title": "1,300-Mile 2018 Audi TT RS",
+      "make": "audi",
+      "model": "tt",
+      "year": 2018,
+      "price": 73343,
+      "sold_ts": 1781900059,
+      "category_ids": []
+    },
+    {
+      "id": 115771912,
+      "title": "27k-Mile 1998 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 1998,
+      "price": 38000,
+      "sold_ts": 1781900031,
+      "category_ids": []
+    },
+    {
+      "id": 115886559,
+      "title": "2003 Toyota Tacoma SR5 Xtracab TRD V6 4&#215;4",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2003,
+      "price": 14250,
+      "sold_ts": 1781899910,
+      "category_ids": []
+    },
+    {
+      "id": 115889664,
+      "title": "1967 Chevrolet Corvette Convertible L79 327/350 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1967,
+      "price": 77000,
+      "sold_ts": 1781899875,
+      "category_ids": []
+    },
+    {
+      "id": 114966981,
+      "title": "2024 Harley-Davidson Road Glide",
+      "make": "harley-davidson",
+      "model": "road",
+      "year": 2024,
+      "price": 28382,
+      "sold_ts": 1781899853,
+      "category_ids": []
+    },
+    {
+      "id": 116386641,
+      "title": "2016 Land Rover Range Rover SVAutobiography LWB",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2016,
+      "price": 30750,
+      "sold_ts": 1781899815,
+      "category_ids": []
+    },
+    {
+      "id": 115658140,
+      "title": "One-Owner, Twin-Turbocharged 2005 Dodge Viper SRT-10 Hennessey Venom 1000 Roadster",
+      "make": "dodge",
+      "model": "viper",
+      "year": 2005,
+      "price": 105000,
+      "sold_ts": 1781899783,
+      "category_ids": []
+    },
+    {
+      "id": 116311442,
+      "title": "23k-Mile 2015 Porsche Boxster",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2015,
+      "price": 35500,
+      "sold_ts": 1781899688,
+      "category_ids": []
+    },
+    {
+      "id": 115563789,
+      "title": "2016 Porsche Cayenne Diesel",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2016,
+      "price": 23300,
+      "sold_ts": 1781899621,
+      "category_ids": []
+    },
+    {
+      "id": 114248300,
+      "title": "Supercharged 2024 Jeep Wrangler Rubicon 392 Four-Door",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2024,
+      "price": 89343,
+      "sold_ts": 1781899618,
+      "category_ids": []
+    },
+    {
+      "id": 115872127,
+      "title": "1991 Chevrolet Corvette Convertible 6-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1991,
+      "price": 9900,
+      "sold_ts": 1781899560,
+      "category_ids": []
+    },
+    {
+      "id": 115383850,
+      "title": "2011 BMW Z4 sDrive35i M Sport 6-Speed",
+      "make": "bmw",
+      "model": "z4",
+      "year": 2011,
+      "price": 25250,
+      "sold_ts": 1781899501,
+      "category_ids": []
+    },
+    {
+      "id": 114672669,
+      "title": "2005 BMW M3 Convertible",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2005,
+      "price": 32500,
+      "sold_ts": 1781899434,
+      "category_ids": []
+    },
+    {
+      "id": 115645089,
+      "title": "2000 Ford Excursion Limited Power Stroke 4×4",
+      "make": "ford",
+      "model": "excursion",
+      "year": 2000,
+      "price": 35500,
+      "sold_ts": 1781899409,
+      "category_ids": []
+    },
+    {
+      "id": 116094379,
+      "title": "2000 Ferrari 360 Modena 6-Speed",
+      "make": "ferrari",
+      "model": "360",
+      "year": 2000,
+      "price": 135000,
+      "sold_ts": 1781899377,
+      "category_ids": []
+    },
+    {
+      "id": 115578159,
+      "title": "One-Owner 2000 Land Rover Discovery II SE7",
+      "make": "land-rover",
+      "model": "discovery",
+      "year": 2000,
+      "price": 5200,
+      "sold_ts": 1781899329,
+      "category_ids": []
+    },
+    {
+      "id": 114987990,
+      "title": "1980 Fiat Spider 2000",
+      "make": "fiat",
+      "model": "spider",
+      "year": 1980,
+      "price": 9100,
+      "sold_ts": 1781899221,
+      "category_ids": []
+    },
+    {
+      "id": 115583436,
+      "title": "2002 Toyota 4Runner SR5 Sport Edition 4WD",
+      "make": "toyota",
+      "model": "4runner",
+      "year": 2002,
+      "price": 16700,
+      "sold_ts": 1781899133,
+      "category_ids": []
+    },
+    {
+      "id": 114848018,
+      "title": "Single-Family-Owned 1988 Mercedes-Benz 560SL",
+      "make": "mercedes-benz",
+      "model": "560sl",
+      "year": 1988,
+      "price": 21000,
+      "sold_ts": 1781898847,
+      "category_ids": []
+    },
+    {
+      "id": 115682535,
+      "title": "10k-Mile 2009 Cadillac XLR Platinum",
+      "make": "cadillac",
+      "model": "xlr",
+      "year": 2009,
+      "price": 36000,
+      "sold_ts": 1781898814,
+      "category_ids": []
+    },
+    {
+      "id": 115367419,
+      "title": "2007 Toyota Land Cruiser UZJ100",
+      "make": "toyota",
+      "model": "land",
+      "year": 2007,
+      "price": 21750,
+      "sold_ts": 1781898666,
+      "category_ids": []
+    },
+    {
+      "id": 98639523,
+      "title": "24k-Mile 2015 Jeep Wrangler Unlimited Rubicon AEV Filson Edition 6.4L",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2015,
+      "price": 43500,
+      "sold_ts": 1781898602,
+      "category_ids": []
+    },
+    {
+      "id": 113805549,
+      "title": "1950 Willys-Overland Jeepster",
+      "make": "willys-overland",
+      "model": "jeepster",
+      "year": 1950,
+      "price": 8500,
+      "sold_ts": 1781898459,
+      "category_ids": []
+    },
+    {
+      "id": 114810075,
+      "title": "26-Years-Owned 1971 Jensen Interceptor Mk II",
+      "make": "jensen",
+      "model": "interceptor",
+      "year": 1971,
+      "price": 28000,
+      "sold_ts": 1781898435,
+      "category_ids": []
+    },
+    {
+      "id": 115985159,
+      "title": "2016 Mercedes-Benz GL450 4MATIC",
+      "make": "mercedes-benz",
+      "model": "gl450",
+      "year": 2016,
+      "price": 14000,
+      "sold_ts": 1781898412,
+      "category_ids": []
+    },
+    {
+      "id": 115659674,
+      "title": "1966 Triumph TR4A IRS 5-Speed",
+      "make": "triumph",
+      "model": "tr4a",
+      "year": 1966,
+      "price": 40500,
+      "sold_ts": 1781898275,
+      "category_ids": []
+    },
+    {
+      "id": 115804296,
+      "title": "3,600-Mile 2001 Acura CL Type-S",
+      "make": "acura",
+      "model": "cl",
+      "year": 2001,
+      "price": 24444,
+      "sold_ts": 1781898222,
+      "category_ids": []
+    },
+    {
+      "id": 114855166,
+      "title": "2005 Porsche Boxster 5-Speed",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2005,
+      "price": 13000,
+      "sold_ts": 1781898189,
+      "category_ids": []
+    },
+    {
+      "id": 114842322,
+      "title": "Original-Owner 2019 Winnebago Revel 4&#215;4",
+      "make": "winnebago",
+      "model": "revel",
+      "year": 2019,
+      "price": 80000,
+      "sold_ts": 1781898180,
+      "category_ids": []
+    },
+    {
+      "id": 116304922,
+      "title": "1,900-Mile 2009 Pontiac Solstice GXP Coupe",
+      "make": "pontiac",
+      "model": "solstice",
+      "year": 2009,
+      "price": 29500,
+      "sold_ts": 1781898138,
+      "category_ids": []
+    },
+    {
+      "id": 115985450,
+      "title": "2010 Audi A4 2.0T 6-Speed",
+      "make": "audi",
+      "model": "a4",
+      "year": 2010,
+      "price": 7701,
+      "sold_ts": 1781898070,
+      "category_ids": []
+    },
+    {
+      "id": 115822647,
+      "title": "1972 Jaguar E-Type Series III 2+2 V12 4-Speed",
+      "make": "jaguar",
+      "model": "e-type",
+      "year": 1972,
+      "price": 26000,
+      "sold_ts": 1781898005,
+      "category_ids": []
+    },
+    {
+      "id": 116074047,
+      "title": "23k-Mile 2004 Pontiac GTO",
+      "make": "pontiac",
+      "model": "gto",
+      "year": 2004,
+      "price": 14750,
+      "sold_ts": 1781897883,
+      "category_ids": []
+    },
+    {
+      "id": 115237551,
+      "title": "1972 Ford LTD Convertible 400",
+      "make": "ford",
+      "model": "ltd",
+      "year": 1972,
+      "price": 14050,
+      "sold_ts": 1781897273,
+      "category_ids": []
+    },
+    {
+      "id": 115649815,
+      "title": "2002 Lexus SC430",
+      "make": "lexus",
+      "model": "sc430",
+      "year": 2002,
+      "price": 8000,
+      "sold_ts": 1781897271,
+      "category_ids": []
+    },
+    {
+      "id": 105532093,
+      "title": "1979 Pontiac Firebird Trans Am 10th Anniversary Edition 4-Speed",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1979,
+      "price": 36100,
+      "sold_ts": 1781897244,
+      "category_ids": []
+    },
+    {
+      "id": 108872027,
+      "title": "1973 Citroen SM 3.0L 5-Speed",
+      "make": "citroen",
+      "model": "sm",
+      "year": 1973,
+      "price": 35000,
+      "sold_ts": 1781897207,
+      "category_ids": []
+    },
+    {
+      "id": 115641451,
+      "title": "2011 BMW 335i Coupe",
+      "make": "bmw",
+      "model": "335i",
+      "year": 2011,
+      "price": 7200,
+      "sold_ts": 1781897189,
+      "category_ids": []
+    },
+    {
+      "id": 115640902,
+      "title": "21k-Mile 2016 Chevrolet Corvette Z06 Coupe 3LZ",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2016,
+      "price": 66500,
+      "sold_ts": 1781897092,
+      "category_ids": []
+    },
+    {
+      "id": 115775945,
+      "title": "6k-Mile 2021 BMW M760i xDrive",
+      "make": "bmw",
+      "model": "m760i",
+      "year": 2021,
+      "price": 91000,
+      "sold_ts": 1781897086,
+      "category_ids": []
+    },
+    {
+      "id": 116154682,
+      "title": "6k-Mile 2005 Cadillac CTS-V",
+      "make": "cadillac",
+      "model": "cts-v",
+      "year": 2005,
+      "price": 28000,
+      "sold_ts": 1781897016,
+      "category_ids": []
+    },
+    {
+      "id": 115985597,
+      "title": "2008 Porsche Cayenne",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2008,
+      "price": 13750,
+      "sold_ts": 1781896637,
+      "category_ids": []
+    },
+    {
+      "id": 115027676,
+      "title": "1998 Harley-Davidson Softail Custom Bobber",
+      "make": "harley-davidson",
+      "model": "softail",
+      "year": 1998,
+      "price": 5000,
+      "sold_ts": 1781896620,
+      "category_ids": []
+    },
+    {
+      "id": 113856221,
+      "title": "2004 Mini Cooper S",
+      "make": "mini",
+      "model": "cooper",
+      "year": 2004,
+      "price": 6600,
+      "sold_ts": 1781896477,
+      "category_ids": []
+    },
+    {
+      "id": 115952879,
+      "title": "2015 Toyota Tundra 1794 Edition CrewMax 4&#215;4",
+      "make": "toyota",
+      "model": "tundra",
+      "year": 2015,
+      "price": 34500,
+      "sold_ts": 1781896402,
+      "category_ids": []
+    },
+    {
+      "id": 115955543,
+      "title": "Original-Owner 2009 Hummer H3 Alpha",
+      "make": "hummer",
+      "model": "h3",
+      "year": 2009,
+      "price": 8500,
+      "sold_ts": 1781896268,
+      "category_ids": []
+    },
+    {
+      "id": 115807303,
+      "title": "2021 Aston Martin DBX",
+      "make": "aston-martin",
+      "model": "dbx",
+      "year": 2021,
+      "price": 70000,
+      "sold_ts": 1781896200,
+      "category_ids": []
+    },
+    {
+      "id": 116272336,
+      "title": "1988 BMW M3",
+      "make": "bmw",
+      "model": "m3",
+      "year": 1988,
+      "price": 83000,
+      "sold_ts": 1781896148,
+      "category_ids": []
+    },
+    {
+      "id": 114542511,
+      "title": "Fuel-Injected 1975 Triumph TR6 5-Speed",
+      "make": "triumph",
+      "model": "tr6",
+      "year": 1975,
+      "price": 55000,
+      "sold_ts": 1781896094,
+      "category_ids": []
+    },
+    {
+      "id": 115596841,
+      "title": "3,600-Mile 2007 Saturn Sky Red Line",
+      "make": "saturn",
+      "model": "sky",
+      "year": 2007,
+      "price": 19500,
+      "sold_ts": 1781896045,
+      "category_ids": []
+    },
+    {
+      "id": 115769745,
+      "title": "1988 BMW R100GS",
+      "make": "bmw",
+      "model": "r100gs",
+      "year": 1988,
+      "price": 8000,
+      "sold_ts": 1781895936,
+      "category_ids": []
+    },
+    {
+      "id": 91552824,
+      "title": "49k-Mile 2002 Mercedes-Benz SL500 Silver Arrow",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 2002,
+      "price": 38350,
+      "sold_ts": 1781895892,
+      "category_ids": []
+    },
+    {
+      "id": 114722689,
+      "title": "2023 Can-Am Defender Max Lone Star",
+      "make": "can-am",
+      "model": "defender",
+      "year": 2023,
+      "price": 16800,
+      "sold_ts": 1781895840,
+      "category_ids": []
+    },
+    {
+      "id": 115980432,
+      "title": "Six-Decades-Family-Owned 1955 Jaguar XK140 MC Roadster 5-Speed",
+      "make": "jaguar",
+      "model": "xk140",
+      "year": 1955,
+      "price": 76000,
+      "sold_ts": 1781895829,
+      "category_ids": []
+    },
+    {
+      "id": 116012715,
+      "title": "1973 Triumph Bonneville T140V",
+      "make": "triumph",
+      "model": "bonneville",
+      "year": 1973,
+      "price": 2150,
+      "sold_ts": 1781895720,
+      "category_ids": []
+    },
+    {
+      "id": 115541190,
+      "title": "40k-Mile 2008 Ford Mustang Bullitt",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2008,
+      "price": 27777,
+      "sold_ts": 1781895644,
+      "category_ids": []
+    },
+    {
+      "id": 114880895,
+      "title": "1979 Volkswagen Type 2 Westfalia",
+      "make": "volkswagen",
+      "model": "type",
+      "year": 1979,
+      "price": 8100,
+      "sold_ts": 1781895627,
+      "category_ids": []
+    },
+    {
+      "id": 116108474,
+      "title": "1973 DeTomaso Pantera",
+      "make": "detomaso",
+      "model": "pantera",
+      "year": 1973,
+      "price": 111000,
+      "sold_ts": 1781895622,
+      "category_ids": []
+    },
+    {
+      "id": 114940295,
+      "title": "52-Years-Family-Owned 1955 Buick Century Riviera 4-Door Hardtop",
+      "make": "buick",
+      "model": "century",
+      "year": 1955,
+      "price": 7200,
+      "sold_ts": 1781895540,
+      "category_ids": []
+    },
+    {
+      "id": 112663107,
+      "title": "1966 Chevrolet Corvette Convertible L79 327/350 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1966,
+      "price": 64000,
+      "sold_ts": 1781895527,
+      "category_ids": []
+    },
+    {
+      "id": 115776418,
+      "title": "2026 Chevrolet Corvette Stingray Coupe 3LT Z51",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2026,
+      "price": 75000,
+      "sold_ts": 1781895483,
+      "category_ids": []
+    },
+    {
+      "id": 115819667,
+      "title": "15k-Mile 1995 Chevrolet Corvette Convertible",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1995,
+      "price": 14850,
+      "sold_ts": 1781895300,
+      "category_ids": []
+    },
+    {
+      "id": 115897149,
+      "title": "1947 Plymouth P15 Special Deluxe 4-Door Sedan",
+      "make": "plymouth",
+      "model": "p15",
+      "year": 1947,
+      "price": 3400,
+      "sold_ts": 1781894959,
+      "category_ids": []
+    },
+    {
+      "id": 116188588,
+      "title": "37k-Mile 2002 Porsche Boxster S 6-Speed",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2002,
+      "price": 28250,
+      "sold_ts": 1781894920,
+      "category_ids": []
+    },
+    {
+      "id": 115278774,
+      "title": "1998 Freightliner FL60 Sport Chassis",
+      "make": "freightliner",
+      "model": "fl60",
+      "year": 1998,
+      "price": 22541,
+      "sold_ts": 1781894894,
+      "category_ids": []
+    },
+    {
+      "id": 115563700,
+      "title": "16k-Mile 1992 Lexus LS400",
+      "make": "lexus",
+      "model": "ls400",
+      "year": 1992,
+      "price": 19625,
+      "sold_ts": 1781894820,
+      "category_ids": []
+    },
+    {
+      "id": 116356661,
+      "title": "46-Years-Family-Owned 1965 Lotus Elan S2 Project",
+      "make": "lotus",
+      "model": "elan",
+      "year": 1965,
+      "price": 17250,
+      "sold_ts": 1781894814,
+      "category_ids": []
+    },
+    {
+      "id": 113251616,
+      "title": "1971 Volvo 1800E",
+      "make": "volvo",
+      "model": "1800e",
+      "year": 1971,
+      "price": 10250,
+      "sold_ts": 1781894678,
+      "category_ids": []
+    },
+    {
+      "id": 115703548,
+      "title": "2001 Mercedes-Benz CL500",
+      "make": "mercedes-benz",
+      "model": "cl500",
+      "year": 2001,
+      "price": 11250,
+      "sold_ts": 1781894483,
+      "category_ids": []
+    },
+    {
+      "id": 116119062,
+      "title": "292-Mile 2008 Benelli Tre-K 1130 Amazonas",
+      "make": "benelli",
+      "model": "tre-k",
+      "year": 2008,
+      "price": 7000,
+      "sold_ts": 1781894460,
+      "category_ids": []
+    },
+    {
+      "id": 115643114,
+      "title": "2010 Mini Cooper 6-Speed",
+      "make": "mini",
+      "model": "cooper",
+      "year": 2010,
+      "price": 3600,
+      "sold_ts": 1781894448,
+      "category_ids": []
+    },
+    {
+      "id": 114812660,
+      "title": "14k-Mile Modified 2009 Lotus Elise",
+      "make": "lotus",
+      "model": "elise",
+      "year": 2009,
+      "price": 45750,
+      "sold_ts": 1781894388,
+      "category_ids": []
+    },
+    {
+      "id": 110286471,
+      "title": "41-Years-Owned Modified 1980 Lambretta Jet 200",
+      "make": "lambretta",
+      "model": "jet",
+      "year": 1980,
+      "price": 7500,
+      "sold_ts": 1781894365,
+      "category_ids": []
+    },
+    {
+      "id": 116041990,
+      "title": "2005 Chevrolet Silverado 2500HD LS Extended Cab Duramax 4×4",
+      "make": "chevrolet",
+      "model": "silverado",
+      "year": 2005,
+      "price": 19750,
+      "sold_ts": 1781894357,
+      "category_ids": []
+    },
+    {
+      "id": 112615368,
+      "title": "Euro 1978 Mercedes-Benz 280SLC 4-Speed",
+      "make": "mercedes-benz",
+      "model": "280slc",
+      "year": 1978,
+      "price": 8800,
+      "sold_ts": 1781894280,
+      "category_ids": []
+    },
+    {
+      "id": 115584187,
+      "title": "2006 Ferrari 612 Scaglietti",
+      "make": "ferrari",
+      "model": "612",
+      "year": 2006,
+      "price": 87000,
+      "sold_ts": 1781894235,
+      "category_ids": []
+    },
+    {
+      "id": 113608011,
+      "title": "2018 BMW R nineT Racer",
+      "make": "bmw",
+      "model": "r",
+      "year": 2018,
+      "price": 8828,
+      "sold_ts": 1781894109,
+      "category_ids": []
+    },
+    {
+      "id": 114148230,
+      "title": "2006 Porsche 911 Carrera 4S Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2006,
+      "price": 49000,
+      "sold_ts": 1781894052,
+      "category_ids": []
+    },
+    {
+      "id": 116212268,
+      "title": "32-Years-Owned 1985 Excalibur Phaeton Series V",
+      "make": "excalibur",
+      "model": "phaeton",
+      "year": 1985,
+      "price": 48500,
+      "sold_ts": 1781894019,
+      "category_ids": []
+    },
+    {
+      "id": 116355569,
+      "title": "2012 Scion iQ",
+      "make": "scion",
+      "model": "iq",
+      "year": 2012,
+      "price": 5000,
+      "sold_ts": 1781893921,
+      "category_ids": []
+    },
+    {
+      "id": 115391514,
+      "title": "33-Years-Owned 1979 Volkswagen Super Beetle Convertible",
+      "make": "volkswagen",
+      "model": "super",
+      "year": 1979,
+      "price": 42750,
+      "sold_ts": 1781893894,
+      "category_ids": []
+    },
+    {
+      "id": 115003417,
+      "title": "39k-Mile 1990 Volvo 240 DL Sedan",
+      "make": "volvo",
+      "model": "240",
+      "year": 1990,
+      "price": 12250,
+      "sold_ts": 1781893850,
+      "category_ids": []
+    },
+    {
+      "id": 114393886,
+      "title": "1957 Mercedes-Benz 190SL",
+      "make": "mercedes-benz",
+      "model": "190sl",
+      "year": 1957,
+      "price": 207000,
+      "sold_ts": 1781893768,
+      "category_ids": []
+    },
+    {
+      "id": 115717535,
+      "title": "32k-Mile 2007 BMW M5 6-Speed",
+      "make": "bmw",
+      "model": "m5",
+      "year": 2007,
+      "price": 69699,
+      "sold_ts": 1781893752,
+      "category_ids": []
+    },
+    {
+      "id": 114801015,
+      "title": "26-Years-Owned 1963 Chevrolet Corvette Convertible L84 327/360 Fuelie 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1963,
+      "price": 78500,
+      "sold_ts": 1781893735,
+      "category_ids": []
+    },
+    {
+      "id": 115593452,
+      "title": "1998 Peterbilt 379 Ultracab",
+      "make": "peterbilt",
+      "model": "379",
+      "year": 1998,
+      "price": 47000,
+      "sold_ts": 1781893648,
+      "category_ids": []
+    },
+    {
+      "id": 115899289,
+      "title": "45k-Mile 2005 Mercury Grand Marquis LS Premium",
+      "make": "mercury",
+      "model": "grand",
+      "year": 2005,
+      "price": 7050,
+      "sold_ts": 1781893608,
+      "category_ids": []
+    },
+    {
+      "id": 115058366,
+      "title": "13k-Mile 2013 Maserati GranTurismo Convertible",
+      "make": "maserati",
+      "model": "granturismo",
+      "year": 2013,
+      "price": 32500,
+      "sold_ts": 1781893597,
+      "category_ids": []
+    },
+    {
+      "id": 115521998,
+      "title": "Single-Family-Owned 1985 Cadillac Eldorado Coupe",
+      "make": "cadillac",
+      "model": "eldorado",
+      "year": 1985,
+      "price": 7027,
+      "sold_ts": 1781893548,
+      "category_ids": []
+    },
+    {
+      "id": 106323909,
+      "title": "10k-Mile 2001 Chrysler Prowler Mulholland Edition",
+      "make": "chrysler",
+      "model": "prowler",
+      "year": 2001,
+      "price": 28250,
+      "sold_ts": 1781893535,
+      "category_ids": []
+    },
+    {
+      "id": 115076586,
+      "title": "390-Mile 2023 Chevrolet Corvette Stingray Convertible 3LT Z51",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2023,
+      "price": 74000,
+      "sold_ts": 1781893503,
+      "category_ids": []
+    },
+    {
+      "id": 115874941,
+      "title": "1999 Toyota Epic S22",
+      "make": "toyota",
+      "model": "epic",
+      "year": 1999,
+      "price": 20500,
+      "sold_ts": 1781893447,
+      "category_ids": []
+    },
+    {
+      "id": 115776817,
+      "title": "Individual Urban Green 2025 BMW M3 6-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2025,
+      "price": 88000,
+      "sold_ts": 1781893383,
+      "category_ids": []
+    },
+    {
+      "id": 115507021,
+      "title": "2004 Audi S4",
+      "make": "audi",
+      "model": "s4",
+      "year": 2004,
+      "price": 6800,
+      "sold_ts": 1781893344,
+      "category_ids": []
+    },
+    {
+      "id": 115734083,
+      "title": "38k-Mile 2014 Porsche Cayman S 6-Speed",
+      "make": "porsche",
+      "model": "cayman",
+      "year": 2014,
+      "price": 49000,
+      "sold_ts": 1781893290,
+      "category_ids": []
+    },
+    {
+      "id": 116174200,
+      "title": "428-Powered 1968 Mercury Cougar XR-7 4-Speed",
+      "make": "mercury",
+      "model": "cougar",
+      "year": 1968,
+      "price": 58000,
+      "sold_ts": 1781893154,
+      "category_ids": []
+    },
+    {
+      "id": 115988631,
+      "title": "44k-Mile 2002 Chevrolet Avalanche 1500 Z71 4×4",
+      "make": "chevrolet",
+      "model": "avalanche",
+      "year": 2002,
+      "price": 21000,
+      "sold_ts": 1781892923,
+      "category_ids": []
+    },
+    {
+      "id": 116056399,
+      "title": "37k-Mile 2014 Mercedes-Benz S550 Sedan",
+      "make": "mercedes-benz",
+      "model": "s550",
+      "year": 2014,
+      "price": 34000,
+      "sold_ts": 1781892856,
+      "category_ids": []
+    },
+    {
+      "id": 109428567,
+      "title": "2024 Porsche 911 Targa 4 GTS 7-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2024,
+      "price": 212000,
+      "sold_ts": 1781892798,
+      "category_ids": []
+    },
+    {
+      "id": 115749910,
+      "title": "43-Years-Owned 1973 Yamaha MX250",
+      "make": "yamaha",
+      "model": "mx250",
+      "year": 1973,
+      "price": 4300,
+      "sold_ts": 1781892737,
+      "category_ids": []
+    },
+    {
+      "id": 115307434,
+      "title": "2010 Tesla Roadster Sport 2.0",
+      "make": "tesla",
+      "model": "roadster",
+      "year": 2010,
+      "price": 44000,
+      "sold_ts": 1781892720,
+      "category_ids": []
+    },
+    {
+      "id": 113763124,
+      "title": "1,900-Mile 1999 Pontiac Firebird Trans Am 30th Anniversary Edition Coupe WS6 6-Speed",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1999,
+      "price": 56000,
+      "sold_ts": 1781892668,
+      "category_ids": []
+    },
+    {
+      "id": 114171787,
+      "title": "40k-Mile 2007 Bentley Continental GTC",
+      "make": "bentley",
+      "model": "continental",
+      "year": 2007,
+      "price": 39500,
+      "sold_ts": 1781892613,
+      "category_ids": []
+    },
+    {
+      "id": 113793620,
+      "title": "One-Family-Owned 2008 Lexus GX470",
+      "make": "lexus",
+      "model": "gx470",
+      "year": 2008,
+      "price": 29750,
+      "sold_ts": 1781892427,
+      "category_ids": []
+    },
+    {
+      "id": 114128380,
+      "title": "40-Years-Family-Owned 1984 Mercedes-Benz 380SL",
+      "make": "mercedes-benz",
+      "model": "380sl",
+      "year": 1984,
+      "price": 14000,
+      "sold_ts": 1781892313,
+      "category_ids": []
+    },
+    {
+      "id": 115266285,
+      "title": "25k-Mile 1999 Lincoln Town Car Cartier",
+      "make": "lincoln",
+      "model": "town",
+      "year": 1999,
+      "price": 12500,
+      "sold_ts": 1781892100,
+      "category_ids": []
+    },
+    {
+      "id": 115370181,
+      "title": "Supercharged LT1-Powered 1949 Oldsmobile Futuramic Series 76 2-Door Club Coupe",
+      "make": "oldsmobile",
+      "model": "futuramic",
+      "year": 1949,
+      "price": 46250,
+      "sold_ts": 1781892075,
+      "category_ids": []
+    },
+    {
+      "id": 115956034,
+      "title": "Euro 1986 Ferrari 328 GTS",
+      "make": "ferrari",
+      "model": "328",
+      "year": 1986,
+      "price": 111500,
+      "sold_ts": 1781891996,
+      "category_ids": []
+    },
+    {
+      "id": 111085037,
+      "title": "1964 Volkswagen Type 2 Bus 21-Window Conversion",
+      "make": "volkswagen",
+      "model": "type",
+      "year": 1964,
+      "price": 52000,
+      "sold_ts": 1781891967,
+      "category_ids": []
+    },
+    {
+      "id": 115075086,
+      "title": "55-Years-Family-Owned 1970 Porsche 914",
+      "make": "porsche",
+      "model": "914",
+      "year": 1970,
+      "price": 14500,
+      "sold_ts": 1781891940,
+      "category_ids": []
+    },
+    {
+      "id": 114297688,
+      "title": "1965 Chevrolet Corvette Convertible 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1965,
+      "price": 145000,
+      "sold_ts": 1781891776,
+      "category_ids": []
+    },
+    {
+      "id": 115710423,
+      "title": "41k-Mile 1995 Mercedes-Benz E320 Cabriolet",
+      "make": "mercedes-benz",
+      "model": "e320",
+      "year": 1995,
+      "price": 18600,
+      "sold_ts": 1781891620,
+      "category_ids": []
+    },
+    {
+      "id": 115938077,
+      "title": "1997 Ford F-250 HD XL Crew Cab Power Stroke 4×4",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1997,
+      "price": 33000,
+      "sold_ts": 1781891579,
+      "category_ids": []
+    },
+    {
+      "id": 113780638,
+      "title": "2006 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 2006,
+      "price": 14000,
+      "sold_ts": 1781891431,
+      "category_ids": []
+    },
+    {
+      "id": 115600148,
+      "title": "32k-Mile 2001 Dodge Ram 1500 SLT Quad Cab 4×4",
+      "make": "dodge",
+      "model": "ram",
+      "year": 2001,
+      "price": 16250,
+      "sold_ts": 1781891400,
+      "category_ids": []
+    },
+    {
+      "id": 115716599,
+      "title": "2001 Chevrolet Tahoe LT 4×4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 2001,
+      "price": 7100,
+      "sold_ts": 1781891328,
+      "category_ids": []
+    },
+    {
+      "id": 87457091,
+      "title": "1964 Studebaker Avanti R1",
+      "make": "studebaker",
+      "model": "avanti",
+      "year": 1964,
+      "price": 14252,
+      "sold_ts": 1781891304,
+      "category_ids": []
+    },
+    {
+      "id": 113153772,
+      "title": "25k-Mile 2003 Porsche 911 Carrera Cabriolet 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2003,
+      "price": 35996,
+      "sold_ts": 1781891164,
+      "category_ids": []
+    },
+    {
+      "id": 114911352,
+      "title": "1963 Maserati Sebring Series I Project",
+      "make": "maserati",
+      "model": "sebring",
+      "year": 1963,
+      "price": 56750,
+      "sold_ts": 1781890855,
+      "category_ids": []
+    },
+    {
+      "id": 116029687,
+      "title": "2001 Ford F-250 Super Duty Lariat SuperCab Power Stroke 4×4",
+      "make": "ford",
+      "model": "f-250",
+      "year": 2001,
+      "price": 28500,
+      "sold_ts": 1781890702,
+      "category_ids": []
+    },
+    {
+      "id": 115653034,
+      "title": "2006 Jeep Wrangler Unlimited 6-Speed",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2006,
+      "price": 11000,
+      "sold_ts": 1781890627,
+      "category_ids": []
+    },
+    {
+      "id": 115522207,
+      "title": "2011 Toyota Tacoma TRD Off-Road Access Cab V6 4×4",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2011,
+      "price": 17500,
+      "sold_ts": 1781890583,
+      "category_ids": []
+    },
+    {
+      "id": 115737093,
+      "title": "1988 Alfa Romeo Spider Graduate",
+      "make": "alfa-romeo",
+      "model": "spider",
+      "year": 1988,
+      "price": 8500,
+      "sold_ts": 1781890570,
+      "category_ids": []
+    },
+    {
+      "id": 115872090,
+      "title": "12k-Mile 2012 Mercedes-Benz SLS AMG Roadster",
+      "make": "mercedes-benz",
+      "model": "sls",
+      "year": 2012,
+      "price": 149000,
+      "sold_ts": 1781890402,
+      "category_ids": []
+    },
+    {
+      "id": 114926240,
+      "title": "LS1-Powered 1963 Chevrolet Bel Air 2-Door Sedan",
+      "make": "chevrolet",
+      "model": "bel",
+      "year": 1963,
+      "price": 17900,
+      "sold_ts": 1781890335,
+      "category_ids": []
+    },
+    {
+      "id": 115407383,
+      "title": "1993 Porsche 928 GTS",
+      "make": "porsche",
+      "model": "928",
+      "year": 1993,
+      "price": 44500,
+      "sold_ts": 1781890301,
+      "category_ids": []
+    },
+    {
+      "id": 115990856,
+      "title": "1999 Volkswagen EuroVan Winnebago Camper",
+      "make": "volkswagen",
+      "model": "eurovan",
+      "year": 1999,
+      "price": 20000,
+      "sold_ts": 1781890260,
+      "category_ids": []
+    },
+    {
+      "id": 116181563,
+      "title": "42k-Mile 2016 BMW M3 Competition Package",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2016,
+      "price": 51000,
+      "sold_ts": 1781890186,
+      "category_ids": []
+    },
+    {
+      "id": 115945037,
+      "title": "1973 BMW 2002 4-Speed",
+      "make": "bmw",
+      "model": "2002",
+      "year": 1973,
+      "price": 10500,
+      "sold_ts": 1781890134,
+      "category_ids": []
+    },
+    {
+      "id": 110885578,
+      "title": "2,300-Mile 2018 Dodge Challenger SRT Demon",
+      "make": "dodge",
+      "model": "challenger",
+      "year": 2018,
+      "price": 93500,
+      "sold_ts": 1781889822,
+      "category_ids": []
+    },
+    {
+      "id": 116004497,
+      "title": "46-Mile 2024 Porsche 911 Dakar Rallye Design",
+      "make": "porsche",
+      "model": "911",
+      "year": 2024,
+      "price": 400000,
+      "sold_ts": 1781889300,
+      "category_ids": []
+    },
+    {
+      "id": 115081955,
+      "title": "291-Mile 2016 Porsche 911 R",
+      "make": "porsche",
+      "model": "911",
+      "year": 2016,
+      "price": 799120,
+      "sold_ts": 1781889000,
+      "category_ids": []
+    },
+    {
+      "id": 113084398,
+      "title": "2005 Mercedes-Benz G55 AMG",
+      "make": "mercedes-benz",
+      "model": "g55",
+      "year": 2005,
+      "price": 85500,
+      "sold_ts": 1781815009,
+      "category_ids": []
+    },
+    {
+      "id": 116155777,
+      "title": "12k-Mile 2022 Porsche 911 Targa 4",
+      "make": "porsche",
+      "model": "911",
+      "year": 2022,
+      "price": 160000,
+      "sold_ts": 1781814795,
+      "category_ids": []
+    },
+    {
+      "id": 115776029,
+      "title": "19k-Mile 2006 Maserati GranSport Coupe Limited Edition",
+      "make": "maserati",
+      "model": "gransport",
+      "year": 2006,
+      "price": 24588,
+      "sold_ts": 1781814496,
+      "category_ids": []
+    },
+    {
+      "id": 115796952,
+      "title": "1980 Oldsmobile Delta 88 Holiday Coupe",
+      "make": "oldsmobile",
+      "model": "delta",
+      "year": 1980,
+      "price": 12000,
+      "sold_ts": 1781814420,
+      "category_ids": []
+    },
+    {
+      "id": 116102097,
+      "title": "1981 Honda CT110",
+      "make": "honda",
+      "model": "ct110",
+      "year": 1981,
+      "price": 4100,
+      "sold_ts": 1781814360,
+      "category_ids": []
+    },
+    {
+      "id": 115932526,
+      "title": "9k-Mile 2008 BMW 335i Convertible Sport",
+      "make": "bmw",
+      "model": "335i",
+      "year": 2008,
+      "price": 26000,
+      "sold_ts": 1781814261,
+      "category_ids": []
+    },
+    {
+      "id": 115542374,
+      "title": "2002 Porsche 911 Carrera 4 Cabriolet 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2002,
+      "price": 35250,
+      "sold_ts": 1781814163,
+      "category_ids": []
+    },
+    {
+      "id": 114672735,
+      "title": "19k-Mile 2004 Honda S2000",
+      "make": "honda",
+      "model": "s2000",
+      "year": 2004,
+      "price": 31751,
+      "sold_ts": 1781814008,
+      "category_ids": []
+    },
+    {
+      "id": 116106250,
+      "title": "1945 Oliver Row-Crop 60",
+      "make": "oliver",
+      "model": "row-crop",
+      "year": 1945,
+      "price": 12500,
+      "sold_ts": 1781813882,
+      "category_ids": []
+    },
+    {
+      "id": 115625890,
+      "title": "844-Mile 2013 McLaren 12C Spider",
+      "make": "mclaren",
+      "model": "12c",
+      "year": 2013,
+      "price": 138000,
+      "sold_ts": 1781813849,
+      "category_ids": []
+    },
+    {
+      "id": 115334220,
+      "title": "1971 Chevrolet Corvette Convertible LT-1 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1971,
+      "price": 72750,
+      "sold_ts": 1781813741,
+      "category_ids": []
+    },
+    {
+      "id": 113533316,
+      "title": "2012 Fiat 500 Abarth 5-Speed",
+      "make": "fiat",
+      "model": "500",
+      "year": 2012,
+      "price": 5300,
+      "sold_ts": 1781813663,
+      "category_ids": []
+    },
+    {
+      "id": 115229889,
+      "title": "1996 Chevrolet Corvette Grand Sport Coupe Z51",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1996,
+      "price": 29000,
+      "sold_ts": 1781813547,
+      "category_ids": []
+    },
+    {
+      "id": 113642362,
+      "title": "17k-Mile 2005 Chrysler Crossfire SRT-6 Coupe",
+      "make": "chrysler",
+      "model": "crossfire",
+      "year": 2005,
+      "price": 19520,
+      "sold_ts": 1781813524,
+      "category_ids": []
+    },
+    {
+      "id": 111153714,
+      "title": "33k-Mile 2000 Porsche 911 Carrera Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2000,
+      "price": 42500,
+      "sold_ts": 1781813476,
+      "category_ids": []
+    },
+    {
+      "id": 111944241,
+      "title": "2010 Rolls-Royce Ghost",
+      "make": "rolls-royce",
+      "model": "ghost",
+      "year": 2010,
+      "price": 49000,
+      "sold_ts": 1781813456,
+      "category_ids": []
+    },
+    {
+      "id": 115084676,
+      "title": "2012 Triumph Daytona 675R",
+      "make": "triumph",
+      "model": "daytona",
+      "year": 2012,
+      "price": 4950,
+      "sold_ts": 1781813357,
+      "category_ids": []
+    },
+    {
+      "id": 115825126,
+      "title": "1975 Honda MR175 Elsinore",
+      "make": "honda",
+      "model": "mr175",
+      "year": 1975,
+      "price": 2500,
+      "sold_ts": 1781813249,
+      "category_ids": []
+    },
+    {
+      "id": 115040551,
+      "title": "2,400-Mile Brewster Green 2022 Porsche 911 Turbo S Coupe",
+      "make": "porsche",
+      "model": "911",
+      "year": 2022,
+      "price": 283500,
+      "sold_ts": 1781813249,
+      "category_ids": []
+    },
+    {
+      "id": 115342114,
+      "title": "1985.5 Porsche 944 5-Speed Project",
+      "make": "5",
+      "model": "porsche",
+      "year": 1985,
+      "price": 4700,
+      "sold_ts": 1781813172,
+      "category_ids": []
+    },
+    {
+      "id": 115166972,
+      "title": "650-Powered 1959 Fiat Nuova 500",
+      "make": "fiat",
+      "model": "nuova",
+      "year": 1959,
+      "price": 22000,
+      "sold_ts": 1781813139,
+      "category_ids": []
+    },
+    {
+      "id": 115205982,
+      "title": "13k-Mile 1997 Chevrolet Corvette Coupe",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1997,
+      "price": 17500,
+      "sold_ts": 1781813016,
+      "category_ids": []
+    },
+    {
+      "id": 115295696,
+      "title": "2010 Rolls-Royce Phantom Drophead Coupe",
+      "make": "rolls-royce",
+      "model": "phantom",
+      "year": 2010,
+      "price": 189000,
+      "sold_ts": 1781813011,
+      "category_ids": []
+    },
+    {
+      "id": 114634538,
+      "title": "2017 Mercedes-Benz S550 Sedan",
+      "make": "mercedes-benz",
+      "model": "s550",
+      "year": 2017,
+      "price": 31100,
+      "sold_ts": 1781812869,
+      "category_ids": []
+    },
+    {
+      "id": 115702605,
+      "title": "2015 Mercedes-AMG E63 S 4MATIC Wagon",
+      "make": "mercedes-amg",
+      "model": "e63",
+      "year": 2015,
+      "price": 24000,
+      "sold_ts": 1781812811,
+      "category_ids": []
+    },
+    {
+      "id": 113249148,
+      "title": "2002 Audi TT Coupe 225 Quattro 6-Speed",
+      "make": "audi",
+      "model": "tt",
+      "year": 2002,
+      "price": 5800,
+      "sold_ts": 1781812770,
+      "category_ids": []
+    },
+    {
+      "id": 115978857,
+      "title": "12k-Mile 2013 Mercedes-Benz SL550",
+      "make": "mercedes-benz",
+      "model": "sl550",
+      "year": 2013,
+      "price": 38000,
+      "sold_ts": 1781812735,
+      "category_ids": []
+    },
+    {
+      "id": 114451897,
+      "title": "2002 Kawasaki Vulcan 800 Drifter",
+      "make": "kawasaki",
+      "model": "vulcan",
+      "year": 2002,
+      "price": 3595,
+      "sold_ts": 1781812591,
+      "category_ids": []
+    },
+    {
+      "id": 116049888,
+      "title": "2017 Fiat 124 Spider Lusso 6-Speed",
+      "make": "fiat",
+      "model": "124",
+      "year": 2017,
+      "price": 16000,
+      "sold_ts": 1781812574,
+      "category_ids": []
+    },
+    {
+      "id": 115802754,
+      "title": "22k-Mile 1988 Rolls-Royce Corniche II",
+      "make": "rolls-royce",
+      "model": "corniche",
+      "year": 1988,
+      "price": 81000,
+      "sold_ts": 1781812383,
+      "category_ids": []
+    },
+    {
+      "id": 115653081,
+      "title": "13k-Mile 2019 Mazda MX-5 Miata RF 30th Anniversary Edition 6-Speed",
+      "make": "mazda",
+      "model": "mx-5",
+      "year": 2019,
+      "price": 36225,
+      "sold_ts": 1781812260,
+      "category_ids": []
+    },
+    {
+      "id": 115799336,
+      "title": "1967 Chevrolet Corvette Convertible",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1967,
+      "price": 70000,
+      "sold_ts": 1781812017,
+      "category_ids": []
+    },
+    {
+      "id": 116230105,
+      "title": "One-Family-Owned 2000 BMW M Roadster",
+      "make": "bmw",
+      "model": "m",
+      "year": 2000,
+      "price": 21750,
+      "sold_ts": 1781811903,
+      "category_ids": []
+    },
+    {
+      "id": 115949234,
+      "title": "1965 Ford Falcon Squire Wagon 289",
+      "make": "ford",
+      "model": "falcon",
+      "year": 1965,
+      "price": 14000,
+      "sold_ts": 1781811725,
+      "category_ids": []
+    },
+    {
+      "id": 115718616,
+      "title": "1962 Austin-Healey 3000 BJ7 Mk II",
+      "make": "austin-healey",
+      "model": "3000",
+      "year": 1962,
+      "price": 42000,
+      "sold_ts": 1781811635,
+      "category_ids": []
+    },
+    {
+      "id": 115219869,
+      "title": "11k-Mile 2006 Bentley Continental Flying Spur",
+      "make": "bentley",
+      "model": "continental",
+      "year": 2006,
+      "price": 19500,
+      "sold_ts": 1781811544,
+      "category_ids": []
+    },
+    {
+      "id": 115692951,
+      "title": "26k-Mile 2014 Jaguar F-Type Convertible",
+      "make": "jaguar",
+      "model": "f-type",
+      "year": 2014,
+      "price": 28500,
+      "sold_ts": 1781811480,
+      "category_ids": []
+    },
+    {
+      "id": 114821803,
+      "title": "2006 Chevrolet Corvette Z06 2LZ",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2006,
+      "price": 38000,
+      "sold_ts": 1781811470,
+      "category_ids": []
+    },
+    {
+      "id": 115241125,
+      "title": "1973 Emmick Lightning Pro Go-Kart",
+      "make": "emmick",
+      "model": "lightning",
+      "year": 1973,
+      "price": 2700,
+      "sold_ts": 1781811360,
+      "category_ids": []
+    },
+    {
+      "id": 110988964,
+      "title": "1994 Puch 230GE",
+      "make": "puch",
+      "model": "230ge",
+      "year": 1994,
+      "price": 37777,
+      "sold_ts": 1781810955,
+      "category_ids": []
+    },
+    {
+      "id": 115894598,
+      "title": "1986 Kawasaki GPZ900R Ninja",
+      "make": "kawasaki",
+      "model": "gpz900r",
+      "year": 1986,
+      "price": 4750,
+      "sold_ts": 1781810892,
+      "category_ids": []
+    },
+    {
+      "id": 114423760,
+      "title": "2024 Ford F-250 Super Duty Crew Cab 4×4 Harley-Davidson Edition",
+      "make": "ford",
+      "model": "f-250",
+      "year": 2024,
+      "price": 91000,
+      "sold_ts": 1781810888,
+      "category_ids": []
+    },
+    {
+      "id": 116231821,
+      "title": "Slate Gray 2021 Porsche 911 Targa 4S Heritage Design Edition 7-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2021,
+      "price": 217500,
+      "sold_ts": 1781810873,
+      "category_ids": []
+    },
+    {
+      "id": 115937870,
+      "title": "12k-Mile 2003 Jeep Wrangler Sport 4.0",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2003,
+      "price": 17800,
+      "sold_ts": 1781810760,
+      "category_ids": []
+    },
+    {
+      "id": 115794364,
+      "title": "2001 Chevrolet Suburban 2500 LT 8.1L 4×4",
+      "make": "chevrolet",
+      "model": "suburban",
+      "year": 2001,
+      "price": 15000,
+      "sold_ts": 1781810745,
+      "category_ids": []
+    },
+    {
+      "id": 116017008,
+      "title": "29k-Mile 2018 Land Rover Range Rover Supercharged LWB",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2018,
+      "price": 40000,
+      "sold_ts": 1781810645,
+      "category_ids": []
+    },
+    {
+      "id": 115904519,
+      "title": "2015 Porsche Panamera S E-Hybrid",
+      "make": "porsche",
+      "model": "panamera",
+      "year": 2015,
+      "price": 18250,
+      "sold_ts": 1781810639,
+      "category_ids": []
+    },
+    {
+      "id": 115843142,
+      "title": "9k-Mile 1993 Chevrolet Corvette Coupe 40th Anniversary 6-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1993,
+      "price": 30000,
+      "sold_ts": 1781810408,
+      "category_ids": []
+    },
+    {
+      "id": 114808163,
+      "title": "LS3-Powered 1997 Land Rover Defender 110",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1997,
+      "price": 94000,
+      "sold_ts": 1781810319,
+      "category_ids": []
+    },
+    {
+      "id": 115713254,
+      "title": "1997 Lexus LX450",
+      "make": "lexus",
+      "model": "lx450",
+      "year": 1997,
+      "price": 13250,
+      "sold_ts": 1781810295,
+      "category_ids": []
+    },
+    {
+      "id": 114573074,
+      "title": "1983 Ferrari 308 GTS Quattrovalvole",
+      "make": "ferrari",
+      "model": "308",
+      "year": 1983,
+      "price": 175000,
+      "sold_ts": 1781810249,
+      "category_ids": []
+    },
+    {
+      "id": 115824590,
+      "title": "956-Mile 2007 Honda VFR800 Interceptor 25th Anniversary Special",
+      "make": "honda",
+      "model": "vfr800",
+      "year": 2007,
+      "price": 11000,
+      "sold_ts": 1781810216,
+      "category_ids": []
+    },
+    {
+      "id": 115013011,
+      "title": "2009 Aston Martin V8 Vantage Roadster",
+      "make": "aston-martin",
+      "model": "v8",
+      "year": 2009,
+      "price": 30500,
+      "sold_ts": 1781810040,
+      "category_ids": []
+    },
+    {
+      "id": 115401427,
+      "title": "1972 BMW 2002 4-Speed",
+      "make": "bmw",
+      "model": "2002",
+      "year": 1972,
+      "price": 8000,
+      "sold_ts": 1781809920,
+      "category_ids": []
+    },
+    {
+      "id": 115503506,
+      "title": "2018 Audi Q7 3.0T Prestige",
+      "make": "audi",
+      "model": "q7",
+      "year": 2018,
+      "price": 19250,
+      "sold_ts": 1781809815,
+      "category_ids": []
+    },
+    {
+      "id": 115130651,
+      "title": "2021 Mercedes-Benz Sprinter 2500 Moonlight Mods Executive Shuttle",
+      "make": "mercedes-benz",
+      "model": "sprinter",
+      "year": 2021,
+      "price": 65000,
+      "sold_ts": 1781809742,
+      "category_ids": []
+    },
+    {
+      "id": 115518937,
+      "title": "6.5L Stroker–Powered 1993 Porsche 928 GTS 5-Speed",
+      "make": "porsche",
+      "model": "928",
+      "year": 1993,
+      "price": 121928,
+      "sold_ts": 1781809655,
+      "category_ids": []
+    },
+    {
+      "id": 113779937,
+      "title": "4,500-Mile 2016 Cadillac Escalade ESV Platinum 4WD",
+      "make": "cadillac",
+      "model": "escalade",
+      "year": 2016,
+      "price": 44500,
+      "sold_ts": 1781809555,
+      "category_ids": []
+    },
+    {
+      "id": 115721553,
+      "title": "2015 Audi A8L TDI",
+      "make": "audi",
+      "model": "a8l",
+      "year": 2015,
+      "price": 22750,
+      "sold_ts": 1781809513,
+      "category_ids": []
+    },
+    {
+      "id": 114655978,
+      "title": "2004 Toyota Tacoma SR5 XtraCab TRD V6 4&#215;4",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2004,
+      "price": 20000,
+      "sold_ts": 1781809472,
+      "category_ids": []
+    },
+    {
+      "id": 115611360,
+      "title": "2020 Ford Mustang Shelby GT500",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2020,
+      "price": 80000,
+      "sold_ts": 1781809401,
+      "category_ids": []
+    },
+    {
+      "id": 116154689,
+      "title": "20k-Mile 1998 BMW Z3 2.8 5-Speed",
+      "make": "bmw",
+      "model": "z3",
+      "year": 1998,
+      "price": 8000,
+      "sold_ts": 1781809265,
+      "category_ids": []
+    },
+    {
+      "id": 115827946,
+      "title": "1993 Dodge Power Ram W350 LE Club Cab 4×4 Cummins Dually",
+      "make": "dodge",
+      "model": "power",
+      "year": 1993,
+      "price": 48500,
+      "sold_ts": 1781809165,
+      "category_ids": []
+    },
+    {
+      "id": 115431799,
+      "title": "1955 Ford Thunderbird",
+      "make": "ford",
+      "model": "thunderbird",
+      "year": 1955,
+      "price": 17750,
+      "sold_ts": 1781808953,
+      "category_ids": []
+    },
+    {
+      "id": 115922971,
+      "title": "Modified 1939 Packard Six Touring Sedan",
+      "make": "packard",
+      "model": "six",
+      "year": 1939,
+      "price": 11111,
+      "sold_ts": 1781808840,
+      "category_ids": []
+    },
+    {
+      "id": 115952111,
+      "title": "One-Owner 1978 Honda CB750F Super Sport",
+      "make": "honda",
+      "model": "cb750f",
+      "year": 1978,
+      "price": 4500,
+      "sold_ts": 1781808816,
+      "category_ids": []
+    },
+    {
+      "id": 114055401,
+      "title": "49k-Mile 2016 Land Rover Range Rover Sport Supercharged Dynamic",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2016,
+      "price": 19900,
+      "sold_ts": 1781808540,
+      "category_ids": []
+    },
+    {
+      "id": 115621926,
+      "title": "1967 Chevrolet El Camino",
+      "make": "chevrolet",
+      "model": "el",
+      "year": 1967,
+      "price": 10250,
+      "sold_ts": 1781808466,
+      "category_ids": []
+    },
+    {
+      "id": 115082134,
+      "title": "18k-Mile 2015 Porsche 911 Carrera S Cabriolet",
+      "make": "porsche",
+      "model": "911",
+      "year": 2015,
+      "price": 79000,
+      "sold_ts": 1781808464,
+      "category_ids": []
+    },
+    {
+      "id": 115239155,
+      "title": "35k-Mile 2006 Aston Martin DB9",
+      "make": "aston-martin",
+      "model": "db9",
+      "year": 2006,
+      "price": 29650,
+      "sold_ts": 1781808458,
+      "category_ids": []
+    },
+    {
+      "id": 115755675,
+      "title": "2016 Smart Fortwo Passion Coupe",
+      "make": "smart",
+      "model": "fortwo",
+      "year": 2016,
+      "price": 11250,
+      "sold_ts": 1781808300,
+      "category_ids": []
+    },
+    {
+      "id": 115333381,
+      "title": "2006 Mini Cooper S JCW GP 6-Speed",
+      "make": "mini",
+      "model": "cooper",
+      "year": 2006,
+      "price": 20000,
+      "sold_ts": 1781808209,
+      "category_ids": []
+    },
+    {
+      "id": 113406919,
+      "title": "1993 Volkswagen Eurovan MV Weekender Denby Camper",
+      "make": "volkswagen",
+      "model": "eurovan",
+      "year": 1993,
+      "price": 11250,
+      "sold_ts": 1781808180,
+      "category_ids": []
+    },
+    {
+      "id": 115803376,
+      "title": "1957 Porsche 356A Coupe",
+      "make": "porsche",
+      "model": "356a",
+      "year": 1957,
+      "price": 105356,
+      "sold_ts": 1781808176,
+      "category_ids": []
+    },
+    {
+      "id": 115653196,
+      "title": "2011 Toyota Tacoma PreRunner SR5 Double Cab V6",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2011,
+      "price": 8700,
+      "sold_ts": 1781808163,
+      "category_ids": []
+    },
+    {
+      "id": 115851367,
+      "title": "2,900-Mile 2016 Ducati Diavel Dark Stealth",
+      "make": "ducati",
+      "model": "diavel",
+      "year": 2016,
+      "price": 6300,
+      "sold_ts": 1781808140,
+      "category_ids": []
+    },
+    {
+      "id": 111564610,
+      "title": "49k-Mile 2017 Jeep Wrangler Sport",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2017,
+      "price": 17000,
+      "sold_ts": 1781808106,
+      "category_ids": []
+    },
+    {
+      "id": 115832485,
+      "title": "41k-Mile 2000 GMC Sierra K3500 SLE Extended Cab 7.4L 4×4 Dually",
+      "make": "gmc",
+      "model": "sierra",
+      "year": 2000,
+      "price": 29000,
+      "sold_ts": 1781808012,
+      "category_ids": []
+    },
+    {
+      "id": 115765064,
+      "title": "2,500-Mile 2018 Chevrolet Camaro Coupe 2SS Hot Wheels Edition",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 2018,
+      "price": 42000,
+      "sold_ts": 1781807832,
+      "category_ids": []
+    },
+    {
+      "id": 115699758,
+      "title": "2013 Lotus Exige S V6 Cup",
+      "make": "lotus",
+      "model": "exige",
+      "year": 2013,
+      "price": 63000,
+      "sold_ts": 1781807818,
+      "category_ids": []
+    },
+    {
+      "id": 116275593,
+      "title": "Ex–Jerry Magnuson, Supercharged 2004 Chevrolet SSR",
+      "make": "chevrolet",
+      "model": "ssr",
+      "year": 2004,
+      "price": 39000,
+      "sold_ts": 1781807688,
+      "category_ids": []
+    },
+    {
+      "id": 116026511,
+      "title": "2004 Harley-Davidson Screamin&#8217; Eagle CVO Softail Deuce",
+      "make": "harley-davidson",
+      "model": "screamin-8217",
+      "year": 2004,
+      "price": 7800,
+      "sold_ts": 1781807626,
+      "category_ids": []
+    },
+    {
+      "id": 115924175,
+      "title": "Triple-Carbureted 1977 Jaguar XJ6C 5-Speed",
+      "make": "jaguar",
+      "model": "xj6c",
+      "year": 1977,
+      "price": 25000,
+      "sold_ts": 1781807487,
+      "category_ids": []
+    },
+    {
+      "id": 116163603,
+      "title": "1967 Maserati Mistral Project",
+      "make": "maserati",
+      "model": "mistral",
+      "year": 1967,
+      "price": 31000,
+      "sold_ts": 1781807423,
+      "category_ids": []
+    },
+    {
+      "id": 115749320,
+      "title": "1963 Porsche 356B Cabriolet",
+      "make": "porsche",
+      "model": "356b",
+      "year": 1963,
+      "price": 125000,
+      "sold_ts": 1781807413,
+      "category_ids": []
+    },
+    {
+      "id": 116305583,
+      "title": "2008 Mercedes-Benz E350 Sedan",
+      "make": "mercedes-benz",
+      "model": "e350",
+      "year": 2008,
+      "price": 8205,
+      "sold_ts": 1781807382,
+      "category_ids": []
+    },
+    {
+      "id": 116261674,
+      "title": "36k-Mile 2005 Dodge Ram SRT-10 Quad Cab",
+      "make": "dodge",
+      "model": "ram",
+      "year": 2005,
+      "price": 25250,
+      "sold_ts": 1781807200,
+      "category_ids": []
+    },
+    {
+      "id": 116311397,
+      "title": "1991 Maxton Rollerskate",
+      "make": "maxton",
+      "model": "rollerskate",
+      "year": 1991,
+      "price": 25900,
+      "sold_ts": 1781806920,
+      "category_ids": []
+    },
+    {
+      "id": 115780703,
+      "title": "1981 Pontiac Firebird Turbo Trans Am",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1981,
+      "price": 14551,
+      "sold_ts": 1781806883,
+      "category_ids": []
+    },
+    {
+      "id": 115904735,
+      "title": "2004 Audi A6 2.7T Quattro",
+      "make": "audi",
+      "model": "a6",
+      "year": 2004,
+      "price": 5000,
+      "sold_ts": 1781806805,
+      "category_ids": []
+    },
+    {
+      "id": 115607436,
+      "title": "3,300-Mile 2022 Acura NSX Type S",
+      "make": "acura",
+      "model": "nsx",
+      "year": 2022,
+      "price": 242000,
+      "sold_ts": 1781806704,
+      "category_ids": []
+    },
+    {
+      "id": 111120906,
+      "title": "1,900-Mile 2013 Morgan 3-Wheeler",
+      "make": "morgan",
+      "model": "3-wheeler",
+      "year": 2013,
+      "price": 42000,
+      "sold_ts": 1781806341,
+      "category_ids": []
+    },
+    {
+      "id": 115647622,
+      "title": "Olds 455-Powered 1977 GMC Kingsley 26’ Motorhome",
+      "make": "gmc",
+      "model": "kingsley",
+      "year": 1977,
+      "price": 15250,
+      "sold_ts": 1781806225,
+      "category_ids": []
+    },
+    {
+      "id": 116206827,
+      "title": "Turbocharged 2.1L 16V-Powered Euro 1984 Saab 99 2-Door Sedan 5-Speed",
+      "make": "saab",
+      "model": "99",
+      "year": 1984,
+      "price": 27000,
+      "sold_ts": 1781806200,
+      "category_ids": []
+    },
+    {
+      "id": 116021435,
+      "title": "Fuel-Injected 302-Powered 1966 Sunbeam Tiger Mk 1A Automatic",
+      "make": "sunbeam",
+      "model": "tiger",
+      "year": 1966,
+      "price": 29000,
+      "sold_ts": 1781806048,
+      "category_ids": []
+    },
+    {
+      "id": 112435389,
+      "title": "2002 Ford F-350 Super Duty XL SuperCab Power Stroke 4&#215;4 6-Speed Dually Utility Truck",
+      "make": "ford",
+      "model": "f-350",
+      "year": 2002,
+      "price": 20500,
+      "sold_ts": 1781806007,
+      "category_ids": []
+    },
+    {
+      "id": 115874510,
+      "title": "46k-Mile 2011 BMW Z4 sDrive30i",
+      "make": "bmw",
+      "model": "z4",
+      "year": 2011,
+      "price": 18750,
+      "sold_ts": 1781805954,
+      "category_ids": []
+    },
+    {
+      "id": 116258489,
+      "title": "2010 Mercedes-Benz G550",
+      "make": "mercedes-benz",
+      "model": "g550",
+      "year": 2010,
+      "price": 45000,
+      "sold_ts": 1781805942,
+      "category_ids": []
+    },
+    {
+      "id": 115922252,
+      "title": "2013 Toyota FJ Cruiser Trail Teams Special Edition",
+      "make": "toyota",
+      "model": "fj",
+      "year": 2013,
+      "price": 33000,
+      "sold_ts": 1781805862,
+      "category_ids": []
+    },
+    {
+      "id": 115727097,
+      "title": "43k-Mile 2003 Lexus SC430",
+      "make": "lexus",
+      "model": "sc430",
+      "year": 2003,
+      "price": 18100,
+      "sold_ts": 1781805564,
+      "category_ids": []
+    },
+    {
+      "id": 114588867,
+      "title": "1988 Mercedes-Benz 300E",
+      "make": "mercedes-benz",
+      "model": "300e",
+      "year": 1988,
+      "price": 8500,
+      "sold_ts": 1781805444,
+      "category_ids": []
+    },
+    {
+      "id": 115238412,
+      "title": "290-Mile San Marino Blue Metallic 2022 Porsche 911 GT3 Touring 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2022,
+      "price": 341000,
+      "sold_ts": 1781805441,
+      "category_ids": []
+    },
+    {
+      "id": 115823615,
+      "title": "2003 Chevrolet Tahoe Z71 4×4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 2003,
+      "price": 13000,
+      "sold_ts": 1781805420,
+      "category_ids": []
+    },
+    {
+      "id": 115431040,
+      "title": "Original-Owner 2008 Subaru Forester 2.5XT Limited 5-Speed",
+      "make": "subaru",
+      "model": "forester",
+      "year": 2008,
+      "price": 12000,
+      "sold_ts": 1781805379,
+      "category_ids": []
+    },
+    {
+      "id": 115604317,
+      "title": "1955 Chevrolet Bel Air 2-Door Sedan 3-Speed",
+      "make": "chevrolet",
+      "model": "bel",
+      "year": 1955,
+      "price": 20500,
+      "sold_ts": 1781805269,
+      "category_ids": []
+    },
+    {
+      "id": 113892568,
+      "title": "2001 Toyota Sequoia Limited 4&#215;4",
+      "make": "toyota",
+      "model": "sequoia",
+      "year": 2001,
+      "price": 5100,
+      "sold_ts": 1781805235,
+      "category_ids": []
+    },
+    {
+      "id": 114298853,
+      "title": "2006 Lincoln Town Car Signature L",
+      "make": "lincoln",
+      "model": "town",
+      "year": 2006,
+      "price": 17000,
+      "sold_ts": 1781804942,
+      "category_ids": []
+    },
+    {
+      "id": 115662268,
+      "title": "1979 Mercedes-Benz 450SL",
+      "make": "mercedes-benz",
+      "model": "450sl",
+      "year": 1979,
+      "price": 9500,
+      "sold_ts": 1781804901,
+      "category_ids": []
+    },
+    {
+      "id": 109702846,
+      "title": "One-Owner 2016 Ducati 1299 Panigale",
+      "make": "ducati",
+      "model": "1299",
+      "year": 2016,
+      "price": 13000,
+      "sold_ts": 1781804768,
+      "category_ids": []
+    },
+    {
+      "id": 115693455,
+      "title": "One-Owner, 38k-Mile 1995 Chevrolet C1500 Cheyenne 5-Speed",
+      "make": "chevrolet",
+      "model": "c1500",
+      "year": 1995,
+      "price": 18250,
+      "sold_ts": 1781804338,
+      "category_ids": []
+    },
+    {
+      "id": 116028048,
+      "title": "1947–2023 Road &#038; Track Library",
+      "make": "2023",
+      "model": "road",
+      "year": 1947,
+      "price": 4000,
+      "sold_ts": 1781804120,
+      "category_ids": []
+    },
+    {
+      "id": 115957179,
+      "title": "2016 Toyota Land Cruiser URJ200",
+      "make": "toyota",
+      "model": "land",
+      "year": 2016,
+      "price": 64000,
+      "sold_ts": 1781804040,
+      "category_ids": []
+    },
+    {
+      "id": 115262636,
+      "title": "1995 Mercedes-Benz SL600",
+      "make": "mercedes-benz",
+      "model": "sl600",
+      "year": 1995,
+      "price": 105000,
+      "sold_ts": 1781803937,
+      "category_ids": []
+    },
+    {
+      "id": 115763850,
+      "title": "1988 Porsche 944 Turbo",
+      "make": "porsche",
+      "model": "944",
+      "year": 1988,
+      "price": 36000,
+      "sold_ts": 1781803899,
+      "category_ids": []
+    },
+    {
+      "id": 113156101,
+      "title": "1996 Suzuki X-90 5-Speed",
+      "make": "suzuki",
+      "model": "x-90",
+      "year": 1996,
+      "price": 6400,
+      "sold_ts": 1781803855,
+      "category_ids": []
+    },
+    {
+      "id": 115827966,
+      "title": "1999 Porsche 911 Carrera Coupe 6-Speed Project",
+      "make": "porsche",
+      "model": "911",
+      "year": 1999,
+      "price": 16500,
+      "sold_ts": 1781803750,
+      "category_ids": []
+    },
+    {
+      "id": 115460611,
+      "title": "Viper-Powered 1979 Jeep Cherokee Chief 6-Speed by Vigilante",
+      "make": "jeep",
+      "model": "cherokee",
+      "year": 1979,
+      "price": 315000,
+      "sold_ts": 1781803713,
+      "category_ids": []
+    },
+    {
+      "id": 115469335,
+      "title": "38k-Mile 1996 Ford F-250 XLT SuperCab 7.5L 4×4",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1996,
+      "price": 30250,
+      "sold_ts": 1781803680,
+      "category_ids": []
+    },
+    {
+      "id": 115818941,
+      "title": "14k-Mile 2007 Ford Mustang GT California Special Convertible",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2007,
+      "price": 32500,
+      "sold_ts": 1781803575,
+      "category_ids": []
+    },
+    {
+      "id": 116117534,
+      "title": "1991 Ford Mustang Convertible 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1991,
+      "price": 8700,
+      "sold_ts": 1781803408,
+      "category_ids": []
+    },
+    {
+      "id": 116222845,
+      "title": "2005 Mercedes-Benz SL600",
+      "make": "mercedes-benz",
+      "model": "sl600",
+      "year": 2005,
+      "price": 20500,
+      "sold_ts": 1781803365,
+      "category_ids": []
+    },
+    {
+      "id": 115711382,
+      "title": "2019 Toyota Tacoma TRD Pro Double Cab 4×4 V6",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2019,
+      "price": 27501,
+      "sold_ts": 1781803217,
+      "category_ids": []
+    },
+    {
+      "id": 116131883,
+      "title": "31k-Mile 2011 Porsche Boxster Spyder 6-Speed",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2011,
+      "price": 48000,
+      "sold_ts": 1781802720,
+      "category_ids": []
+    },
+    {
+      "id": 115636751,
+      "title": "8k-Kilometer 2003 Lamborghini Murcielago 6-Speed",
+      "make": "lamborghini",
+      "model": "murcielago",
+      "year": 2003,
+      "price": 510000,
+      "sold_ts": 1781802300,
+      "category_ids": []
+    },
+    {
+      "id": 115111090,
+      "title": "2003 Morgan Plus 8 35th Anniversary Edition",
+      "make": "morgan",
+      "model": "plus",
+      "year": 2003,
+      "price": 61000,
+      "sold_ts": 1781730136,
+      "category_ids": []
+    },
+    {
+      "id": 115565999,
+      "title": "37k-Mile 2016 Land Rover Range Rover Sport SE",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2016,
+      "price": 20250,
+      "sold_ts": 1781728775,
+      "category_ids": []
+    },
+    {
+      "id": 115513914,
+      "title": "Modified 2001 BMW 325Ci Coupe 5-Speed",
+      "make": "bmw",
+      "model": "325ci",
+      "year": 2001,
+      "price": 8900,
+      "sold_ts": 1781728669,
+      "category_ids": []
+    },
+    {
+      "id": 115927748,
+      "title": "2002 Toyota 4Runner SR5",
+      "make": "toyota",
+      "model": "4runner",
+      "year": 2002,
+      "price": 13000,
+      "sold_ts": 1781728020,
+      "category_ids": []
+    },
+    {
+      "id": 115729621,
+      "title": "2011 Mercedes-Benz ML63 AMG 4MATIC",
+      "make": "mercedes-benz",
+      "model": "ml63",
+      "year": 2011,
+      "price": 21500,
+      "sold_ts": 1781727806,
+      "category_ids": []
+    },
+    {
+      "id": 115637298,
+      "title": "239 Flathead-Powered 1930 Ford 5-Window Coupe 5-Speed",
+      "make": "ford",
+      "model": "5-window",
+      "year": 1930,
+      "price": 43750,
+      "sold_ts": 1781727304,
+      "category_ids": []
+    },
+    {
+      "id": 115647292,
+      "title": "2002 Mazda B3000 Dual Sport V6",
+      "make": "mazda",
+      "model": "b3000",
+      "year": 2002,
+      "price": 8800,
+      "sold_ts": 1781727184,
+      "category_ids": []
+    },
+    {
+      "id": 114841840,
+      "title": "1974 Alfa Romeo 2000 Spider Veloce",
+      "make": "alfa-romeo",
+      "model": "2000",
+      "year": 1974,
+      "price": 18250,
+      "sold_ts": 1781727096,
+      "category_ids": []
+    },
+    {
+      "id": 115886400,
+      "title": "2005 Ford Excursion Eddie Bauer Power Stroke 4×4",
+      "make": "ford",
+      "model": "excursion",
+      "year": 2005,
+      "price": 26000,
+      "sold_ts": 1781727065,
+      "category_ids": []
+    },
+    {
+      "id": 115877426,
+      "title": "1993 TVR Griffith",
+      "make": "tvr",
+      "model": "griffith",
+      "year": 1993,
+      "price": 19650,
+      "sold_ts": 1781726787,
+      "category_ids": []
+    },
+    {
+      "id": 114008413,
+      "title": "16k-Mile 2013 Ford Mustang Boss 302",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2013,
+      "price": 33250,
+      "sold_ts": 1781726618,
+      "category_ids": []
+    },
+    {
+      "id": 115598492,
+      "title": "1993 Alfa Romeo Spider Veloce",
+      "make": "alfa-romeo",
+      "model": "spider",
+      "year": 1993,
+      "price": 17001,
+      "sold_ts": 1781726611,
+      "category_ids": []
+    },
+    {
+      "id": 115459567,
+      "title": "2003 Ford F-350 Super Duty Lariat Crew Cab Power Stroke 4×4 FX4",
+      "make": "ford",
+      "model": "f-350",
+      "year": 2003,
+      "price": 27750,
+      "sold_ts": 1781726585,
+      "category_ids": []
+    },
+    {
+      "id": 115058941,
+      "title": "1984 Mercedes-Benz 380SL",
+      "make": "mercedes-benz",
+      "model": "380sl",
+      "year": 1984,
+      "price": 12025,
+      "sold_ts": 1781726499,
+      "category_ids": []
+    },
+    {
+      "id": 115181809,
+      "title": "22-Years-Owned 1991 Chevrolet Corvette ZR-1",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1991,
+      "price": 24250,
+      "sold_ts": 1781726285,
+      "category_ids": []
+    },
+    {
+      "id": 114159433,
+      "title": "2011 Land Rover Range Rover Sport HSE Luxury",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2011,
+      "price": 8000,
+      "sold_ts": 1781726280,
+      "category_ids": []
+    },
+    {
+      "id": 114551960,
+      "title": "Single-Family-Owned 1993 Chevrolet K2500 HD Silverado 7.4L 4×4",
+      "make": "chevrolet",
+      "model": "k2500",
+      "year": 1993,
+      "price": 9851,
+      "sold_ts": 1781726220,
+      "category_ids": []
+    },
+    {
+      "id": 115907451,
+      "title": "2004 BMW M3 Coupe",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2004,
+      "price": 18800,
+      "sold_ts": 1781726042,
+      "category_ids": []
+    },
+    {
+      "id": 115425336,
+      "title": "34k-Mile 2010 Lexus LS460 L",
+      "make": "lexus",
+      "model": "ls460",
+      "year": 2010,
+      "price": 30000,
+      "sold_ts": 1781725922,
+      "category_ids": []
+    },
+    {
+      "id": 114357069,
+      "title": "14k-Mile 2000 Honda S2000",
+      "make": "honda",
+      "model": "s2000",
+      "year": 2000,
+      "price": 36250,
+      "sold_ts": 1781725818,
+      "category_ids": []
+    },
+    {
+      "id": 114261972,
+      "title": "2004 Lexus LS430",
+      "make": "lexus",
+      "model": "ls430",
+      "year": 2004,
+      "price": 16350,
+      "sold_ts": 1781725593,
+      "category_ids": []
+    },
+    {
+      "id": 115513865,
+      "title": "46k-Mile 2003 Porsche 911 Carrera Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2003,
+      "price": 37500,
+      "sold_ts": 1781725493,
+      "category_ids": []
+    },
+    {
+      "id": 113892161,
+      "title": "2014 Honda Z50J Monkey Kumamon",
+      "make": "honda",
+      "model": "z50j",
+      "year": 2014,
+      "price": 6767,
+      "sold_ts": 1781725478,
+      "category_ids": []
+    },
+    {
+      "id": 114648425,
+      "title": "454-Powered 1962 Cadillac Series 62 Convertible",
+      "make": "cadillac",
+      "model": "series",
+      "year": 1962,
+      "price": 27000,
+      "sold_ts": 1781725444,
+      "category_ids": []
+    },
+    {
+      "id": 114502241,
+      "title": "2024 Chevrolet Camaro ZL1 Collector Edition",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 2024,
+      "price": 87500,
+      "sold_ts": 1781725080,
+      "category_ids": []
+    },
+    {
+      "id": 115637178,
+      "title": "Original-Owner 2013 Ford Mustang Shelby GT500 Convertible",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2013,
+      "price": 64501,
+      "sold_ts": 1781725020,
+      "category_ids": []
+    },
+    {
+      "id": 115581303,
+      "title": "2013 Jaguar XF Supercharged",
+      "make": "jaguar",
+      "model": "xf",
+      "year": 2013,
+      "price": 9600,
+      "sold_ts": 1781724960,
+      "category_ids": []
+    },
+    {
+      "id": 115417062,
+      "title": "Original-Owner 2000 Honda Prelude 5-Speed",
+      "make": "honda",
+      "model": "prelude",
+      "year": 2000,
+      "price": 11055,
+      "sold_ts": 1781724940,
+      "category_ids": []
+    },
+    {
+      "id": 115472111,
+      "title": "2007 BMW 750Li",
+      "make": "bmw",
+      "model": "750li",
+      "year": 2007,
+      "price": 6000,
+      "sold_ts": 1781724926,
+      "category_ids": []
+    },
+    {
+      "id": 114177319,
+      "title": "14k-Mile 2008 BMW M3 Sedan 6-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2008,
+      "price": 67000,
+      "sold_ts": 1781724880,
+      "category_ids": []
+    },
+    {
+      "id": 115926303,
+      "title": "Modified 2011 Cadillac CTS-V Wagon",
+      "make": "cadillac",
+      "model": "cts-v",
+      "year": 2011,
+      "price": 41000,
+      "sold_ts": 1781724873,
+      "category_ids": []
+    },
+    {
+      "id": 115035992,
+      "title": "2011 BMW 128i Coupe Sport",
+      "make": "bmw",
+      "model": "128i",
+      "year": 2011,
+      "price": 5200,
+      "sold_ts": 1781724840,
+      "category_ids": []
+    },
+    {
+      "id": 114915522,
+      "title": "1987 Volkswagen Vanagon GL Westfalia 4-Speed",
+      "make": "volkswagen",
+      "model": "vanagon",
+      "year": 1987,
+      "price": 26000,
+      "sold_ts": 1781724815,
+      "category_ids": []
+    },
+    {
+      "id": 115371082,
+      "title": "14k-Mile 2021 Toyota Tacoma TRD Pro Double Cab 4×4 6-Speed",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2021,
+      "price": 52500,
+      "sold_ts": 1781724778,
+      "category_ids": []
+    },
+    {
+      "id": 115398110,
+      "title": "31k-Mile 2005 Cadillac DeVille Professional Limousine",
+      "make": "cadillac",
+      "model": "deville",
+      "year": 2005,
+      "price": 2350,
+      "sold_ts": 1781724764,
+      "category_ids": []
+    },
+    {
+      "id": 116263250,
+      "title": "1958 Chevrolet Bel Air 2-Door Sport Coupe 348",
+      "make": "chevrolet",
+      "model": "bel",
+      "year": 1958,
+      "price": 44000,
+      "sold_ts": 1781724655,
+      "category_ids": []
+    },
+    {
+      "id": 114831832,
+      "title": "2004 Porsche 911 Carrera 4S Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2004,
+      "price": 44000,
+      "sold_ts": 1781724635,
+      "category_ids": []
+    },
+    {
+      "id": 115406899,
+      "title": "10k-Mile 2007 Chevrolet Silverado 3500 Classic LT Crew Cab Duramax Dually 4×4",
+      "make": "chevrolet",
+      "model": "silverado",
+      "year": 2007,
+      "price": 65000,
+      "sold_ts": 1781724161,
+      "category_ids": []
+    },
+    {
+      "id": 114569694,
+      "title": "1993 Land Rover Range Rover County LWB",
+      "make": "land-rover",
+      "model": "range",
+      "year": 1993,
+      "price": 10500,
+      "sold_ts": 1781724141,
+      "category_ids": []
+    },
+    {
+      "id": 115705583,
+      "title": "46k-Mile 2002 BMW 330Ci Convertible",
+      "make": "bmw",
+      "model": "330ci",
+      "year": 2002,
+      "price": 8888,
+      "sold_ts": 1781724025,
+      "category_ids": []
+    },
+    {
+      "id": 115100744,
+      "title": "1750-Powered 1957 Alfa Romeo Giulietta Spider 5-Speed",
+      "make": "alfa-romeo",
+      "model": "giulietta",
+      "year": 1957,
+      "price": 45000,
+      "sold_ts": 1781723953,
+      "category_ids": []
+    },
+    {
+      "id": 115806924,
+      "title": "Original-Owner 50k-Mile 2006 Infiniti G35 6-Speed",
+      "make": "infiniti",
+      "model": "g35",
+      "year": 2006,
+      "price": 11500,
+      "sold_ts": 1781723853,
+      "category_ids": []
+    },
+    {
+      "id": 115712541,
+      "title": "4,700-Mile 2021 Mazda MX-5 Miata Club 6-Speed",
+      "make": "mazda",
+      "model": "mx-5",
+      "year": 2021,
+      "price": 28500,
+      "sold_ts": 1781723841,
+      "category_ids": []
+    },
+    {
+      "id": 115846493,
+      "title": "1987 Honda XL600",
+      "make": "honda",
+      "model": "xl600",
+      "year": 1987,
+      "price": 4300,
+      "sold_ts": 1781723760,
+      "category_ids": []
+    },
+    {
+      "id": 115549620,
+      "title": "20k-Mile 2021 Jeep Wrangler Unlimited Rubicon EcoDiesel",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2021,
+      "price": 41500,
+      "sold_ts": 1781723740,
+      "category_ids": []
+    },
+    {
+      "id": 115155093,
+      "title": "5k-Mile 2007 BMW Z4 M Coupe",
+      "make": "bmw",
+      "model": "z4",
+      "year": 2007,
+      "price": 66500,
+      "sold_ts": 1781723662,
+      "category_ids": []
+    },
+    {
+      "id": 115726453,
+      "title": "1977 Harley-Davidson XLCR",
+      "make": "harley-davidson",
+      "model": "xlcr",
+      "year": 1977,
+      "price": 11750,
+      "sold_ts": 1781723606,
+      "category_ids": []
+    },
+    {
+      "id": 115979195,
+      "title": "24k-Mile 2016 Jaguar XJL Supercharged",
+      "make": "jaguar",
+      "model": "xjl",
+      "year": 2016,
+      "price": 29500,
+      "sold_ts": 1781723575,
+      "category_ids": []
+    },
+    {
+      "id": 115747562,
+      "title": "1986 Land Rover 90 Project",
+      "make": "land-rover",
+      "model": "90",
+      "year": 1986,
+      "price": 14000,
+      "sold_ts": 1781723413,
+      "category_ids": []
+    },
+    {
+      "id": 114379452,
+      "title": "32k-Mile 1992 Cadillac Brougham",
+      "make": "cadillac",
+      "model": "brougham",
+      "year": 1992,
+      "price": 25750,
+      "sold_ts": 1781723303,
+      "category_ids": []
+    },
+    {
+      "id": 115114661,
+      "title": "2024 Chevrolet Corvette Z06 Convertible 3LZ Z07",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2024,
+      "price": 121069,
+      "sold_ts": 1781723220,
+      "category_ids": []
+    },
+    {
+      "id": 116148068,
+      "title": "1975 Mercedes-Benz 240D 4-Speed",
+      "make": "mercedes-benz",
+      "model": "240d",
+      "year": 1975,
+      "price": 24000,
+      "sold_ts": 1781723080,
+      "category_ids": []
+    },
+    {
+      "id": 115857838,
+      "title": "1973 Schwinn Sting-Ray Apple Krate Bicycle",
+      "make": "schwinn",
+      "model": "sting-ray",
+      "year": 1973,
+      "price": 5800,
+      "sold_ts": 1781722833,
+      "category_ids": []
+    },
+    {
+      "id": 115474774,
+      "title": "1995 Mercedes-Benz S500 Sedan",
+      "make": "mercedes-benz",
+      "model": "s500",
+      "year": 1995,
+      "price": 15300,
+      "sold_ts": 1781722784,
+      "category_ids": []
+    },
+    {
+      "id": 115681519,
+      "title": "2002 Chevrolet Corvette Z06",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2002,
+      "price": 23000,
+      "sold_ts": 1781722726,
+      "category_ids": []
+    },
+    {
+      "id": 115554494,
+      "title": "18k-Mile 1998 BMW M3 Convertible 5-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 1998,
+      "price": 48000,
+      "sold_ts": 1781722654,
+      "category_ids": []
+    },
+    {
+      "id": 115867444,
+      "title": "46k-Mile 2004 Mercedes-Benz SLK32 AMG",
+      "make": "mercedes-benz",
+      "model": "slk32",
+      "year": 2004,
+      "price": 14000,
+      "sold_ts": 1781722463,
+      "category_ids": []
+    },
+    {
+      "id": 115263030,
+      "title": "2014 BMW 535d xDrive",
+      "make": "bmw",
+      "model": "535d",
+      "year": 2014,
+      "price": 13600,
+      "sold_ts": 1781722275,
+      "category_ids": []
+    },
+    {
+      "id": 115621956,
+      "title": "2002 Mercedes-Benz CLK430 Cabriolet",
+      "make": "mercedes-benz",
+      "model": "clk430",
+      "year": 2002,
+      "price": 8400,
+      "sold_ts": 1781722200,
+      "category_ids": []
+    },
+    {
+      "id": 115573280,
+      "title": "15k-Mile 1997 BMW 840Ci",
+      "make": "bmw",
+      "model": "840ci",
+      "year": 1997,
+      "price": 43500,
+      "sold_ts": 1781722119,
+      "category_ids": []
+    },
+    {
+      "id": 115848551,
+      "title": "1966 Jaguar XKE Series I 4.2 2+2 4-Speed Project",
+      "make": "jaguar",
+      "model": "xke",
+      "year": 1966,
+      "price": 11072,
+      "sold_ts": 1781721847,
+      "category_ids": []
+    },
+    {
+      "id": 115218724,
+      "title": "1985 Jaguar XJ-SC 5-Speed",
+      "make": "jaguar",
+      "model": "xj-sc",
+      "year": 1985,
+      "price": 7800,
+      "sold_ts": 1781721682,
+      "category_ids": []
+    },
+    {
+      "id": 108118436,
+      "title": "1956 Ford Thunderbird",
+      "make": "ford",
+      "model": "thunderbird",
+      "year": 1956,
+      "price": 15250,
+      "sold_ts": 1781721637,
+      "category_ids": []
+    },
+    {
+      "id": 115512934,
+      "title": "16k-Mile 1998 Ferrari F355 Spider 6-Speed",
+      "make": "ferrari",
+      "model": "f355",
+      "year": 1998,
+      "price": 220000,
+      "sold_ts": 1781721360,
+      "category_ids": []
+    },
+    {
+      "id": 115339394,
+      "title": "Four-Decades-Family-Owned 1973 DeTomaso Pantera L",
+      "make": "detomaso",
+      "model": "pantera",
+      "year": 1973,
+      "price": 80000,
+      "sold_ts": 1781721326,
+      "category_ids": []
+    },
+    {
+      "id": 114082773,
+      "title": "17k-Mile 2013 Chevrolet Corvette 427 Convertible",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2013,
+      "price": 59000,
+      "sold_ts": 1781721240,
+      "category_ids": []
+    },
+    {
+      "id": 115435730,
+      "title": "3,200-Mile 2001 Lincoln Town Car Executive Series Limousine",
+      "make": "lincoln",
+      "model": "town",
+      "year": 2001,
+      "price": 9610,
+      "sold_ts": 1781721161,
+      "category_ids": []
+    },
+    {
+      "id": 114079243,
+      "title": "2006 Mini Cooper S",
+      "make": "mini",
+      "model": "cooper",
+      "year": 2006,
+      "price": 4400,
+      "sold_ts": 1781721159,
+      "category_ids": []
+    },
+    {
+      "id": 115883810,
+      "title": "1963 Chevrolet Corvette Split-Window Coupe Chassis &#038; Body Project",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1963,
+      "price": 30500,
+      "sold_ts": 1781721060,
+      "category_ids": []
+    },
+    {
+      "id": 114313172,
+      "title": "1989 Freightliner Unimog FLU419",
+      "make": "freightliner",
+      "model": "unimog",
+      "year": 1989,
+      "price": 19500,
+      "sold_ts": 1781720940,
+      "category_ids": []
+    },
+    {
+      "id": 115143548,
+      "title": "Original-Owner 2003 Mercury Marauder",
+      "make": "mercury",
+      "model": "marauder",
+      "year": 2003,
+      "price": 25000,
+      "sold_ts": 1781720898,
+      "category_ids": []
+    },
+    {
+      "id": 115010749,
+      "title": "2001 Honda RVT1000R RC51",
+      "make": "honda",
+      "model": "rvt1000r",
+      "year": 2001,
+      "price": 9700,
+      "sold_ts": 1781720808,
+      "category_ids": []
+    },
+    {
+      "id": 115480901,
+      "title": "2001 Toyota Sequoia Limited 4&#215;4",
+      "make": "toyota",
+      "model": "sequoia",
+      "year": 2001,
+      "price": 12000,
+      "sold_ts": 1781720780,
+      "category_ids": []
+    },
+    {
+      "id": 115829284,
+      "title": "38k-Mile 2015 Maserati Ghibli",
+      "make": "maserati",
+      "model": "ghibli",
+      "year": 2015,
+      "price": 15000,
+      "sold_ts": 1781720760,
+      "category_ids": []
+    },
+    {
+      "id": 115235795,
+      "title": "1987 Mercedes-Benz Unimog 1300L",
+      "make": "mercedes-benz",
+      "model": "unimog",
+      "year": 1987,
+      "price": 43000,
+      "sold_ts": 1781720713,
+      "category_ids": []
+    },
+    {
+      "id": 112198103,
+      "title": "44-Years-Family-Owned 1975 Lincoln Continental Town Coupe",
+      "make": "lincoln",
+      "model": "continental",
+      "year": 1975,
+      "price": 5700,
+      "sold_ts": 1781720700,
+      "category_ids": []
+    },
+    {
+      "id": 115703081,
+      "title": "292-Powered 1955 Ford Fairlane Club Sedan 5-Speed",
+      "make": "ford",
+      "model": "fairlane",
+      "year": 1955,
+      "price": 18000,
+      "sold_ts": 1781720541,
+      "category_ids": []
+    },
+    {
+      "id": 115349007,
+      "title": "1974 Triumph TR6",
+      "make": "triumph",
+      "model": "tr6",
+      "year": 1974,
+      "price": 14250,
+      "sold_ts": 1781720514,
+      "category_ids": []
+    },
+    {
+      "id": 115643779,
+      "title": "47k-Mile 2012 Fiat 500 Abarth 5-Speed",
+      "make": "fiat",
+      "model": "500",
+      "year": 2012,
+      "price": 6500,
+      "sold_ts": 1781720152,
+      "category_ids": []
+    },
+    {
+      "id": 115585639,
+      "title": "2005 Subaru Impreza WRX STi",
+      "make": "subaru",
+      "model": "impreza",
+      "year": 2005,
+      "price": 10800,
+      "sold_ts": 1781720112,
+      "category_ids": []
+    },
+    {
+      "id": 114467911,
+      "title": "2018 GMC Savana 2500 Van Turbodiesel",
+      "make": "gmc",
+      "model": "savana",
+      "year": 2018,
+      "price": 13750,
+      "sold_ts": 1781720100,
+      "category_ids": []
+    },
+    {
+      "id": 114751799,
+      "title": "1966 Plymouth Fury III Convertible",
+      "make": "plymouth",
+      "model": "fury",
+      "year": 1966,
+      "price": 13000,
+      "sold_ts": 1781719986,
+      "category_ids": []
+    },
+    {
+      "id": 115677824,
+      "title": "1995 Chevrolet Impala SS",
+      "make": "chevrolet",
+      "model": "impala",
+      "year": 1995,
+      "price": 13250,
+      "sold_ts": 1781719979,
+      "category_ids": []
+    },
+    {
+      "id": 113653736,
+      "title": "48k-Mile 2009 Porsche 911 Targa 4S 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2009,
+      "price": 102000,
+      "sold_ts": 1781719951,
+      "category_ids": []
+    },
+    {
+      "id": 115823873,
+      "title": "Supercharged 2022 Ford F-150 XLT Roush SuperCrew 4×4",
+      "make": "ford",
+      "model": "f-150",
+      "year": 2022,
+      "price": 67000,
+      "sold_ts": 1781719872,
+      "category_ids": []
+    },
+    {
+      "id": 113815186,
+      "title": "GT6-Powered 1968 Triumph Spitfire Mk III",
+      "make": "triumph",
+      "model": "spitfire",
+      "year": 1968,
+      "price": 14000,
+      "sold_ts": 1781719822,
+      "category_ids": []
+    },
+    {
+      "id": 116015080,
+      "title": "1998 Toyota Corolla VE",
+      "make": "toyota",
+      "model": "corolla",
+      "year": 1998,
+      "price": 6300,
+      "sold_ts": 1781719790,
+      "category_ids": []
+    },
+    {
+      "id": 116129163,
+      "title": "2001 Ford Explorer Sportsman Concept",
+      "make": "ford",
+      "model": "explorer",
+      "year": 2001,
+      "price": 25288,
+      "sold_ts": 1781719742,
+      "category_ids": []
+    },
+    {
+      "id": 115562236,
+      "title": "Single-Family-Owned 2002 Chevrolet Corvette Convertible 6-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2002,
+      "price": 13250,
+      "sold_ts": 1781719560,
+      "category_ids": []
+    },
+    {
+      "id": 115530611,
+      "title": "2013 BMW M5 6-Speed",
+      "make": "bmw",
+      "model": "m5",
+      "year": 2013,
+      "price": 20900,
+      "sold_ts": 1781719315,
+      "category_ids": []
+    },
+    {
+      "id": 115637189,
+      "title": "17k-Mile 2021 Ford Bronco Badlands 7-Speed",
+      "make": "ford",
+      "model": "bronco",
+      "year": 2021,
+      "price": 39750,
+      "sold_ts": 1781719283,
+      "category_ids": []
+    },
+    {
+      "id": 115802254,
+      "title": "2002 Chevrolet Monte Carlo SS Dale Earnhardt Signature Edition",
+      "make": "chevrolet",
+      "model": "monte",
+      "year": 2002,
+      "price": 8800,
+      "sold_ts": 1781719272,
+      "category_ids": []
+    },
+    {
+      "id": 115618802,
+      "title": "36-Years-Owned 1981 DeLorean DMC-12 5-Speed",
+      "make": "delorean",
+      "model": "dmc-12",
+      "year": 1981,
+      "price": 50500,
+      "sold_ts": 1781718999,
+      "category_ids": []
+    },
+    {
+      "id": 114949754,
+      "title": "1989 Honda GB500 Tourist Trophy",
+      "make": "honda",
+      "model": "gb500",
+      "year": 1989,
+      "price": 4850,
+      "sold_ts": 1781718960,
+      "category_ids": []
+    },
+    {
+      "id": 114926705,
+      "title": "8k-Mile 2005 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 2005,
+      "price": 33000,
+      "sold_ts": 1781718936,
+      "category_ids": []
+    },
+    {
+      "id": 115700104,
+      "title": "2005 Toyota Tundra Limited Double Cab V8 4&#215;4",
+      "make": "toyota",
+      "model": "tundra",
+      "year": 2005,
+      "price": 16000,
+      "sold_ts": 1781718909,
+      "category_ids": []
+    },
+    {
+      "id": 111359716,
+      "title": "One-Owner 1964 Volkswagen Karmann Ghia Coupe",
+      "make": "volkswagen",
+      "model": "karmann",
+      "year": 1964,
+      "price": 18250,
+      "sold_ts": 1781718865,
+      "category_ids": []
+    },
+    {
+      "id": 115727172,
+      "title": "28k-Mile 1987 Mercedes-Benz 560SL",
+      "make": "mercedes-benz",
+      "model": "560sl",
+      "year": 1987,
+      "price": 59000,
+      "sold_ts": 1781718780,
+      "category_ids": []
+    },
+    {
+      "id": 115891927,
+      "title": "1999 Ducati 996S",
+      "make": "ducati",
+      "model": "996s",
+      "year": 1999,
+      "price": 8100,
+      "sold_ts": 1781718634,
+      "category_ids": []
+    },
+    {
+      "id": 114130723,
+      "title": "19k-Mile 2002 Ford Thunderbird",
+      "make": "ford",
+      "model": "thunderbird",
+      "year": 2002,
+      "price": 19000,
+      "sold_ts": 1781718492,
+      "category_ids": []
+    },
+    {
+      "id": 114557018,
+      "title": "1969 Chevrolet Corvair Monza Convertible 4-Speed",
+      "make": "chevrolet",
+      "model": "corvair",
+      "year": 1969,
+      "price": 35000,
+      "sold_ts": 1781718324,
+      "category_ids": []
+    },
+    {
+      "id": 115421559,
+      "title": "2013 Porsche 911 Carrera S Coupe",
+      "make": "porsche",
+      "model": "911",
+      "year": 2013,
+      "price": 63800,
+      "sold_ts": 1781718315,
+      "category_ids": []
+    },
+    {
+      "id": 114539874,
+      "title": "1971 Mercedes-Benz 300SEL 3.5",
+      "make": "mercedes-benz",
+      "model": "300sel",
+      "year": 1971,
+      "price": 15500,
+      "sold_ts": 1781718243,
+      "category_ids": []
+    },
+    {
+      "id": 114224107,
+      "title": "1969 Mercedes-Benz 280SL 4-Speed",
+      "make": "mercedes-benz",
+      "model": "280sl",
+      "year": 1969,
+      "price": 133000,
+      "sold_ts": 1781718109,
+      "category_ids": []
+    },
+    {
+      "id": 114146799,
+      "title": "1963 Morgan 4/4",
+      "make": "morgan",
+      "model": "4-4",
+      "year": 1963,
+      "price": 37000,
+      "sold_ts": 1781718060,
+      "category_ids": []
+    },
+    {
+      "id": 106682103,
+      "title": "22-Years-Owned 1960 Plymouth Valiant V-200 Four-Door Sedan",
+      "make": "plymouth",
+      "model": "valiant",
+      "year": 1960,
+      "price": 6700,
+      "sold_ts": 1781718001,
+      "category_ids": []
+    },
+    {
+      "id": 115381598,
+      "title": "1990 Alfa Romeo Spider Veloce",
+      "make": "alfa-romeo",
+      "model": "spider",
+      "year": 1990,
+      "price": 2800,
+      "sold_ts": 1781718000,
+      "category_ids": []
+    },
+    {
+      "id": 115555272,
+      "title": "1994 Ford F-150 XL",
+      "make": "ford",
+      "model": "f-150",
+      "year": 1994,
+      "price": 6100,
+      "sold_ts": 1781717933,
+      "category_ids": []
+    },
+    {
+      "id": 114461119,
+      "title": "1973 Dodge Charger Coupe 318",
+      "make": "dodge",
+      "model": "charger",
+      "year": 1973,
+      "price": 5800,
+      "sold_ts": 1781717763,
+      "category_ids": []
+    },
+    {
+      "id": 115513557,
+      "title": "2000 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 2000,
+      "price": 13250,
+      "sold_ts": 1781717563,
+      "category_ids": []
+    },
+    {
+      "id": 115718571,
+      "title": "1970 Lancia Fulvia Sport 1.3S Zagato",
+      "make": "lancia",
+      "model": "fulvia",
+      "year": 1970,
+      "price": 41500,
+      "sold_ts": 1781717089,
+      "category_ids": []
+    },
+    {
+      "id": 114117727,
+      "title": "1972 Porsche 914",
+      "make": "porsche",
+      "model": "914",
+      "year": 1972,
+      "price": 17000,
+      "sold_ts": 1781717040,
+      "category_ids": []
+    },
+    {
+      "id": 114581550,
+      "title": "2021 Lamborghini Urus",
+      "make": "lamborghini",
+      "model": "urus",
+      "year": 2021,
+      "price": 147500,
+      "sold_ts": 1781716940,
+      "category_ids": []
+    },
+    {
+      "id": 115808489,
+      "title": "2006 Porsche 911 Carrera Cabriolet 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2006,
+      "price": 38000,
+      "sold_ts": 1781716873,
+      "category_ids": []
+    },
+    {
+      "id": 115084273,
+      "title": "2007 Ford Mustang GT Coupe Roush Stage 3 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2007,
+      "price": 21394,
+      "sold_ts": 1781716843,
+      "category_ids": []
+    },
+    {
+      "id": 115271323,
+      "title": "22k-Mile 2010 Chevrolet Camaro 2SS Coupe",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 2010,
+      "price": 22250,
+      "sold_ts": 1781716834,
+      "category_ids": []
+    },
+    {
+      "id": 114597091,
+      "title": "2016 BMW Z4 sDrive35i M Sport",
+      "make": "bmw",
+      "model": "z4",
+      "year": 2016,
+      "price": 18250,
+      "sold_ts": 1781716795,
+      "category_ids": []
+    },
+    {
+      "id": 112989596,
+      "title": "40k-Mile 2006 Jeep Wrangler Unlimited Rubicon 4.0",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2006,
+      "price": 13000,
+      "sold_ts": 1781716697,
+      "category_ids": []
+    },
+    {
+      "id": 114864603,
+      "title": "6k-Mile 2019 Porsche 911 GT3 RS",
+      "make": "porsche",
+      "model": "911",
+      "year": 2019,
+      "price": 271000,
+      "sold_ts": 1781716676,
+      "category_ids": []
+    },
+    {
+      "id": 112954303,
+      "title": "20k-Mile 2019 Chevrolet Corvette Z06 Coupe 2LZ 7-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2019,
+      "price": 82000,
+      "sold_ts": 1781716328,
+      "category_ids": []
+    },
+    {
+      "id": 115372055,
+      "title": "40k-Mile 2007 Cadillac XLR Passion Red Limited Edition",
+      "make": "cadillac",
+      "model": "xlr",
+      "year": 2007,
+      "price": 20161,
+      "sold_ts": 1781716128,
+      "category_ids": []
+    },
+    {
+      "id": 115883730,
+      "title": "2025 Lamborghini Revuelto",
+      "make": "lamborghini",
+      "model": "revuelto",
+      "year": 2025,
+      "price": 678000,
+      "sold_ts": 1781715782,
+      "category_ids": []
+    },
+    {
+      "id": 115731618,
+      "title": "2022 Ford Mustang Shelby GT500 Carbon Fiber Track Pack",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2022,
+      "price": 107000,
+      "sold_ts": 1781642463,
+      "category_ids": []
+    },
+    {
+      "id": 116142589,
+      "title": "2014 Jeep Grand Cherokee Summit EcoDiesel 4&#215;4",
+      "make": "jeep",
+      "model": "grand",
+      "year": 2014,
+      "price": 15500,
+      "sold_ts": 1781641332,
+      "category_ids": []
+    },
+    {
+      "id": 115514110,
+      "title": "18k-Mile 2011 Porsche 911 Carrera S Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2011,
+      "price": 105000,
+      "sold_ts": 1781641134,
+      "category_ids": []
+    },
+    {
+      "id": 115974273,
+      "title": "47k-Mile 2005 Dodge Durango Limited 5.7L",
+      "make": "dodge",
+      "model": "durango",
+      "year": 2005,
+      "price": 9926,
+      "sold_ts": 1781640936,
+      "category_ids": []
+    },
+    {
+      "id": 115676973,
+      "title": "2004 BMW X3 2.5i",
+      "make": "bmw",
+      "model": "x3",
+      "year": 2004,
+      "price": 6100,
+      "sold_ts": 1781640796,
+      "category_ids": []
+    },
+    {
+      "id": 115424142,
+      "title": "Euro 1985 Mercedes-Benz 190E 2.3-16 5-Speed Project",
+      "make": "mercedes-benz",
+      "model": "190e",
+      "year": 1985,
+      "price": 7200,
+      "sold_ts": 1781640296,
+      "category_ids": []
+    },
+    {
+      "id": 115871154,
+      "title": "2004 BMW M3 Convertible 6-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2004,
+      "price": 18500,
+      "sold_ts": 1781640179,
+      "category_ids": []
+    },
+    {
+      "id": 115350724,
+      "title": "1972 Volkswagen Type 2 Westfalia Campmobile",
+      "make": "volkswagen",
+      "model": "type",
+      "year": 1972,
+      "price": 28250,
+      "sold_ts": 1781639943,
+      "category_ids": []
+    },
+    {
+      "id": 115614136,
+      "title": "33k-Mile 2004 GMC Sierra 1500 SLT Z71 4×4",
+      "make": "gmc",
+      "model": "sierra",
+      "year": 2004,
+      "price": 27500,
+      "sold_ts": 1781639897,
+      "category_ids": []
+    },
+    {
+      "id": 115215157,
+      "title": "248-Mile 2007 Harley-Davidson Sportster 50th Anniversary",
+      "make": "harley-davidson",
+      "model": "sportster",
+      "year": 2007,
+      "price": 6100,
+      "sold_ts": 1781639893,
+      "category_ids": []
+    },
+    {
+      "id": 115680168,
+      "title": "1995 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 1995,
+      "price": 26000,
+      "sold_ts": 1781639753,
+      "category_ids": []
+    },
+    {
+      "id": 115546291,
+      "title": "1971 Boise Cascade Leisure Lodge Motorhome",
+      "make": "boise",
+      "model": "cascade",
+      "year": 1971,
+      "price": 2600,
+      "sold_ts": 1781639689,
+      "category_ids": []
+    },
+    {
+      "id": 115336883,
+      "title": "18k-Mile 1978 Fiat 124 Sport Spider",
+      "make": "fiat",
+      "model": "124",
+      "year": 1978,
+      "price": 42000,
+      "sold_ts": 1781639681,
+      "category_ids": []
+    },
+    {
+      "id": 113385778,
+      "title": "27k-Mile 2015 Porsche 911 Turbo Coupe",
+      "make": "porsche",
+      "model": "911",
+      "year": 2015,
+      "price": 117500,
+      "sold_ts": 1781639672,
+      "category_ids": []
+    },
+    {
+      "id": 115449351,
+      "title": "Twin-Cam 1.4L–Powered 1989 Rover Mini Thirty",
+      "make": "rover",
+      "model": "mini",
+      "year": 1989,
+      "price": 24500,
+      "sold_ts": 1781639651,
+      "category_ids": []
+    },
+    {
+      "id": 115551575,
+      "title": "Original-Owner 2003 BMW 530i",
+      "make": "bmw",
+      "model": "530i",
+      "year": 2003,
+      "price": 10750,
+      "sold_ts": 1781639582,
+      "category_ids": []
+    },
+    {
+      "id": 114711302,
+      "title": "1996 Chevrolet Corvette Coupe Collector Edition",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1996,
+      "price": 10800,
+      "sold_ts": 1781639460,
+      "category_ids": []
+    },
+    {
+      "id": 115873644,
+      "title": "1994 Honda Acty SDX Pickup",
+      "make": "honda",
+      "model": "acty",
+      "year": 1994,
+      "price": 8250,
+      "sold_ts": 1781639367,
+      "category_ids": []
+    },
+    {
+      "id": 114684088,
+      "title": "2018 BMW X5 xDrive35d M Sport",
+      "make": "bmw",
+      "model": "x5",
+      "year": 2018,
+      "price": 39250,
+      "sold_ts": 1781639256,
+      "category_ids": []
+    },
+    {
+      "id": 115950525,
+      "title": "23k-Mile, One-Owner 2008 Jaguar XK Coupe",
+      "make": "jaguar",
+      "model": "xk",
+      "year": 2008,
+      "price": 24250,
+      "sold_ts": 1781639020,
+      "category_ids": []
+    },
+    {
+      "id": 114992998,
+      "title": "1988 BMW M3",
+      "make": "bmw",
+      "model": "m3",
+      "year": 1988,
+      "price": 55000,
+      "sold_ts": 1781638821,
+      "category_ids": []
+    },
+    {
+      "id": 115198158,
+      "title": "2005 Ford F-250 Super Duty XLT Crew Cab Power Stroke 4×4  ",
+      "make": "ford",
+      "model": "f-250",
+      "year": 2005,
+      "price": 17000,
+      "sold_ts": 1781638671,
+      "category_ids": []
+    },
+    {
+      "id": 115284650,
+      "title": "2013 Volvo C30 T5 Polestar Limited Edition 6-Speed",
+      "make": "volvo",
+      "model": "c30",
+      "year": 2013,
+      "price": 20000,
+      "sold_ts": 1781638533,
+      "category_ids": []
+    },
+    {
+      "id": 116008727,
+      "title": "31k-Mile Modified 2007 Chevrolet Corvette Z06 2LZ",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2007,
+      "price": 52000,
+      "sold_ts": 1781638220,
+      "category_ids": []
+    },
+    {
+      "id": 114984996,
+      "title": "2006 Chevrolet SSR",
+      "make": "chevrolet",
+      "model": "ssr",
+      "year": 2006,
+      "price": 17750,
+      "sold_ts": 1781638140,
+      "category_ids": []
+    },
+    {
+      "id": 115473285,
+      "title": "2006 Porsche Cayman S 6-Speed",
+      "make": "porsche",
+      "model": "cayman",
+      "year": 2006,
+      "price": 15500,
+      "sold_ts": 1781638046,
+      "category_ids": []
+    },
+    {
+      "id": 115654186,
+      "title": "1993 Harley-Davidson Sportster 883 Hugger",
+      "make": "harley-davidson",
+      "model": "sportster",
+      "year": 1993,
+      "price": 3500,
+      "sold_ts": 1781638020,
+      "category_ids": []
+    },
+    {
+      "id": 115823815,
+      "title": "43k-Mile 1997 Mercedes-Benz E320 Sedan",
+      "make": "mercedes-benz",
+      "model": "e320",
+      "year": 1997,
+      "price": 8200,
+      "sold_ts": 1781637736,
+      "category_ids": []
+    },
+    {
+      "id": 109701676,
+      "title": "1971 Porsche 914",
+      "make": "porsche",
+      "model": "914",
+      "year": 1971,
+      "price": 22500,
+      "sold_ts": 1781637728,
+      "category_ids": []
+    },
+    {
+      "id": 115767569,
+      "title": "3,300-Mile 2018 Honda Civic Type R Touring",
+      "make": "honda",
+      "model": "civic",
+      "year": 2018,
+      "price": 36750,
+      "sold_ts": 1781637629,
+      "category_ids": []
+    },
+    {
+      "id": 115568304,
+      "title": "1999 Chevrolet Tahoe LT 4×4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 1999,
+      "price": 10000,
+      "sold_ts": 1781637540,
+      "category_ids": []
+    },
+    {
+      "id": 115098386,
+      "title": "1980 Yamaha GT80 Enduro",
+      "make": "yamaha",
+      "model": "gt80",
+      "year": 1980,
+      "price": 3600,
+      "sold_ts": 1781637398,
+      "category_ids": []
+    },
+    {
+      "id": 115595238,
+      "title": "1987 BMW 325i Convertible 5-Speed",
+      "make": "bmw",
+      "model": "325i",
+      "year": 1987,
+      "price": 13500,
+      "sold_ts": 1781637366,
+      "category_ids": []
+    },
+    {
+      "id": 105445237,
+      "title": "2005 Lexus LS430 Ultra Luxury Package",
+      "make": "lexus",
+      "model": "ls430",
+      "year": 2005,
+      "price": 15250,
+      "sold_ts": 1781637253,
+      "category_ids": []
+    },
+    {
+      "id": 115717159,
+      "title": "1965 Lincoln Continental Convertible",
+      "make": "lincoln",
+      "model": "continental",
+      "year": 1965,
+      "price": 160000,
+      "sold_ts": 1781637174,
+      "category_ids": []
+    },
+    {
+      "id": 103212722,
+      "title": "1k-Mile 1993 Dodge Viper RT/10",
+      "make": "dodge",
+      "model": "viper",
+      "year": 1993,
+      "price": 63000,
+      "sold_ts": 1781637019,
+      "category_ids": []
+    },
+    {
+      "id": 113602665,
+      "title": "2023 Mercedes-Benz Sprinter 2500 Conversion by Imperial Luxury Coach Builders",
+      "make": "mercedes-benz",
+      "model": "sprinter",
+      "year": 2023,
+      "price": 84727,
+      "sold_ts": 1781636974,
+      "category_ids": []
+    },
+    {
+      "id": 115635504,
+      "title": "2014 BMW 535d xDrive",
+      "make": "bmw",
+      "model": "535d",
+      "year": 2014,
+      "price": 13500,
+      "sold_ts": 1781636840,
+      "category_ids": []
+    },
+    {
+      "id": 115745475,
+      "title": "Cadillac 500-Powered 1948 Buick Super Sedanet",
+      "make": "buick",
+      "model": "super",
+      "year": 1948,
+      "price": 17750,
+      "sold_ts": 1781636825,
+      "category_ids": []
+    },
+    {
+      "id": 113736127,
+      "title": "49k-Mile 2009 Lexus LS460",
+      "make": "lexus",
+      "model": "ls460",
+      "year": 2009,
+      "price": 16650,
+      "sold_ts": 1781636774,
+      "category_ids": []
+    },
+    {
+      "id": 114142509,
+      "title": "2016 Toyota Tacoma TRD Off-Road Double Cab 4×4 V6 6-Speed",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2016,
+      "price": 27000,
+      "sold_ts": 1781636640,
+      "category_ids": []
+    },
+    {
+      "id": 115818716,
+      "title": "25-Years-Owned 1995 Harley-Davidson Heritage Softail Classic",
+      "make": "harley-davidson",
+      "model": "heritage",
+      "year": 1995,
+      "price": 12500,
+      "sold_ts": 1781636520,
+      "category_ids": []
+    },
+    {
+      "id": 114624443,
+      "title": "2010 Jeep Wrangler Sport 6-Speed",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2010,
+      "price": 20000,
+      "sold_ts": 1781636434,
+      "category_ids": []
+    },
+    {
+      "id": 108524012,
+      "title": "33k-Mile 2005 Honda Civic LX Sedan 5-Speed",
+      "make": "honda",
+      "model": "civic",
+      "year": 2005,
+      "price": 9800,
+      "sold_ts": 1781636399,
+      "category_ids": []
+    },
+    {
+      "id": 112395848,
+      "title": "1964 Chevrolet Corvair Monza 900 Convertible 4-Speed",
+      "make": "chevrolet",
+      "model": "corvair",
+      "year": 1964,
+      "price": 6450,
+      "sold_ts": 1781636340,
+      "category_ids": []
+    },
+    {
+      "id": 113235422,
+      "title": "42k-Mile 2011 BMW M3 Coupe 6-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2011,
+      "price": 49000,
+      "sold_ts": 1781636278,
+      "category_ids": []
+    },
+    {
+      "id": 114445401,
+      "title": "1954 Chevrolet Corvette",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1954,
+      "price": 39300,
+      "sold_ts": 1781636160,
+      "category_ids": []
+    },
+    {
+      "id": 114585913,
+      "title": "2004 Honda S2000",
+      "make": "honda",
+      "model": "s2000",
+      "year": 2004,
+      "price": 38750,
+      "sold_ts": 1781636021,
+      "category_ids": []
+    },
+    {
+      "id": 115611606,
+      "title": "1998 GMC Sierra C2500 SLE",
+      "make": "gmc",
+      "model": "sierra",
+      "year": 1998,
+      "price": 13750,
+      "sold_ts": 1781635980,
+      "category_ids": []
+    },
+    {
+      "id": 115158501,
+      "title": "2006 BMW 330i Sport Sedan 6-Speed",
+      "make": "bmw",
+      "model": "330i",
+      "year": 2006,
+      "price": 9700,
+      "sold_ts": 1781635943,
+      "category_ids": []
+    },
+    {
+      "id": 115749309,
+      "title": "400-Powered 1976 Ford F-150 4&#215;4",
+      "make": "ford",
+      "model": "f-150",
+      "year": 1976,
+      "price": 18000,
+      "sold_ts": 1781635860,
+      "category_ids": []
+    },
+    {
+      "id": 115079142,
+      "title": "25k-Mile 2012 Ford Mustang Boss 302 Laguna Seca",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2012,
+      "price": 33250,
+      "sold_ts": 1781635751,
+      "category_ids": []
+    },
+    {
+      "id": 115481949,
+      "title": "2016 Toyota 4Runner SR5 Premium 4&#215;4",
+      "make": "toyota",
+      "model": "4runner",
+      "year": 2016,
+      "price": 23000,
+      "sold_ts": 1781635284,
+      "category_ids": []
+    },
+    {
+      "id": 115748730,
+      "title": "1977 Honda CB750K",
+      "make": "honda",
+      "model": "cb750k",
+      "year": 1977,
+      "price": 3800,
+      "sold_ts": 1781635260,
+      "category_ids": []
+    },
+    {
+      "id": 116068822,
+      "title": "One-Owner, Callaway-Supercharged 2007 Chevrolet Corvette Convertible 3LT",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2007,
+      "price": 25069,
+      "sold_ts": 1781635140,
+      "category_ids": []
+    },
+    {
+      "id": 115568581,
+      "title": "One-Family-Owned 8k-Mile 1991 Mercury Capri XR2 5-Speed",
+      "make": "mercury",
+      "model": "capri",
+      "year": 1991,
+      "price": 17777,
+      "sold_ts": 1781635074,
+      "category_ids": []
+    },
+    {
+      "id": 114689118,
+      "title": "2024 INEOS Grenadier",
+      "make": "ineos",
+      "model": "grenadier",
+      "year": 2024,
+      "price": 58500,
+      "sold_ts": 1781635020,
+      "category_ids": []
+    },
+    {
+      "id": 115077567,
+      "title": "2019 Chevrolet Tahoe Premier 4&#215;4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 2019,
+      "price": 26500,
+      "sold_ts": 1781635002,
+      "category_ids": []
+    },
+    {
+      "id": 115191132,
+      "title": "1988 Ferrari Testarossa",
+      "make": "ferrari",
+      "model": "testarossa",
+      "year": 1988,
+      "price": 215000,
+      "sold_ts": 1781634994,
+      "category_ids": []
+    },
+    {
+      "id": 115850607,
+      "title": "2023 The Little Car Company Bugatti Baby II Vitesse",
+      "make": "the",
+      "model": "little",
+      "year": 2023,
+      "price": 52000,
+      "sold_ts": 1781634960,
+      "category_ids": []
+    },
+    {
+      "id": 115000988,
+      "title": "1997 Toyota Century",
+      "make": "toyota",
+      "model": "century",
+      "year": 1997,
+      "price": 11000,
+      "sold_ts": 1781634927,
+      "category_ids": []
+    },
+    {
+      "id": 115014748,
+      "title": "39k-Mile 2015 Aston Martin V8 Vantage GT Coupe 6-Speed",
+      "make": "aston-martin",
+      "model": "v8",
+      "year": 2015,
+      "price": 74000,
+      "sold_ts": 1781634909,
+      "category_ids": []
+    },
+    {
+      "id": 114898032,
+      "title": "22k-Mile 2006 Ferrari F430 Spider 6-Speed Conversion",
+      "make": "ferrari",
+      "model": "f430",
+      "year": 2006,
+      "price": 226430,
+      "sold_ts": 1781634838,
+      "category_ids": []
+    },
+    {
+      "id": 115618817,
+      "title": "Vortec-Powered 2005 Jeep Wrangler Unlimited Rubicon 5-Speed",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2005,
+      "price": 37750,
+      "sold_ts": 1781634529,
+      "category_ids": []
+    },
+    {
+      "id": 115184841,
+      "title": "2006 Porsche Cayenne",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2006,
+      "price": 4500,
+      "sold_ts": 1781634498,
+      "category_ids": []
+    },
+    {
+      "id": 115731364,
+      "title": "1973 Chevrolet Corvette Coupe",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1973,
+      "price": 26000,
+      "sold_ts": 1781634435,
+      "category_ids": []
+    },
+    {
+      "id": 114556912,
+      "title": "20k-Mile 1997 BMW 750iL",
+      "make": "bmw",
+      "model": "750il",
+      "year": 1997,
+      "price": 32000,
+      "sold_ts": 1781634420,
+      "category_ids": []
+    },
+    {
+      "id": 114584415,
+      "title": "Pair of 1985 &#038; 1986 Honda Gyro Ss",
+      "make": "038",
+      "model": "1986",
+      "year": 1985,
+      "price": 11111,
+      "sold_ts": 1781634410,
+      "category_ids": []
+    },
+    {
+      "id": 109799441,
+      "title": "Single-Family-Owned 1966 Volkswagen Beetle",
+      "make": "volkswagen",
+      "model": "beetle",
+      "year": 1966,
+      "price": 8750,
+      "sold_ts": 1781634314,
+      "category_ids": []
+    },
+    {
+      "id": 115505319,
+      "title": "24k-Mile 2013 Porsche Boxster S",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2013,
+      "price": 46500,
+      "sold_ts": 1781634300,
+      "category_ids": []
+    },
+    {
+      "id": 115579399,
+      "title": "2010 Chevrolet Silverado 2500HD LT Crew Cab Z71 4×4",
+      "make": "chevrolet",
+      "model": "silverado",
+      "year": 2010,
+      "price": 24000,
+      "sold_ts": 1781634289,
+      "category_ids": []
+    },
+    {
+      "id": 114572088,
+      "title": "1985 Porsche 928S",
+      "make": "porsche",
+      "model": "928s",
+      "year": 1985,
+      "price": 15000,
+      "sold_ts": 1781634165,
+      "category_ids": []
+    },
+    {
+      "id": 115586260,
+      "title": "1957 Firestone Outboard",
+      "make": "firestone",
+      "model": "outboard",
+      "year": 1957,
+      "price": 855,
+      "sold_ts": 1781634000,
+      "category_ids": []
+    },
+    {
+      "id": 115208516,
+      "title": "One-Owner 2014 BMW Z4 sDrive35i M Sport 6-Speed",
+      "make": "bmw",
+      "model": "z4",
+      "year": 2014,
+      "price": 36000,
+      "sold_ts": 1781633640,
+      "category_ids": []
+    },
+    {
+      "id": 113138481,
+      "title": "2004 Honda NSR50R and 2006 Honda NSF100",
+      "make": "honda",
+      "model": "nsr50r",
+      "year": 2004,
+      "price": 10250,
+      "sold_ts": 1781633206,
+      "category_ids": []
+    },
+    {
+      "id": 115562309,
+      "title": "798-Mile 2015 Triumph Bonneville T214 Special Edition",
+      "make": "triumph",
+      "model": "bonneville",
+      "year": 2015,
+      "price": 6100,
+      "sold_ts": 1781633132,
+      "category_ids": []
+    },
+    {
+      "id": 113804658,
+      "title": "11k-Mile 2012 Audi R8 V10 Coupe",
+      "make": "audi",
+      "model": "r8",
+      "year": 2012,
+      "price": 92500,
+      "sold_ts": 1781633094,
+      "category_ids": []
+    },
+    {
+      "id": 115556149,
+      "title": "1989 Dodge Shelby Dakota",
+      "make": "dodge",
+      "model": "shelby",
+      "year": 1989,
+      "price": 10500,
+      "sold_ts": 1781633063,
+      "category_ids": []
+    },
+    {
+      "id": 115224092,
+      "title": "28k-Mile 2018 Mercedes-Benz GLS450",
+      "make": "mercedes-benz",
+      "model": "gls450",
+      "year": 2018,
+      "price": 34250,
+      "sold_ts": 1781633001,
+      "category_ids": []
+    },
+    {
+      "id": 115548836,
+      "title": "2010 Porsche Panamera Turbo",
+      "make": "porsche",
+      "model": "panamera",
+      "year": 2010,
+      "price": 13700,
+      "sold_ts": 1781632910,
+      "category_ids": []
+    },
+    {
+      "id": 113611577,
+      "title": "2006 BMW 330Ci ZHP Coupe 6-Speed",
+      "make": "bmw",
+      "model": "330ci",
+      "year": 2006,
+      "price": 19875,
+      "sold_ts": 1781632693,
+      "category_ids": []
+    },
+    {
+      "id": 109039804,
+      "title": "454-Powered 1971 Chevrolet Corvette Convertible 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1971,
+      "price": 38500,
+      "sold_ts": 1781632613,
+      "category_ids": []
+    },
+    {
+      "id": 114997954,
+      "title": "15k-Mile, Modified 2017 Chevrolet Corvette Z06 Coupe 2LZ 7-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2017,
+      "price": 79000,
+      "sold_ts": 1781632610,
+      "category_ids": []
+    },
+    {
+      "id": 115742203,
+      "title": "1992 Chevrolet K1500 Silverado 4×4 5-Speed",
+      "make": "chevrolet",
+      "model": "k1500",
+      "year": 1992,
+      "price": 13500,
+      "sold_ts": 1781632521,
+      "category_ids": []
+    },
+    {
+      "id": 115384860,
+      "title": "1960 Ford Thunderbird Convertible",
+      "make": "ford",
+      "model": "thunderbird",
+      "year": 1960,
+      "price": 28500,
+      "sold_ts": 1781632320,
+      "category_ids": []
+    },
+    {
+      "id": 115618123,
+      "title": "1965 Chevrolet Corvair Monza Sport Coupe 4-Speed",
+      "make": "chevrolet",
+      "model": "corvair",
+      "year": 1965,
+      "price": 12700,
+      "sold_ts": 1781632260,
+      "category_ids": []
+    },
+    {
+      "id": 115637262,
+      "title": "2018 Jaguar XF Sportbrake S",
+      "make": "jaguar",
+      "model": "xf",
+      "year": 2018,
+      "price": 21250,
+      "sold_ts": 1781632231,
+      "category_ids": []
+    },
+    {
+      "id": 114720363,
+      "title": "6-Mile 2018 Dodge Challenger SRT Demon",
+      "make": "dodge",
+      "model": "challenger",
+      "year": 2018,
+      "price": 105000,
+      "sold_ts": 1781632122,
+      "category_ids": []
+    },
+    {
+      "id": 115418916,
+      "title": "1965 Chevrolet Corvair 95 Greenbrier",
+      "make": "chevrolet",
+      "model": "corvair",
+      "year": 1965,
+      "price": 13330,
+      "sold_ts": 1781632110,
+      "category_ids": []
+    },
+    {
+      "id": 115990903,
+      "title": "Modified 1975 Moto Guzzi 850-T",
+      "make": "moto",
+      "model": "guzzi",
+      "year": 1975,
+      "price": 3500,
+      "sold_ts": 1781632080,
+      "category_ids": []
+    },
+    {
+      "id": 115135962,
+      "title": "1962 Rambler Ambassador Custom 2-Door Sedan",
+      "make": "rambler",
+      "model": "ambassador",
+      "year": 1962,
+      "price": 6200,
+      "sold_ts": 1781632040,
+      "category_ids": []
+    },
+    {
+      "id": 115828777,
+      "title": "1967 BMW R50/2",
+      "make": "bmw",
+      "model": "r50-2",
+      "year": 1967,
+      "price": 17500,
+      "sold_ts": 1781632017,
+      "category_ids": []
+    },
+    {
+      "id": 115693896,
+      "title": "10k-Mile 2009 Chevrolet Silverado 1500 LT Z71 4×4",
+      "make": "chevrolet",
+      "model": "silverado",
+      "year": 2009,
+      "price": 28000,
+      "sold_ts": 1781632012,
+      "category_ids": []
+    },
+    {
+      "id": 115251601,
+      "title": "11k-Mile 2016 BMW M4 Convertible 6-Speed",
+      "make": "bmw",
+      "model": "m4",
+      "year": 2016,
+      "price": 60000,
+      "sold_ts": 1781631960,
+      "category_ids": []
+    },
+    {
+      "id": 115840232,
+      "title": "2016 ATC Quest 24&#8242; Enclosed Trailer",
+      "make": "atc",
+      "model": "quest",
+      "year": 2016,
+      "price": 18750,
+      "sold_ts": 1781631877,
+      "category_ids": []
+    },
+    {
+      "id": 112442383,
+      "title": "2001 Porsche Boxster S 6-Speed",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2001,
+      "price": 10250,
+      "sold_ts": 1781631717,
+      "category_ids": []
+    },
+    {
+      "id": 115680779,
+      "title": "32k-Mile 2005 Mercedes-Benz SL65 AMG",
+      "make": "mercedes-benz",
+      "model": "sl65",
+      "year": 2005,
+      "price": 49150,
+      "sold_ts": 1781631667,
+      "category_ids": []
+    },
+    {
+      "id": 110471767,
+      "title": "1969 Honda CM91 Super Cub",
+      "make": "honda",
+      "model": "cm91",
+      "year": 1969,
+      "price": 2800,
+      "sold_ts": 1781631540,
+      "category_ids": []
+    },
+    {
+      "id": 112535450,
+      "title": "2014 Rolls-Royce Wraith",
+      "make": "rolls-royce",
+      "model": "wraith",
+      "year": 2014,
+      "price": 96501,
+      "sold_ts": 1781631487,
+      "category_ids": []
+    },
+    {
+      "id": 114039938,
+      "title": "Original-Owner 2005 Porsche 911 Carrera Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2005,
+      "price": 44000,
+      "sold_ts": 1781631329,
+      "category_ids": []
+    },
+    {
+      "id": 115425470,
+      "title": "1970 Chevrolet El Camino",
+      "make": "chevrolet",
+      "model": "el",
+      "year": 1970,
+      "price": 8100,
+      "sold_ts": 1781631214,
+      "category_ids": []
+    },
+    {
+      "id": 115024215,
+      "title": "2004 Subaru Baja Turbo 5-Speed",
+      "make": "subaru",
+      "model": "baja",
+      "year": 2004,
+      "price": 22000,
+      "sold_ts": 1781630874,
+      "category_ids": []
+    },
+    {
+      "id": 115348011,
+      "title": "2017 Land Rover Range Rover Autobiography LWB",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2017,
+      "price": 24000,
+      "sold_ts": 1781630840,
+      "category_ids": []
+    },
+    {
+      "id": 114123396,
+      "title": "1958 Cadillac Series 62 Convertible",
+      "make": "cadillac",
+      "model": "series",
+      "year": 1958,
+      "price": 62000,
+      "sold_ts": 1781630722,
+      "category_ids": []
+    },
+    {
+      "id": 115709622,
+      "title": "1992 Mercedes-Benz 400E",
+      "make": "mercedes-benz",
+      "model": "400e",
+      "year": 1992,
+      "price": 14777,
+      "sold_ts": 1781630628,
+      "category_ids": []
+    },
+    {
+      "id": 114466028,
+      "title": "1999 BMW M3 Coupe 5-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 1999,
+      "price": 31500,
+      "sold_ts": 1781630531,
+      "category_ids": []
+    },
+    {
+      "id": 115428433,
+      "title": "2017 Porsche Cayenne S",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2017,
+      "price": 12000,
+      "sold_ts": 1781630409,
+      "category_ids": []
+    },
+    {
+      "id": 115332219,
+      "title": "20-Years-Owned 1979 Mercedes-Benz 450SL",
+      "make": "mercedes-benz",
+      "model": "450sl",
+      "year": 1979,
+      "price": 7200,
+      "sold_ts": 1781630344,
+      "category_ids": []
+    },
+    {
+      "id": 112446280,
+      "title": "One-Owner 1997 Mercedes-Benz SL500 40th Anniversary Edition",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 1997,
+      "price": 13000,
+      "sold_ts": 1781630056,
+      "category_ids": []
+    },
+    {
+      "id": 112439006,
+      "title": "Original-Owner 2005 Volkswagen Jetta GLI 1.8T 6-Speed",
+      "make": "volkswagen",
+      "model": "jetta",
+      "year": 2005,
+      "price": 11000,
+      "sold_ts": 1781630040,
+      "category_ids": []
+    },
+    {
+      "id": 112678015,
+      "title": "14k-Mile 2007 Ferrari 599 GTB Fiorano",
+      "make": "ferrari",
+      "model": "599",
+      "year": 2007,
+      "price": 240000,
+      "sold_ts": 1781629894,
+      "category_ids": []
+    },
+    {
+      "id": 115349452,
+      "title": "6k-Mile 1985 Ford Mustang GT Convertible",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1985,
+      "price": 17000,
+      "sold_ts": 1781629860,
+      "category_ids": []
+    },
+    {
+      "id": 115319148,
+      "title": "5k-Mile 2021 Ferrari 812 GTS",
+      "make": "ferrari",
+      "model": "812",
+      "year": 2021,
+      "price": 717000,
+      "sold_ts": 1781629833,
+      "category_ids": []
+    },
+    {
+      "id": 115801766,
+      "title": "2014 Aston Martin Vanquish Coupe",
+      "make": "aston-martin",
+      "model": "vanquish",
+      "year": 2014,
+      "price": 69500,
+      "sold_ts": 1781629800,
+      "category_ids": []
+    },
+    {
+      "id": 114949179,
+      "title": "1995 Land Rover Discovery",
+      "make": "land-rover",
+      "model": "discovery",
+      "year": 1995,
+      "price": 12000,
+      "sold_ts": 1781555052,
+      "category_ids": []
+    },
+    {
+      "id": 116014423,
+      "title": "1964 Jaguar XKE Series 1 3.8 Roadster",
+      "make": "jaguar",
+      "model": "xke",
+      "year": 1964,
+      "price": 92000,
+      "sold_ts": 1781554183,
+      "category_ids": []
+    },
+    {
+      "id": 115195617,
+      "title": "One-Owner 2013 Porsche 911 Carrera Cabriolet",
+      "make": "porsche",
+      "model": "911",
+      "year": 2013,
+      "price": 69500,
+      "sold_ts": 1781553656,
+      "category_ids": []
+    },
+    {
+      "id": 115923448,
+      "title": "1996 Mercedes-Benz S600 Sedan",
+      "make": "mercedes-benz",
+      "model": "s600",
+      "year": 1996,
+      "price": 16300,
+      "sold_ts": 1781553570,
+      "category_ids": []
+    },
+    {
+      "id": 112737654,
+      "title": "129-Mile 2025 Ariel Atom 4",
+      "make": "ariel",
+      "model": "atom",
+      "year": 2025,
+      "price": 132069,
+      "sold_ts": 1781553541,
+      "category_ids": []
+    },
+    {
+      "id": 115804967,
+      "title": "2002 Porsche 911 Carrera Cabriolet 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2002,
+      "price": 27500,
+      "sold_ts": 1781553373,
+      "category_ids": []
+    },
+    {
+      "id": 114755024,
+      "title": "2005 Jeep Wrangler Rubicon 4.0",
+      "make": "jeep",
+      "model": "wrangler",
+      "year": 2005,
+      "price": 8800,
+      "sold_ts": 1781553365,
+      "category_ids": []
+    },
+    {
+      "id": 108781795,
+      "title": "Modified 1964 Triumph Bonneville T120R",
+      "make": "triumph",
+      "model": "bonneville",
+      "year": 1964,
+      "price": 8001,
+      "sold_ts": 1781553321,
+      "category_ids": []
+    },
+    {
+      "id": 115265093,
+      "title": "2006 BMW 330Ci Convertible 6-Speed",
+      "make": "bmw",
+      "model": "330ci",
+      "year": 2006,
+      "price": 30000,
+      "sold_ts": 1781553191,
+      "category_ids": []
+    },
+    {
+      "id": 114722419,
+      "title": "16k-Mile 1987 Ford Mustang GT 5.0 Hatchback 5-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1987,
+      "price": 32000,
+      "sold_ts": 1781552998,
+      "category_ids": []
+    },
+    {
+      "id": 114167167,
+      "title": "Modified 1973 DeTomaso Pantera",
+      "make": "detomaso",
+      "model": "pantera",
+      "year": 1973,
+      "price": 128000,
+      "sold_ts": 1781552665,
+      "category_ids": []
+    },
+    {
+      "id": 112459455,
+      "title": "2006 Mercedes-Benz G55 AMG",
+      "make": "mercedes-benz",
+      "model": "g55",
+      "year": 2006,
+      "price": 43500,
+      "sold_ts": 1781552608,
+      "category_ids": []
+    },
+    {
+      "id": 115351392,
+      "title": "2015 Mercedes-Benz S550 4MATIC Sedan",
+      "make": "mercedes-benz",
+      "model": "s550",
+      "year": 2015,
+      "price": 19000,
+      "sold_ts": 1781552580,
+      "category_ids": []
+    },
+    {
+      "id": 115647492,
+      "title": "2007 BMW M6 Convertible 6-Speed",
+      "make": "bmw",
+      "model": "m6",
+      "year": 2007,
+      "price": 30000,
+      "sold_ts": 1781552517,
+      "category_ids": []
+    },
+    {
+      "id": 115152077,
+      "title": "One-Family-Owned 1996 BMW Z3 1.9 5-Speed",
+      "make": "bmw",
+      "model": "z3",
+      "year": 1996,
+      "price": 7719,
+      "sold_ts": 1781552495,
+      "category_ids": []
+    },
+    {
+      "id": 114993373,
+      "title": "34k-Mile 2001 Acura NSX-T 6-Speed",
+      "make": "acura",
+      "model": "nsx-t",
+      "year": 2001,
+      "price": 176000,
+      "sold_ts": 1781552337,
+      "category_ids": []
+    },
+    {
+      "id": 115524245,
+      "title": "9k-Mile 1985 Pontiac Firebird Trans Am WS6",
+      "make": "pontiac",
+      "model": "firebird",
+      "year": 1985,
+      "price": 25000,
+      "sold_ts": 1781552264,
+      "category_ids": []
+    },
+    {
+      "id": 115514856,
+      "title": "31k-Mile 2011 Toyota Camry XLE",
+      "make": "toyota",
+      "model": "camry",
+      "year": 2011,
+      "price": 14250,
+      "sold_ts": 1781552065,
+      "category_ids": []
+    },
+    {
+      "id": 115209714,
+      "title": "2004 Mercedes-Benz SL55 AMG",
+      "make": "mercedes-benz",
+      "model": "sl55",
+      "year": 2004,
+      "price": 16501,
+      "sold_ts": 1781552053,
+      "category_ids": []
+    },
+    {
+      "id": 114244086,
+      "title": "2007 Toyota 4Runner SR5",
+      "make": "toyota",
+      "model": "4runner",
+      "year": 2007,
+      "price": 9000,
+      "sold_ts": 1781551799,
+      "category_ids": []
+    },
+    {
+      "id": 114896487,
+      "title": "2005 Mercedes-Benz E320 CDI",
+      "make": "mercedes-benz",
+      "model": "e320",
+      "year": 2005,
+      "price": 4700,
+      "sold_ts": 1781551726,
+      "category_ids": []
+    },
+    {
+      "id": 114799630,
+      "title": "1984 Chevrolet El Camino",
+      "make": "chevrolet",
+      "model": "el",
+      "year": 1984,
+      "price": 5100,
+      "sold_ts": 1781551710,
+      "category_ids": []
+    },
+    {
+      "id": 112886521,
+      "title": "2000 Porsche Boxster 5-Speed",
+      "make": "porsche",
+      "model": "boxster",
+      "year": 2000,
+      "price": 15000,
+      "sold_ts": 1781551474,
+      "category_ids": []
+    },
+    {
+      "id": 114741987,
+      "title": "34-Years-Owned 1959 MG MGA Roadster",
+      "make": "mg",
+      "model": "mga",
+      "year": 1959,
+      "price": 25250,
+      "sold_ts": 1781551317,
+      "category_ids": []
+    },
+    {
+      "id": 114837934,
+      "title": "1985 Honda XL80S",
+      "make": "honda",
+      "model": "xl80s",
+      "year": 1985,
+      "price": 5400,
+      "sold_ts": 1781551250,
+      "category_ids": []
+    },
+    {
+      "id": 115675337,
+      "title": "1967 Sunbeam Tiger Mk 2 Project",
+      "make": "sunbeam",
+      "model": "tiger",
+      "year": 1967,
+      "price": 8100,
+      "sold_ts": 1781551216,
+      "category_ids": []
+    },
+    {
+      "id": 115601950,
+      "title": "35k-Mile 2014 Mercedes-Benz C350 Sport Sedan",
+      "make": "mercedes-benz",
+      "model": "c350",
+      "year": 2014,
+      "price": 17250,
+      "sold_ts": 1781551215,
+      "category_ids": []
+    },
+    {
+      "id": 115619507,
+      "title": "1999 Ford F-250 Super Duty XLT SuperCab V10 4&#215;4",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1999,
+      "price": 14750,
+      "sold_ts": 1781551001,
+      "category_ids": []
+    },
+    {
+      "id": 115847561,
+      "title": "British Racing Green 2021 Land Rover Range Rover Autobiography",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2021,
+      "price": 50500,
+      "sold_ts": 1781550819,
+      "category_ids": []
+    },
+    {
+      "id": 114530484,
+      "title": "3,200-Mile 2016 Porsche 911 GT3 RS",
+      "make": "porsche",
+      "model": "911",
+      "year": 2016,
+      "price": 214000,
+      "sold_ts": 1781550676,
+      "category_ids": []
+    },
+    {
+      "id": 115063647,
+      "title": "1973 Volvo 144",
+      "make": "volvo",
+      "model": "144",
+      "year": 1973,
+      "price": 3850,
+      "sold_ts": 1781550582,
+      "category_ids": []
+    },
+    {
+      "id": 114286280,
+      "title": "1967 Volkswagen Type 2 Microbus",
+      "make": "volkswagen",
+      "model": "type",
+      "year": 1967,
+      "price": 28500,
+      "sold_ts": 1781550470,
+      "category_ids": []
+    },
+    {
+      "id": 115522198,
+      "title": "1,600-Mile 2003 Harley-Davidson CVO Screamin’ Eagle Road King 100th Anniversary",
+      "make": "harley-davidson",
+      "model": "cvo",
+      "year": 2003,
+      "price": 17500,
+      "sold_ts": 1781550443,
+      "category_ids": []
+    },
+    {
+      "id": 115332295,
+      "title": "5.8L-Powered 1988 Ford F-150 XLT Lariat 4×4 5-Speed",
+      "make": "ford",
+      "model": "f-150",
+      "year": 1988,
+      "price": 25000,
+      "sold_ts": 1781550324,
+      "category_ids": []
+    },
+    {
+      "id": 115657367,
+      "title": "2019 Porsche Cayenne Turbo",
+      "make": "porsche",
+      "model": "cayenne",
+      "year": 2019,
+      "price": 55000,
+      "sold_ts": 1781550212,
+      "category_ids": []
+    },
+    {
+      "id": 115673104,
+      "title": "2004 GMC Yukon XL SLE 4×4",
+      "make": "gmc",
+      "model": "yukon",
+      "year": 2004,
+      "price": 8500,
+      "sold_ts": 1781550211,
+      "category_ids": []
+    },
+    {
+      "id": 115008542,
+      "title": "2001 BMW 530i Sport 5-Speed",
+      "make": "bmw",
+      "model": "530i",
+      "year": 2001,
+      "price": 16500,
+      "sold_ts": 1781549985,
+      "category_ids": []
+    },
+    {
+      "id": 115724043,
+      "title": "Single-Family-Owned 2002 Subaru Impreza WRX Sedan 5-Speed",
+      "make": "subaru",
+      "model": "impreza",
+      "year": 2002,
+      "price": 11250,
+      "sold_ts": 1781549940,
+      "category_ids": []
+    },
+    {
+      "id": 115945152,
+      "title": "2005 Lexus LX470",
+      "make": "lexus",
+      "model": "lx470",
+      "year": 2005,
+      "price": 21000,
+      "sold_ts": 1781549926,
+      "category_ids": []
+    },
+    {
+      "id": 108521315,
+      "title": "1951 Cadillac Series 62 Convertible",
+      "make": "cadillac",
+      "model": "series",
+      "year": 1951,
+      "price": 54000,
+      "sold_ts": 1781549805,
+      "category_ids": []
+    },
+    {
+      "id": 111180848,
+      "title": "Gasser-Style, Supercharged 392 Hemi-Powered 1933 Willys 77 Coupe for The Lions Automobilia Foundation",
+      "make": "willys",
+      "model": "77",
+      "year": 1933,
+      "price": 40000,
+      "sold_ts": 1781549768,
+      "category_ids": []
+    },
+    {
+      "id": 112391566,
+      "title": "36-Years-Owned 1963 Chevrolet Corvette Split-Window Coupe L76 327/340 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1963,
+      "price": 196000,
+      "sold_ts": 1781549740,
+      "category_ids": []
+    },
+    {
+      "id": 115546336,
+      "title": "50k-Mile 2001 BMW X5 4.4i",
+      "make": "bmw",
+      "model": "x5",
+      "year": 2001,
+      "price": 7300,
+      "sold_ts": 1781549713,
+      "category_ids": []
+    },
+    {
+      "id": 115394942,
+      "title": "1995 Chevrolet Tahoe LS 2-Door 4&#215;4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 1995,
+      "price": 18250,
+      "sold_ts": 1781549623,
+      "category_ids": []
+    },
+    {
+      "id": 115451127,
+      "title": "2004 LTI TXII London Taxi",
+      "make": "lti",
+      "model": "txii",
+      "year": 2004,
+      "price": 13000,
+      "sold_ts": 1781549520,
+      "category_ids": []
+    },
+    {
+      "id": 115763819,
+      "title": "1984 Aston Martin Lagonda Series 2",
+      "make": "aston-martin",
+      "model": "lagonda",
+      "year": 1984,
+      "price": 55000,
+      "sold_ts": 1781549244,
+      "category_ids": []
+    },
+    {
+      "id": 112125079,
+      "title": "1963 Cadillac Fleetwood Sixty Special",
+      "make": "cadillac",
+      "model": "fleetwood",
+      "year": 1963,
+      "price": 12000,
+      "sold_ts": 1781549238,
+      "category_ids": []
+    },
+    {
+      "id": 115146610,
+      "title": "19k-Mile 2011 Mercedes-Benz SLS AMG",
+      "make": "mercedes-benz",
+      "model": "sls",
+      "year": 2011,
+      "price": 326000,
+      "sold_ts": 1781549185,
+      "category_ids": []
+    },
+    {
+      "id": 113679956,
+      "title": "1,776cc-Powered 1961 Volkswagen Beetle",
+      "make": "volkswagen",
+      "model": "beetle",
+      "year": 1961,
+      "price": 19010,
+      "sold_ts": 1781548980,
+      "category_ids": []
+    },
+    {
+      "id": 115612366,
+      "title": "2015 Land Rover LR4 HSE",
+      "make": "land-rover",
+      "model": "lr4",
+      "year": 2015,
+      "price": 7100,
+      "sold_ts": 1781548921,
+      "category_ids": []
+    },
+    {
+      "id": 115247513,
+      "title": "2,600-Mile 2007 Chevrolet Corvette Convertible Indy 500 Pace Car Edition",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2007,
+      "price": 32500,
+      "sold_ts": 1781548740,
+      "category_ids": []
+    },
+    {
+      "id": 115226295,
+      "title": "1997 Fiat Panda 4&#215;4 Country Club",
+      "make": "fiat",
+      "model": "panda",
+      "year": 1997,
+      "price": 17000,
+      "sold_ts": 1781548690,
+      "category_ids": []
+    },
+    {
+      "id": 114535900,
+      "title": "1964 Dodge 440 Hardtop 318",
+      "make": "dodge",
+      "model": "440",
+      "year": 1964,
+      "price": 12500,
+      "sold_ts": 1781548680,
+      "category_ids": []
+    },
+    {
+      "id": 115659693,
+      "title": "112-Mile 2001 BMW R1150GS",
+      "make": "bmw",
+      "model": "r1150gs",
+      "year": 2001,
+      "price": 8500,
+      "sold_ts": 1781548553,
+      "category_ids": []
+    },
+    {
+      "id": 110390267,
+      "title": "Original-Owner, 3,700-Mile 2019 Ford Shelby F-150 Lariat SuperCrew 4×4",
+      "make": "ford",
+      "model": "shelby",
+      "year": 2019,
+      "price": 75000,
+      "sold_ts": 1781548486,
+      "category_ids": []
+    },
+    {
+      "id": 115079270,
+      "title": "1994 Mercedes-Benz E320 Cabriolet",
+      "make": "mercedes-benz",
+      "model": "e320",
+      "year": 1994,
+      "price": 23010,
+      "sold_ts": 1781548343,
+      "category_ids": []
+    },
+    {
+      "id": 114810603,
+      "title": "2,200-Mile 2000 Ford Mustang SVT Cobra R",
+      "make": "ford",
+      "model": "mustang",
+      "year": 2000,
+      "price": 81000,
+      "sold_ts": 1781548324,
+      "category_ids": []
+    },
+    {
+      "id": 114535243,
+      "title": "2020 Polestar 1",
+      "make": "polestar",
+      "model": "1",
+      "year": 2020,
+      "price": 46500,
+      "sold_ts": 1781548320,
+      "category_ids": []
+    },
+    {
+      "id": 115816315,
+      "title": "1966 Chevrolet Corvette Convertible L72 427/425 4-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1966,
+      "price": 130000,
+      "sold_ts": 1781548123,
+      "category_ids": []
+    },
+    {
+      "id": 115294745,
+      "title": "4,100-Mile 2011 BMW 1M",
+      "make": "bmw",
+      "model": "1m",
+      "year": 2011,
+      "price": 92000,
+      "sold_ts": 1781548080,
+      "category_ids": []
+    },
+    {
+      "id": 114835987,
+      "title": "1,200-Mile 2013 Chevrolet Corvette 427 Convertible 60th Anniversary",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2013,
+      "price": 82000,
+      "sold_ts": 1781548035,
+      "category_ids": []
+    },
+    {
+      "id": 114746831,
+      "title": "1968 BSA A65L Lightning Project",
+      "make": "bsa",
+      "model": "a65l",
+      "year": 1968,
+      "price": 3300,
+      "sold_ts": 1781548005,
+      "category_ids": []
+    },
+    {
+      "id": 115073985,
+      "title": "1941 Packard One-Twenty Convertible Coupe",
+      "make": "packard",
+      "model": "one-twenty",
+      "year": 1941,
+      "price": 44500,
+      "sold_ts": 1781547942,
+      "category_ids": []
+    },
+    {
+      "id": 114760068,
+      "title": "8k-Mile 2001 Chevrolet Corvette Z06",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2001,
+      "price": 30750,
+      "sold_ts": 1781547778,
+      "category_ids": []
+    },
+    {
+      "id": 105584730,
+      "title": "2023 Rimac Nevera Time Attack",
+      "make": "rimac",
+      "model": "nevera",
+      "year": 2023,
+      "price": 1677000,
+      "sold_ts": 1781547564,
+      "category_ids": []
+    },
+    {
+      "id": 112862589,
+      "title": "2006 Vespa Granturismo 200 L",
+      "make": "vespa",
+      "model": "granturismo",
+      "year": 2006,
+      "price": 2900,
+      "sold_ts": 1781547420,
+      "category_ids": []
+    },
+    {
+      "id": 114256232,
+      "title": "1991 Nissan Maxima SE 5-Speed",
+      "make": "nissan",
+      "model": "maxima",
+      "year": 1991,
+      "price": 3500,
+      "sold_ts": 1781547360,
+      "category_ids": []
+    },
+    {
+      "id": 114499242,
+      "title": "1969 Ford Thunderbird Hardtop",
+      "make": "ford",
+      "model": "thunderbird",
+      "year": 1969,
+      "price": 13000,
+      "sold_ts": 1781547344,
+      "category_ids": []
+    },
+    {
+      "id": 115500021,
+      "title": "15k-Mile 2005 Dodge Neon SRT-4",
+      "make": "dodge",
+      "model": "neon",
+      "year": 2005,
+      "price": 19250,
+      "sold_ts": 1781547270,
+      "category_ids": []
+    },
+    {
+      "id": 112747447,
+      "title": "1948 Willys-Overland CJ-2A",
+      "make": "willys-overland",
+      "model": "cj-2a",
+      "year": 1948,
+      "price": 8000,
+      "sold_ts": 1781547060,
+      "category_ids": []
+    },
+    {
+      "id": 115440072,
+      "title": "2000 Corbin Sparrow Project",
+      "make": "corbin",
+      "model": "sparrow",
+      "year": 2000,
+      "price": 10250,
+      "sold_ts": 1781546957,
+      "category_ids": []
+    },
+    {
+      "id": 115079103,
+      "title": "2023 Fisker Ocean One Launch Edition",
+      "make": "fisker",
+      "model": "ocean",
+      "year": 2023,
+      "price": 18873,
+      "sold_ts": 1781546886,
+      "category_ids": []
+    },
+    {
+      "id": 113297444,
+      "title": "1999 Jaguar XJR",
+      "make": "jaguar",
+      "model": "xjr",
+      "year": 1999,
+      "price": 4600,
+      "sold_ts": 1781546880,
+      "category_ids": []
+    },
+    {
+      "id": 115643615,
+      "title": "2002 Lexus ES300",
+      "make": "lexus",
+      "model": "es300",
+      "year": 2002,
+      "price": 8700,
+      "sold_ts": 1781546843,
+      "category_ids": []
+    },
+    {
+      "id": 115829599,
+      "title": "1974 Yamaha MX360",
+      "make": "yamaha",
+      "model": "mx360",
+      "year": 1974,
+      "price": 4700,
+      "sold_ts": 1781546838,
+      "category_ids": []
+    },
+    {
+      "id": 115648627,
+      "title": "One-Owner 2004 Toyota 4Runner Limited V8 4WD",
+      "make": "toyota",
+      "model": "4runner",
+      "year": 2004,
+      "price": 12750,
+      "sold_ts": 1781546795,
+      "category_ids": []
+    },
+    {
+      "id": 113092143,
+      "title": "2016 BMW Alpina B6 xDrive Gran Coupe",
+      "make": "bmw",
+      "model": "alpina",
+      "year": 2016,
+      "price": 31000,
+      "sold_ts": 1781546775,
+      "category_ids": []
+    },
+    {
+      "id": 113891773,
+      "title": "1949 Cushman Package Kar",
+      "make": "cushman",
+      "model": "package",
+      "year": 1949,
+      "price": 9500,
+      "sold_ts": 1781546760,
+      "category_ids": []
+    },
+    {
+      "id": 115645099,
+      "title": "One-Owner 2022 MV Agusta Dragster RR SCS",
+      "make": "mv",
+      "model": "agusta",
+      "year": 2022,
+      "price": 9700,
+      "sold_ts": 1781546738,
+      "category_ids": []
+    },
+    {
+      "id": 113729622,
+      "title": "2012 Jaguar XJ Supersport",
+      "make": "jaguar",
+      "model": "xj",
+      "year": 2012,
+      "price": 18000,
+      "sold_ts": 1781546640,
+      "category_ids": []
+    },
+    {
+      "id": 115578550,
+      "title": "2016 Cadillac Escalade ESV Platinum 4WD",
+      "make": "cadillac",
+      "model": "escalade",
+      "year": 2016,
+      "price": 42250,
+      "sold_ts": 1781546436,
+      "category_ids": []
+    },
+    {
+      "id": 115000942,
+      "title": "British Racing Green 2022 Porsche 911 GT3 Touring 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2022,
+      "price": 298000,
+      "sold_ts": 1781546367,
+      "category_ids": []
+    },
+    {
+      "id": 115494181,
+      "title": "1989 Ford Taurus SHO 5-Speed",
+      "make": "ford",
+      "model": "taurus",
+      "year": 1989,
+      "price": 7500,
+      "sold_ts": 1781546340,
+      "category_ids": []
+    },
+    {
+      "id": 107984690,
+      "title": "2023 Mercedes-Benz CLS450",
+      "make": "mercedes-benz",
+      "model": "cls450",
+      "year": 2023,
+      "price": 52000,
+      "sold_ts": 1781546221,
+      "category_ids": []
+    },
+    {
+      "id": 114419225,
+      "title": "Ex–Kelley Racing 2000 Dallara-Oldsmobile IR-00 Indy Car",
+      "make": "dallara-oldsmobile",
+      "model": "ir-00",
+      "year": 2000,
+      "price": 45000,
+      "sold_ts": 1781546220,
+      "category_ids": []
+    },
+    {
+      "id": 111294456,
+      "title": "1969 Jaguar XKE Series II Coupe 4-Speed",
+      "make": "jaguar",
+      "model": "xke",
+      "year": 1969,
+      "price": 45500,
+      "sold_ts": 1781546019,
+      "category_ids": []
+    },
+    {
+      "id": 113373779,
+      "title": "27-Years-Owned 1948 Oldsmobile Series 66 Woodie Station Wagon",
+      "make": "oldsmobile",
+      "model": "series",
+      "year": 1948,
+      "price": 32500,
+      "sold_ts": 1781545980,
+      "category_ids": []
+    },
+    {
+      "id": 115133215,
+      "title": "35k-Mile 2009 Chevrolet Corvette Z06 3LZ",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2009,
+      "price": 46856,
+      "sold_ts": 1781545946,
+      "category_ids": []
+    },
+    {
+      "id": 115529596,
+      "title": "British Racing Green 2020 Land Rover Range Rover HSE P525",
+      "make": "land-rover",
+      "model": "range",
+      "year": 2020,
+      "price": 43750,
+      "sold_ts": 1781545928,
+      "category_ids": []
+    },
+    {
+      "id": 115302473,
+      "title": "24k-Mile 1999 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 1999,
+      "price": 28500,
+      "sold_ts": 1781545675,
+      "category_ids": []
+    },
+    {
+      "id": 115369808,
+      "title": "23-Years-Owned 1958 Porsche 356A Speedster",
+      "make": "porsche",
+      "model": "356a",
+      "year": 1958,
+      "price": 356356,
+      "sold_ts": 1781545200,
+      "category_ids": []
     }
   ]
 }

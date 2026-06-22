@@ -7,8 +7,9 @@ richer every day — which is also what makes appreciation trends possible over 
 
 A comp is a completed listing that actually SOLD ("Sold for $X"); reserve-not-met
 ("Bid to $X") lots are excluded — they are not sales and would bias fair value low.
-Only comps that fall into one of our taste categories are kept, to keep the file small
-and relevant.
+Every sold car with a year and a price is kept — deal scoring spans the whole board, so
+the pool can't be category-locked. `category_ids` is a best-effort tag for the optional
+filter presets, not a gate.
 """
 
 from __future__ import annotations
@@ -27,7 +28,11 @@ RETENTION_SECONDS = RETENTION_DAYS * 86400
 
 def parse_completed_item(raw_item: dict) -> dict | None:
     """Turn a raw completed listing into a comp record, or None if it is not a usable
-    sale (reserve-not-met, no year, no price, or not in any of our categories)."""
+    sale (reserve-not-met, no year, or no price).
+
+    Any sold car with a year + price is kept — deal scoring needs comps across the whole
+    board, not just the taste categories. `category_ids` is tagged for the filter presets
+    but is no longer a gate (pivot 2026-06-21)."""
     rec = parse.parse_item(raw_item)
     if rec["bid"]["status"] != "sold":          # "Sold for ..." only (not "Bid to")
         return None
@@ -35,9 +40,7 @@ def parse_completed_item(raw_item: dict) -> dict | None:
     price = rec["bid"]["amount"]
     if not isinstance(year, int) or not price or price <= 0:
         return None
-    cats = categories.match_categories(rec)
-    if not cats:
-        return None
+    cats = categories.match_categories(rec)     # best-effort tag (presets), not a gate
     sold_ts = raw_item.get("sold_text_timestamp") or raw_item.get("timestamp_end")
     try:
         sold_ts = int(sold_ts) if sold_ts is not None else None

@@ -21,6 +21,70 @@
   #status { padding: 24px 18px; color: #9aa0ad; font-size: 14px; line-height: 1.6; }
   code { background: #1a1d24; padding: 1px 6px; border-radius: 4px; }
   .hint { padding: 2px 18px 10px; font-size: 12px; color: #7b8190; }
+  /* --- filter bar + saved-view / preset chips (pivot) --- */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 18px; font-size: 13px; }
+  .filters input[type=number] { width: 92px; }
+  .filters input, .filters button { background: #1a1d24; color: #e7e9ee; border: 1px solid #2a2e38;
+                                     border-radius: 6px; padding: 5px 8px; font-size: 13px; }
+  .filters input::placeholder { color: #6b7280; }
+  .filters label { color: #9aa0ad; display: inline-flex; align-items: center; gap: 4px; }
+  .filters button { cursor: pointer; }
+  .filters button:hover { background: #22262f; }
+  #f-count { padding: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 18px 8px; }
+  .chip { cursor: pointer; font-size: 12px; padding: 3px 10px; border-radius: 999px;
+          background: #1a1d24; color: #c7ccd6; border: 1px solid #2a2e38; }
+  .chip:hover { background: #22262f; }
+  .chip.active { background: #5b8def; color: #0f1115; border-color: #5b8def; font-weight: 600; }
+  .chip .x { color: #7b8190; margin-left: 6px; }
+  .chip.preset { border-style: dashed; }
+  /* --- ending-soon ticker (Phase 1) --- */
+  #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex;
+            align-items: stretch; height: 46px; background: #12141a;
+            border-top: 1px solid #1c1f27; border-bottom: 1px solid #1c1f27; }
+  #ticker[hidden] { display: none; }
+  .ticker-label { flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: 6px;
+                  padding: 0 14px; font-size: 12px; font-weight: 600; color: #c7ccd6;
+                  background: #12141a; border-right: 1px solid #1c1f27; }
+  .ticker-label .deals { color: #ffd54a; }
+  .ticker-viewport { overflow: hidden; flex: 1 1 auto; display: flex; align-items: center; }
+  .ticker-track { display: inline-flex; align-items: center;
+                  animation: ticker-marquee linear infinite; will-change: transform; }
+  #ticker:hover .ticker-track, #ticker.paused .ticker-track { animation-play-state: paused; }
+  @keyframes ticker-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-chip { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto;
+                 padding: 4px 14px; border-right: 1px solid #1c1f27;
+                 text-decoration: none; color: #e7e9ee; font-size: 12px; line-height: 1.2; }
+  .ticker-chip:hover { background: #1a1d24; }
+  .ticker-chip.deal { background: rgba(255,213,74,0.09); }
+  .ticker-chip img { width: 40px; height: 28px; object-fit: cover; border-radius: 4px;
+                     background: #1a1d24; flex: 0 0 auto; }
+  .ticker-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+  .ticker-bid { color: #c7ccd6; }
+  .ticker-deal { color: #ffd54a; font-weight: 600; }
+  .ticker-deal.above { color: #9aa0ad; font-weight: 400; }
+  .ticker-thin { color: #6b7280; }
+  .ticker-miles { color: #c7ccd6; background: #1f232c; border-radius: 3px; padding: 1px 5px; font-size: 11px; }
+  .ticker-miles.tmu { color: #e0a13a; }
+  .ticker-flag { color: #ffb3a7; background: rgba(226,85,59,0.18); border-radius: 3px;
+                 padding: 1px 5px; font-size: 10px; font-weight: 700; letter-spacing: .2px; }
+  .ticker-good { color: #28b487; font-size: 10px; font-weight: 600; }
+  .ticker-clock { color: #9aa0ad; font-variant-numeric: tabular-nums; min-width: 52px; }
+  .ticker-clock.urgent { color: #e2553b; font-weight: 600; }
+  .ticker-tag { background: #ffd54a; color: #0f1115; font-weight: 700; font-size: 10px;
+                padding: 1px 5px; border-radius: 3px; }
+  .ticker-delta { font-size: 10px; font-weight: 700; margin-left: 1px; }
+  .ticker-delta.up { color: #28b487; }
+  .ticker-delta.down { color: #e2553b; }
+  @keyframes chip-flash-up   { from { background: rgba(40,180,135,0.45); } to { background: transparent; } }
+  @keyframes chip-flash-down { from { background: rgba(226,85,59,0.45);  } to { background: transparent; } }
+  .ticker-chip.flash-up   { animation: chip-flash-up   1.8s ease-out 1; }
+  .ticker-chip.flash-down { animation: chip-flash-down 1.8s ease-out 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+    .ticker-viewport { overflow-x: auto; }
+    .ticker-chip.flash-up, .ticker-chip.flash-down { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -48,12 +112,28 @@
       <option value="photos">Photos</option>
     </select>
   </span>
-  <span class="hint">Click the legend to toggle a category · hover for the photo · click a car to open its BaT listing · drag/scroll to zoom</span>
+  <span class="hint">Legend toggles a category · hover for the photo · click a car to open its listing · drag/scroll to zoom</span>
 </div>
+<div class="filters">
+  <input id="f-make" placeholder="make(s), e.g. porsche toyota" list="makes" autocomplete="off">
+  <datalist id="makes"></datalist>
+  <input id="f-yearmin" type="number" inputmode="numeric" placeholder="year ≥">
+  <input id="f-yearmax" type="number" inputmode="numeric" placeholder="year ≤">
+  <input id="f-pricemax" type="number" inputmode="numeric" placeholder="max $">
+  <input id="f-milesmax" type="number" inputmode="numeric" placeholder="max mi">
+  <label><input type="checkbox" id="f-noreserve"> No reserve</label>
+  <label><input type="checkbox" id="f-deals"> Deals only</label>
+  <button id="f-clear" type="button">Clear</button>
+  <button id="f-save" type="button">★ Save view</button>
+  <span id="f-count" class="hint"></span>
+</div>
+<div class="chips" id="chips"></div>
+<div id="ticker" hidden></div>
 <div id="chart"></div>
 <div id="status"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<script src="./filters.js"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 const CATEGORY_COLORS = {
@@ -88,51 +168,92 @@ async function loadData() {
   return null;
 }
 
-function fmtMoney(n) {
-  return n == null ? "—" : "$" + Number(n).toLocaleString();
+const CURRENCY_SYMBOLS = { USD: "$", EUR: "€", GBP: "£" };
+function fmtMoney(n, currency) {
+  if (n == null) return "—";
+  const num = Number(n).toLocaleString();
+  const sym = CURRENCY_SYMBOLS[currency || "USD"];
+  return sym ? sym + num : (currency ? escapeHTML(currency) + " " : "$") + num;
+}
+function escapeHTML(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g,
+    c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+// A car is "scoreable" only with enough same make+model comps; thin-comp cars never
+// show a deal % or green coloring (the honesty gate from the design doc).
+const SCOREABLE_BASES = { "make-model-y3": 1, "make-model-y7": 1 };
+function isScoreable(v) {
+  return !!(v && v.fair_value && SCOREABLE_BASES[v.basis] && v.deal_pct != null);
 }
 
-function buildSeries(snapshot, yMetric, markers) {
+// Phase 4: mileage + condition badges (the "kill the wasted scroll" signal).
+const COND_LABELS = {
+  restomod: "RESTOMOD", replica: "REPLICA", tribute: "TRIBUTE", "kit-car": "KIT CAR",
+  modified: "MODIFIED", "engine-swap": "ENGINE SWAP", project: "PROJECT",
+  "salvage-title": "SALVAGE", "rebuilt-engine": "REBUILT ENGINE", repaint: "REPAINT",
+  "numbers-matching": "#s-MATCHING", "original-paint": "ORIG PAINT",
+};
+const COND_GOOD = { "numbers-matching": 1, "original-paint": 1 };
+function condSplit(condition) {
+  const bad = [], good = [];
+  for (const f of condition || []) (COND_GOOD[f] ? good : bad).push(COND_LABELS[f] || f.toUpperCase());
+  return { bad, good };
+}
+function fmtMiles(d) {
+  if (!d || d.miles == null) return (d && d.tmu) ? "TMU" : null;
+  const s = d.miles >= 10000 ? Math.round(d.miles / 1000) + "k mi" : d.miles.toLocaleString() + " mi";
+  return d.tmu ? s + " · TMU" : s;
+}
+
+// Plots the cars passed in (already filtered). Untagged cars go in a gray "Other" series
+// so the WHOLE board shows, not just the taste categories. A car only plots if it has the
+// chosen Y value — we never fake a 0 for unknown engagement (honest, like the deal axis).
+function buildSeries(cars, yMetric, markers) {
   const usePhotos = markers === "photos";
+  const OTHER = "__other";
   const byCat = {};
-  for (const a of snapshot.auctions) {
+  for (const a of cars) {
     const price = a.bid && a.bid.amount;
     if (!price || price <= 0) continue;                 // log axis needs price > 0
-    if (!a.category_ids || a.category_ids.length === 0) continue;
     let heat;
     if (yMetric === "deal") {
       if (!a.value || a.value.deal_pct == null) continue;   // only cars with a comp estimate
-      heat = Math.round(a.value.deal_pct * 100);
+      if (!(a.flags && a.flags.no_reserve)) continue;       // deal axis = real discounts: a reserve
+      heat = Math.round(a.value.deal_pct * 100);            // bid isn't a price, so "% under" is bogus
     } else {
-      heat = (a.engagement && a.engagement[yMetric]) || 0;
+      const e = a.engagement && a.engagement[yMetric];
+      if (e == null) continue;                              // unknown engagement: don't fake a 0
+      heat = e;
     }
     const photo = usePhotos && a.thumbnail_url;
     const isDeal = !!(a.value && a.value.is_deal);          // ending soon + under comps + enough comps
     const dotSize = isDeal ? 19 : 13;
-    for (const cid of a.category_ids) {
+    const cats = (a.category_ids && a.category_ids.length) ? a.category_ids : [OTHER];
+    for (const cid of cats) {
+      const color = CATEGORY_COLORS[cid] || "#6b7280";     // untagged -> gray
       (byCat[cid] = byCat[cid] || []).push({
         value: [price, heat],
         symbol: photo ? "image://" + a.thumbnail_url : "circle",
         symbolSize: photo ? [48, 36] : dotSize,
-        // colored dots by default; flagged deals get a gold ring
         itemStyle: photo
-          ? { borderColor: isDeal ? "#ffd54a" : (CATEGORY_COLORS[cid] || "#888"), borderWidth: isDeal ? 3 : 2 }
-          : { color: CATEGORY_COLORS[cid] || "#888", opacity: 0.85,
+          ? { borderColor: isDeal ? "#ffd54a" : color, borderWidth: isDeal ? 3 : 2 }
+          : { color: color, opacity: 0.85,
               borderColor: isDeal ? "#ffd54a" : "#0f1115", borderWidth: isDeal ? 3 : 1 },
-        _t: a.title, _y: a.year, _p: price,
+        _t: a.title, _y: a.year, _p: price, _cur: a.bid && a.bid.currency,
         _c: (a.engagement && a.engagement.comments),
         _w: (a.engagement && a.engagement.watchers),
-        _img: a.thumbnail_url, _url: a.listing_url, _v: a.value,
+        _img: a.thumbnail_url, _url: a.listing_url, _v: a.value, _d: a.details,
+        _nr: !!(a.flags && a.flags.no_reserve),
       });
     }
   }
   return Object.keys(byCat).sort().map(cid => ({
-    name: CATEGORY_LABELS[cid] || cid,
+    name: cid === OTHER ? "Other" : (CATEGORY_LABELS[cid] || cid),
     type: "scatter",
     data: byCat[cid],
-    color: CATEGORY_COLORS[cid] || "#888",
+    color: CATEGORY_COLORS[cid] || "#6b7280",
     emphasis: { focus: "series" },
-    large: false,
+    large: true, largeThreshold: 400,            // whole board can be ~1k points
   }));
 }
 
@@ -140,25 +261,43 @@ function render() {
   const yMetric = document.getElementById("ymetric").value;
   const xType = document.getElementById("xmetric").value === "linear" ? "value" : "log";
   const markers = document.getElementById("markers").value;
-  const series = buildSeries(SNAPSHOT, yMetric, markers);
+  const spec = currentSpec();
+  const all = SNAPSHOT.auctions;
+  const cars = window.BATFilters ? BATFilters.filterCars(all, spec) : all;
+  updateFilterReadout(cars, all, spec);
+  const series = buildSeries(cars, yMetric, markers);
   chart.setOption({
     tooltip: {
       trigger: "item",
       backgroundColor: "#16181f", borderColor: "#2a2e38", textStyle: { color: "#e7e9ee" },
       formatter: (p) => {
         const d = p.data;
-        const img = d._img ? `<img src="${d._img}" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : "";
+        const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : "";
         let vline = "";
         const v = d._v;
         if (v && v.fair_value) {
           const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
-          vline = `Fair value: ${fmtMoney(v.fair_value)} <span style="color:#9aa0ad">(${v.n_comps} comps, ${v.basis})</span><br>`;
-          if (below != null) vline += `Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
-            + (v.is_deal ? ` · <b style="color:#ffd54a">DEAL — ending soon</b>` : "") + `<br>`;
+          vline = `Fair value: ${fmtMoney(v.fair_value, d._cur)} <span style="color:#9aa0ad">(${v.n_comps} comps, ${v.basis})</span><br>`;
+          if (d._nr && below != null) {            // discount only means something on a no-reserve car
+            vline += `Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
+              + (v.is_deal ? ` · <b style="color:#ffd54a">DEAL — ending soon</b>` : "") + `<br>`;
+          } else if (!d._nr) {
+            vline += `<span style="color:#9aa0ad">Reserve auction — bid may be below reserve, not a discount</span><br>`;
+          }
           if (v.appreciation_pct != null) vline += `Recent trend: ${v.appreciation_pct >= 0 ? "+" : ""}${Math.round(v.appreciation_pct * 100)}%<br>`;
         }
-        return `${img}<b>${d._y || ""} ${d._t || ""}</b><br>`
-          + `Bid: ${fmtMoney(d._p)}<br>`
+        let dline = "";
+        const det = d._d;
+        if (det) {
+          const miles = fmtMiles(det), cs = condSplit(det.condition), parts = [];
+          if (miles) parts.push(miles);
+          if (cs.bad.length) parts.push(`<span style="color:#e2553b">🚩 ${cs.bad.join(", ")}</span>`);
+          if (cs.good.length) parts.push(`<span style="color:#28b487">${cs.good.join(", ")}</span>`);
+          if (parts.length) dline = parts.join(" · ") + "<br>";
+        }
+        return `${img}<b>${escapeHTML(d._t)}</b><br>`
+          + `Bid: ${fmtMoney(d._p, d._cur)}<br>`
+          + dline
           + `Comments: ${d._c ?? "—"} · Watchers: ${d._w ?? "—"}<br>`
           + vline
           + `<span style="color:#9aa0ad">click to open listing</span>`;
@@ -169,13 +308,15 @@ function render() {
     },
     grid: { left: 64, right: 28, top: 44, bottom: 56 },
     xAxis: {
-      type: xType, name: "Bid price (USD)", nameLocation: "middle", nameGap: 34,
+      type: xType, name: "Bid price", nameLocation: "middle", nameGap: 34,
       axisLabel: { formatter: (v) => "$" + (v >= 1000 ? (v/1000) + "k" : v) },
       splitLine: { lineStyle: { color: "#1c1f27" } },
       min: xType === "log" ? 1000 : 0,
     },
     yAxis: {
-      type: "value", name: (yMetric === "watchers" ? "Watchers" : "Comments") + " (heat) →",
+      type: "value",
+      name: yMetric === "deal" ? "% under comps →"
+        : (yMetric === "watchers" ? "Watchers" : "Comments") + " (heat) →",
       nameLocation: "middle", nameGap: 44,
       splitLine: { lineStyle: { color: "#1c1f27" } },
     },
@@ -187,10 +328,267 @@ function render() {
   }, true);
 }
 
+// --- Ending-soon ticker (Phase 1): built from the snapshot we already loaded (zero new fetch).
+// Window is 48h to match the is_deal definition, so every flagged deal appears. Scoped to the
+// taste categories (like the map). The countdown is the only genuinely-live element.
+const TICKER_WINDOW_MS = 48 * 3600 * 1000;
+const TICKER_MAX = 60;            // cap chips so the marquee stays glanceable (deals sort first)
+let tickerTimer = null;
+
+function buildTicker(snapshot) {
+  const el = document.getElementById("ticker");
+  if (!el || !snapshot || !snapshot.auctions) return;
+  const now = Date.now();
+  let items = [];
+  for (const a of snapshot.auctions) {
+    // whole board (pivot): ending-soon cars across every make, not just the taste categories,
+    // so the ticker surfaces every deal. Deals (no-reserve, under comps) sort to the front.
+    const price = a.bid && a.bid.amount;
+    if (!price || price <= 0) continue;
+    const endMs = a.ends_at ? Date.parse(a.ends_at) : NaN;
+    if (!endMs || endMs <= now || endMs - now > TICKER_WINDOW_MS) continue;  // ending within window, not ended
+    const v = a.value || null;                                   // ~960 cars have value:null — guard it
+    const scoreable = isScoreable(v);
+    items.push({
+      id: a.id,
+      title: a.title || "",                                       // BaT titles already include the year
+      url: a.listing_url, img: a.thumbnail_url,
+      bid: price, cur: a.bid && a.bid.currency, endMs,
+      scoreable,
+      noReserve: !!(a.flags && a.flags.no_reserve),
+      isDeal: !!(scoreable && v.is_deal),
+      dealPct: scoreable ? Math.round(v.deal_pct * 100) : null,
+      dealScore: scoreable && v.deal_score != null ? v.deal_score : null,  // condition-adjusted
+      fairValue: scoreable ? v.fair_value : null,
+      details: a.details || null,
+    });
+  }
+  if (!items.length) { el.hidden = true; return; }               // fail-soft: no ticker, map still works
+  // deals first (biggest discount), then everything else soonest-ending first
+  const score = (it) => it.dealScore != null ? it.dealScore : (it.dealPct != null ? it.dealPct / 100 : 0);
+  items.sort((x, y) => {
+    if (x.isDeal !== y.isDeal) return x.isDeal ? -1 : 1;
+    if (x.isDeal && y.isDeal) return score(y) - score(x);   // condition-adjusted deal_score
+    return x.endMs - y.endMs;
+  });
+  const totalDeals = items.reduce((n, i) => n + (i.isDeal ? 1 : 0), 0);
+  // cap a glanceable marquee — deals sort first, so the cap keeps every deal + the soonest cars
+  items = items.slice(0, TICKER_MAX);
+
+  applyDailyFlash(items);                                         // Phase 2: green/red daily diff
+  const chips = items.map(chipHTML).join("");
+  const label = `<div class="ticker-label">⏱ Ending soon`
+    + (totalDeals ? ` · <span class="deals">${totalDeals} deal${totalDeals > 1 ? "s" : ""}</span>` : "")
+    + `</div>`;
+  const dur = Math.max(30, items.length * 2.4);                  // ~constant speed regardless of count
+  // chips rendered twice so translateX(-50%) loops seamlessly
+  el.innerHTML = label
+    + `<div class="ticker-viewport"><div class="ticker-track" style="animation-duration:${dur}s">`
+    + chips + chips
+    + `</div></div>`;
+  el.hidden = false;
+  startTickerCountdown();
+}
+
+// Phase 2 green/red flash: diff each scoreable car's deal % against what we stored the last
+// day the page was opened. Mutates items with a `.delta` (points moved). Fires only across a
+// day boundary, only for scoreable cars, and persists today's values for tomorrow. localStorage
+// only — no network, no timer.
+function applyDailyFlash(items) {
+  const KEY = "bat_ticker_prev_v1";
+  const d = new Date();
+  const today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  let prev = null;
+  try { prev = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { prev = null; }
+  const crossDay = !!(prev && prev.day && prev.day !== today);
+  const current = {};
+  for (const it of items) {
+    if (it.scoreable && it.id != null) current[it.id] = it.dealPct;
+  }
+  if (crossDay && prev.values) {
+    for (const it of items) {
+      if (it.scoreable && it.id != null && prev.values[it.id] != null) {
+        const delta = it.dealPct - prev.values[it.id];                // points the deal moved
+        if (delta !== 0) it.delta = delta;
+      }
+    }
+  }
+  if (!prev || prev.day !== today) {
+    try { localStorage.setItem(KEY, JSON.stringify({ day: today, values: current })); } catch (e) {}
+  }
+}
+
+function chipHTML(it) {
+  const safeUrl = /^https?:\/\//i.test(it.url || "") ? it.url : "#";   // no javascript: hrefs from scraped data
+  const img = it.img
+    ? `<img src="${escapeHTML(it.img)}" loading="lazy" referrerpolicy="no-referrer" alt="">` : "";
+  let dealHTML;
+  if (it.isDeal) {
+    dealHTML = `<span class="ticker-tag">DEAL</span>`
+      + `<span class="ticker-deal">${it.dealPct}% under</span>`;
+  } else if (it.scoreable && it.noReserve && it.dealPct != null) {
+    const above = it.dealPct < 0;                 // a real discount only on a no-reserve car
+    dealHTML = `<span class="ticker-deal${above ? " above" : ""}">`
+      + (above ? (-it.dealPct) + "% over" : it.dealPct + "% under") + `</span>`;
+  } else if (it.scoreable) {
+    // reserve car: show the comp market as context, never a discount (bid may be below reserve)
+    dealHTML = `<span class="ticker-thin">comps ~${fmtMoney(it.fairValue, it.cur)}</span>`;
+  } else {
+    dealHTML = `<span class="ticker-thin">no comp est.</span>`;  // thin comps, no number
+  }
+  let deltaHTML = "", flashCls = "";
+  if (it.delta != null && it.delta !== 0) {                       // moved since the last day you looked
+    const up = it.delta > 0;                                      // deal improved (more under comps)
+    deltaHTML = `<span class="ticker-delta ${up ? "up" : "down"}">${up ? "▲" : "▼"}${Math.abs(it.delta)}</span>`;
+    flashCls = up ? " flash-up" : " flash-down";
+  }
+  // mileage + condition: the at-a-glance "is this worth a look" signal
+  const milesTxt = fmtMiles(it.details);
+  const milesHTML = milesTxt
+    ? `<span class="ticker-miles${it.details && it.details.tmu ? " tmu" : ""}">${escapeHTML(milesTxt)}</span>` : "";
+  const cs = condSplit(it.details && it.details.condition);
+  let condHTML = "";
+  if (cs.bad.length) condHTML = `<span class="ticker-flag">🚩${escapeHTML(cs.bad[0])}</span>`;
+  else if (cs.good.length) condHTML = `<span class="ticker-good">${escapeHTML(cs.good[0])}</span>`;
+  return `<a class="ticker-chip${it.isDeal ? " deal" : ""}${flashCls}" href="${escapeHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">`
+    + img
+    + `<span class="ticker-name">${escapeHTML(it.title)}</span>`
+    + `<span class="ticker-bid">${fmtMoney(it.bid, it.cur)}</span>`
+    + milesHTML
+    + condHTML
+    + dealHTML
+    + deltaHTML
+    + `<span class="ticker-clock" data-ends="${it.endMs}"></span>`
+    + `</a>`;
+}
+
+function fmtCountdown(ms) {
+  if (ms <= 0) return "ENDED";
+  const s = Math.floor(ms / 1000);
+  const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600),
+        m = Math.floor((s % 3600) / 60), sec = s % 60;
+  if (d > 0) return d + "d " + h + "h";
+  if (h > 0) return h + "h " + m + "m";
+  if (m > 0) return m + "m " + sec + "s";
+  return sec + "s";
+}
+function tickCountdowns() {
+  const now = Date.now();
+  document.querySelectorAll("#ticker .ticker-clock").forEach(el => {
+    const left = Number(el.getAttribute("data-ends")) - now;
+    el.textContent = fmtCountdown(left);
+    el.classList.toggle("urgent", left > 0 && left <= 3600 * 1000);   // < 1h to go
+  });
+}
+function startTickerCountdown() {
+  if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; }
+  tickCountdowns();
+  if (document.visibilityState === "visible") tickerTimer = setInterval(tickCountdowns, 1000);
+}
+document.addEventListener("visibilitychange", () => {
+  const el = document.getElementById("ticker");
+  const hidden = document.visibilityState !== "visible";
+  if (el) el.classList.toggle("paused", hidden);                 // pause marquee when tab is hidden
+  if (hidden) { if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; } }
+  else if (el && !el.hidden) startTickerCountdown();
+});
+
 chart.on("click", (p) => { if (p.data && p.data._url) window.open(p.data._url, "_blank"); });
 document.getElementById("ymetric").addEventListener("change", render);
 document.getElementById("xmetric").addEventListener("change", render);
 document.getElementById("markers").addEventListener("change", render);
+
+// --- filter controller (pivot): one spec, read from the bar, written by chips/presets/saved views
+const SAVED_KEY = "bat_saved_views_v1";
+let activePreset = null;   // a category id for a one-tap preset, or null
+
+function debounce(fn, ms) { let t; return function () { clearTimeout(t); t = setTimeout(fn, ms); }; }
+
+function currentSpec() {
+  const v = id => (document.getElementById(id).value || "").trim();
+  const n = id => { const x = v(id); return x ? Number(x) : null; };
+  const spec = {};
+  const mk = v("f-make");
+  if (mk) spec.makes = mk.toLowerCase().split(/[,\s]+/).filter(Boolean);
+  const ymin = n("f-yearmin"); if (ymin) spec.yearMin = ymin;
+  const ymax = n("f-yearmax"); if (ymax) spec.yearMax = ymax;
+  const pmax = n("f-pricemax"); if (pmax) spec.priceMax = pmax;
+  const mmax = n("f-milesmax"); if (mmax) spec.milesMax = mmax;
+  if (document.getElementById("f-noreserve").checked) spec.noReserve = true;
+  if (document.getElementById("f-deals").checked) spec.dealsOnly = true;
+  if (activePreset) spec.category = activePreset;
+  return spec;
+}
+
+function applySpec(spec) {
+  spec = spec || {};
+  document.getElementById("f-make").value = (spec.makes || []).join(" ");
+  document.getElementById("f-yearmin").value = spec.yearMin || "";
+  document.getElementById("f-yearmax").value = spec.yearMax || "";
+  document.getElementById("f-pricemax").value = spec.priceMax || "";
+  document.getElementById("f-milesmax").value = spec.milesMax || "";
+  document.getElementById("f-noreserve").checked = !!spec.noReserve;
+  document.getElementById("f-deals").checked = !!spec.dealsOnly;
+  activePreset = spec.category || null;
+}
+
+function updateFilterReadout(cars, all, spec) {
+  const el = document.getElementById("f-count");
+  if (!el) return;
+  let msg = `${cars.length} of ${all.length} cars`;
+  if (spec && spec.milesMax != null && window.BATFilters) {        // 1C-A honesty: say where the data is
+    msg += ` · mileage known for ${BATFilters.knownCount(cars, "miles")}`;
+  }
+  el.textContent = msg;
+}
+
+function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
+function storeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list.slice(0, 20))); } catch (e) {} }
+
+function renderChips() {
+  const wrap = document.getElementById("chips");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  const presets = [["", "All"]].concat(Object.keys(CATEGORY_LABELS).map(id => [id, CATEGORY_LABELS[id]]));
+  for (const [id, label] of presets) {
+    const c = document.createElement("span");
+    c.className = "chip preset" + ((activePreset || "") === id ? " active" : "");
+    c.textContent = label;
+    c.onclick = () => { activePreset = id || null; renderChips(); render(); };
+    wrap.appendChild(c);
+  }
+  for (const view of loadSaved()) {
+    const c = document.createElement("span");
+    c.className = "chip"; c.textContent = view.name;
+    c.onclick = () => { applySpec(view.spec); renderChips(); render(); };
+    const x = document.createElement("span");
+    x.className = "x"; x.textContent = "✕";
+    x.onclick = (e) => { e.stopPropagation(); storeSaved(loadSaved().filter(v => v.name !== view.name)); renderChips(); };
+    c.appendChild(x);
+    wrap.appendChild(c);
+  }
+}
+
+function setupFilters(cars) {
+  const counts = {};
+  for (const a of cars) { const m = a.make && a.make.slug; if (m) counts[m] = (counts[m] || 0) + 1; }
+  const dl = document.getElementById("makes");
+  Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 60).forEach(m => {
+    const o = document.createElement("option"); o.value = m; dl.appendChild(o);
+  });
+  ["f-make", "f-yearmin", "f-yearmax", "f-pricemax", "f-milesmax"].forEach(
+    id => document.getElementById(id).addEventListener("input", debounce(render, 200)));
+  ["f-noreserve", "f-deals"].forEach(id => document.getElementById(id).addEventListener("change", render));
+  document.getElementById("f-clear").onclick = () => { applySpec({}); renderChips(); render(); };
+  document.getElementById("f-save").onclick = () => {
+    const name = (prompt("Name this view (e.g. \"Dad: cheap trucks\"):") || "").trim();
+    if (!name) return;
+    const list = loadSaved().filter(v => v.name !== name);
+    list.unshift({ name, spec: currentSpec() });
+    storeSaved(list); renderChips();
+  };
+  renderChips();
+}
 
 (async function init() {
   SNAPSHOT = await loadData();
@@ -204,16 +602,18 @@ document.getElementById("markers").addEventListener("change", render);
     metaEl.textContent = "no data";
     return;
   }
-  const tagged = SNAPSHOT.auctions.filter(a => a.category_ids && a.category_ids.length);
-  const enriched = tagged.filter(a => a.engagement && a.engagement.comments != null).length;
-  metaEl.innerHTML = `${tagged.length} cars across ${new Set(tagged.flatMap(a=>a.category_ids)).size} categories `
-    + `· ${enriched} with engagement · ${SNAPSHOT.auctions.length} live total `
+  const all = SNAPSHOT.auctions;
+  const scored = all.filter(a => a.value && a.value.fair_value != null).length;
+  const enriched = all.filter(a => a.engagement && a.engagement.comments != null).length;
+  metaEl.innerHTML = `${all.length} live cars · ${scored} priced vs comps · ${enriched} enriched `
     + `· scraped ${SNAPSHOT.scraped_at ? new Date(SNAPSHOT.scraped_at).toLocaleString() : "?"}`;
-  if (!tagged.length) {
-    statusEl.innerHTML = "Snapshot loaded but no categorized cars to plot.";
+  if (!all.length) {
+    statusEl.innerHTML = "Snapshot loaded but no cars to plot.";
     return;
   }
+  setupFilters(all);
   render();
+  buildTicker(SNAPSHOT);
 })();
 </script>
 </body>

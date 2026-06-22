@@ -142,7 +142,18 @@ block/challenge.
 Each auction: `id, title, year, make{id,name,slug}, models[{id,name,slug}],
 taxonomy_paths, category_ids, bid{amount,currency,status},
 engagement{comments,views,watchers}, started_at, ends_at,
-flags{no_reserve,premium,alumni}, listing_url, thumbnail_url`.
+flags{no_reserve,premium,alumni}, listing_url, thumbnail_url,
+details{miles,odometer_raw,tmu,condition[]}, value{...}`.
+
+`details` (mileage + condition) is parsed from the matched car's listing page during the
+same per-listing enrichment fetch (no extra requests). It comes from the "BaT Essentials →
+Listing Details" bullet list only, so the related-listings sidebar and comments (which name
+other cars' mileage) can't contaminate it. `miles` is best-effort (converted from km when a
+listing only gives kilometers); `tmu` flags "true mileage unknown" so the number isn't
+trusted; `condition` is a list of flags (`numbers-matching`, `repaint`, `restored`,
+`rebuilt-engine`, `engine-swap`, `restomod`, `modified`, `replica`, `tribute`, …). Measured
+hit-rate on a live 20-car sample (2026-06-20): **mileage 90%, condition 30%** (condition is
+sparser but precise). The run summary prints this coverage each time.
 
 The snapshot stores **all** live auctions (not just the target category) so future
 categories need no re-scrape; `category_ids` tags which belong where. Engagement is

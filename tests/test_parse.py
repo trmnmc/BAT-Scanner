@@ -135,3 +135,67 @@ def test_parse_listing_engagement():
 def test_parse_listing_engagement_missing_fields():
     eng = parse.parse_listing_engagement("<html><body>no stats here</body></html>")
     assert eng == {"comments": None, "views": None, "watchers": None}
+
+
+# --- listing details: mileage + condition (Phase 3) ---
+
+def _details_html(*bullets):
+    lis = "".join(f"<li>{b}</li>" for b in bullets)
+    return ('<div class="essentials"><div class="item"><strong>Listing Details</strong>'
+            f"<ul>{lis}</ul></div></div>")
+
+
+def test_parse_listing_details_from_fixture():
+    html = (FIXTURES / "bat_listing.html").read_text(encoding="utf-8")
+    d = parse.parse_listing_details(html, "1985 Porsche 911 Carrera Coupe")
+    assert d["miles"] == 45000
+    assert d["odometer_raw"] == "45k Miles Shown"
+    assert d["tmu"] is False
+    assert "numbers-matching" in d["condition"]
+    assert "repaint" in d["condition"]
+
+
+@pytest.mark.parametrize("bullet,miles,tmu", [
+    ("80k Miles Shown", 80000, False),
+    ("7k Miles Shown, TMU", 7000, True),
+    ("45,300 Miles", 45300, False),
+    ("243k Kilometers (~151k Miles) Shown", 151000, False),   # prefer the converted miles figure
+    ("180,000 Kilometers", round(180000 * 0.621371), False),  # km-only -> converted
+])
+def test_parse_odometer_variants(bullet, miles, tmu):
+    d = parse.parse_listing_details(_details_html("Chassis: X", bullet, "3.2L Flat-Six"))
+    assert d["miles"] == miles
+    assert d["tmu"] is tmu
+
+
+def test_parse_details_no_block():
+    d = parse.parse_listing_details("<html><body>nothing useful</body></html>", "1990 Whatever")
+    assert d == {"miles": None, "odometer_raw": None, "tmu": False, "condition": []}
+
+
+def test_parse_details_ignores_related_listing_noise():
+    # mileage figures outside the Listing Details block (sidebar/comments) must be ignored
+    html = _details_html("80k Miles Shown") + '<div class="similar">45k-Mile 1965 Mustang</div>'
+    assert parse.parse_listing_details(html)["miles"] == 80000
+
+
+def test_condition_no_false_positives_on_colors():
+    # the over-exclusion lesson: paint/color names must not trip condition flags
+    d = parse.parse_listing_details(_details_html("Shell Grey Paint", "Grand Prix White Paint",
+                                                  "80k Miles Shown"), "1973 Porsche 911T")
+    assert d["condition"] == []
+    assert d["miles"] == 80000
+
+
+@pytest.mark.parametrize("title,bullet,flag", [
+    ("1972 Datsun 240Z Replica", "Chassis: X", "replica"),
+    ("1969 Ford Mustang", "Rebuilt 302ci Engine", "rebuilt-engine"),
+    ("1965 Ford Mustang Restomod", "Coyote V8", "restomod"),
+    ("1980 MG Tribute", "Chassis: X", "tribute"),
+    ("1985 Porsche 911", "Numbers-Matching Drivetrain", "numbers-matching"),
+    ("K20-Powered 1983 Nissan Skyline", "Chassis: X", "engine-swap"),   # BaT "-Powered" = swap
+    ("Twin-Turbocharged 408-Powered 1970 Ford F-100", "Chassis: X", "engine-swap"),
+])
+def test_condition_flags(title, bullet, flag):
+    d = parse.parse_listing_details(_details_html(bullet), title)
+    assert flag in d["condition"]

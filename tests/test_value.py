@@ -6,13 +6,18 @@ NOW = 1_800_000_000
 DAY = 86400
 
 
-def _car(*, price, year=1985, ends_in_h=1):
+def _car(*, price, year=1985, ends_in_h=1, details=None, no_reserve=True):
     return {
         "make": {"slug": "porsche"}, "models": [{"slug": "911"}], "year": year,
         "category_ids": ["air-cooled-911-family"],
         "bid": {"amount": price, "currency": "USD", "status": "live"},
+        "flags": {"no_reserve": no_reserve},
+        "details": details,
         "_ends_ts": NOW + ends_in_h * 3600,
     }
+
+
+_FIVE = (40000, 50000, 60000, 70000, 80000)  # median 60000
 
 
 def _comp(price, *, year=1985, days_ago=30, make="porsche", model="911",
@@ -35,6 +40,17 @@ def test_is_deal_requires_ending_soon():
     cheap_later = value.compute_value(_car(price=40000, ends_in_h=200), comps, now=NOW)
     assert cheap_soon["is_deal"] is True      # cheap AND ending soon
     assert cheap_later["is_deal"] is False     # cheap but days away -> may still bid up
+
+
+def test_reserve_auction_never_flagged_deal():
+    # a cheap, ending-soon, well-comped car on a RESERVE auction is NOT a deal: the bid is
+    # below an unmet reserve, not a real price. Same car no-reserve IS a deal.
+    comps = [_comp(p) for p in (50000, 55000, 60000, 65000, 70000)]   # median 60000
+    reserve = value.compute_value(_car(price=20000, ends_in_h=2, no_reserve=False), comps, now=NOW)
+    nores = value.compute_value(_car(price=20000, ends_in_h=2, no_reserve=True), comps, now=NOW)
+    assert reserve["deal_pct"] == nores["deal_pct"]   # same raw under-comps math
+    assert reserve["is_deal"] is False                # but reserve bid isn't a price
+    assert nores["is_deal"] is True
 
 
 def test_not_a_deal_when_not_cheap():
@@ -65,6 +81,67 @@ def test_no_category_fallback():
     assert v["basis"] == "insufficient"
     assert v["fair_value"] is None
     assert v["is_deal"] is False
+
+
+def test_tilt_zero_without_details_and_score_equals_pct():
+    comps = [_comp(p) for p in _FIVE]
+    v = value.compute_value(_car(price=42000), comps, now=NOW)   # details=None
+    assert v["tilt"] == 0.0
+    assert v["deal_score"] == v["deal_pct"]                      # no nudge -> score == pct
+
+
+def test_low_mileage_raises_score_high_mileage_lowers_it():
+    comps = [_comp(p) for p in _FIVE]
+    clean = {"miles": 0, "tmu": False, "condition": []}
+    worn = {"miles": 840000, "tmu": False, "condition": []}      # ~20k mi/yr over 42y
+    lo = value.compute_value(_car(price=42000, details=clean), comps, now=NOW)
+    hi = value.compute_value(_car(price=42000, details=worn), comps, now=NOW)
+    assert lo["tilt"] > 0 and hi["tilt"] < 0
+    assert lo["deal_score"] > lo["deal_pct"] > hi["deal_score"]
+
+
+def test_tmu_ignores_mileage():
+    comps = [_comp(p) for p in _FIVE]
+    v = value.compute_value(
+        _car(price=42000, details={"miles": 0, "tmu": True, "condition": []}), comps, now=NOW)
+    assert v["tilt"] == 0.0                                      # TMU -> can't trust the number
+
+
+def test_bad_condition_lowers_score_missing_is_never_penalized():
+    comps = [_comp(p) for p in _FIVE]
+    bad = value.compute_value(
+        _car(price=42000, details={"miles": None, "tmu": False, "condition": ["restomod", "replica"]}),
+        comps, now=NOW)
+    none = value.compute_value(_car(price=42000, details={"miles": None, "tmu": False, "condition": []}),
+                               comps, now=NOW)
+    assert bad["tilt"] < 0
+    assert none["tilt"] == 0.0                                   # absent data is 0, not a penalty
+
+
+def test_tilt_none_when_not_scoreable():
+    comps = [_comp(50000), _comp(60000)]                         # 2 comps -> insufficient
+    v = value.compute_value(
+        _car(price=20000, details={"miles": 0, "tmu": False, "condition": []}), comps, now=NOW)
+    assert v["basis"] == "insufficient"
+    assert v["tilt"] is None and v["deal_score"] is None         # no score on thin comps
+
+
+def test_tilt_clamped_to_limit():
+    comps = [_comp(p) for p in _FIVE]
+    # +0.06 mileage + capped good condition; total stays within the clamp
+    v = value.compute_value(
+        _car(price=42000, details={"miles": 0, "tmu": False,
+                                   "condition": ["numbers-matching", "original-paint"]}),
+        comps, now=NOW)
+    assert 0 < v["tilt"] <= value.TILT_CLAMP
+
+
+def test_is_deal_unaffected_by_tilt():
+    comps = [_comp(p) for p in (50000, 55000, 60000, 65000, 70000)]  # median 60000
+    worn = {"miles": 999000, "tmu": False, "condition": ["restomod"]}
+    v = value.compute_value(_car(price=40000, ends_in_h=2, details=worn), comps, now=NOW)
+    assert v["is_deal"] is True          # is_deal keys off deal_pct + ending soon, not the tilt
+    assert v["tilt"] < 0
 
 
 def test_appreciation_recent_vs_older():

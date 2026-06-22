@@ -14,6 +14,8 @@ Everything is None/false when comps are too thin to trust.
 
 from __future__ import annotations
 
+import datetime as _dt
+
 YEAR_BAND = 3                 # tier 1: same make+model within +/- this many years
 YEAR_BAND_WIDE = 7            # tier 2/3: widen the year window
 MIN_COMPS = 5                 # need at least this many comps to trust a fair value
@@ -22,6 +24,23 @@ ENDING_SOON_SECONDS = 48 * 3600
 APPR_RECENT_SECONDS = 180 * 86400      # "recent" = last 180 days
 APPR_OLDER_SECONDS = 540 * 86400       # "older" = 180-540 days ago
 APPR_MIN_PER_BUCKET = 3
+
+# Phase 4: mileage/age/condition tilt on the deal score. deal_pct stays the pure comp
+# signal; the tilt nudges deal_score so a clean low-mileage car ranks above a worn or
+# modified one at the same price. It NEVER changes fair_value and NEVER flips is_deal.
+TILT_WEIGHT = 1.0            # global multiplier; 90% mileage hit-rate (Phase 3) justifies 1.0
+TILT_CLAMP = 0.12            # deal_score = deal_pct + clamp(tilt, +/-TILT_CLAMP)
+MPY_BASELINE = 7500          # "average" miles/year; below = nicer, above = worn
+MILEAGE_TILT_MAX = 0.06
+COND_TILT = {               # per-flag nudge; a missing flag is always 0, never a penalty
+    "numbers-matching": +0.02, "original-paint": +0.02,
+    "repaint": -0.02, "rebuilt-engine": -0.02,
+    "modified": -0.03, "restomod": -0.03, "engine-swap": -0.03,
+    "replica": -0.03, "tribute": -0.03, "kit-car": -0.03,
+    "project": -0.03, "salvage-title": -0.03,
+}
+COND_GOOD_CAP = 0.06
+COND_BAD_CAP = -0.08
 
 
 def _median(xs):
@@ -58,6 +77,38 @@ def _select_comps(car, comps):
     return tier2, "insufficient"
 
 
+def _mileage_tilt(details, year, now_year):
+    """+ for below-average miles/year, - for above; 0 if TMU/missing/no year."""
+    if not details or details.get("tmu"):
+        return 0.0
+    miles = details.get("miles")
+    if miles is None or not isinstance(year, int) or not isinstance(now_year, int):
+        return 0.0
+    age = max(1, now_year - year)
+    mpy = miles / age
+    t = (MPY_BASELINE - mpy) / MPY_BASELINE * MILEAGE_TILT_MAX
+    return max(-MILEAGE_TILT_MAX, min(MILEAGE_TILT_MAX, t))
+
+
+def _condition_tilt(details):
+    """Sum of per-flag nudges, good and bad capped independently. Missing -> 0."""
+    if not details:
+        return 0.0
+    good = bad = 0.0
+    for f in details.get("condition") or []:
+        v = COND_TILT.get(f, 0.0)
+        if v > 0:
+            good += v
+        elif v < 0:
+            bad += v
+    return min(good, COND_GOOD_CAP) + max(bad, COND_BAD_CAP)
+
+
+def _deal_tilt(details, year, now_year):
+    t = (_mileage_tilt(details, year, now_year) + _condition_tilt(details)) * TILT_WEIGHT
+    return max(-TILT_CLAMP, min(TILT_CLAMP, t))
+
+
 def compute_value(car, comps, *, now: float):
     selected, basis = _select_comps(car, comps)
     n = len(selected)
@@ -72,7 +123,13 @@ def compute_value(car, comps, *, now: float):
 
     ends = car.get("_ends_ts")
     ending_soon = isinstance(ends, (int, float)) and 0 <= (ends - now) <= ENDING_SOON_SECONDS
-    is_deal = bool(enough and deal_pct is not None and deal_pct >= DEAL_MARGIN and ending_soon)
+    # A flagged DEAL requires NO RESERVE: on a reserve auction the current bid is not the
+    # price (it may be far below an unmet reserve and will jump or not sell), so "under comps"
+    # is meaningless. On a no-reserve car the current bid IS the price, so under-comps +
+    # ending-soon is a genuine likely-steal.
+    no_reserve = bool((car.get("flags") or {}).get("no_reserve"))
+    is_deal = bool(enough and deal_pct is not None and deal_pct >= DEAL_MARGIN
+                   and ending_soon and no_reserve)
 
     appreciation_pct = None
     if enough:
@@ -85,11 +142,21 @@ def compute_value(car, comps, *, now: float):
             if mr and mo:
                 appreciation_pct = round((mr - mo) / mo, 4)
 
+    # deal_score = deal_pct nudged by mileage/condition. Only when scoreable, so a
+    # thin-comp car never gets a score (the frontend shows no green/deal for it).
+    tilt = deal_score = None
+    if enough and deal_pct is not None:
+        now_year = _dt.datetime.fromtimestamp(now, tz=_dt.timezone.utc).year
+        tilt = round(_deal_tilt(car.get("details"), car.get("year"), now_year), 4)
+        deal_score = round(deal_pct + tilt, 4)
+
     return {
         "fair_value": int(fair) if fair else None,
         "n_comps": n,
         "basis": basis,
         "deal_pct": deal_pct,
         "is_deal": is_deal,
+        "tilt": tilt,
+        "deal_score": deal_score,
         "appreciation_pct": appreciation_pct,
     }

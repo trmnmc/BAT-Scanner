@@ -25,13 +25,20 @@ def test_parse_completed_skips_reserve_not_met():
         _raw(2, "1989 Porsche 930 Turbo", "1989", 99000, "Bid to USD $99,000 on 1/2/2026")) is None
 
 
-def test_parse_completed_skips_parts_and_non_category():
-    # parts / no year
+def test_parse_completed_skips_parts_no_year():
+    # parts / no year -> still rejected (regression guard)
     assert comps.parse_completed_item(
         _raw(3, "Porsche 911 Wheels", None, 4900, "Sold for USD $4,900 on 1/2/2026")) is None
-    # sold but not in any category
-    assert comps.parse_completed_item(
-        _raw(4, "2015 Honda Accord Sedan", "2015", 18000, "Sold for USD $18,000 on 1/2/2026")) is None
+
+
+def test_parse_completed_keeps_non_category_car():
+    # pivot 2026-06-21: a sold car outside the taste categories is now KEPT (whole-board
+    # scoring needs comps for every make), just tagged with no category_ids.
+    c = comps.parse_completed_item(
+        _raw(4, "2015 Honda Accord Sedan", "2015", 18000, "Sold for USD $18,000 on 1/2/2026"))
+    assert c is not None
+    assert c["make"] == "honda" and c["model"] == "accord" and c["price"] == 18000
+    assert c["category_ids"] == []
 
 
 def test_harvest_dedupes_and_early_stops():

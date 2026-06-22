@@ -280,6 +280,7 @@ def parse_item(raw_item: dict, now: float | None = None) -> dict:
         },
         "listing_url": raw_item.get("url"),
         "thumbnail_url": raw_item.get("thumbnail_url"),
+        "details": None,  # filled for matched cars from the listing page (mileage/condition)
         "value": None,  # filled for matched cars when comps are available (see value.py)
     }
 
@@ -308,6 +309,84 @@ def parse_listing_engagement(html: str) -> dict:
         "views": None,  # not published on the listing page
         "watchers": _num(_WATCHERS_RE.search(html)),
     }
+
+
+# --- listing details: mileage + condition (Phase 3) -----------------------
+# The subject car's facts live in the "BaT Essentials > Listing Details" item as a
+# clean <ul> of <li> bullets (chassis, mileage, engine, paint, ...). We parse ONLY
+# that block, so the related-listings sidebar and comments (which mention other cars'
+# mileage) can't contaminate the read.
+_LISTING_DETAILS_RE = re.compile(
+    r"<strong>\s*Listing Details\s*</strong>\s*<ul>(.*?)</ul>", re.IGNORECASE | re.DOTALL)
+_LI_RE = re.compile(r"<li[^>]*>(.*?)</li>", re.IGNORECASE | re.DOTALL)
+_TAG_RE = re.compile(r"<[^>]+>")
+_MILES_RE = re.compile(r"(\d[\d,]*)\s*([kK])?\s*miles", re.IGNORECASE)
+_KM_RE = re.compile(r"(\d[\d,]*)\s*([kK])?\s*(?:kilometers|kilometres|kms?)\b", re.IGNORECASE)
+
+# (flag, pattern) — phrase/word-boundary anchored so "Shell Grey" or "Grand Prix White"
+# don't trip a flag (the over-exclusion lesson from category matching).
+_CONDITION_PATTERNS = [
+    ("numbers-matching", re.compile(r"numbers[\s-]matching|matching[\s-]numbers", re.I)),
+    ("original-paint",   re.compile(r"original paint", re.I)),
+    ("restored",         re.compile(r"\brestored\b|\brestoration\b", re.I)),
+    ("repaint",          re.compile(r"\brepaint(?:ed)?\b|\brespray(?:ed)?\b|\brefinished\b", re.I)),
+    ("rebuilt-engine",   re.compile(r"rebuilt\s+(?:\w+\s+){0,2}engine|engine\s+rebuild", re.I)),
+    ("restomod",         re.compile(r"resto[\s-]?mod", re.I)),
+    ("engine-swap",      re.compile(r"engine\s+swap|\bswapped\b|\bls[\s-]?swap\b|\bv8\s+swap\b|\b[\w.]+-powered\b", re.I)),
+    ("modified",         re.compile(r"\bmodified\b|\bmodifications\b", re.I)),
+    ("replica",          re.compile(r"\breplica\b|\brecreation\b|re-creation", re.I)),
+    ("tribute",          re.compile(r"\btribute\b|\bclone\b", re.I)),
+    ("kit-car",          re.compile(r"\bkit\s+car\b", re.I)),
+    ("project",          re.compile(r"\bproject\b|non[\s-]running|not\s+running", re.I)),
+    ("salvage-title",    re.compile(r"salvage\s+title|rebuilt\s+title|branded\s+title", re.I)),
+]
+
+
+def _clean_text(s: str) -> str:
+    return re.sub(r"\s+", " ", _TAG_RE.sub(" ", s)).strip()
+
+
+def _num_k(m) -> int:
+    """A captured (digits, optional 'k') -> int. '80','k' -> 80000; '45,300','' -> 45300."""
+    n = int(m.group(1).replace(",", ""))
+    return n * 1000 if m.group(2) else n
+
+
+def _parse_odometer(bullets):
+    """Return (miles, raw_text, tmu) from the listing-detail bullets.
+
+    Prefers a Miles figure; converts from kilometers if only those are given. `tmu`
+    flags "true mileage unknown" so downstream code can refuse to trust the number.
+    """
+    for raw in bullets:
+        b = _clean_text(raw)
+        low = b.lower()
+        if "mile" not in low and "kilometer" not in low and "kilometre" not in low and " km" not in low:
+            continue
+        tmu = ("tmu" in low) or ("mileage unknown" in low) or ("unknown mileage" in low)
+        mm = _MILES_RE.search(b)
+        if mm:
+            return _num_k(mm), b, tmu
+        km = _KM_RE.search(b)
+        if km:
+            return round(_num_k(km) * 0.621371), b, tmu   # convert km -> mi
+        if tmu or "unknown" in low:
+            return None, b, True
+    return None, None, False
+
+
+def parse_listing_details(html: str, title: str = "") -> dict:
+    """Extract subject-car mileage + condition flags from a listing page.
+
+    Returns {miles, odometer_raw, tmu, condition[]}. All best-effort: a page without a
+    parseable "Listing Details" block yields miles=None / condition=[] (not an error).
+    """
+    m = _LISTING_DETAILS_RE.search(html)
+    bullets = _LI_RE.findall(m.group(1)) if m else []
+    miles, odo_raw, tmu = _parse_odometer(bullets)
+    scan = (title or "") + " " + " ".join(_clean_text(b) for b in bullets)
+    condition = [flag for flag, rx in _CONDITION_PATTERNS if rx.search(scan)]
+    return {"miles": miles, "odometer_raw": odo_raw, "tmu": tmu, "condition": condition}
 
 
 def parse_listings_filter(text_or_obj) -> dict:
