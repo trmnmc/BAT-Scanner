@@ -92,6 +92,52 @@
     .ticker-viewport { overflow-x: auto; }
     .ticker-chip.flash-up, .ticker-chip.flash-down { animation: none; }
   }
+  /* --- Map / List view toggle --- */
+  .seg { display: inline-flex; border: 1px solid #2a2e38; border-radius: 6px; overflow: hidden; }
+  .seg button { background: #1a1d24; color: #c7ccd6; border: 0; padding: 5px 12px; font-size: 13px; cursor: pointer; }
+  .seg button.active { background: #5b8def; color: #0f1115; font-weight: 600; }
+  /* --- clickable car detail card (stays until dismissed) --- */
+  #card { position: fixed; top: 64px; right: 16px; z-index: 60; width: 340px; max-width: calc(100vw - 32px);
+          background: #16181f; border: 1px solid #2a2e38; border-radius: 12px; padding: 12px;
+          box-shadow: 0 16px 40px rgba(0,0,0,.55); font-size: 13px; }
+  #card[hidden] { display: none; }
+  #card .card-img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; background: #1a1d24; display: block; }
+  #card .card-close { position: absolute; top: 8px; right: 10px; cursor: pointer; color: #fff;
+                      background: rgba(0,0,0,.55); border-radius: 50%; width: 26px; height: 26px;
+                      display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
+  #card .card-title { font-weight: 600; font-size: 15px; margin: 10px 0 6px; }
+  #card .card-row { color: #c7ccd6; margin: 4px 0; }
+  #card .card-bid { font-size: 18px; font-weight: 700; color: #e7e9ee; }
+  #card .card-clock { font-variant-numeric: tabular-nums; font-weight: 600; }
+  #card .card-clock.urgent { color: #e2553b; }
+  #card .card-deal { color: #ffd54a; font-weight: 600; }
+  #card .card-flag { color: #ffb3a7; }
+  #card .card-good { color: #28b487; }
+  .card-muted { color: #9aa0ad; }
+  .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 8px;
+              background: #5b8def; color: #0f1115; font-weight: 600; text-decoration: none; }
+  .btn-link:hover { background: #6f9bf0; }
+  /* --- sortable list view --- */
+  #listpanel { padding: 4px 18px 28px; }
+  #listpanel[hidden] { display: none; }
+  table.listtbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.listtbl th { text-align: left; color: #9aa0ad; font-weight: 600; padding: 8px 10px;
+                     border-bottom: 1px solid #2a2e38; cursor: pointer; white-space: nowrap;
+                     position: sticky; top: 0; background: #0f1115; }
+  table.listtbl th.num { text-align: right; }
+  table.listtbl th:hover { color: #e7e9ee; }
+  table.listtbl th.sorted { color: #e7e9ee; }
+  table.listtbl th.sorted::after { content: " ▾"; color: #5b8def; }
+  table.listtbl th.sorted.asc::after { content: " ▴"; }
+  table.listtbl td { padding: 7px 10px; border-bottom: 1px solid #181b22; vertical-align: middle; }
+  table.listtbl td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  table.listtbl tbody tr { cursor: pointer; }
+  table.listtbl tbody tr:hover { background: #1a1d24; }
+  .lt-img { width: 56px; height: 40px; object-fit: cover; border-radius: 4px; background: #1a1d24; flex: 0 0 auto; }
+  .lt-name { font-weight: 500; max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lt-deal { color: #ffd54a; font-weight: 600; }
+  .lt-over { color: #9aa0ad; }
+  .lt-urgent { color: #e2553b; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -119,7 +165,12 @@
       <option value="photos">Photos</option>
     </select>
   </span>
-  <span class="hint">Legend toggles a category · hover for the photo · click a car to open its listing · drag/scroll to zoom</span>
+  <span><label>View:</label>
+    <span class="seg">
+      <button id="view-map" class="active" type="button">Map</button>
+      <button id="view-list" type="button">List</button>
+    </span></span>
+  <span class="hint">Legend toggles a category · hover for the photo · click a car for details · scroll/pinch to zoom · double-click to reset</span>
 </div>
 <div class="filters">
   <input id="f-make" placeholder="make(s), e.g. porsche toyota" list="makes" autocomplete="off">
@@ -137,8 +188,10 @@
 <div class="chips" id="chips"></div>
 <div id="ticker" hidden></div>
 <div id="chart"></div>
+<div id="listpanel" hidden></div>
 <div id="status"></div>
 <div id="ticker-preview" hidden><img alt="" referrerpolicy="no-referrer"><div class="cap"></div></div>
+<div id="card" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
 <script src="./filters.js"></script>
@@ -229,6 +282,9 @@ window.addEventListener("resize", () => chart.resize());
 })();
 
 let SNAPSHOT = null;
+let FILTERED = [];                       // cars passing the current filter (drives map + list)
+let listView = false;                    // Map vs List view
+let listSort = { key: "ends", dir: "asc" };   // List default: ending soonest first
 
 async function loadData() {
   for (const p of DATA_PATHS) {
@@ -316,6 +372,7 @@ function buildSeries(cars, yMetric, markers) {
         _w: (a.engagement && a.engagement.watchers),
         _img: a.thumbnail_url, _url: a.listing_url, _v: a.value, _d: a.details,
         _nr: !!(a.flags && a.flags.no_reserve),
+        _end: a.ends_at || null,                    // deadline: a bid is meaningless without time left
       });
     }
   }
@@ -336,7 +393,9 @@ function render() {
   const spec = currentSpec();
   const all = SNAPSHOT.auctions;
   const cars = window.BATFilters ? BATFilters.filterCars(all, spec) : all;
+  FILTERED = cars;                          // shared with the List view
   updateFilterReadout(cars, all, spec);
+  if (listView) renderList();
   const series = buildSeries(cars, yMetric, markers);
   chart.setOption({
     animationDurationUpdate: 0,   // instant, cursor-tight zoom/pan response
@@ -368,12 +427,22 @@ function render() {
           if (cs.good.length) parts.push(`<span style="color:#28b487">${cs.good.join(", ")}</span>`);
           if (parts.length) dline = parts.join(" · ") + "<br>";
         }
+        let tline = "";
+        const endMs = d._end ? Date.parse(d._end) : NaN;
+        if (endMs) {
+          const left = endMs - Date.now();
+          const col = left > 0 && left <= 3600 * 1000 ? "#e2553b" : "#c7ccd6";
+          tline = left > 0
+            ? `<span style="color:${col}">Ends in ${fmtCountdown(left)}</span><br>`
+            : `<span style="color:#9aa0ad">Auction ended</span><br>`;
+        }
         return `${img}<b>${escapeHTML(d._t)}</b><br>`
           + `Bid: ${fmtMoney(d._p, d._cur)}<br>`
+          + tline
           + dline
           + `Comments: ${d._c ?? "—"} · Watchers: ${d._w ?? "—"}<br>`
           + vline
-          + `<span style="color:#9aa0ad">click to open listing</span>`;
+          + `<span style="color:#9aa0ad">click for details</span>`;
       },
     },
     legend: {
@@ -555,10 +624,11 @@ function fmtCountdown(ms) {
 }
 function tickCountdowns() {
   const now = Date.now();
-  document.querySelectorAll("#ticker .ticker-clock").forEach(el => {
+  document.querySelectorAll("[data-ends]").forEach(el => {        // ticker clocks + card + list rows
     const left = Number(el.getAttribute("data-ends")) - now;
     el.textContent = fmtCountdown(left);
     el.classList.toggle("urgent", left > 0 && left <= 3600 * 1000);   // < 1h to go
+    el.classList.toggle("lt-urgent", left > 0 && left <= 3600 * 1000);
   });
 }
 function startTickerCountdown() {
@@ -571,7 +641,7 @@ document.addEventListener("visibilitychange", () => {
   const hidden = document.visibilityState !== "visible";
   if (el) el.classList.toggle("paused", hidden);                 // pause marquee when tab is hidden
   if (hidden) { if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; } }
-  else if (el && !el.hidden) startTickerCountdown();
+  else startTickerCountdown();                                    // resume clocks (ticker + card + list)
 });
 
 // hover preview: a big detailed photo when you hover a ticker chip. Lives on <body> (fixed)
@@ -598,7 +668,162 @@ document.addEventListener("visibilitychange", () => {
   el.addEventListener("mouseleave", () => { pv.hidden = true; });
 })();
 
-chart.on("click", (p) => { if (p.data && p.data._url) window.open(p.data._url, "_blank"); });
+// --- persistent detail card: a click pins a card (with the deadline + a "View on BaT"
+// button) instead of jumping straight to the listing. Reused by the map and the list.
+function carToCard(a) {
+  return {
+    _t: a.title, _y: a.year, _p: a.bid && a.bid.amount, _cur: a.bid && a.bid.currency,
+    _c: a.engagement && a.engagement.comments, _w: a.engagement && a.engagement.watchers,
+    _img: a.thumbnail_url, _url: a.listing_url, _v: a.value, _d: a.details,
+    _nr: !!(a.flags && a.flags.no_reserve), _end: a.ends_at || null,
+  };
+}
+function closeCard() { const c = document.getElementById("card"); if (c) c.hidden = true; }
+function openCard(d) {
+  const card = document.getElementById("card");
+  if (!card || !d) return;
+  const safeUrl = /^https?:\/\//i.test(d._url || "") ? d._url : null;
+  const img = d._img ? `<img class="card-img" src="${escapeHTML(d._img)}" referrerpolicy="no-referrer" alt="">` : "";
+  let clock = "";
+  const endMs = d._end ? Date.parse(d._end) : NaN;
+  if (endMs) {
+    const left = endMs - Date.now();
+    clock = left > 0
+      ? `<div class="card-row">Ends in <span class="card-clock" data-ends="${endMs}">${fmtCountdown(left)}</span>`
+        + ` <span class="card-muted">· ${new Date(endMs).toLocaleString()}</span></div>`
+      : `<div class="card-row card-muted">Auction ended</div>`;
+  }
+  let vline = "";
+  const v = d._v;
+  if (v && v.fair_value) {
+    const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
+    vline = `<div class="card-row">Fair value: <b>${fmtMoney(v.fair_value, d._cur)}</b> `
+      + `<span class="card-muted">(${v.n_comps} comps, ${escapeHTML(v.basis || "")})</span></div>`;
+    if (d._nr && below != null) {
+      vline += `<div class="card-row">Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
+        + (v.is_deal ? ` · <span class="card-deal">DEAL — ending soon</span>` : "") + `</div>`;
+    } else if (!d._nr) {
+      vline += `<div class="card-row card-muted">Reserve auction — bid may be below reserve, not a discount</div>`;
+    }
+    if (v.appreciation_pct != null) {
+      vline += `<div class="card-row card-muted">Recent trend: ${v.appreciation_pct >= 0 ? "+" : ""}${Math.round(v.appreciation_pct * 100)}%</div>`;
+    }
+  }
+  let dline = "";
+  const det = d._d;
+  if (det) {
+    const miles = fmtMiles(det), cs = condSplit(det.condition), parts = [];
+    if (miles) parts.push(escapeHTML(miles));
+    if (cs.bad.length) parts.push(`<span class="card-flag">🚩 ${escapeHTML(cs.bad.join(", "))}</span>`);
+    if (cs.good.length) parts.push(`<span class="card-good">${escapeHTML(cs.good.join(", "))}</span>`);
+    if (parts.length) dline = `<div class="card-row">${parts.join(" · ")}</div>`;
+  }
+  const btn = safeUrl
+    ? `<a class="btn-link" href="${escapeHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">View on BaT →</a>`
+    : `<div class="card-row card-muted">No listing link</div>`;
+  card.innerHTML =
+    `<div class="card-close" role="button" aria-label="Close">✕</div>`
+    + img
+    + `<div class="card-title">${escapeHTML(d._t || "")}</div>`
+    + `<div class="card-row"><span class="card-bid">${fmtMoney(d._p, d._cur)}</span> <span class="card-muted">current bid</span></div>`
+    + clock + dline + vline
+    + `<div class="card-row card-muted">${d._c ?? "—"} comments · ${d._w ?? "—"} watchers</div>`
+    + btn;
+  card.querySelector(".card-close").onclick = closeCard;
+  card.hidden = false;
+  startTickerCountdown();                   // keep the card's countdown ticking even if the ticker is hidden
+}
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeCard(); });
+
+function resetZoom() {
+  chart.dispatchAction({ type: "dataZoom", batch: [
+    { dataZoomIndex: 0, start: 0, end: 100 }, { dataZoomIndex: 1, start: 0, end: 100 }] });
+}
+chart.on("click", (p) => { if (p.data) openCard(p.data); });
+chart.getZr().on("dblclick", resetZoom);   // double-click anywhere to reset the zoom
+
+// --- List view: a sortable table of the filtered cars (zoom-free drill-down).
+const LIST_COLS = [
+  { key: "name",     label: "Car" },
+  { key: "price",    label: "Price",    num: true },
+  { key: "ends",     label: "Ends",     num: true },
+  { key: "deal",     label: "vs comps", num: true },
+  { key: "watchers", label: "Watchers", num: true },
+  { key: "comments", label: "Comments", num: true },
+];
+function listValue(a, key) {
+  switch (key) {
+    case "price": return (a.bid && a.bid.amount) || 0;
+    case "ends": return a.ends_at ? Date.parse(a.ends_at) : Infinity;
+    case "deal": return (a.value && a.value.deal_pct != null && a.flags && a.flags.no_reserve) ? a.value.deal_pct : -Infinity;
+    case "watchers": return (a.engagement && a.engagement.watchers != null) ? a.engagement.watchers : -1;
+    case "comments": return (a.engagement && a.engagement.comments != null) ? a.engagement.comments : -1;
+    case "name": return (a.title || "").toLowerCase();
+    default: return 0;
+  }
+}
+function renderList() {
+  const lp = document.getElementById("listpanel");
+  if (!lp) return;
+  const rows = FILTERED.slice().sort((x, y) => {
+    const a = listValue(x, listSort.key), b = listValue(y, listSort.key);
+    const c = a < b ? -1 : a > b ? 1 : 0;
+    return listSort.dir === "asc" ? c : -c;
+  });
+  const head = LIST_COLS.map(col => {
+    const sorted = col.key === listSort.key ? " sorted" + (listSort.dir === "asc" ? " asc" : "") : "";
+    return `<th class="${col.num ? "num" : ""}${sorted}" data-key="${col.key}">${col.label}</th>`;
+  }).join("");
+  const body = rows.slice(0, 400).map((a, i) => {
+    const endMs = a.ends_at ? Date.parse(a.ends_at) : NaN;
+    const clock = endMs ? `<span data-ends="${endMs}">${fmtCountdown(endMs - Date.now())}</span>` : "—";
+    const v = a.value, nr = !!(a.flags && a.flags.no_reserve);
+    let deal = "—";
+    if (v && v.deal_pct != null && nr) {
+      const pct = Math.round(v.deal_pct * 100);
+      deal = pct >= 0 ? `<span class="lt-deal">${pct}% under</span>` : `<span class="lt-over">${-pct}% over</span>`;
+    } else if (v && v.fair_value) {
+      deal = `<span class="lt-over">comps ~${fmtMoney(v.fair_value, a.bid && a.bid.currency)}</span>`;
+    }
+    const miles = fmtMiles(a.details);
+    const img = a.thumbnail_url
+      ? `<img class="lt-img" src="${escapeHTML(a.thumbnail_url)}" loading="lazy" referrerpolicy="no-referrer" alt="">` : "";
+    return `<tr data-i="${i}">`
+      + `<td><div style="display:flex;align-items:center;gap:8px">${img}<span class="lt-name">${escapeHTML(a.title || "")}`
+        + `${miles ? ` <span class="card-muted">· ${escapeHTML(miles)}</span>` : ""}</span></div></td>`
+      + `<td class="num">${fmtMoney(a.bid && a.bid.amount, a.bid && a.bid.currency)}</td>`
+      + `<td class="num">${clock}</td>`
+      + `<td class="num">${deal}</td>`
+      + `<td class="num">${(a.engagement && a.engagement.watchers) ?? "—"}</td>`
+      + `<td class="num">${(a.engagement && a.engagement.comments) ?? "—"}</td>`
+      + `</tr>`;
+  }).join("");
+  lp.innerHTML =
+    `<div class="card-muted" style="padding:8px 0">${rows.length} cars`
+      + `${rows.length > 400 ? " (showing first 400)" : ""} · click a row for details</div>`
+    + `<table class="listtbl"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  lp.querySelectorAll("th").forEach(th => th.onclick = () => {
+    const key = th.getAttribute("data-key");
+    if (listSort.key === key) listSort.dir = listSort.dir === "asc" ? "desc" : "asc";
+    else { listSort.key = key; listSort.dir = (key === "ends" || key === "name") ? "asc" : "desc"; }
+    renderList();
+  });
+  lp.querySelectorAll("tbody tr").forEach(tr => tr.onclick = () =>
+    openCard(carToCard(rows[Number(tr.getAttribute("data-i"))])));
+  startTickerCountdown();
+}
+function setView(v) {
+  listView = (v === "list");
+  document.getElementById("chart").hidden = listView;
+  document.getElementById("listpanel").hidden = !listView;
+  document.getElementById("view-map").classList.toggle("active", !listView);
+  document.getElementById("view-list").classList.toggle("active", listView);
+  if (listView) renderList();
+  else chart.resize();                      // chart was display:none; re-measure on return
+}
+document.getElementById("view-map").onclick = () => setView("map");
+document.getElementById("view-list").onclick = () => setView("list");
+
 document.getElementById("ymetric").addEventListener("change", render);
 document.getElementById("xmetric").addEventListener("change", render);
 document.getElementById("markers").addEventListener("change", render);
