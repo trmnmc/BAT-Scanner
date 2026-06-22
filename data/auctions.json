@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scraped_at": "2026-06-21T21:19:26.358646Z",
+  "scraped_at": "2026-06-22T04:57:27.007566Z",
   "source": {
     "reported_live_count": 1112,
     "parsed_live_count": 1112,
@@ -34,9 +34,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 17,
         "views": null,
-        "watchers": 571
+        "watchers": 595
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:00:00Z",
@@ -94,7 +94,7 @@
       "engagement": {
         "comments": 90,
         "views": null,
-        "watchers": 1794
+        "watchers": 1837
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:00:00Z",
@@ -150,9 +150,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 45,
+        "comments": 47,
         "views": null,
-        "watchers": 1119
+        "watchers": 1167
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:05:00Z",
@@ -206,9 +206,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 38,
+        "comments": 51,
         "views": null,
-        "watchers": 1695
+        "watchers": 1778
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:10:00Z",
@@ -262,9 +262,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 20,
         "views": null,
-        "watchers": 714
+        "watchers": 762
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:15:00Z",
@@ -322,7 +322,7 @@
       "engagement": {
         "comments": 31,
         "views": null,
-        "watchers": 1663
+        "watchers": 1735
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:15:00Z",
@@ -373,14 +373,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 50000,
+        "amount": 50505,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 21,
         "views": null,
-        "watchers": 963
+        "watchers": 996
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:20:00Z",
@@ -401,7 +401,7 @@
         "fair_value": 123875,
         "n_comps": 2,
         "basis": "insufficient",
-        "deal_pct": 0.5964,
+        "deal_pct": 0.5923,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -434,9 +434,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 42,
+        "comments": 44,
         "views": null,
-        "watchers": 697
+        "watchers": 709
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:21:00Z",
@@ -492,9 +492,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 20,
         "views": null,
-        "watchers": 602
+        "watchers": 622
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:22:00Z",
@@ -548,9 +548,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 9,
+        "comments": 14,
         "views": null,
-        "watchers": 465
+        "watchers": 489
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:23:00Z",
@@ -599,14 +599,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 80000,
+        "amount": 81000,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
         "comments": 21,
         "views": null,
-        "watchers": 1313
+        "watchers": 1366
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:24:00Z",
@@ -627,10 +627,10 @@
         "fair_value": 104250,
         "n_comps": 8,
         "basis": "make-model-y3",
-        "deal_pct": 0.2326,
+        "deal_pct": 0.223,
         "is_deal": true,
         "tilt": 0.0,
-        "deal_score": 0.2326,
+        "deal_score": 0.223,
         "appreciation_pct": null
       }
     },
@@ -660,9 +660,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 25,
+        "comments": 26,
         "views": null,
-        "watchers": 459
+        "watchers": 468
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:24:00Z",
@@ -713,14 +713,14 @@
         "vintage-trucks"
       ],
       "bid": {
-        "amount": 40000,
+        "amount": 42500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 17,
+        "comments": 18,
         "views": null,
-        "watchers": 671
+        "watchers": 684
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:25:00Z",
@@ -741,7 +741,7 @@
         "fair_value": 9765,
         "n_comps": 1,
         "basis": "insufficient",
-        "deal_pct": -3.0963,
+        "deal_pct": -3.3523,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -774,9 +774,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 12,
+        "comments": 13,
         "views": null,
-        "watchers": 441
+        "watchers": 452
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:26:00Z",
@@ -825,14 +825,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 11000,
+        "amount": 11250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 14,
         "views": null,
-        "watchers": 609
+        "watchers": 661
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:27:00Z",
@@ -853,7 +853,7 @@
         "fair_value": 23325,
         "n_comps": 2,
         "basis": "insufficient",
-        "deal_pct": 0.5284,
+        "deal_pct": 0.5177,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -888,7 +888,7 @@
       "engagement": {
         "comments": 6,
         "views": null,
-        "watchers": 132
+        "watchers": 136
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:28:00Z",
@@ -942,9 +942,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 21,
         "views": null,
-        "watchers": 772
+        "watchers": 800
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:29:00Z",
@@ -998,9 +998,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 13,
         "views": null,
-        "watchers": 580
+        "watchers": 596
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:30:00Z",
@@ -1054,9 +1054,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 34,
+        "comments": 37,
         "views": null,
-        "watchers": 729
+        "watchers": 758
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:30:00Z",
@@ -1110,9 +1110,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 14,
+        "comments": 16,
         "views": null,
-        "watchers": 402
+        "watchers": 422
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:30:00Z",
@@ -1168,9 +1168,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 21,
+        "comments": 23,
         "views": null,
-        "watchers": 1595
+        "watchers": 1656
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:30:00Z",
@@ -1226,7 +1226,7 @@
       "engagement": {
         "comments": 28,
         "views": null,
-        "watchers": 870
+        "watchers": 901
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:31:00Z",
@@ -1282,7 +1282,7 @@
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 337
+        "watchers": 354
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:32:00Z",
@@ -1338,7 +1338,7 @@
       "engagement": {
         "comments": 4,
         "views": null,
-        "watchers": 265
+        "watchers": 277
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:33:00Z",
@@ -1392,9 +1392,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 16,
         "views": null,
-        "watchers": 789
+        "watchers": 812
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:33:00Z",
@@ -1450,9 +1450,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 21,
+        "comments": 26,
         "views": null,
-        "watchers": 1183
+        "watchers": 1236
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:34:00Z",
@@ -1503,14 +1503,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 33750,
+        "amount": 34333,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 18,
         "views": null,
-        "watchers": 725
+        "watchers": 768
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:35:00Z",
@@ -1534,62 +1534,6 @@
         "n_comps": 0,
         "basis": "insufficient",
         "deal_pct": null,
-        "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
-        "appreciation_pct": null
-      }
-    },
-    {
-      "id": 116038571,
-      "title": "2003 Lexus LX470",
-      "year": 2003,
-      "make": {
-        "id": null,
-        "name": "Lexus",
-        "slug": "lexus"
-      },
-      "models": [
-        {
-          "id": null,
-          "name": "LX470",
-          "slug": "lx470"
-        }
-      ],
-      "taxonomy_paths": [
-        "lexus/lx470"
-      ],
-      "category_ids": [],
-      "bid": {
-        "amount": 15250,
-        "currency": "USD",
-        "status": "live"
-      },
-      "engagement": {
-        "comments": 14,
-        "views": null,
-        "watchers": 590
-      },
-      "started_at": null,
-      "ends_at": "2026-06-22T17:35:00Z",
-      "flags": {
-        "no_reserve": false,
-        "premium": false,
-        "alumni": null
-      },
-      "listing_url": "https://bringatrailer.com/listing/2003-lexus-lx470-64/",
-      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/06/2003_lexus_lx470_2003-lexus-lx-tan-bat-527326-7-44183.jpg?resize=470%2C318",
-      "details": {
-        "miles": 106000,
-        "odometer_raw": "106k Miles",
-        "tmu": false,
-        "condition": []
-      },
-      "value": {
-        "fair_value": 21000,
-        "n_comps": 1,
-        "basis": "insufficient",
-        "deal_pct": 0.2738,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -1624,9 +1568,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 17,
         "views": null,
-        "watchers": 785
+        "watchers": 800
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:35:00Z",
@@ -1657,6 +1601,62 @@
       }
     },
     {
+      "id": 116038571,
+      "title": "2003 Lexus LX470",
+      "year": 2003,
+      "make": {
+        "id": null,
+        "name": "Lexus",
+        "slug": "lexus"
+      },
+      "models": [
+        {
+          "id": null,
+          "name": "LX470",
+          "slug": "lx470"
+        }
+      ],
+      "taxonomy_paths": [
+        "lexus/lx470"
+      ],
+      "category_ids": [],
+      "bid": {
+        "amount": 15250,
+        "currency": "USD",
+        "status": "live"
+      },
+      "engagement": {
+        "comments": 14,
+        "views": null,
+        "watchers": 611
+      },
+      "started_at": null,
+      "ends_at": "2026-06-22T17:35:00Z",
+      "flags": {
+        "no_reserve": false,
+        "premium": false,
+        "alumni": null
+      },
+      "listing_url": "https://bringatrailer.com/listing/2003-lexus-lx470-64/",
+      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/06/2003_lexus_lx470_2003-lexus-lx-tan-bat-527326-7-44183.jpg?resize=470%2C318",
+      "details": {
+        "miles": 106000,
+        "odometer_raw": "106k Miles",
+        "tmu": false,
+        "condition": []
+      },
+      "value": {
+        "fair_value": 21000,
+        "n_comps": 1,
+        "basis": "insufficient",
+        "deal_pct": 0.2738,
+        "is_deal": false,
+        "tilt": null,
+        "deal_score": null,
+        "appreciation_pct": null
+      }
+    },
+    {
       "id": 116023726,
       "title": "One-Owner 1997 Porsche Boxster 5-Speed",
       "year": 1997,
@@ -1677,14 +1677,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 6500,
+        "amount": 6600,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 47,
+        "comments": 50,
         "views": null,
-        "watchers": 566
+        "watchers": 627
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:35:00Z",
@@ -1705,7 +1705,7 @@
         "fair_value": 14000,
         "n_comps": 4,
         "basis": "insufficient",
-        "deal_pct": 0.5357,
+        "deal_pct": 0.5286,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -1738,9 +1738,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 24,
+        "comments": 25,
         "views": null,
-        "watchers": 349
+        "watchers": 375
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:36:00Z",
@@ -1789,14 +1789,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 30500,
+        "amount": 31000,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 24,
+        "comments": 26,
         "views": null,
-        "watchers": 585
+        "watchers": 605
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:37:00Z",
@@ -1817,10 +1817,10 @@
         "fair_value": 26266,
         "n_comps": 8,
         "basis": "make-model-y7",
-        "deal_pct": -0.1612,
+        "deal_pct": -0.1802,
         "is_deal": false,
         "tilt": 0.0473,
-        "deal_score": -0.1139,
+        "deal_score": -0.1329,
         "appreciation_pct": null
       }
     },
@@ -1852,7 +1852,7 @@
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 293
+        "watchers": 299
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:38:00Z",
@@ -1906,9 +1906,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 8,
+        "comments": 12,
         "views": null,
-        "watchers": 326
+        "watchers": 343
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:39:00Z",
@@ -1957,14 +1957,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 10000,
+        "amount": 10250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 12,
         "views": null,
-        "watchers": 456
+        "watchers": 482
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:40:00Z",
@@ -1985,10 +1985,10 @@
         "fair_value": 22250,
         "n_comps": 7,
         "basis": "make-model-y7",
-        "deal_pct": 0.5506,
+        "deal_pct": 0.5393,
         "is_deal": true,
         "tilt": -0.0135,
-        "deal_score": 0.5371,
+        "deal_score": 0.5258,
         "appreciation_pct": null
       }
     },
@@ -2018,9 +2018,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 17,
         "views": null,
-        "watchers": 742
+        "watchers": 787
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:41:00Z",
@@ -2076,9 +2076,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 32,
+        "comments": 34,
         "views": null,
-        "watchers": 880
+        "watchers": 958
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:42:00Z",
@@ -2136,7 +2136,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 512
+        "watchers": 545
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:43:00Z",
@@ -2192,7 +2192,7 @@
       "engagement": {
         "comments": 18,
         "views": null,
-        "watchers": 440
+        "watchers": 462
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:44:00Z",
@@ -2248,9 +2248,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 92,
+        "comments": 96,
         "views": null,
-        "watchers": 1040
+        "watchers": 1065
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:45:00Z",
@@ -2299,14 +2299,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 7200,
+        "amount": 7500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 673
+        "watchers": 711
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:45:00Z",
@@ -2329,7 +2329,7 @@
         "fair_value": 9175,
         "n_comps": 2,
         "basis": "insufficient",
-        "deal_pct": 0.2153,
+        "deal_pct": 0.1826,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -2364,9 +2364,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 29,
+        "comments": 31,
         "views": null,
-        "watchers": 684
+        "watchers": 710
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:46:00Z",
@@ -2420,9 +2420,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 39,
+        "comments": 45,
         "views": null,
-        "watchers": 1407
+        "watchers": 1474
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:47:00Z",
@@ -2478,7 +2478,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 319
+        "watchers": 338
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:48:00Z",
@@ -2532,9 +2532,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 14,
+        "comments": 15,
         "views": null,
-        "watchers": 752
+        "watchers": 787
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:49:00Z",
@@ -2592,7 +2592,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 370
+        "watchers": 397
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:50:00Z",
@@ -2648,7 +2648,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 323
+        "watchers": 332
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:51:00Z",
@@ -2704,7 +2704,7 @@
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 313
+        "watchers": 327
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:52:00Z",
@@ -2760,7 +2760,7 @@
       "engagement": {
         "comments": 4,
         "views": null,
-        "watchers": 382
+        "watchers": 395
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:53:00Z",
@@ -2814,9 +2814,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 70,
+        "comments": 73,
         "views": null,
-        "watchers": 570
+        "watchers": 589
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:54:00Z",
@@ -2870,9 +2870,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 24,
+        "comments": 25,
         "views": null,
-        "watchers": 590
+        "watchers": 606
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:55:00Z",
@@ -2928,9 +2928,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 38,
+        "comments": 40,
         "views": null,
-        "watchers": 1156
+        "watchers": 1166
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:56:00Z",
@@ -3046,7 +3046,7 @@
       "engagement": {
         "comments": null,
         "views": null,
-        "watchers": 125
+        "watchers": 127
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:58:00Z",
@@ -3100,9 +3100,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 30,
+        "comments": 32,
         "views": null,
-        "watchers": 825
+        "watchers": 833
       },
       "started_at": null,
       "ends_at": "2026-06-22T17:59:00Z",
@@ -3156,9 +3156,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 54,
+        "comments": 58,
         "views": null,
-        "watchers": 828
+        "watchers": 852
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:00:00Z",
@@ -3207,14 +3207,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 3800,
+        "amount": 4000,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 25,
+        "comments": 27,
         "views": null,
-        "watchers": 429
+        "watchers": 450
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:01:00Z",
@@ -3270,7 +3270,7 @@
       "engagement": {
         "comments": 3,
         "views": null,
-        "watchers": 532
+        "watchers": 553
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:02:00Z",
@@ -3326,7 +3326,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 405
+        "watchers": 419
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:03:00Z",
@@ -3384,9 +3384,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 27,
+        "comments": 29,
         "views": null,
-        "watchers": 1413
+        "watchers": 1447
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:04:00Z",
@@ -3442,9 +3442,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 45,
+        "comments": 47,
         "views": null,
-        "watchers": 1487
+        "watchers": 1520
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:05:00Z",
@@ -3500,9 +3500,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 14,
         "views": null,
-        "watchers": 268
+        "watchers": 277
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:06:00Z",
@@ -3558,9 +3558,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 14,
+        "comments": 17,
         "views": null,
-        "watchers": 629
+        "watchers": 638
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:07:00Z",
@@ -3614,9 +3614,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 35,
+        "comments": 38,
         "views": null,
-        "watchers": 836
+        "watchers": 866
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:08:00Z",
@@ -3670,9 +3670,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 16,
         "views": null,
-        "watchers": 513
+        "watchers": 519
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:09:00Z",
@@ -3726,9 +3726,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 24,
+        "comments": 26,
         "views": null,
-        "watchers": 255
+        "watchers": 258
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:10:00Z",
@@ -3784,7 +3784,7 @@
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 276
+        "watchers": 291
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:11:00Z",
@@ -3838,9 +3838,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 18,
+        "comments": 20,
         "views": null,
-        "watchers": 464
+        "watchers": 470
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:12:00Z",
@@ -3894,9 +3894,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 28,
+        "comments": 31,
         "views": null,
-        "watchers": 610
+        "watchers": 623
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:13:00Z",
@@ -3950,9 +3950,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 21,
         "views": null,
-        "watchers": 784
+        "watchers": 810
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:14:00Z",
@@ -4008,7 +4008,7 @@
       "engagement": {
         "comments": 21,
         "views": null,
-        "watchers": 519
+        "watchers": 527
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:15:00Z",
@@ -4062,9 +4062,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 17,
         "views": null,
-        "watchers": 306
+        "watchers": 323
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:16:00Z",
@@ -4118,9 +4118,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 31,
+        "comments": 32,
         "views": null,
-        "watchers": 886
+        "watchers": 910
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:17:00Z",
@@ -4169,14 +4169,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 46000,
+        "amount": 46250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
         "comments": 26,
         "views": null,
-        "watchers": 798
+        "watchers": 809
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:18:00Z",
@@ -4197,10 +4197,10 @@
         "fair_value": 81000,
         "n_comps": 8,
         "basis": "make-model-y3",
-        "deal_pct": 0.4321,
+        "deal_pct": 0.429,
         "is_deal": false,
         "tilt": 0.036,
-        "deal_score": 0.4681,
+        "deal_score": 0.465,
         "appreciation_pct": null
       }
     },
@@ -4230,9 +4230,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 41,
+        "comments": 42,
         "views": null,
-        "watchers": 913
+        "watchers": 936
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:19:00Z",
@@ -4286,9 +4286,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 16,
+        "comments": 17,
         "views": null,
-        "watchers": 341
+        "watchers": 346
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:20:00Z",
@@ -4346,7 +4346,7 @@
       "engagement": {
         "comments": 22,
         "views": null,
-        "watchers": 847
+        "watchers": 862
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:21:00Z",
@@ -4404,7 +4404,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 111
+        "watchers": 113
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:22:00Z",
@@ -4460,7 +4460,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 336
+        "watchers": 345
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:23:00Z",
@@ -4516,7 +4516,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 195
+        "watchers": 203
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:24:00Z",
@@ -4572,7 +4572,7 @@
       "engagement": {
         "comments": 50,
         "views": null,
-        "watchers": 555
+        "watchers": 565
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:25:00Z",
@@ -4628,7 +4628,7 @@
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 480
+        "watchers": 489
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:26:00Z",
@@ -4684,7 +4684,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 398
+        "watchers": 413
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:27:00Z",
@@ -4738,9 +4738,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 67,
+        "comments": 74,
         "views": null,
-        "watchers": 1685
+        "watchers": 1718
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:29:00Z",
@@ -4796,7 +4796,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 542
+        "watchers": 554
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:30:00Z",
@@ -4852,7 +4852,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 747
+        "watchers": 761
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:30:00Z",
@@ -4906,9 +4906,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 12,
+        "comments": 13,
         "views": null,
-        "watchers": 280
+        "watchers": 293
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:31:00Z",
@@ -4964,7 +4964,7 @@
       "engagement": {
         "comments": 14,
         "views": null,
-        "watchers": 352
+        "watchers": 360
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:32:00Z",
@@ -5022,7 +5022,7 @@
       "engagement": {
         "comments": 11,
         "views": null,
-        "watchers": 684
+        "watchers": 699
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:33:00Z",
@@ -5078,7 +5078,7 @@
       "engagement": {
         "comments": 37,
         "views": null,
-        "watchers": 942
+        "watchers": 969
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:34:00Z",
@@ -5134,9 +5134,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 21,
         "views": null,
-        "watchers": 522
+        "watchers": 535
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:35:00Z",
@@ -5190,9 +5190,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 21,
+        "comments": 22,
         "views": null,
-        "watchers": 162
+        "watchers": 177
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:36:00Z",
@@ -5250,7 +5250,7 @@
       "engagement": {
         "comments": 19,
         "views": null,
-        "watchers": 447
+        "watchers": 456
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:37:00Z",
@@ -5308,7 +5308,7 @@
       "engagement": {
         "comments": 30,
         "views": null,
-        "watchers": 1134
+        "watchers": 1169
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:38:00Z",
@@ -5364,9 +5364,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 40,
+        "comments": 43,
         "views": null,
-        "watchers": 925
+        "watchers": 950
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:39:00Z",
@@ -5422,7 +5422,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 396
+        "watchers": 427
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:40:00Z",
@@ -5480,7 +5480,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 657
+        "watchers": 678
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:41:00Z",
@@ -5534,9 +5534,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 33,
+        "comments": 35,
         "views": null,
-        "watchers": 814
+        "watchers": 826
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:42:00Z",
@@ -5592,9 +5592,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 14,
         "views": null,
-        "watchers": 848
+        "watchers": 866
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:43:00Z",
@@ -5650,7 +5650,7 @@
       "engagement": {
         "comments": 4,
         "views": null,
-        "watchers": 153
+        "watchers": 159
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:44:00Z",
@@ -5704,9 +5704,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 47,
+        "comments": 49,
         "views": null,
-        "watchers": 986
+        "watchers": 1020
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:45:00Z",
@@ -5760,9 +5760,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 17,
+        "comments": 18,
         "views": null,
-        "watchers": 227
+        "watchers": 241
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:46:00Z",
@@ -5816,9 +5816,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 34,
+        "comments": 35,
         "views": null,
-        "watchers": 891
+        "watchers": 922
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:47:00Z",
@@ -5869,14 +5869,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 1000,
+        "amount": 1100,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 5,
+        "comments": 11,
         "views": null,
-        "watchers": 209
+        "watchers": 232
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:48:00Z",
@@ -5897,10 +5897,10 @@
         "fair_value": 30750,
         "n_comps": 7,
         "basis": "make-model-y3",
-        "deal_pct": 0.9675,
+        "deal_pct": 0.9642,
         "is_deal": false,
         "tilt": -0.03,
-        "deal_score": 0.9375,
+        "deal_score": 0.9342,
         "appreciation_pct": null
       }
     },
@@ -5930,9 +5930,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 30,
+        "comments": 35,
         "views": null,
-        "watchers": 436
+        "watchers": 461
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:49:00Z",
@@ -5986,9 +5986,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 36,
+        "comments": 39,
         "views": null,
-        "watchers": 752
+        "watchers": 783
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:50:00Z",
@@ -6042,9 +6042,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 6,
+        "comments": 9,
         "views": null,
-        "watchers": 459
+        "watchers": 491
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:51:00Z",
@@ -6102,7 +6102,7 @@
       "engagement": {
         "comments": 29,
         "views": null,
-        "watchers": 505
+        "watchers": 513
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:52:00Z",
@@ -6160,7 +6160,7 @@
       "engagement": {
         "comments": 4,
         "views": null,
-        "watchers": 531
+        "watchers": 536
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:53:00Z",
@@ -6214,9 +6214,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 21,
         "views": null,
-        "watchers": 540
+        "watchers": 556
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:54:00Z",
@@ -6272,7 +6272,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 501
+        "watchers": 506
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:55:00Z",
@@ -6328,7 +6328,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 410
+        "watchers": 426
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:56:00Z",
@@ -6384,7 +6384,7 @@
       "engagement": {
         "comments": 21,
         "views": null,
-        "watchers": 465
+        "watchers": 476
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:57:00Z",
@@ -6438,9 +6438,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 32,
+        "comments": 33,
         "views": null,
-        "watchers": 605
+        "watchers": 613
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:58:00Z",
@@ -6494,9 +6494,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 12,
+        "comments": 13,
         "views": null,
-        "watchers": 691
+        "watchers": 701
       },
       "started_at": null,
       "ends_at": "2026-06-22T18:59:00Z",
@@ -6552,7 +6552,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 468
+        "watchers": 477
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:00:00Z",
@@ -6606,9 +6606,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 8,
+        "comments": 9,
         "views": null,
-        "watchers": 442
+        "watchers": 450
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:01:00Z",
@@ -6662,9 +6662,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 12,
+        "comments": 14,
         "views": null,
-        "watchers": 210
+        "watchers": 214
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:02:00Z",
@@ -6722,7 +6722,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 282
+        "watchers": 294
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:03:00Z",
@@ -6778,7 +6778,7 @@
       "engagement": {
         "comments": 32,
         "views": null,
-        "watchers": 735
+        "watchers": 751
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:04:00Z",
@@ -6834,9 +6834,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 22,
+        "comments": 23,
         "views": null,
-        "watchers": 441
+        "watchers": 447
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:05:00Z",
@@ -6854,10 +6854,10 @@
         "condition": []
       },
       "value": {
-        "fair_value": 32250,
-        "n_comps": 2,
+        "fair_value": 39500,
+        "n_comps": 3,
         "basis": "insufficient",
-        "deal_pct": 0.2248,
+        "deal_pct": 0.3671,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -6892,7 +6892,7 @@
       "engagement": {
         "comments": 24,
         "views": null,
-        "watchers": 465
+        "watchers": 471
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:06:00Z",
@@ -6943,14 +6943,14 @@
         "vintage-trucks"
       ],
       "bid": {
-        "amount": 15500,
+        "amount": 15750,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 30,
+        "comments": 31,
         "views": null,
-        "watchers": 691
+        "watchers": 707
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:07:00Z",
@@ -6971,10 +6971,10 @@
         "fair_value": 15500,
         "n_comps": 5,
         "basis": "make-model-y7",
-        "deal_pct": 0.0,
+        "deal_pct": -0.0161,
         "is_deal": false,
         "tilt": 0.0301,
-        "deal_score": 0.0301,
+        "deal_score": 0.014,
         "appreciation_pct": null
       }
     },
@@ -7006,7 +7006,7 @@
       "engagement": {
         "comments": 24,
         "views": null,
-        "watchers": 910
+        "watchers": 930
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:08:00Z",
@@ -7064,7 +7064,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 711
+        "watchers": 723
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:09:00Z",
@@ -7122,7 +7122,7 @@
       "engagement": {
         "comments": null,
         "views": null,
-        "watchers": 170
+        "watchers": 172
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:10:00Z",
@@ -7171,14 +7171,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 8900,
+        "amount": 9250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 600
+        "watchers": 606
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:11:00Z",
@@ -7199,7 +7199,7 @@
         "fair_value": 9250,
         "n_comps": 2,
         "basis": "insufficient",
-        "deal_pct": 0.0378,
+        "deal_pct": 0.0,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -7234,7 +7234,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 270
+        "watchers": 288
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:12:00Z",
@@ -7288,9 +7288,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 5,
+        "comments": 6,
         "views": null,
-        "watchers": 671
+        "watchers": 703
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:13:00Z",
@@ -7346,7 +7346,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 717
+        "watchers": 733
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:14:00Z",
@@ -7395,14 +7395,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 12000,
+        "amount": 12250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 14,
         "views": null,
-        "watchers": 575
+        "watchers": 594
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:15:00Z",
@@ -7423,7 +7423,7 @@
         "fair_value": 18250,
         "n_comps": 3,
         "basis": "insufficient",
-        "deal_pct": 0.3425,
+        "deal_pct": 0.3288,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -7512,9 +7512,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 42,
+        "comments": 43,
         "views": null,
-        "watchers": 351
+        "watchers": 360
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:17:00Z",
@@ -7570,7 +7570,7 @@
       "engagement": {
         "comments": null,
         "views": null,
-        "watchers": 137
+        "watchers": 138
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:18:00Z",
@@ -7624,9 +7624,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 26,
+        "comments": 33,
         "views": null,
-        "watchers": 432
+        "watchers": 439
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:19:00Z",
@@ -7682,7 +7682,7 @@
       "engagement": {
         "comments": 36,
         "views": null,
-        "watchers": 491
+        "watchers": 495
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:20:00Z",
@@ -7730,7 +7730,7 @@
       "engagement": {
         "comments": 26,
         "views": null,
-        "watchers": 654
+        "watchers": 674
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:21:00Z",
@@ -7788,7 +7788,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 403
+        "watchers": 411
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:22:00Z",
@@ -7842,9 +7842,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 27,
+        "comments": 29,
         "views": null,
-        "watchers": 565
+        "watchers": 576
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:23:00Z",
@@ -7898,9 +7898,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 26,
+        "comments": 29,
         "views": null,
-        "watchers": 673
+        "watchers": 676
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:24:00Z",
@@ -7954,9 +7954,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 20,
         "views": null,
-        "watchers": 1064
+        "watchers": 1084
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:25:00Z",
@@ -8010,9 +8010,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 22,
         "views": null,
-        "watchers": 404
+        "watchers": 418
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:26:00Z",
@@ -8066,9 +8066,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 37,
+        "comments": 38,
         "views": null,
-        "watchers": 784
+        "watchers": 795
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:27:00Z",
@@ -8117,14 +8117,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 36000,
+        "amount": 36250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 42,
+        "comments": 47,
         "views": null,
-        "watchers": 974
+        "watchers": 990
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:28:00Z",
@@ -8145,10 +8145,10 @@
         "fair_value": 44000,
         "n_comps": 11,
         "basis": "make-model-y3",
-        "deal_pct": 0.1818,
+        "deal_pct": 0.1761,
         "is_deal": false,
         "tilt": 0.0429,
-        "deal_score": 0.2247,
+        "deal_score": 0.219,
         "appreciation_pct": null
       }
     },
@@ -8180,7 +8180,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 447
+        "watchers": 470
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:29:00Z",
@@ -8236,7 +8236,7 @@
       "engagement": {
         "comments": 3,
         "views": null,
-        "watchers": 226
+        "watchers": 235
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:31:00Z",
@@ -8292,9 +8292,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 56,
+        "comments": 57,
         "views": null,
-        "watchers": 723
+        "watchers": 735
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:32:00Z",
@@ -8350,9 +8350,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 13,
         "views": null,
-        "watchers": 360
+        "watchers": 374
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:33:00Z",
@@ -8408,9 +8408,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 16,
         "views": null,
-        "watchers": 529
+        "watchers": 535
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:34:00Z",
@@ -8468,7 +8468,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 1085
+        "watchers": 1127
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:35:00Z",
@@ -8526,7 +8526,7 @@
       "engagement": {
         "comments": 30,
         "views": null,
-        "watchers": 396
+        "watchers": 409
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:36:00Z",
@@ -8582,7 +8582,7 @@
       "engagement": {
         "comments": 26,
         "views": null,
-        "watchers": 392
+        "watchers": 400
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:37:00Z",
@@ -8638,7 +8638,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 335
+        "watchers": 338
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:38:00Z",
@@ -8694,7 +8694,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 316
+        "watchers": 331
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:39:00Z",
@@ -8750,9 +8750,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 36,
+        "comments": 37,
         "views": null,
-        "watchers": 1322
+        "watchers": 1350
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:40:00Z",
@@ -8808,7 +8808,7 @@
       "engagement": {
         "comments": 31,
         "views": null,
-        "watchers": 565
+        "watchers": 572
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:41:00Z",
@@ -8864,7 +8864,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 612
+        "watchers": 623
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:42:00Z",
@@ -8918,9 +8918,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 17,
+        "comments": 18,
         "views": null,
-        "watchers": 693
+        "watchers": 712
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:43:00Z",
@@ -8976,7 +8976,7 @@
       "engagement": {
         "comments": 24,
         "views": null,
-        "watchers": 736
+        "watchers": 764
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:44:00Z",
@@ -9025,14 +9025,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 5750,
+        "amount": 6250,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 33,
+        "comments": 34,
         "views": null,
-        "watchers": 435
+        "watchers": 443
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:45:00Z",
@@ -9088,7 +9088,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 449
+        "watchers": 467
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:46:00Z",
@@ -9142,9 +9142,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 13,
         "views": null,
-        "watchers": 127
+        "watchers": 132
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:47:00Z",
@@ -9200,7 +9200,7 @@
       "engagement": {
         "comments": 11,
         "views": null,
-        "watchers": 393
+        "watchers": 400
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:48:00Z",
@@ -9254,9 +9254,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 12,
+        "comments": 13,
         "views": null,
-        "watchers": 445
+        "watchers": 471
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:49:00Z",
@@ -9305,14 +9305,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 35011,
+        "amount": 35500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 4,
+        "comments": 7,
         "views": null,
-        "watchers": 462
+        "watchers": 485
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:50:00Z",
@@ -9333,7 +9333,7 @@
         "fair_value": 75000,
         "n_comps": 1,
         "basis": "insufficient",
-        "deal_pct": 0.5332,
+        "deal_pct": 0.5267,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -9368,7 +9368,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 334
+        "watchers": 343
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:51:00Z",
@@ -9426,7 +9426,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 322
+        "watchers": 327
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:52:00Z",
@@ -9482,9 +9482,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 23,
+        "comments": 25,
         "views": null,
-        "watchers": 620
+        "watchers": 642
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:53:00Z",
@@ -9540,9 +9540,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 16,
         "views": null,
-        "watchers": 467
+        "watchers": 476
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:54:00Z",
@@ -9598,7 +9598,7 @@
       "engagement": {
         "comments": 8,
         "views": null,
-        "watchers": 516
+        "watchers": 540
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:55:00Z",
@@ -9654,7 +9654,7 @@
       "engagement": {
         "comments": 24,
         "views": null,
-        "watchers": 195
+        "watchers": 203
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:56:00Z",
@@ -9708,9 +9708,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 21,
         "views": null,
-        "watchers": 432
+        "watchers": 457
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:57:00Z",
@@ -9759,14 +9759,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 450,
+        "amount": 750,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 10,
+        "comments": 11,
         "views": null,
-        "watchers": 296
+        "watchers": 317
       },
       "started_at": null,
       "ends_at": "2026-06-22T19:59:00Z",
@@ -9820,9 +9820,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 17,
+        "comments": 19,
         "views": null,
-        "watchers": 372
+        "watchers": 381
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:00:00Z",
@@ -9873,14 +9873,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 90500,
+        "amount": 95500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 31,
+        "comments": 32,
         "views": null,
-        "watchers": 456
+        "watchers": 458
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:01:00Z",
@@ -9936,9 +9936,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 21,
+        "comments": 24,
         "views": null,
-        "watchers": 778
+        "watchers": 809
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:02:00Z",
@@ -9994,7 +9994,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 213
+        "watchers": 219
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:03:00Z",
@@ -10050,9 +10050,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 12,
+        "comments": 17,
         "views": null,
-        "watchers": 1069
+        "watchers": 1100
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:04:00Z",
@@ -10108,7 +10108,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 633
+        "watchers": 653
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:05:00Z",
@@ -10162,9 +10162,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 28,
+        "comments": 32,
         "views": null,
-        "watchers": 872
+        "watchers": 891
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:06:00Z",
@@ -10220,7 +10220,7 @@
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 745
+        "watchers": 762
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:07:00Z",
@@ -10274,9 +10274,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 31,
+        "comments": 33,
         "views": null,
-        "watchers": 577
+        "watchers": 584
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:08:00Z",
@@ -10332,7 +10332,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 633
+        "watchers": 642
       },
       "started_at": null,
       "ends_at": "2026-06-22T20:09:00Z",
@@ -10388,7 +10388,7 @@
       "engagement": {
         "comments": 60,
         "views": null,
-        "watchers": 2101
+        "watchers": 2124
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:00:00Z",
@@ -10446,7 +10446,7 @@
       "engagement": {
         "comments": 34,
         "views": null,
-        "watchers": 1903
+        "watchers": 1930
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:05:00Z",
@@ -10503,9 +10503,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 22,
+        "comments": 23,
         "views": null,
-        "watchers": 1506
+        "watchers": 1528
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:10:00Z",
@@ -10561,7 +10561,7 @@
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 772
+        "watchers": 778
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:11:00Z",
@@ -10617,9 +10617,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 65,
+        "comments": 70,
         "views": null,
-        "watchers": 1727
+        "watchers": 1762
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:12:00Z",
@@ -10670,14 +10670,14 @@
         "60s-muscle"
       ],
       "bid": {
-        "amount": 18000,
+        "amount": 18500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 695
+        "watchers": 706
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:13:00Z",
@@ -10698,10 +10698,10 @@
         "fair_value": 50200,
         "n_comps": 5,
         "basis": "make-model-y3",
-        "deal_pct": 0.6414,
+        "deal_pct": 0.6315,
         "is_deal": false,
         "tilt": 0.0462,
-        "deal_score": 0.6876,
+        "deal_score": 0.6777,
         "appreciation_pct": null
       }
     },
@@ -10733,7 +10733,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 565
+        "watchers": 574
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:14:00Z",
@@ -10789,7 +10789,7 @@
       "engagement": {
         "comments": 27,
         "views": null,
-        "watchers": 1138
+        "watchers": 1166
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:15:00Z",
@@ -10849,7 +10849,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 307
+        "watchers": 314
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:16:00Z",
@@ -10905,7 +10905,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 617
+        "watchers": 630
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:17:00Z",
@@ -10954,14 +10954,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 1313,
+        "amount": 1500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 21,
         "views": null,
-        "watchers": 336
+        "watchers": 347
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:18:00Z",
@@ -11017,7 +11017,7 @@
       "engagement": {
         "comments": 11,
         "views": null,
-        "watchers": 582
+        "watchers": 591
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:19:00Z",
@@ -11071,9 +11071,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 13,
+        "comments": 15,
         "views": null,
-        "watchers": 599
+        "watchers": 618
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:20:00Z",
@@ -11129,7 +11129,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 522
+        "watchers": 533
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:21:00Z",
@@ -11185,7 +11185,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 294
+        "watchers": 313
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:22:00Z",
@@ -11241,7 +11241,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 377
+        "watchers": 387
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:23:00Z",
@@ -11297,7 +11297,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 484
+        "watchers": 497
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:24:00Z",
@@ -11353,7 +11353,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 129
+        "watchers": 128
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:25:00Z",
@@ -11407,9 +11407,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 36,
+        "comments": 39,
         "views": null,
-        "watchers": 986
+        "watchers": 999
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:27:00Z",
@@ -11465,9 +11465,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 3,
+        "comments": 4,
         "views": null,
-        "watchers": 278
+        "watchers": 281
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:28:00Z",
@@ -11523,7 +11523,7 @@
       "engagement": {
         "comments": 26,
         "views": null,
-        "watchers": 513
+        "watchers": 517
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:29:00Z",
@@ -11579,7 +11579,7 @@
       "engagement": {
         "comments": 4,
         "views": null,
-        "watchers": 574
+        "watchers": 595
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:30:00Z",
@@ -11635,7 +11635,7 @@
       "engagement": {
         "comments": 23,
         "views": null,
-        "watchers": 619
+        "watchers": 643
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:31:00Z",
@@ -11689,9 +11689,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 16,
+        "comments": 17,
         "views": null,
-        "watchers": 602
+        "watchers": 618
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:32:00Z",
@@ -11747,7 +11747,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 545
+        "watchers": 563
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:33:00Z",
@@ -11801,9 +11801,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 20,
         "views": null,
-        "watchers": 586
+        "watchers": 605
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:34:00Z",
@@ -11857,9 +11857,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 45,
+        "comments": 46,
         "views": null,
-        "watchers": 858
+        "watchers": 873
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:35:00Z",
@@ -11915,9 +11915,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 53,
+        "comments": 56,
         "views": null,
-        "watchers": 1012
+        "watchers": 1026
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:36:00Z",
@@ -11975,7 +11975,7 @@
       "engagement": {
         "comments": 3,
         "views": null,
-        "watchers": 275
+        "watchers": 288
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:37:00Z",
@@ -12031,7 +12031,7 @@
       "engagement": {
         "comments": 25,
         "views": null,
-        "watchers": 173
+        "watchers": 176
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:38:00Z",
@@ -12087,7 +12087,7 @@
       "engagement": {
         "comments": 39,
         "views": null,
-        "watchers": 664
+        "watchers": 677
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:39:00Z",
@@ -12143,7 +12143,7 @@
       "engagement": {
         "comments": 4,
         "views": null,
-        "watchers": 403
+        "watchers": 419
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:40:00Z",
@@ -12199,7 +12199,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 322
+        "watchers": 328
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:41:00Z",
@@ -12255,7 +12255,7 @@
       "engagement": {
         "comments": 14,
         "views": null,
-        "watchers": 365
+        "watchers": 376
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:42:00Z",
@@ -12309,9 +12309,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 7,
+        "comments": 12,
         "views": null,
-        "watchers": 290
+        "watchers": 294
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:43:00Z",
@@ -12365,9 +12365,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 26,
+        "comments": 27,
         "views": null,
-        "watchers": 655
+        "watchers": 677
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:44:00Z",
@@ -12423,7 +12423,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 758
+        "watchers": 774
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:45:00Z",
@@ -12481,7 +12481,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 262
+        "watchers": 270
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:46:00Z",
@@ -12539,7 +12539,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 522
+        "watchers": 533
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:47:00Z",
@@ -12595,7 +12595,7 @@
       "engagement": {
         "comments": 34,
         "views": null,
-        "watchers": 361
+        "watchers": 372
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:48:00Z",
@@ -12651,7 +12651,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 510
+        "watchers": 534
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:49:00Z",
@@ -12705,9 +12705,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 28,
+        "comments": 33,
         "views": null,
-        "watchers": 832
+        "watchers": 855
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:50:00Z",
@@ -12761,9 +12761,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 21,
+        "comments": 22,
         "views": null,
-        "watchers": 629
+        "watchers": 642
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:51:00Z",
@@ -12819,7 +12819,7 @@
       "engagement": {
         "comments": 26,
         "views": null,
-        "watchers": 578
+        "watchers": 598
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:52:00Z",
@@ -12875,7 +12875,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 238
+        "watchers": 248
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:53:00Z",
@@ -12931,7 +12931,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 703
+        "watchers": 717
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:54:00Z",
@@ -12991,7 +12991,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 743
+        "watchers": 761
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:55:00Z",
@@ -13047,7 +13047,7 @@
       "engagement": {
         "comments": 6,
         "views": null,
-        "watchers": 296
+        "watchers": 304
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:56:00Z",
@@ -13101,9 +13101,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 18,
+        "comments": 20,
         "views": null,
-        "watchers": 444
+        "watchers": 458
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:57:00Z",
@@ -13152,14 +13152,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 11000,
+        "amount": 11500,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 31,
+        "comments": 32,
         "views": null,
-        "watchers": 680
+        "watchers": 694
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:58:00Z",
@@ -13180,10 +13180,10 @@
         "fair_value": 70000,
         "n_comps": 7,
         "basis": "make-model-y7",
-        "deal_pct": 0.8429,
+        "deal_pct": 0.8357,
         "is_deal": false,
         "tilt": 0.0555,
-        "deal_score": 0.8984,
+        "deal_score": 0.8912,
         "appreciation_pct": null
       }
     },
@@ -13215,7 +13215,7 @@
       "engagement": {
         "comments": 44,
         "views": null,
-        "watchers": 700
+        "watchers": 721
       },
       "started_at": null,
       "ends_at": "2026-06-23T17:59:00Z",
@@ -13271,7 +13271,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 184
+        "watchers": 190
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:00:00Z",
@@ -13327,7 +13327,7 @@
       "engagement": {
         "comments": 25,
         "views": null,
-        "watchers": 1007
+        "watchers": 1031
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:01:00Z",
@@ -13383,7 +13383,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 370
+        "watchers": 392
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:02:00Z",
@@ -13441,7 +13441,7 @@
       "engagement": {
         "comments": 14,
         "views": null,
-        "watchers": 651
+        "watchers": 663
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:03:00Z",
@@ -13499,7 +13499,7 @@
       "engagement": {
         "comments": 5,
         "views": null,
-        "watchers": 413
+        "watchers": 430
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:04:00Z",
@@ -13555,7 +13555,7 @@
       "engagement": {
         "comments": 10,
         "views": null,
-        "watchers": 191
+        "watchers": 197
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:05:00Z",
@@ -13611,7 +13611,7 @@
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 459
+        "watchers": 477
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:06:00Z",
@@ -13667,7 +13667,7 @@
       "engagement": {
         "comments": 23,
         "views": null,
-        "watchers": 748
+        "watchers": 769
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:07:00Z",
@@ -13723,7 +13723,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 399
+        "watchers": 418
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:08:00Z",
@@ -13779,9 +13779,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 21,
         "views": null,
-        "watchers": 943
+        "watchers": 959
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:09:00Z",
@@ -13839,7 +13839,7 @@
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 507
+        "watchers": 515
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:10:00Z",
@@ -13895,7 +13895,7 @@
       "engagement": {
         "comments": 6,
         "views": null,
-        "watchers": 325
+        "watchers": 331
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:11:00Z",
@@ -13951,9 +13951,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 8,
+        "comments": 10,
         "views": null,
-        "watchers": 479
+        "watchers": 484
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:12:00Z",
@@ -14009,9 +14009,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 52,
+        "comments": 54,
         "views": null,
-        "watchers": 1720
+        "watchers": 1783
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:13:00Z",
@@ -14067,7 +14067,7 @@
       "engagement": {
         "comments": 15,
         "views": null,
-        "watchers": 628
+        "watchers": 636
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:14:00Z",
@@ -14125,7 +14125,7 @@
       "engagement": {
         "comments": 8,
         "views": null,
-        "watchers": 350
+        "watchers": 359
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:15:00Z",
@@ -14181,9 +14181,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 17,
+        "comments": 20,
         "views": null,
-        "watchers": 1126
+        "watchers": 1167
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:18:00Z",
@@ -14239,7 +14239,7 @@
       "engagement": {
         "comments": 7,
         "views": null,
-        "watchers": 196
+        "watchers": 206
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:19:00Z",
@@ -14295,7 +14295,7 @@
       "engagement": {
         "comments": 11,
         "views": null,
-        "watchers": 528
+        "watchers": 549
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:20:00Z",
@@ -14351,7 +14351,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 613
+        "watchers": 620
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:21:00Z",
@@ -14405,9 +14405,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 26,
+        "comments": 31,
         "views": null,
-        "watchers": 634
+        "watchers": 661
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:22:00Z",
@@ -14463,7 +14463,7 @@
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 285
+        "watchers": 298
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:23:00Z",
@@ -14519,7 +14519,7 @@
       "engagement": {
         "comments": 24,
         "views": null,
-        "watchers": 634
+        "watchers": 644
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:24:00Z",
@@ -14577,7 +14577,7 @@
       "engagement": {
         "comments": 14,
         "views": null,
-        "watchers": 732
+        "watchers": 746
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:25:00Z",
@@ -14633,7 +14633,7 @@
       "engagement": {
         "comments": 3,
         "views": null,
-        "watchers": 227
+        "watchers": 231
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:26:00Z",
@@ -14691,7 +14691,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 516
+        "watchers": 524
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:27:00Z",
@@ -14745,9 +14745,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 7,
+        "comments": 11,
         "views": null,
-        "watchers": 254
+        "watchers": 280
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:28:00Z",
@@ -14803,7 +14803,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 253
+        "watchers": 273
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:29:00Z",
@@ -14859,7 +14859,7 @@
       "engagement": {
         "comments": 8,
         "views": null,
-        "watchers": 167
+        "watchers": 175
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:30:00Z",
@@ -14913,9 +14913,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 16,
+        "comments": 17,
         "views": null,
-        "watchers": 414
+        "watchers": 421
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:31:00Z",
@@ -14971,7 +14971,7 @@
       "engagement": {
         "comments": 14,
         "views": null,
-        "watchers": 626
+        "watchers": 635
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:32:00Z",
@@ -15027,9 +15027,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 10,
+        "comments": 11,
         "views": null,
-        "watchers": 555
+        "watchers": 590
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:33:00Z",
@@ -15085,7 +15085,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 213
+        "watchers": 217
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:34:00Z",
@@ -15143,7 +15143,7 @@
       "engagement": {
         "comments": 11,
         "views": null,
-        "watchers": 332
+        "watchers": 339
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:35:00Z",
@@ -15197,9 +15197,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 11,
+        "comments": 12,
         "views": null,
-        "watchers": 405
+        "watchers": 417
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:36:00Z",
@@ -15255,7 +15255,7 @@
       "engagement": {
         "comments": 6,
         "views": null,
-        "watchers": 284
+        "watchers": 288
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:37:00Z",
@@ -15309,9 +15309,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 21,
+        "comments": 22,
         "views": null,
-        "watchers": 684
+        "watchers": 703
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:38:00Z",
@@ -15362,14 +15362,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 3700,
+        "amount": 3801,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
-        "comments": 36,
+        "comments": 48,
         "views": null,
-        "watchers": 618
+        "watchers": 633
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:39:00Z",
@@ -15390,7 +15390,7 @@
         "fair_value": 33000,
         "n_comps": 1,
         "basis": "insufficient",
-        "deal_pct": 0.8879,
+        "deal_pct": 0.8848,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -15425,7 +15425,7 @@
       "engagement": {
         "comments": 6,
         "views": null,
-        "watchers": 509
+        "watchers": 521
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:40:00Z",
@@ -15481,7 +15481,7 @@
       "engagement": {
         "comments": 23,
         "views": null,
-        "watchers": 427
+        "watchers": 437
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:41:00Z",
@@ -15535,9 +15535,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 19,
+        "comments": 20,
         "views": null,
-        "watchers": 1227
+        "watchers": 1246
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:42:00Z",
@@ -15591,9 +15591,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 31,
+        "comments": 33,
         "views": null,
-        "watchers": 634
+        "watchers": 646
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:43:00Z",
@@ -15649,7 +15649,7 @@
       "engagement": {
         "comments": 40,
         "views": null,
-        "watchers": 763
+        "watchers": 776
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:44:00Z",
@@ -15707,7 +15707,7 @@
       "engagement": {
         "comments": 16,
         "views": null,
-        "watchers": 601
+        "watchers": 613
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:45:00Z",
@@ -15763,7 +15763,7 @@
       "engagement": {
         "comments": 44,
         "views": null,
-        "watchers": 495
+        "watchers": 503
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:46:00Z",
@@ -15822,7 +15822,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 558
+        "watchers": 579
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:47:00Z",
@@ -15876,9 +15876,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 37,
+        "comments": 43,
         "views": null,
-        "watchers": 334
+        "watchers": 336
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:48:00Z",
@@ -15936,7 +15936,7 @@
       "engagement": {
         "comments": 8,
         "views": null,
-        "watchers": 452
+        "watchers": 457
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:49:00Z",
@@ -15995,7 +15995,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 393
+        "watchers": 399
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:50:00Z",
@@ -16051,7 +16051,7 @@
       "engagement": {
         "comments": 11,
         "views": null,
-        "watchers": 492
+        "watchers": 496
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:51:00Z",
@@ -16105,9 +16105,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 16,
+        "comments": 18,
         "views": null,
-        "watchers": 443
+        "watchers": 455
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:52:00Z",
@@ -16163,7 +16163,7 @@
       "engagement": {
         "comments": 9,
         "views": null,
-        "watchers": 320
+        "watchers": 328
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:53:00Z",
@@ -16217,9 +16217,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 55,
+        "comments": 57,
         "views": null,
-        "watchers": 694
+        "watchers": 697
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:54:00Z",
@@ -16275,7 +16275,7 @@
       "engagement": {
         "comments": 2,
         "views": null,
-        "watchers": 260
+        "watchers": 267
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:55:00Z",
@@ -16331,7 +16331,7 @@
       "engagement": {
         "comments": 22,
         "views": null,
-        "watchers": 568
+        "watchers": 583
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:56:00Z",
@@ -16389,7 +16389,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 204
+        "watchers": 210
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:57:00Z",
@@ -16445,9 +16445,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 15,
+        "comments": 16,
         "views": null,
-        "watchers": 735
+        "watchers": 756
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:58:00Z",
@@ -16505,7 +16505,7 @@
       "engagement": {
         "comments": 17,
         "views": null,
-        "watchers": 768
+        "watchers": 793
       },
       "started_at": null,
       "ends_at": "2026-06-23T18:59:00Z",
@@ -16561,7 +16561,7 @@
       "engagement": {
         "comments": 37,
         "views": null,
-        "watchers": 1193
+        "watchers": 1222
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:00:00Z",
@@ -16619,7 +16619,7 @@
       "engagement": {
         "comments": 31,
         "views": null,
-        "watchers": 1688
+        "watchers": 1725
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:01:00Z",
@@ -16675,7 +16675,7 @@
       "engagement": {
         "comments": 12,
         "views": null,
-        "watchers": 389
+        "watchers": 396
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:02:00Z",
@@ -16791,7 +16791,7 @@
       "engagement": {
         "comments": 20,
         "views": null,
-        "watchers": 1128
+        "watchers": 1146
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:04:00Z",
@@ -16840,14 +16840,14 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 6135,
+        "amount": 11111,
         "currency": "USD",
         "status": "live"
       },
       "engagement": {
         "comments": 24,
         "views": null,
-        "watchers": 302
+        "watchers": 306
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:05:00Z",
@@ -16901,9 +16901,9 @@
         "status": "live"
       },
       "engagement": {
-        "comments": 20,
+        "comments": 21,
         "views": null,
-        "watchers": 955
+        "watchers": 966
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:06:00Z",
@@ -16959,7 +16959,7 @@
       "engagement": {
         "comments": 13,
         "views": null,
-        "watchers": 668
+        "watchers": 681
       },
       "started_at": null,
       "ends_at": "2026-06-23T19:07:00Z",
@@ -20809,7 +20809,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 1500,
+        "amount": 1600,
         "currency": "USD",
         "status": "live"
       },
@@ -20832,7 +20832,7 @@
         "fair_value": 39250,
         "n_comps": 1,
         "basis": "insufficient",
-        "deal_pct": 0.9618,
+        "deal_pct": 0.9592,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -21808,13 +21808,13 @@
       "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2023/06/IMG_5688-copy-2026-06-16-uaf-45016.jpeg?resize=470%2C318",
       "details": null,
       "value": {
-        "fair_value": 47000,
-        "n_comps": 7,
+        "fair_value": 53555,
+        "n_comps": 8,
         "basis": "make-model-y3",
-        "deal_pct": 0.4468,
+        "deal_pct": 0.5145,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.4468,
+        "deal_score": 0.5145,
         "appreciation_pct": null
       }
     },
@@ -21941,7 +21941,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 180000,
+        "amount": 181000,
         "currency": "USD",
         "status": "live"
       },
@@ -22249,7 +22249,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 2500,
+        "amount": 2600,
         "currency": "USD",
         "status": "live"
       },
@@ -23230,7 +23230,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 5800,
+        "amount": 5900,
         "currency": "USD",
         "status": "live"
       },
@@ -24099,7 +24099,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 169000,
+        "amount": 170000,
         "currency": "USD",
         "status": "live"
       },
@@ -24122,10 +24122,10 @@
         "fair_value": 46500,
         "n_comps": 10,
         "basis": "make-model-y3",
-        "deal_pct": -2.6344,
+        "deal_pct": -2.6559,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": -2.6344,
+        "deal_score": -2.6559,
         "appreciation_pct": null
       }
     },
@@ -26366,7 +26366,7 @@
         "air-cooled-911-family"
       ],
       "bid": {
-        "amount": 75964,
+        "amount": 77777,
         "currency": "USD",
         "status": "live"
       },
@@ -26389,10 +26389,10 @@
         "fair_value": 86000,
         "n_comps": 14,
         "basis": "make-model-y7",
-        "deal_pct": 0.1167,
+        "deal_pct": 0.0956,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.1167,
+        "deal_score": 0.0956,
         "appreciation_pct": null
       }
     },
@@ -27293,7 +27293,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 20000,
+        "amount": 22000,
         "currency": "USD",
         "status": "live"
       },
@@ -27316,7 +27316,7 @@
         "fair_value": 92500,
         "n_comps": 1,
         "basis": "insufficient",
-        "deal_pct": 0.7838,
+        "deal_pct": 0.7622,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -31903,7 +31903,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 31506,
+        "amount": 32222,
         "currency": "USD",
         "status": "live"
       },
@@ -31926,10 +31926,10 @@
         "fair_value": 38000,
         "n_comps": 5,
         "basis": "make-model-y3",
-        "deal_pct": 0.1709,
+        "deal_pct": 0.1521,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.1709,
+        "deal_score": 0.1521,
         "appreciation_pct": null
       }
     },
@@ -32690,13 +32690,13 @@
       "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/05/IMG-3319-87646-scaled.jpg?resize=470%2C318",
       "details": null,
       "value": {
-        "fair_value": 47000,
-        "n_comps": 9,
+        "fair_value": 50250,
+        "n_comps": 10,
         "basis": "make-model-y3",
-        "deal_pct": 0.2553,
+        "deal_pct": 0.3035,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.2553,
+        "deal_score": 0.3035,
         "appreciation_pct": null
       }
     },
@@ -34669,7 +34669,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 11000,
+        "amount": 11500,
         "currency": "USD",
         "status": "live"
       },
@@ -39641,57 +39641,6 @@
       }
     },
     {
-      "id": 115734914,
-      "title": "8k-Mile 1979 Mercedes-Benz 300SD",
-      "year": 1979,
-      "make": {
-        "id": null,
-        "name": "Mercedes-Benz",
-        "slug": "mercedes-benz"
-      },
-      "models": [
-        {
-          "id": null,
-          "name": "300SD",
-          "slug": "300sd"
-        }
-      ],
-      "taxonomy_paths": [
-        "mercedes-benz/300sd"
-      ],
-      "category_ids": [],
-      "bid": {
-        "amount": 25500,
-        "currency": "USD",
-        "status": "live"
-      },
-      "engagement": {
-        "comments": null,
-        "views": null,
-        "watchers": null
-      },
-      "started_at": null,
-      "ends_at": "2026-06-25T18:15:00Z",
-      "flags": {
-        "no_reserve": false,
-        "premium": false,
-        "alumni": null
-      },
-      "listing_url": "https://bringatrailer.com/listing/1979-mercedes-benz-300sd-36-2/",
-      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/06/1979_mercedes-benz_300sd_bat-226-53377-scaled-28659.jpg?resize=470%2C318",
-      "details": null,
-      "value": {
-        "fair_value": null,
-        "n_comps": 0,
-        "basis": "insufficient",
-        "deal_pct": null,
-        "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
-        "appreciation_pct": null
-      }
-    },
-    {
       "id": 116123056,
       "title": "50k-Mile 1995 Porsche 911 Carrera Coupe 6-Speed",
       "year": 1995,
@@ -39741,6 +39690,57 @@
         "is_deal": false,
         "tilt": 0.0,
         "deal_score": 0.7808,
+        "appreciation_pct": null
+      }
+    },
+    {
+      "id": 115734914,
+      "title": "8k-Mile 1979 Mercedes-Benz 300SD",
+      "year": 1979,
+      "make": {
+        "id": null,
+        "name": "Mercedes-Benz",
+        "slug": "mercedes-benz"
+      },
+      "models": [
+        {
+          "id": null,
+          "name": "300SD",
+          "slug": "300sd"
+        }
+      ],
+      "taxonomy_paths": [
+        "mercedes-benz/300sd"
+      ],
+      "category_ids": [],
+      "bid": {
+        "amount": 25500,
+        "currency": "USD",
+        "status": "live"
+      },
+      "engagement": {
+        "comments": null,
+        "views": null,
+        "watchers": null
+      },
+      "started_at": null,
+      "ends_at": "2026-06-25T18:15:00Z",
+      "flags": {
+        "no_reserve": false,
+        "premium": false,
+        "alumni": null
+      },
+      "listing_url": "https://bringatrailer.com/listing/1979-mercedes-benz-300sd-36-2/",
+      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/06/1979_mercedes-benz_300sd_bat-226-53377-scaled-28659.jpg?resize=470%2C318",
+      "details": null,
+      "value": {
+        "fair_value": null,
+        "n_comps": 0,
+        "basis": "insufficient",
+        "deal_pct": null,
+        "is_deal": false,
+        "tilt": null,
+        "deal_score": null,
         "appreciation_pct": null
       }
     },
@@ -41456,7 +41456,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 6000,
+        "amount": 6500,
         "currency": "USD",
         "status": "live"
       },
@@ -41609,7 +41609,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 25000,
+        "amount": 25250,
         "currency": "USD",
         "status": "live"
       },
@@ -41632,7 +41632,7 @@
         "fair_value": 25250,
         "n_comps": 2,
         "basis": "insufficient",
-        "deal_pct": 0.0099,
+        "deal_pct": 0.0,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -41733,13 +41733,13 @@
       "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/05/1970_ford_mustang-boss-302_936o-71365.jpg?resize=470%2C318",
       "details": null,
       "value": {
-        "fair_value": 64000,
-        "n_comps": 5,
+        "fair_value": 62055,
+        "n_comps": 6,
         "basis": "make-model-y3",
-        "deal_pct": 0.566,
+        "deal_pct": 0.5524,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.566,
+        "deal_score": 0.5524,
         "appreciation_pct": null
       }
     },
@@ -42309,6 +42309,57 @@
       }
     },
     {
+      "id": 115382569,
+      "title": "7k-Mile 1989 Chevrolet Camaro IROC-Z Convertible",
+      "year": 1989,
+      "make": {
+        "id": null,
+        "name": "Chevrolet",
+        "slug": "chevrolet"
+      },
+      "models": [
+        {
+          "id": null,
+          "name": "Camaro",
+          "slug": "camaro"
+        }
+      ],
+      "taxonomy_paths": [
+        "chevrolet/camaro"
+      ],
+      "category_ids": [],
+      "bid": {
+        "amount": 17500,
+        "currency": "USD",
+        "status": "live"
+      },
+      "engagement": {
+        "comments": null,
+        "views": null,
+        "watchers": null
+      },
+      "started_at": null,
+      "ends_at": "2026-06-25T19:00:00Z",
+      "flags": {
+        "no_reserve": false,
+        "premium": false,
+        "alumni": null
+      },
+      "listing_url": "https://bringatrailer.com/listing/1989-chevrolet-camaro-iroc-z-convertible-14/",
+      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/05/IMG_7056-21756-scaled.jpg?resize=470%2C318",
+      "details": null,
+      "value": {
+        "fair_value": null,
+        "n_comps": 0,
+        "basis": "insufficient",
+        "deal_pct": null,
+        "is_deal": false,
+        "tilt": null,
+        "deal_score": null,
+        "appreciation_pct": null
+      }
+    },
+    {
       "id": 116384847,
       "title": "Porsche 911 SWB 2.0L Cup Race Car",
       "year": 1968,
@@ -42355,57 +42406,6 @@
         "n_comps": 1,
         "basis": "insufficient",
         "deal_pct": 0.7333,
-        "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
-        "appreciation_pct": null
-      }
-    },
-    {
-      "id": 115382569,
-      "title": "7k-Mile 1989 Chevrolet Camaro IROC-Z Convertible",
-      "year": 1989,
-      "make": {
-        "id": null,
-        "name": "Chevrolet",
-        "slug": "chevrolet"
-      },
-      "models": [
-        {
-          "id": null,
-          "name": "Camaro",
-          "slug": "camaro"
-        }
-      ],
-      "taxonomy_paths": [
-        "chevrolet/camaro"
-      ],
-      "category_ids": [],
-      "bid": {
-        "amount": 17500,
-        "currency": "USD",
-        "status": "live"
-      },
-      "engagement": {
-        "comments": null,
-        "views": null,
-        "watchers": null
-      },
-      "started_at": null,
-      "ends_at": "2026-06-25T19:00:00Z",
-      "flags": {
-        "no_reserve": false,
-        "premium": false,
-        "alumni": null
-      },
-      "listing_url": "https://bringatrailer.com/listing/1989-chevrolet-camaro-iroc-z-convertible-14/",
-      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/05/IMG_7056-21756-scaled.jpg?resize=470%2C318",
-      "details": null,
-      "value": {
-        "fair_value": null,
-        "n_comps": 0,
-        "basis": "insufficient",
-        "deal_pct": null,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -44977,57 +44977,6 @@
       }
     },
     {
-      "id": 111468801,
-      "title": "21k-Mile 2004 Honda S2000",
-      "year": 2004,
-      "make": {
-        "id": null,
-        "name": "Honda",
-        "slug": "honda"
-      },
-      "models": [
-        {
-          "id": null,
-          "name": "S2000",
-          "slug": "s2000"
-        }
-      ],
-      "taxonomy_paths": [
-        "honda/s2000"
-      ],
-      "category_ids": [],
-      "bid": {
-        "amount": 12000,
-        "currency": "USD",
-        "status": "live"
-      },
-      "engagement": {
-        "comments": null,
-        "views": null,
-        "watchers": null
-      },
-      "started_at": null,
-      "ends_at": "2026-06-25T20:00:00Z",
-      "flags": {
-        "no_reserve": false,
-        "premium": false,
-        "alumni": null
-      },
-      "listing_url": "https://bringatrailer.com/listing/2004-honda-s2000-220/",
-      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/03/36A1779-23657-scaled.jpg?resize=470%2C318",
-      "details": null,
-      "value": {
-        "fair_value": 36250,
-        "n_comps": 3,
-        "basis": "insufficient",
-        "deal_pct": 0.669,
-        "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
-        "appreciation_pct": null
-      }
-    },
-    {
       "id": 115601140,
       "title": "1977 Ford F-150 Ranger XLT 4&#215;4",
       "year": 1977,
@@ -45072,6 +45021,57 @@
         "n_comps": 1,
         "basis": "insufficient",
         "deal_pct": -1.0,
+        "is_deal": false,
+        "tilt": null,
+        "deal_score": null,
+        "appreciation_pct": null
+      }
+    },
+    {
+      "id": 111468801,
+      "title": "21k-Mile 2004 Honda S2000",
+      "year": 2004,
+      "make": {
+        "id": null,
+        "name": "Honda",
+        "slug": "honda"
+      },
+      "models": [
+        {
+          "id": null,
+          "name": "S2000",
+          "slug": "s2000"
+        }
+      ],
+      "taxonomy_paths": [
+        "honda/s2000"
+      ],
+      "category_ids": [],
+      "bid": {
+        "amount": 12000,
+        "currency": "USD",
+        "status": "live"
+      },
+      "engagement": {
+        "comments": null,
+        "views": null,
+        "watchers": null
+      },
+      "started_at": null,
+      "ends_at": "2026-06-25T20:00:00Z",
+      "flags": {
+        "no_reserve": false,
+        "premium": false,
+        "alumni": null
+      },
+      "listing_url": "https://bringatrailer.com/listing/2004-honda-s2000-220/",
+      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/03/36A1779-23657-scaled.jpg?resize=470%2C318",
+      "details": null,
+      "value": {
+        "fair_value": 36250,
+        "n_comps": 3,
+        "basis": "insufficient",
+        "deal_pct": 0.669,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -45458,7 +45458,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 800,
+        "amount": 900,
         "currency": "USD",
         "status": "live"
       },
@@ -46867,13 +46867,13 @@
       "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/06/00-20338-scaled.jpg?resize=470%2C318",
       "details": null,
       "value": {
-        "fair_value": 47000,
-        "n_comps": 9,
+        "fair_value": 50250,
+        "n_comps": 10,
         "basis": "make-model-y3",
-        "deal_pct": -2.1277,
+        "deal_pct": -1.9254,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": -2.1277,
+        "deal_score": -1.9254,
         "appreciation_pct": null
       }
     },
@@ -47031,57 +47031,6 @@
       }
     },
     {
-      "id": 112143492,
-      "title": "Twin-Plug 1.9L-Powered 1965 Alfa Romeo Giulia Sprint GT",
-      "year": 1965,
-      "make": {
-        "id": null,
-        "name": "Alfa Romeo",
-        "slug": "alfa-romeo"
-      },
-      "models": [
-        {
-          "id": null,
-          "name": "Giulia",
-          "slug": "giulia"
-        }
-      ],
-      "taxonomy_paths": [
-        "alfa-romeo/giulia"
-      ],
-      "category_ids": [],
-      "bid": {
-        "amount": 30000,
-        "currency": "EUR",
-        "status": "live"
-      },
-      "engagement": {
-        "comments": null,
-        "views": null,
-        "watchers": null
-      },
-      "started_at": null,
-      "ends_at": "2026-06-26T17:30:00Z",
-      "flags": {
-        "no_reserve": false,
-        "premium": false,
-        "alumni": null
-      },
-      "listing_url": "https://bringatrailer.com/listing/1965-alfa-romeo-giulia-sprint-gt-25/",
-      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/04/B5A9649-36773-scaled.jpg?resize=470%2C318",
-      "details": null,
-      "value": {
-        "fair_value": null,
-        "n_comps": 0,
-        "basis": "insufficient",
-        "deal_pct": null,
-        "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
-        "appreciation_pct": null
-      }
-    },
-    {
       "id": 116618766,
       "title": "1,800-Mile 2019 Porsche 911 Speedster Heritage Design",
       "year": 2019,
@@ -47129,6 +47078,57 @@
         "is_deal": false,
         "tilt": 0.0,
         "deal_score": -0.6231,
+        "appreciation_pct": null
+      }
+    },
+    {
+      "id": 112143492,
+      "title": "Twin-Plug 1.9L-Powered 1965 Alfa Romeo Giulia Sprint GT",
+      "year": 1965,
+      "make": {
+        "id": null,
+        "name": "Alfa Romeo",
+        "slug": "alfa-romeo"
+      },
+      "models": [
+        {
+          "id": null,
+          "name": "Giulia",
+          "slug": "giulia"
+        }
+      ],
+      "taxonomy_paths": [
+        "alfa-romeo/giulia"
+      ],
+      "category_ids": [],
+      "bid": {
+        "amount": 30000,
+        "currency": "EUR",
+        "status": "live"
+      },
+      "engagement": {
+        "comments": null,
+        "views": null,
+        "watchers": null
+      },
+      "started_at": null,
+      "ends_at": "2026-06-26T17:30:00Z",
+      "flags": {
+        "no_reserve": false,
+        "premium": false,
+        "alumni": null
+      },
+      "listing_url": "https://bringatrailer.com/listing/1965-alfa-romeo-giulia-sprint-gt-25/",
+      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/04/B5A9649-36773-scaled.jpg?resize=470%2C318",
+      "details": null,
+      "value": {
+        "fair_value": null,
+        "n_comps": 0,
+        "basis": "insufficient",
+        "deal_pct": null,
+        "is_deal": false,
+        "tilt": null,
+        "deal_score": null,
         "appreciation_pct": null
       }
     },
@@ -47463,7 +47463,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 52520,
+        "amount": 53996,
         "currency": "USD",
         "status": "live"
       },
@@ -47486,10 +47486,10 @@
         "fair_value": 41000,
         "n_comps": 10,
         "basis": "make-model-y3",
-        "deal_pct": -0.281,
+        "deal_pct": -0.317,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": -0.281,
+        "deal_score": -0.317,
         "appreciation_pct": null
       }
     },
@@ -47567,7 +47567,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 15000,
+        "amount": 17580,
         "currency": "USD",
         "status": "live"
       },
@@ -47590,7 +47590,7 @@
         "fair_value": 99250,
         "n_comps": 2,
         "basis": "insufficient",
-        "deal_pct": 0.8489,
+        "deal_pct": 0.8229,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -47899,13 +47899,13 @@
       "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/05/1969_ford_mustang_69_ford_mustang_mach1_2277-1-02736-scaled-34257.jpg?resize=470%2C318",
       "details": null,
       "value": {
-        "fair_value": 47000,
-        "n_comps": 7,
+        "fair_value": 53555,
+        "n_comps": 8,
         "basis": "make-model-y3",
-        "deal_pct": -0.4043,
+        "deal_pct": -0.2324,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": -0.4043,
+        "deal_score": -0.2324,
         "appreciation_pct": null
       }
     },
@@ -48114,57 +48114,6 @@
       }
     },
     {
-      "id": 113519420,
-      "title": "1987 Mercedes-Benz 560SL",
-      "year": 1987,
-      "make": {
-        "id": null,
-        "name": "Mercedes-Benz",
-        "slug": "mercedes-benz"
-      },
-      "models": [
-        {
-          "id": null,
-          "name": "560SL",
-          "slug": "560sl"
-        }
-      ],
-      "taxonomy_paths": [
-        "mercedes-benz/560sl"
-      ],
-      "category_ids": [],
-      "bid": {
-        "amount": 2992,
-        "currency": "USD",
-        "status": "live"
-      },
-      "engagement": {
-        "comments": null,
-        "views": null,
-        "watchers": null
-      },
-      "started_at": null,
-      "ends_at": "2026-06-26T17:50:00Z",
-      "flags": {
-        "no_reserve": false,
-        "premium": false,
-        "alumni": null
-      },
-      "listing_url": "https://bringatrailer.com/listing/1987-mercedes-benz-500sl-20/",
-      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/04/1987_mercedes-benz_500sl_8G4A8568-72306-scaled.jpg?resize=470%2C318",
-      "details": null,
-      "value": {
-        "fair_value": 38500,
-        "n_comps": 3,
-        "basis": "insufficient",
-        "deal_pct": 0.9223,
-        "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
-        "appreciation_pct": null
-      }
-    },
-    {
       "id": 115475230,
       "title": "1969 Datsun 2000 Roadster Project",
       "year": 1969,
@@ -48209,6 +48158,57 @@
         "n_comps": 0,
         "basis": "insufficient",
         "deal_pct": null,
+        "is_deal": false,
+        "tilt": null,
+        "deal_score": null,
+        "appreciation_pct": null
+      }
+    },
+    {
+      "id": 113519420,
+      "title": "1987 Mercedes-Benz 560SL",
+      "year": 1987,
+      "make": {
+        "id": null,
+        "name": "Mercedes-Benz",
+        "slug": "mercedes-benz"
+      },
+      "models": [
+        {
+          "id": null,
+          "name": "560SL",
+          "slug": "560sl"
+        }
+      ],
+      "taxonomy_paths": [
+        "mercedes-benz/560sl"
+      ],
+      "category_ids": [],
+      "bid": {
+        "amount": 2992,
+        "currency": "USD",
+        "status": "live"
+      },
+      "engagement": {
+        "comments": null,
+        "views": null,
+        "watchers": null
+      },
+      "started_at": null,
+      "ends_at": "2026-06-26T17:50:00Z",
+      "flags": {
+        "no_reserve": false,
+        "premium": false,
+        "alumni": null
+      },
+      "listing_url": "https://bringatrailer.com/listing/1987-mercedes-benz-500sl-20/",
+      "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/04/1987_mercedes-benz_500sl_8G4A8568-72306-scaled.jpg?resize=470%2C318",
+      "details": null,
+      "value": {
+        "fair_value": 38500,
+        "n_comps": 3,
+        "basis": "insufficient",
+        "deal_pct": 0.9223,
         "is_deal": false,
         "tilt": null,
         "deal_score": null,
@@ -51722,7 +51722,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 58000,
+        "amount": 61777,
         "currency": "USD",
         "status": "live"
       },
@@ -51745,10 +51745,10 @@
         "fair_value": 277250,
         "n_comps": 8,
         "basis": "make-model-y3",
-        "deal_pct": 0.7908,
+        "deal_pct": 0.7772,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.7908,
+        "deal_score": 0.7772,
         "appreciation_pct": null
       }
     },
@@ -51979,7 +51979,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 1000,
+        "amount": 2000,
         "currency": "USD",
         "status": "live"
       },
@@ -53745,13 +53745,13 @@
       "thumbnail_url": "https://bringatrailer.com/wp-content/uploads/2026/04/1957_chevrolet_bel-air_1957_chevrolet_bel-air_517fc475-3233-4052-9416-8c34aa07fa25-C9FR8t-73607-73608-scaled-1-copy-2026-06-17-he4-99652-scaled.jpg?resize=470%2C318",
       "details": null,
       "value": {
-        "fair_value": 32250,
-        "n_comps": 4,
-        "basis": "insufficient",
-        "deal_pct": 0.1938,
+        "fair_value": 39500,
+        "n_comps": 5,
+        "basis": "make-model-y7",
+        "deal_pct": 0.3418,
         "is_deal": false,
-        "tilt": null,
-        "deal_score": null,
+        "tilt": 0.0,
+        "deal_score": 0.3418,
         "appreciation_pct": null
       }
     },
@@ -56672,7 +56672,7 @@
       ],
       "category_ids": [],
       "bid": {
-        "amount": 3200,
+        "amount": 3400,
         "currency": "USD",
         "status": "live"
       },
@@ -57702,7 +57702,7 @@
         "german-wagons"
       ],
       "bid": {
-        "amount": 19995,
+        "amount": 25500,
         "currency": "USD",
         "status": "live"
       },
@@ -57965,7 +57965,7 @@
         "60s-muscle"
       ],
       "bid": {
-        "amount": 3333,
+        "amount": 5000,
         "currency": "USD",
         "status": "live"
       },
@@ -57988,10 +57988,10 @@
         "fair_value": 47000,
         "n_comps": 9,
         "basis": "make-model-y3",
-        "deal_pct": 0.9291,
+        "deal_pct": 0.8936,
         "is_deal": false,
         "tilt": 0.0,
-        "deal_score": 0.9291,
+        "deal_score": 0.8936,
         "appreciation_pct": null
       }
     },

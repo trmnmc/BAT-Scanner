@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-21T20:56:28Z",
-  "count": 835,
+  "generated_at": "2026-06-22T04:49:10Z",
+  "count": 837,
   "comps": [
     {
       "id": 115117526,
@@ -8658,6 +8658,28 @@
       "year": 1958,
       "price": 356356,
       "sold_ts": 1781545200,
+      "category_ids": []
+    },
+    {
+      "id": 115649469,
+      "title": "1970 Ford Mustang Boss 302 4-Speed",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1970,
+      "price": 60111,
+      "sold_ts": 1782066281,
+      "category_ids": [
+        "60s-muscle"
+      ]
+    },
+    {
+      "id": 115972314,
+      "title": "1957 Chevrolet Bel Air Two-Door Hardtop",
+      "make": "chevrolet",
+      "model": "bel",
+      "year": 1957,
+      "price": 39500,
+      "sold_ts": 1782062746,
       "category_ids": []
     }
   ]
