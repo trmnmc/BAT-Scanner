@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Natural-language search interpreter endpoint (server-side LLM). Empty = basic keyword
+     search only. This is a PUBLIC URL, never a secret; no API key lives in the frontend. -->
+<meta name="bat-search-endpoint" content="" />
 <title>BaT Value Map</title>
 <style>
   :root { color-scheme: light dark; }
@@ -138,6 +141,46 @@
   .lt-deal { color: #ffd54a; font-weight: 600; }
   .lt-over { color: #9aa0ad; }
   .lt-urgent { color: #e2553b; font-weight: 600; }
+  /* --- primary search --- */
+  .search { display: flex; gap: 8px; padding: 10px 18px 4px; }
+  .search input { flex: 1 1 auto; min-width: 0; background: #1a1d24; color: #e7e9ee;
+                  border: 1px solid #2a2e38; border-radius: 8px; padding: 9px 12px; font-size: 15px; }
+  .search input::placeholder { color: #6b7280; }
+  .search button { background: #5b8def; color: #0f1115; border: 0; border-radius: 8px;
+                   padding: 9px 14px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .search button#q-clear { background: #1a1d24; color: #c7ccd6; border: 1px solid #2a2e38; font-weight: 500; }
+  .search-summary { padding: 2px 18px 0; font-size: 12px; color: #9aa0ad; }
+  .search-summary:empty { display: none; }
+  .search-summary.err { color: #e2553b; }
+  details.advanced { padding: 2px 18px; }
+  details.advanced > summary { cursor: pointer; color: #9aa0ad; font-size: 13px; padding: 4px 0; list-style: none; }
+  details.advanced > summary::-webkit-details-marker { display: none; }
+  details.advanced > summary::before { content: "▸ "; }
+  details.advanced[open] > summary::before { content: "▾ "; }
+  details.advanced .filters { padding: 6px 0 8px; }
+  .maphint { padding: 2px 18px 8px; }
+  #q-chips .chip .x { cursor: pointer; }
+  /* color key (shown only while a search is active) */
+  #colorlegend { display: none; flex-wrap: wrap; gap: 3px 14px; padding: 2px 18px 6px; font-size: 11px; color: #9aa0ad; }
+  #colorlegend.on { display: flex; }
+  #colorlegend .sw { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #colorlegend .dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; border: 1px solid #0f1115; }
+  #colorlegend .dot.ring { box-shadow: 0 0 0 2px #ffd54a; }
+  #colorlegend .dot.hollow { background: transparent !important; }
+  #colorlegend .glyph { font-size: 12px; line-height: 1; flex: 0 0 auto; width: 11px; text-align: center; }
+  /* --- mobile (~390px) --- */
+  html, body { max-width: 100%; overflow-x: hidden; }
+  @media (max-width: 480px) {
+    header { padding: 10px 12px 4px; }
+    .search, .search-summary, .controls, details.advanced, .chips, #q-chips, .maphint { padding-left: 12px; padding-right: 12px; }
+    .controls { gap: 10px; }
+    #chart { height: 64vh; min-height: 360px; }
+    /* ticker: real horizontal scroll instead of a clipped marquee */
+    #ticker .ticker-track { animation: none; }
+    #ticker .ticker-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .maphint { display: none; }
+    #card { top: auto; bottom: 8px; right: 8px; left: 8px; width: auto; }
+  }
 </style>
 </head>
 <body>
@@ -145,24 +188,21 @@
   <h1>BaT Value Map</h1>
   <div class="sub" id="meta">loading…</div>
 </header>
+<form class="search" id="searchform" autocomplete="off">
+  <input id="q" type="search" placeholder="Search titles, makes, and models" aria-label="Search cars">
+  <button id="q-go" type="submit">Find cars</button>
+  <button id="q-clear" type="button">Clear</button>
+</form>
+<div id="q-summary" class="search-summary"></div>
+<div class="chips" id="q-chips"></div>
+<div id="colorlegend"></div>
 <div class="controls">
-  <span><label for="ymetric">Heat axis:</label>
+  <span><label for="ymetric">Map:</label>
     <select id="ymetric">
+      <option value="closing">Closing soon</option>
       <option value="comments">Comments</option>
       <option value="watchers">Watchers</option>
-      <option value="deal">Deal % vs comps</option>
-    </select>
-  </span>
-  <span><label for="xmetric">Price axis:</label>
-    <select id="xmetric">
-      <option value="log">Log</option>
-      <option value="linear">Linear</option>
-    </select>
-  </span>
-  <span><label for="markers">Markers:</label>
-    <select id="markers">
-      <option value="dots">Dots</option>
-      <option value="photos">Photos</option>
+      <option value="deal">Comp discount</option>
     </select>
   </span>
   <span><label>View:</label>
@@ -170,22 +210,31 @@
       <button id="view-map" class="active" type="button">Map</button>
       <button id="view-list" type="button">List</button>
     </span></span>
-  <span class="hint">Legend toggles a category · hover for the photo · click a car for details · scroll or pinch to zoom · box-zoom &amp; reset top-right · double-click to reset</span>
-</div>
-<div class="filters">
-  <input id="f-make" placeholder="make(s), e.g. porsche toyota" list="makes" autocomplete="off">
-  <datalist id="makes"></datalist>
-  <input id="f-yearmin" type="number" inputmode="numeric" placeholder="year ≥">
-  <input id="f-yearmax" type="number" inputmode="numeric" placeholder="year ≤">
-  <input id="f-pricemax" type="number" inputmode="numeric" placeholder="max $">
-  <input id="f-milesmax" type="number" inputmode="numeric" placeholder="max mi">
-  <label><input type="checkbox" id="f-noreserve"> No reserve</label>
-  <label><input type="checkbox" id="f-deals"> Deals only</label>
-  <button id="f-clear" type="button">Clear</button>
-  <button id="f-save" type="button">★ Save view</button>
   <span id="f-count" class="hint"></span>
 </div>
+<details class="advanced" id="advanced">
+  <summary>Advanced filters &amp; display</summary>
+  <div class="filters">
+    <input id="f-make" placeholder="make(s), e.g. porsche toyota" list="makes" autocomplete="off">
+    <datalist id="makes"></datalist>
+    <input id="f-yearmin" type="number" inputmode="numeric" placeholder="year ≥">
+    <input id="f-yearmax" type="number" inputmode="numeric" placeholder="year ≤">
+    <input id="f-pricemax" type="number" inputmode="numeric" placeholder="max bid">
+    <input id="f-milesmax" type="number" inputmode="numeric" placeholder="max mi">
+    <label><input type="checkbox" id="f-noreserve"> No reserve</label>
+    <label><input type="checkbox" id="f-deals"> Deals only</label>
+    <span><label for="markers">Markers:</label>
+      <select id="markers">
+        <option value="auto">Auto</option>
+        <option value="dots">Dots</option>
+        <option value="photos">Photos</option>
+      </select></span>
+    <button id="f-clear" type="button">Clear filters</button>
+    <button id="f-save" type="button">★ Save view</button>
+  </div>
+</details>
 <div class="chips" id="chips"></div>
+<div class="hint maphint">Scroll or pinch to zoom · box-zoom &amp; reset top-right · double-click to reset · click a car for details</div>
 <div id="ticker" hidden></div>
 <div id="chart"></div>
 <div id="listpanel" hidden></div>
@@ -195,27 +244,23 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
 <script src="./filters.js"></script>
+<script src="./map-data.js"></script>
+<script src="./search.js"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
-const CATEGORY_COLORS = {
-  "air-cooled-911-family": "#5b8def",
-  "60s-muscle":            "#e2553b",
-  "80s-90s-japanese":      "#28b487",
-  "vintage-trucks":        "#c9943a",
-  "german-wagons":         "#9b6cd6",
-};
-const CATEGORY_LABELS = {
-  "air-cooled-911-family": "Air-cooled 911",
-  "60s-muscle":            "60s muscle",
-  "80s-90s-japanese":      "80s–90s JDM",
-  "vintage-trucks":        "Vintage trucks",
-  "german-wagons":         "German wagons",
-};
+// The five categories are placeholder metadata only — they no longer color the map,
+// drive a legend, or appear as preset chips. category_ids still ride along in the snapshot
+// and BATFilters still understands `category` so old saved views keep working.
 
 const statusEl = document.getElementById("status");
 const metaEl = document.getElementById("meta");
 const chart = echarts.init(document.getElementById("chart"), "dark");
 window.addEventListener("resize", () => chart.resize());
+// Re-render when we cross the mobile/desktop boundary so the declutter + coloring re-evaluate
+// for the new platform (IS_MOBILE is read inside render/buildSeries). Guarded against pre-init.
+const MOBILE_MQ = window.matchMedia("(max-width: 480px), (pointer: coarse)");
+(MOBILE_MQ.addEventListener || MOBILE_MQ.addListener).call(MOBILE_MQ,
+  "change", () => { if (SNAPSHOT) render(); });
 
 // --- Cursor-anchored zoom (wheel + trackpad pinch). ECharts' built-in inside-zoom
 // anchors at the pointer for a plain wheel but IGNORES a Mac trackpad pinch (which
@@ -334,139 +379,224 @@ function fmtMiles(d) {
   return d.tmu ? s + " · TMU" : s;
 }
 
-// Plots the cars passed in (already filtered). Untagged cars go in a gray "Other" series
-// so the WHOLE board shows, not just the taste categories. A car only plots if it has the
-// chosen Y value — we never fake a 0 for unknown engagement (honest, like the deal axis).
-function buildSeries(cars, yMetric, markers) {
-  const usePhotos = markers === "photos";
-  const OTHER = "__other";
-  const byCat = {};
-  for (const a of cars) {
-    const price = a.bid && a.bid.amount;
-    if (!price || price <= 0) continue;                 // log axis needs price > 0
-    let heat;
-    if (yMetric === "deal") {
-      if (!a.value || a.value.deal_pct == null) continue;   // only cars with a comp estimate
-      if (!(a.flags && a.flags.no_reserve)) continue;       // deal axis = real discounts: a reserve
-      heat = Math.round(a.value.deal_pct * 100);            // bid isn't a price, so "% under" is bogus
-    } else {
-      const e = a.engagement && a.engagement[yMetric];
-      if (e == null) continue;                              // unknown engagement: don't fake a 0
-      heat = e;
+const IS_MOBILE = () => MOBILE_MQ.matches;   // same media query as the re-render listener above
+const FRIENDLY_BASIS = { "make-model-y3": "same model, ±3 years", "make-model-y7": "same model, ±7 years" };
+function friendlyBasis(b) { return FRIENDLY_BASIS[b] || b || ""; }
+function metricAxisName(metric) {
+  if (metric === "closing") return "Time remaining, soonest first";
+  if (metric === "deal") return "% under comps →";
+  return (metric === "watchers" ? "Watchers" : "Comments") + " (heat) →";
+}
+function snapshotAgeLabel() {
+  const t = SNAPSHOT && SNAPSHOT.scraped_at ? Date.parse(SNAPSHOT.scraped_at) : NaN;
+  if (isNaN(t)) return "age unknown";
+  return BATMapData.formatAge(Date.now() - t) || "just now";
+}
+
+// One scatter series, one point per active auction with the selected metric. Without a search
+// the board keeps its neutral data-state styling (filled/hollow/stale/deal-ring). WITH a search,
+// the cars you asked for are tinted by deal quality, look-alikes (same make) are muted, and the
+// rest are dimmed (or hidden on mobile). Zero/no bids land in the no-bid lane on the log X axis.
+const TIER_COLOR = { under: "#28b487", fair: "#e0a13a", over: "#e2553b", unknown: "#5b8def" };
+// redundant non-color channel for red-green colorblindness: shape carries buy/avoid too
+const TIER_SYMBOL = { under: "triangle", fair: "circle", over: "diamond", unknown: "circle" };
+const TIER_GLYPH = { under: "▲", fair: "●", over: "◆", unknown: "○" };
+const CLASS_RANK = { neutral: 0, other: 0, similar: 1, match: 2 };   // higher = drawn later = on top
+
+function buildSeries(cars, metric, markers, now, opts) {
+  opts = opts || {};
+  const search = !!opts.searchActive;
+  const matchedIds = opts.matchedIds, similarMakes = opts.similarMakes;
+  const pts = BATMapData.buildPoints(cars, metric, now);
+  const mode = markers === "auto" ? BATMapData.chooseMarkerMode(pts.length, IS_MOBILE()) : markers;
+  const usePhotos = mode === "photos";
+  const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
+  const RING = "#ffd54a";
+  const data = pts.map(pt => {
+    const a = pt.car;
+    const isDeal = !!(a.value && a.value.is_deal);
+    const fresh = BATMapData.getEngagementFreshness(a, now, scrapedAt);
+    let cls = "neutral";
+    if (search) {
+      if (a.id != null && matchedIds.has(a.id)) cls = "match";   // guard: a null id must not match a null in the Set
+      else if (a.make && a.make.slug && similarMakes.has(a.make.slug)) cls = "similar";
+      else cls = "other";
     }
-    const photo = usePhotos && a.thumbnail_url;
-    const isDeal = !!(a.value && a.value.is_deal);          // ending soon + under comps + enough comps
-    const dotSize = isDeal ? 19 : 13;
-    const cats = (a.category_ids && a.category_ids.length) ? a.category_ids : [OTHER];
-    for (const cid of cats) {
-      const color = CATEGORY_COLORS[cid] || "#6b7280";     // untagged -> gray
-      (byCat[cid] = byCat[cid] || []).push({
-        value: [price, heat],
-        symbol: photo ? "image://" + a.thumbnail_url : "circle",
-        symbolSize: photo ? [48, 36] : dotSize,
-        itemStyle: photo
-          ? { borderColor: isDeal ? "#ffd54a" : color, borderWidth: isDeal ? 3 : 2 }
-          : { color: color, opacity: 0.85,
-              borderColor: isDeal ? "#ffd54a" : "#0f1115", borderWidth: isDeal ? 3 : 1 },
-        _t: a.title, _y: a.year, _p: price, _cur: a.bid && a.bid.currency,
-        _c: (a.engagement && a.engagement.comments),
-        _w: (a.engagement && a.engagement.watchers),
-        _img: a.thumbnail_url, _url: a.listing_url, _v: a.value, _d: a.details,
-        _nr: !!(a.flags && a.flags.no_reserve),
-        _end: a.ends_at || null,                    // deadline: a bid is meaningless without time left
-      });
-    }
+    const item = search ? styleSearch(pt, a, cls, isDeal, usePhotos, RING)
+                        : styleNeutral(pt, isDeal, fresh.hasData, fresh.stale, usePhotos, RING);
+    item._t = a.title; item._p = (a.bid && a.bid.amount); item._cur = a.bid && a.bid.currency;
+    item._c = (a.engagement && a.engagement.comments); item._w = (a.engagement && a.engagement.watchers);
+    item._img = a.thumbnail_url; item._url = a.listing_url; item._v = a.value; item._d = a.details;
+    item._nr = !!(a.flags && a.flags.no_reserve); item._end = a.ends_at || null;
+    item._noBid = pt.noBid; item._fresh = fresh; item._cls = cls;
+    return item;
+  });
+  // ECharts ignores per-item z within ONE series, so we order the draw ourselves: matches last
+  // (on top of the dimmed "other"/"similar"), which also makes them win item-hover hit-testing.
+  if (search) data.sort((p, q) => CLASS_RANK[p._cls] - CLASS_RANK[q._cls]);
+  // X lower bound is dynamic: the no-bid lane if any zero/absent bids, else the smallest real bid.
+  const reals = pts.filter(p => !p.noBid).map(p => p.x);
+  const hasNoBid = pts.some(p => p.noBid);
+  const xMin = hasNoBid ? BATMapData.NO_BID_PLOT_VALUE : (reals.length ? Math.min.apply(null, reals) : 1);
+  return { series: [{ type: "scatter", name: "auctions", data: data, large: false,
+                      emphasis: { scale: 1.25 } }], usePhotos: usePhotos, xMin: xMin };
+}
+
+// neutral (no search): the data-state styling — filled=activity, hollow=none, faded=stale, ring=deal.
+function styleNeutral(pt, isDeal, hasActivity, stale, usePhotos, RING) {
+  const a = pt.car;
+  if (usePhotos && a.thumbnail_url) {
+    return { value: [pt.x, pt.y], symbol: "image://" + a.thumbnail_url, symbolSize: [46, 34],
+             itemStyle: { borderColor: isDeal ? RING : (hasActivity ? "#5b8def" : "#5a5f6b"),
+                          borderWidth: isDeal ? 3 : 1.5, opacity: stale ? 0.5 : 1 } };
   }
-  return Object.keys(byCat).sort().map(cid => ({
-    name: cid === OTHER ? "Other" : (CATEGORY_LABELS[cid] || cid),
-    type: "scatter",
-    data: byCat[cid],
-    color: CATEGORY_COLORS[cid] || "#6b7280",
-    emphasis: { focus: "series" },
-    large: true, largeThreshold: 400,            // whole board can be ~1k points
-  }));
+  if (hasActivity) {
+    return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 10,
+             itemStyle: { color: "#8b92a0", opacity: stale ? 0.4 : 0.85,
+                          borderColor: isDeal ? RING : "#0f1115", borderWidth: isDeal ? 3 : 1 } };
+  }
+  return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 10,
+           itemStyle: { color: "transparent", borderColor: isDeal ? RING : "#5a5f6b",
+                        borderWidth: isDeal ? 3 : 1.4, opacity: 0.9 } };   // hollow = no activity
+}
+
+// search: match (deal-tinted, shape-coded, prominent) / similar (muted) / other (faint context).
+function styleSearch(pt, a, cls, isDeal, usePhotos, RING) {
+  if (cls === "match") {
+    const tier = BATMapData.dealTier(a);
+    const color = TIER_COLOR[tier];
+    const recessive = tier === "unknown";    // "comps pending" — let the green/amber/red signal pop
+    if (usePhotos && a.thumbnail_url) {
+      return { value: [pt.x, pt.y], symbol: "image://" + a.thumbnail_url, symbolSize: [50, 38],
+               itemStyle: { borderColor: isDeal ? RING : color, borderWidth: isDeal ? 4 : 2.5, opacity: recessive ? 0.75 : 1 } };
+    }
+    return { value: [pt.x, pt.y], symbol: TIER_SYMBOL[tier], symbolSize: isDeal ? 16 : 12,  // shape carries buy/avoid
+             itemStyle: { color: color, opacity: recessive ? 0.55 : 1,
+                          borderColor: isDeal ? RING : "#0f1115", borderWidth: isDeal ? 3 : 1 } };
+  }
+  if (cls === "similar") {
+    return { value: [pt.x, pt.y], symbol: "circle", symbolSize: 8,
+             itemStyle: { color: "#8b92a0", opacity: 0.55, borderColor: "#0f1115", borderWidth: 0.5 } };
+  }
+  return { value: [pt.x, pt.y], symbol: "circle", symbolSize: 6,           // other = faint context
+           itemStyle: { color: "#3a3f4a", opacity: 0.16, borderWidth: 0 } };
+}
+
+function xTickFormatter(v) {
+  if (v <= BATMapData.NO_BID_PLOT_VALUE * 2) return "No bid";
+  if (v < 1000) return "";                       // empty gap between the no-bid lane and real bids
+  return BATMapData.compactNumber(v);
+}
+
+function tooltipFormatter(p) {
+  const d = p.data;
+  const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : "";
+  const bidLine = d._noBid ? "No bid yet" : `Bid at last scan: ${fmtMoney(d._p, d._cur)}`;
+  let closeLine = "";
+  const endMs = d._end ? Date.parse(d._end) : NaN;
+  if (endMs) {
+    const left = endMs - Date.now();
+    closeLine = left > 0
+      ? `<span style="color:${left <= 3600000 ? "#e2553b" : "#c7ccd6"}">Closes in ${fmtCountdown(left)}</span>`
+        + ` <span style="color:#9aa0ad">· ${new Date(endMs).toLocaleString()}</span><br>`
+      : `<span style="color:#9aa0ad">Auction ended</span><br>`;
+  }
+  let dline = "";
+  const det = d._d;
+  if (det) {
+    const miles = fmtMiles(det), cs = condSplit(det.condition), parts = [];
+    if (miles) parts.push(escapeHTML(miles));
+    if (cs.bad.length) parts.push(`<span style="color:#e2553b">🚩 ${cs.bad.join(", ")}</span>`);
+    if (cs.good.length) parts.push(`<span style="color:#28b487">${cs.good.join(", ")}</span>`);
+    if (parts.length) dline = parts.join(" · ") + "<br>";
+  }
+  const fresh = d._fresh || {};
+  let actLine;
+  if (d._c != null || d._w != null) {
+    actLine = `${d._c ?? "—"} comments · ${d._w ?? "—"} watchers`;
+    if (fresh.label) actLine += ` <span style="color:#9aa0ad">· updated ${escapeHTML(fresh.label)}</span>`;
+  } else {
+    actLine = `<span style="color:#9aa0ad">Activity not scanned yet</span>`;
+  }
+  let compLine = "";
+  const v = d._v;
+  if (v && v.fair_value && SCOREABLE_BASES[v.basis]) {       // only trusted comp bases quote a median
+    compLine = `Comp median: ${fmtMoney(v.fair_value, d._cur)} <span style="color:#9aa0ad">(${v.n_comps} comps, ${escapeHTML(friendlyBasis(v.basis))})</span>`;
+    const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
+    if (d._nr && below != null) {                            // discount only on a no-reserve car
+      compLine += `<br>Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
+        + (v.is_deal ? ` · <b style="color:#ffd54a">DEAL — closing soon</b>` : "");
+    } else if (!d._nr) {
+      compLine += `<br><span style="color:#9aa0ad">Reserve auction — bid may be below reserve, not a discount</span>`;
+    }
+    compLine += "<br>";
+  }
+  return `${img}<b>${escapeHTML(d._t)}</b><br>`
+    + bidLine + "<br>" + closeLine + dline + actLine + "<br>" + compLine
+    + `<span style="color:#7b8190">Snapshot scanned ${snapshotAgeLabel()}</span><br>`
+    + `<span style="color:#9aa0ad">click for details</span>`;
 }
 
 function render() {
-  const yMetric = document.getElementById("ymetric").value;
-  const xType = document.getElementById("xmetric").value === "linear" ? "value" : "log";
+  const metric = document.getElementById("ymetric").value;
   const markers = document.getElementById("markers").value;
-  const spec = currentSpec();
+  const now = Date.now();
+  const mobile = IS_MOBILE();
   const all = SNAPSHOT.auctions;
-  const cars = window.BATFilters ? BATFilters.filterCars(all, spec) : all;
-  FILTERED = cars;                          // shared with the List view
-  updateFilterReadout(cars, all, spec);
+  // Advanced filters always hard-filter the board; search is layered on top as highlight + dim.
+  const baseCars = window.BATFilters ? BATFilters.filterCars(all, currentSpec(), now) : all;
+  const searchActive = !!(window.BATSearch && !BATSearch.isEmptySpec(SEARCH_SPEC));
+
+  let displayCars, matchedIds = null, similarMakes = null, matched = baseCars;
+  if (searchActive) {
+    matched = BATFilters.filterCars(baseCars, SEARCH_SPEC, now);
+    matchedIds = new Set(matched.map(c => c.id).filter(id => id != null));
+    similarMakes = new Set(matched.map(c => c.make && c.make.slug).filter(Boolean));  // same make = "similar"
+    // A broad keyword (e.g. "coupe") spans many makes, so "same make" would flood the view with
+    // loosely-related cars. When the same-make set dwarfs the matches, drop the similar layer and
+    // show just the matches — keeps "similar" meaningful and the phone decluttered.
+    const similarCount = baseCars.filter(c => c.make && c.make.slug && similarMakes.has(c.make.slug) && !(c.id != null && matchedIds.has(c.id))).length;
+    if (similarCount > Math.max(60, matched.length * 2)) similarMakes = new Set();
+    displayCars = mobile
+      ? baseCars.filter(c => (c.id != null && matchedIds.has(c.id)) || (c.make && c.make.slug && similarMakes.has(c.make.slug)))
+      : baseCars;                             // desktop keeps the board; "other" is dimmed, not hidden
+  } else {
+    // empty search: desktop = whole board; mobile = a low-population teaser (today's deals, or
+    // "closing within 24h" when comps are too thin to surface deals) + the prompt to search.
+    displayCars = mobile ? mobileDefaultCars(baseCars, now) : baseCars;
+  }
+
+  FILTERED = searchActive ? matched : baseCars;      // List + ticker follow the searched cars
+  updateFilterReadout(metric, now, { searchActive, matched, baseCars, similarMakes, mobile });
+  buildTicker(FILTERED, now);
   if (listView) renderList();
-  const series = buildSeries(cars, yMetric, markers);
+  toggleColorLegend(searchActive);
+  const built = buildSeries(displayCars, metric, markers, now, { searchActive, matchedIds, similarMakes });
+  const yInverse = metric === "closing";    // soonest-ending at the TOP
   chart.setOption({
     animationDurationUpdate: 0,   // instant, cursor-tight zoom/pan response
     tooltip: {
       trigger: "item",
       backgroundColor: "#16181f", borderColor: "#2a2e38", textStyle: { color: "#e7e9ee" },
-      formatter: (p) => {
-        const d = p.data;
-        const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : "";
-        let vline = "";
-        const v = d._v;
-        if (v && v.fair_value) {
-          const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
-          vline = `Fair value: ${fmtMoney(v.fair_value, d._cur)} <span style="color:#9aa0ad">(${v.n_comps} comps, ${v.basis})</span><br>`;
-          if (d._nr && below != null) {            // discount only means something on a no-reserve car
-            vline += `Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
-              + (v.is_deal ? ` · <b style="color:#ffd54a">DEAL — ending soon</b>` : "") + `<br>`;
-          } else if (!d._nr) {
-            vline += `<span style="color:#9aa0ad">Reserve auction — bid may be below reserve, not a discount</span><br>`;
-          }
-          if (v.appreciation_pct != null) vline += `Recent trend: ${v.appreciation_pct >= 0 ? "+" : ""}${Math.round(v.appreciation_pct * 100)}%<br>`;
-        }
-        let dline = "";
-        const det = d._d;
-        if (det) {
-          const miles = fmtMiles(det), cs = condSplit(det.condition), parts = [];
-          if (miles) parts.push(miles);
-          if (cs.bad.length) parts.push(`<span style="color:#e2553b">🚩 ${cs.bad.join(", ")}</span>`);
-          if (cs.good.length) parts.push(`<span style="color:#28b487">${cs.good.join(", ")}</span>`);
-          if (parts.length) dline = parts.join(" · ") + "<br>";
-        }
-        let tline = "";
-        const endMs = d._end ? Date.parse(d._end) : NaN;
-        if (endMs) {
-          const left = endMs - Date.now();
-          const col = left > 0 && left <= 3600 * 1000 ? "#e2553b" : "#c7ccd6";
-          tline = left > 0
-            ? `<span style="color:${col}">Ends in ${fmtCountdown(left)}</span><br>`
-            : `<span style="color:#9aa0ad">Auction ended</span><br>`;
-        }
-        return `${img}<b>${escapeHTML(d._t)}</b><br>`
-          + `Bid: ${fmtMoney(d._p, d._cur)}<br>`
-          + tline
-          + dline
-          + `Comments: ${d._c ?? "—"} · Watchers: ${d._w ?? "—"}<br>`
-          + vline
-          + `<span style="color:#9aa0ad">click for details</span>`;
-      },
+      formatter: tooltipFormatter,
     },
-    legend: {
-      top: 4, textStyle: { color: "#c7ccd6" }, inactiveColor: "#4a4f5a",
-    },
-    grid: { left: 64, right: 28, top: 44, bottom: 56 },
+    legend: { show: false },                  // categories are gone from primary navigation
+    grid: { left: 70, right: 24, top: 18, bottom: 56 },
     xAxis: {
-      type: xType, name: "Bid price", nameLocation: "middle", nameGap: 34,
-      axisLabel: { formatter: (v) => "$" + (v >= 1000 ? (v/1000) + "k" : v) },
+      // multi-currency board: native amount, no hardcoded $ sign on ticks.
+      type: "log", name: "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,
+      axisLabel: { formatter: xTickFormatter },
       splitLine: { lineStyle: { color: "#1c1f27" } },
-      min: xType === "log" ? 1000 : 0,
-      // Pin the top to the data. The "nice" max sits above the priciest car, and ECharts
-      // snaps any zoom whose endValue lands in that empty band back to full — which broke
-      // cursor-anchored zoom-in. No padding above the data, no snap.
+      min: built.xMin,            // dynamic: no-bid lane or smallest real bid (no hardcoded $1,000)
+      // Pin the top to the data. The "nice" max sits above the priciest car, and ECharts snaps
+      // any zoom whose endValue lands in that empty band back to full — which broke zoom-in.
       max: "dataMax",
     },
     yAxis: {
-      type: "value",
-      name: yMetric === "deal" ? "% under comps →"
-        : (yMetric === "watchers" ? "Watchers" : "Comments") + " (heat) →",
-      nameLocation: "middle", nameGap: 44,
+      type: "value", inverse: yInverse, name: metricAxisName(metric),
+      nameLocation: "middle", nameGap: 48,
+      axisLabel: metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) } : {},
       splitLine: { lineStyle: { color: "#1c1f27" } },
-      // Pin to the data range too — same snap-on-zoom issue as the x-axis padding.
       min: "dataMin", max: "dataMax",
     },
     // Three ways to zoom, so it never feels broken: ECharts' native wheel zoom
@@ -474,7 +604,7 @@ function render() {
     // foolproof), and setupCursorZoom() which only intercepts trackpad PINCH
     // (ctrl+wheel) to stop the browser page-zooming. moveOnMouseMove = drag to pan.
     toolbox: {
-      show: true, right: 12, top: 34, itemGap: 10,
+      show: true, right: 10, top: 2, itemGap: 10,
       iconStyle: { borderColor: "#9aa0ad" },
       emphasis: { iconStyle: { borderColor: "#e7e9ee" } },
       feature: {
@@ -486,7 +616,7 @@ function render() {
       { type: "inside", xAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: true, moveOnMouseWheel: false },
       { type: "inside", yAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: true, moveOnMouseWheel: false },
     ],
-    series,
+    series: built.series,
   }, true);
 }
 
@@ -497,14 +627,14 @@ const TICKER_WINDOW_MS = 48 * 3600 * 1000;
 const TICKER_MAX = 60;            // cap chips so the marquee stays glanceable (deals sort first)
 let tickerTimer = null;
 
-function buildTicker(snapshot) {
+function buildTicker(cars, now) {
   const el = document.getElementById("ticker");
-  if (!el || !snapshot || !snapshot.auctions) return;
-  const now = Date.now();
+  if (!el || !cars) return;
+  now = now || Date.now();
   let items = [];
-  for (const a of snapshot.auctions) {
-    // whole board (pivot): ending-soon cars across every make, not just the taste categories,
-    // so the ticker surfaces every deal. Deals (no-reserve, under comps) sort to the front.
+  for (const a of cars) {
+    // ending-soon cars from the ACTIVE FILTER set (so the ticker matches the map/search, never
+    // unrelated cars). Deals (no-reserve, under comps) sort to the front.
     const price = a.bid && a.bid.amount;
     if (!price || price <= 0) continue;
     const endMs = a.ends_at ? Date.parse(a.ends_at) : NaN;
@@ -688,6 +818,8 @@ function carToCard(a) {
     _c: a.engagement && a.engagement.comments, _w: a.engagement && a.engagement.watchers,
     _img: a.thumbnail_url, _url: a.listing_url, _v: a.value, _d: a.details,
     _nr: !!(a.flags && a.flags.no_reserve), _end: a.ends_at || null,
+    _noBid: !(a.bid && a.bid.amount > 0),
+    _fresh: BATMapData.getEngagementFreshness(a, Date.now(), SNAPSHOT && SNAPSHOT.scraped_at),
   };
 }
 function closeCard() { const c = document.getElementById("card"); if (c) c.hidden = true; }
@@ -707,10 +839,10 @@ function openCard(d) {
   }
   let vline = "";
   const v = d._v;
-  if (v && v.fair_value) {
+  if (v && v.fair_value && SCOREABLE_BASES[v.basis]) {        // only trusted comp bases quote a median
     const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
-    vline = `<div class="card-row">Fair value: <b>${fmtMoney(v.fair_value, d._cur)}</b> `
-      + `<span class="card-muted">(${v.n_comps} comps, ${escapeHTML(v.basis || "")})</span></div>`;
+    vline = `<div class="card-row">Comp median: <b>${fmtMoney(v.fair_value, d._cur)}</b> `
+      + `<span class="card-muted">(${v.n_comps} comps, ${escapeHTML(friendlyBasis(v.basis))})</span></div>`;
     if (d._nr && below != null) {
       vline += `<div class="card-row">Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
         + (v.is_deal ? ` · <span class="card-deal">DEAL — ending soon</span>` : "") + `</div>`;
@@ -737,9 +869,16 @@ function openCard(d) {
     `<div class="card-close" role="button" aria-label="Close">✕</div>`
     + img
     + `<div class="card-title">${escapeHTML(d._t || "")}</div>`
-    + `<div class="card-row"><span class="card-bid">${fmtMoney(d._p, d._cur)}</span> <span class="card-muted">current bid</span></div>`
+    + `<div class="card-row">` + (d._noBid
+        ? `<span class="card-bid">No bid yet</span>`
+        : `<span class="card-bid">${fmtMoney(d._p, d._cur)}</span> <span class="card-muted">bid at last scan</span>`)
+      + `</div>`
     + clock + dline + vline
-    + `<div class="card-row card-muted">${d._c ?? "—"} comments · ${d._w ?? "—"} watchers</div>`
+    + `<div class="card-row card-muted">` + ((d._c != null || d._w != null)
+        ? `${d._c ?? "—"} comments · ${d._w ?? "—"} watchers`
+          + (d._fresh && d._fresh.label ? ` · updated ${escapeHTML(d._fresh.label)}` : "")
+        : `Activity not scanned yet`)
+      + `</div>`
     + btn;
   card.querySelector(".card-close").onclick = closeCard;
   card.hidden = false;
@@ -777,7 +916,8 @@ function listValue(a, key) {
 function renderList() {
   const lp = document.getElementById("listpanel");
   if (!lp) return;
-  const rows = FILTERED.slice().sort((x, y) => {
+  // the List shows the ACTIVE filtered board (ended-since-scan cars are dropped, like the map)
+  const rows = BATMapData.getActiveAuctions(FILTERED, Date.now()).sort((x, y) => {
     const a = listValue(x, listSort.key), b = listValue(y, listSort.key);
     const c = a < b ? -1 : a > b ? 1 : 0;
     return listSort.dir === "asc" ? c : -c;
@@ -803,7 +943,7 @@ function renderList() {
     return `<tr data-i="${i}">`
       + `<td><div style="display:flex;align-items:center;gap:8px">${img}<span class="lt-name">${escapeHTML(a.title || "")}`
         + `${miles ? ` <span class="card-muted">· ${escapeHTML(miles)}</span>` : ""}</span></div></td>`
-      + `<td class="num">${fmtMoney(a.bid && a.bid.amount, a.bid && a.bid.currency)}</td>`
+      + `<td class="num">${a.bid && a.bid.amount > 0 ? fmtMoney(a.bid.amount, a.bid.currency) : "<span class='card-muted'>No bid</span>"}</td>`
       + `<td class="num">${clock}</td>`
       + `<td class="num">${deal}</td>`
       + `<td class="num">${(a.engagement && a.engagement.watchers) ?? "—"}</td>`
@@ -837,8 +977,84 @@ document.getElementById("view-map").onclick = () => setView("map");
 document.getElementById("view-list").onclick = () => setView("list");
 
 document.getElementById("ymetric").addEventListener("change", render);
-document.getElementById("xmetric").addEventListener("change", render);
 document.getElementById("markers").addEventListener("change", render);
+
+// --- search controller. Two layers, matched LOCALLY (the LLM, when wired, only returns a spec;
+// it never matches cars). currentSpec() = the Advanced manual filters, which HARD-filter the
+// board (baseCars). SEARCH_SPEC = the search box (keyword now, validated LLM spec later), applied
+// as a highlight/dim overlay on top — never a hard filter. There is no separate "LLM results" list.
+let SEARCH_SPEC = {};
+const SEARCH_ENDPOINT = (function () {
+  const m = document.querySelector('meta[name="bat-search-endpoint"]');
+  return String(window.BAT_SEARCH_ENDPOINT || (m && m.getAttribute("content")) || "").trim();
+})();
+
+function setSearchSummary(text, isErr) {
+  const el = document.getElementById("q-summary");
+  if (!el) return;
+  el.textContent = text || "";
+  el.classList.toggle("err", !!isErr);
+}
+function renderSearchChips() {
+  const wrap = document.getElementById("q-chips");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  const chips = window.BATSearch ? BATSearch.specConstraints(SEARCH_SPEC) : [];
+  for (const ch of chips) {
+    const el = document.createElement("span");
+    el.className = "chip active"; el.textContent = ch.label;
+    const x = document.createElement("span");
+    x.className = "x"; x.textContent = "✕";
+    x.onclick = () => removeSearchConstraint(ch);
+    el.appendChild(x);
+    wrap.appendChild(el);
+  }
+}
+function removeSearchConstraint(ch) {
+  if (ch.field === "termGroups" && typeof ch.index === "number") {
+    SEARCH_SPEC.termGroups = (SEARCH_SPEC.termGroups || []).filter((_, i) => i !== ch.index);
+    if (!SEARCH_SPEC.termGroups.length) delete SEARCH_SPEC.termGroups;
+  } else {
+    delete SEARCH_SPEC[ch.field];
+  }
+  renderSearchChips();
+  render();
+}
+function clearSearch() {
+  SEARCH_SPEC = {};
+  const q = document.getElementById("q"); if (q) q.value = "";
+  setSearchSummary("");
+  renderSearchChips();
+}
+async function runSearch() {
+  const q = (document.getElementById("q").value || "").trim();
+  if (!q) { clearSearch(); render(); return; }
+  if (!window.BATSearch) return;
+  setSearchSummary("Searching…");
+  const catalog = BATSearch.buildCatalog(SNAPSHOT.auctions);
+  let result;
+  try {
+    result = await BATSearch.interpretSearch(q, { endpoint: SEARCH_ENDPOINT, catalog });
+  } catch (e) {
+    result = { spec: BATSearch.basicKeywordSpec(q), source: "keyword", error: "search failed" };
+  }
+  SEARCH_SPEC = result.spec || {};
+  const note = result.source === "llm" ? "" : "Keyword search · ";
+  const err = result.error && result.source !== "keyword";
+  setSearchSummary((result.error ? result.error + " — " : "") + note + (result.summary || BATSearch.formatSearchSummary(SEARCH_SPEC)), err);
+  renderSearchChips();
+  render();
+}
+(function setupSearch() {
+  const form = document.getElementById("searchform");
+  const q = document.getElementById("q");
+  if (q) q.placeholder = "What kind of car are you looking for?";   // honest prefix lives in the summary
+  if (form) form.addEventListener("submit", (e) => { e.preventDefault(); runSearch(); });
+  // "Clear" beside the search clears ONLY the search (advanced filters keep narrowing the board);
+  // "Clear filters" in the Advanced section owns the manual filters. Each button owns its own bar.
+  const clearBtn = document.getElementById("q-clear");
+  if (clearBtn) clearBtn.onclick = () => { clearSearch(); render(); };
+})();
 
 // --- filter controller (pivot): one spec, read from the bar, written by chips/presets/saved views
 const SAVED_KEY = "bat_saved_views_v1";
@@ -874,14 +1090,91 @@ function applySpec(spec) {
   activePreset = spec.category || null;
 }
 
-function updateFilterReadout(cars, all, spec) {
+function updateFilterReadout(metric, now, ctx) {
   const el = document.getElementById("f-count");
   if (!el) return;
-  let msg = `${cars.length} of ${all.length} cars`;
-  if (spec && spec.milesMax != null && window.BATFilters) {        // 1C-A honesty: say where the data is
-    msg += ` · mileage known for ${BATFilters.knownCount(cars, "miles")}`;
+  const fmt = (n) => Number(n).toLocaleString();
+  let msg;
+  if (ctx.searchActive) {
+    // count the cars actually PLOTTED on this axis (drops ended + metric-less), so the number
+    // equals the dots on screen.
+    const matchPts = BATMapData.buildPoints(ctx.matched, metric, now);
+    const m = matchPts.length;
+    if (m === 0) {
+      msg = "No matches — try fewer or different words";
+    } else {
+      const activeBase = BATMapData.getActiveAuctions(ctx.baseCars, now);
+      const similar = activeBase.filter(c => c.make && c.make.slug && ctx.similarMakes.has(c.make.slug)
+                          && !(c.id != null && new Set(ctx.matched.map(x => x.id)).has(c.id))).length;
+      // most matches have no trusted comps yet, so the green/amber/red tint only means something
+      // for a few — say how many, honestly (same idiom as the mileage/deal readouts).
+      const graded = matchPts.filter(p => BATMapData.dealTier(p.car) !== "unknown").length;
+      msg = `${fmt(m)} match${m === 1 ? "" : "es"}`
+        + (graded > 0 ? ` · comp grade for ${fmt(graded)}` : ` · comps pending`)
+        + (similar > 0 ? ` · ${fmt(similar)} similar (same make)` : "")
+        + (ctx.mobile ? "" : ` · rest dimmed`);
+    }
+  } else {
+    const cars = ctx.baseCars;
+    const active = BATMapData.getActiveAuctions(cars, now).length;
+    const plottable = BATMapData.buildPoints(cars, metric, now).length;
+    if (ctx.mobile) {
+      const deals = activeDeals(cars, now).length;
+      msg = (deals >= MOBILE_DEALS_MIN)
+        ? `${fmt(deals)} deals shown · search to see the whole board`
+        : `${fmt(cars.filter(c => endsWithin(c, now, 24)).length)} closing within 24h · search to see the whole board`;
+    } else if (metric === "closing") {
+      const ended = cars.length - active;
+      msg = `${fmt(active)} active auctions shown` + (ended > 0 ? ` · ${fmt(ended)} ended since the last scan` : "");
+    } else if (metric === "deal") {
+      msg = `${fmt(plottable)} trusted no-reserve comp matches shown · ${fmt(active - plottable)} other active auctions`;
+    } else {
+      const label = metric === "watchers" ? "watcher" : "comment";
+      msg = `${fmt(plottable)} shown · ${fmt(active - plottable)} matching auctions do not have ${label} data`;
+    }
+  }
+  const man = currentSpec();
+  if (man.milesMax != null && window.BATFilters) {                  // 1C-A honesty: say where the data is
+    msg += ` · mileage known for ${BATFilters.knownCount(ctx.baseCars, "miles")}`;
   }
   el.textContent = msg;
+}
+
+// active auction whose end is within `hours` of `now` (used for the mobile low-population default)
+function endsWithin(car, now, hours) {
+  const e = Date.parse(car.ends_at);
+  return !isNaN(e) && e > now && (e - now) <= hours * 3600 * 1000;
+}
+
+// Mobile, no search: a small high-value teaser so the phone isn't a wall of dots. Today's
+// deals if there are enough; otherwise everything closing within 24h.
+const MOBILE_DEALS_MIN = 12;
+function activeDeals(cars, now) {                  // is_deal AND still live (matches what the map plots)
+  return BATMapData.getActiveAuctions(cars, now).filter(c => c.value && c.value.is_deal);
+}
+function mobileDefaultCars(base, now) {
+  const deals = activeDeals(base, now);
+  return deals.length >= MOBILE_DEALS_MIN ? deals : base.filter(c => endsWithin(c, now, 24));
+}
+
+// Color key, shown only while a search is active so the tinting has a legend.
+function toggleColorLegend(on) {
+  const el = document.getElementById("colorlegend");
+  if (!el) return;
+  el.classList.toggle("on", !!on);
+  if (on && !el.dataset.built) {
+    // glyph mirrors the on-map symbol so the buy/avoid read survives red-green colorblindness
+    const tier = (g, c, label) => `<span class="sw"><span class="glyph" style="color:${c}">${g}</span>${label}</span>`;
+    el.innerHTML =
+      tier(TIER_GLYPH.under, "#28b487", "match · under comps")
+      + tier(TIER_GLYPH.over, "#e2553b", "match · over comps")
+      + tier(TIER_GLYPH.fair, "#e0a13a", "match · fair")
+      + tier(TIER_GLYPH.unknown, "#5b8def", "match · comps pending")
+      + `<span class="sw"><span class="dot" style="background:#8b92a0"></span>similar (same make)</span>`
+      + `<span class="sw"><span class="dot" style="background:#3a3f4a"></span>rest of board</span>`
+      + `<span class="sw"><span class="dot ring" style="background:#28b487"></span>gold ring = deal, closing soon</span>`;
+    el.dataset.built = "1";
+  }
 }
 
 function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
@@ -891,18 +1184,12 @@ function renderChips() {
   const wrap = document.getElementById("chips");
   if (!wrap) return;
   wrap.innerHTML = "";
-  const presets = [["", "All"]].concat(Object.keys(CATEGORY_LABELS).map(id => [id, CATEGORY_LABELS[id]]));
-  for (const [id, label] of presets) {
-    const c = document.createElement("span");
-    c.className = "chip preset" + ((activePreset || "") === id ? " active" : "");
-    c.textContent = label;
-    c.onclick = () => { activePreset = id || null; renderChips(); render(); };
-    wrap.appendChild(c);
-  }
+  // Category presets are gone from primary navigation (the board is no longer organized by the
+  // five placeholder categories). Only the user's own saved views remain as chips.
   for (const view of loadSaved()) {
     const c = document.createElement("span");
     c.className = "chip"; c.textContent = view.name;
-    c.onclick = () => { applySpec(view.spec); renderChips(); render(); };
+    c.onclick = () => { if (typeof clearSearch === "function") clearSearch(); applySpec(view.spec); renderChips(); render(); };
     const x = document.createElement("span");
     x.className = "x"; x.textContent = "✕";
     x.onclick = (e) => { e.stopPropagation(); storeSaved(loadSaved().filter(v => v.name !== view.name)); renderChips(); };
@@ -945,17 +1232,17 @@ function setupFilters(cars) {
     return;
   }
   const all = SNAPSHOT.auctions;
-  const scored = all.filter(a => a.value && a.value.fair_value != null).length;
-  const enriched = all.filter(a => a.engagement && a.engagement.comments != null).length;
-  metaEl.innerHTML = `${all.length} live cars · ${scored} priced vs comps · ${enriched} enriched `
-    + `· scraped ${SNAPSHOT.scraped_at ? new Date(SNAPSHOT.scraped_at).toLocaleString() : "?"}`;
+  const now = Date.now();
+  const active = BATMapData.getActiveAuctions(all, now).length;
+  const withEng = all.filter(a => a.engagement && (a.engagement.comments != null || a.engagement.watchers != null)).length;
+  metaEl.innerHTML = `${active.toLocaleString()} active auctions · whole live board · ${withEng.toLocaleString()} with activity data `
+    + `· scanned ${SNAPSHOT.scraped_at ? new Date(SNAPSHOT.scraped_at).toLocaleString() : "?"}`;
   if (!all.length) {
     statusEl.innerHTML = "Snapshot loaded but no cars to plot.";
     return;
   }
   setupFilters(all);
-  render();
-  buildTicker(SNAPSHOT);
+  render();                 // render() builds the ticker from the active filter set
 })();
 </script>
 </body>
