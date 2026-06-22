@@ -25,7 +25,7 @@ AUCTIONS_URL = f"{BASE}/auctions/"
 LISTINGS_FILTER_URL = f"{BASE}/wp-json/bringatrailer/1.0/data/listings-filter"
 
 USER_AGENT = (
-    "BaT-Value-Map/0.2 (personal research tool; +https://github.com/; contact tfenley23@gmail.com)"
+    "BaT-Value-Map/0.2 (personal research tool; +https://github.com/trmnmc/BAT-Scanner)"
 )
 DEFAULT_TIMEOUT = 30
 CRAWL_DELAY_SECONDS = 1.5  # >= robots.txt Crawl-delay: 1, with margin
