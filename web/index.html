@@ -40,7 +40,7 @@
   .chip.preset { border-style: dashed; }
   /* --- ending-soon ticker (Phase 1) --- */
   #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex;
-            align-items: stretch; height: 46px; background: #12141a;
+            align-items: stretch; height: 64px; background: #12141a;
             border-top: 1px solid #1c1f27; border-bottom: 1px solid #1c1f27; }
   #ticker[hidden] { display: none; }
   .ticker-label { flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: 6px;
@@ -57,7 +57,7 @@
                  text-decoration: none; color: #e7e9ee; font-size: 12px; line-height: 1.2; }
   .ticker-chip:hover { background: #1a1d24; }
   .ticker-chip.deal { background: rgba(255,213,74,0.09); }
-  .ticker-chip img { width: 40px; height: 28px; object-fit: cover; border-radius: 4px;
+  .ticker-chip img { width: 72px; height: 48px; object-fit: cover; border-radius: 4px;
                      background: #1a1d24; flex: 0 0 auto; }
   .ticker-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
   .ticker-bid { color: #c7ccd6; }
@@ -380,7 +380,7 @@ function buildTicker(snapshot) {
   const label = `<div class="ticker-label">⏱ Ending soon`
     + (totalDeals ? ` · <span class="deals">${totalDeals} deal${totalDeals > 1 ? "s" : ""}</span>` : "")
     + `</div>`;
-  const dur = Math.max(60, items.length * 4.8);                  // half-speed marquee (~constant regardless of count)
+  const dur = Math.max(90, items.length * 7.2);                  // slower marquee (~3x original; constant regardless of count)
   // chips rendered twice so translateX(-50%) loops seamlessly
   el.innerHTML = label
     + `<div class="ticker-viewport"><div class="ticker-track" style="animation-duration:${dur}s">`
