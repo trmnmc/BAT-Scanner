@@ -129,8 +129,8 @@ def fetch_listing_html(url: str, timeout: int = DEFAULT_TIMEOUT) -> str:
     """GET a single listing page (used for reliable per-listing engagement).
 
     The listings-filter endpoint does not surface live auctions in a pageable
-    order, so engagement (comments/watchers) for the matched set is read from
-    each listing page instead. Low volume: one request per matched car.
+    order, so engagement (comments/watchers) for the bounded target set is read
+    from each listing page instead. Low volume: one request per target car.
     """
     if not (isinstance(url, str) and url.startswith("https://bringatrailer.com/")):
         raise FetchError(f"refusing to fetch non-BaT listing url: {url!r}")

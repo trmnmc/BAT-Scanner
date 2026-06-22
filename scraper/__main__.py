@@ -1,18 +1,20 @@
 """Pipeline entry point.  Run with:  python -m scraper
 
-  fetch -> parse -> filter-live -> categorize -> enrich(matched) -> validate -> write
+  fetch -> parse -> filter-live -> categorize(metadata) -> carry-cache
+        -> score whole board -> bounded enrich -> validate -> write
 
-The snapshot stores ALL live auctions (each tagged with category_ids), so future
-categories work without re-scraping. Engagement enrichment is fetched only for the
-matched-category records, to keep request volume low.
+The snapshot stores ALL live auctions and scores the whole board. Categories are optional
+metadata, never a gate. Enrichment (engagement/mileage/condition) is carried forward from the
+previous snapshot (scraper/enrichment_cache.py) and only a capped, category-agnostic, quota-
+based subset is refreshed over the network each run (see _select_enrichment_targets).
 
 Flags:
   --offline            use fixtures/ instead of the network (also what tests exercise)
   --fixtures-dir DIR   fixtures location (default: ./fixtures)
   --out PATH           snapshot path (default: ./data/auctions.json)
-  --no-enrich          skip engagement enrichment
+  --no-enrich          no network refresh (cached enrichment is still preserved)
   --max-enrich-pages N cap listings-filter pages fetched (default 25)
-  --only CID[,CID]     restrict categorization to these category ids
+  --only CID[,CID]     restrict scoring to these category ids (focus runs only; not a board gate)
 """
 
 from __future__ import annotations
@@ -23,7 +25,7 @@ import os
 import sys
 import time
 
-from . import categories, comps, parse, value
+from . import categories, comps, enrichment_cache, parse, value
 from .fetch import (
     BlockedError,
     FetchError,
@@ -43,9 +45,9 @@ def _repo_root() -> str:
 
 
 def _enrich_per_listing(matched, *, offline, fixtures_dir):
-    """Reliable engagement: read each matched car's listing page.
+    """Reliable engagement: read each target car's listing page.
 
-    The matched set is small, so this is low volume (one request per car). This is
+    The target set is capped (≤300/run), so this is low volume (one request per car). This is
     the default for live runs because the bulk listings-filter endpoint does not
     surface live auctions in a pageable order (observed ~0% coverage).
     Returns ({id: engagement}, request_count).
@@ -104,38 +106,117 @@ def _enrich_bulk(matched_ids, *, offline, fixtures_dir, min_year, max_year, max_
 
 
 # Bounded enrichment (pivot 2026-06-21): deal scoring is free from board price + comps, so we
-# enrich only a capped high-value set for engagement/mileage/condition badges.
+# enrich only a capped high-value set for engagement/mileage/condition badges. Selection is
+# QUOTA-based and category-agnostic: placeholder category tags never influence what is fetched.
 ENRICH_ENDS_SOON_SECONDS = 48 * 3600   # cars ending within 48h (the ticker / is_deal window)
 ENRICH_DEAL_MARGIN = 0.15              # free deal_pct >= this => a deal candidate worth badges
 ENRICH_CAP = 300                       # hard per-run cap on per-listing fetches (politeness)
-ENRICH_SAMPLE_TARGET = 40              # ~rolling sample/run so coverage of the rest fills in
+ENRICH_STALE_SECONDS = 72 * 3600       # cached engagement older than this is "stale"
+TRUSTED_BASES = ("make-model-y3", "make-model-y7")
+# quota per bucket; leftover from a short bucket flows to the others until the cap is filled.
+ENRICH_QUOTAS = (("urgent", 180), ("unenriched", 90), ("stale", 20), ("sample", 10))
 
 
-def _select_enrichment_targets(scored, now):
-    """Bounded high-value set to enrich: ending-soon (soonest first) + deal candidates + a
-    deterministic rolling sample of the rest, hard-capped at ENRICH_CAP. Keeps the BaT
-    footprint low while putting mileage/condition badges where they matter."""
-    soon, deal_cands, rest = [], [], []
-    for r in scored:
-        v = r.get("value") or {}
-        ends = r.get("_ends_ts")
-        is_soon = isinstance(ends, (int, float)) and 0 <= ends - now <= ENRICH_ENDS_SOON_SECONDS
-        dp = v.get("deal_pct")
-        scoreable = v.get("basis") not in (None, "insufficient", "no-year")
-        is_cand = dp is not None and scoreable and dp >= ENRICH_DEAL_MARGIN
-        if is_soon:
-            soon.append(r)
-        elif is_cand:
-            deal_cands.append(r)
-        else:
-            rest.append(r)
-    soon.sort(key=lambda r: r.get("_ends_ts") if r.get("_ends_ts") is not None else float("inf"))
-    # deterministic rolling sample: rotate by day-of-year so the rest fills in over runs
+def _ends_ts_of(r):
+    ends = r.get("_ends_ts")
+    if isinstance(ends, (int, float)):
+        return float(ends)
+    return _iso_to_unix(r.get("ends_at"))
+
+
+def _iso_to_unix(s):
+    if not s:
+        return None
+    try:
+        return _dt.datetime.fromisoformat(str(s).replace("Z", "+00:00")).timestamp()
+    except (ValueError, TypeError):
+        return None
+
+
+def _is_deal_candidate(r):
+    v = r.get("value") or {}
+    dp = v.get("deal_pct")
+    return bool(r.get("flags", {}).get("no_reserve")
+               and v.get("basis") in TRUSTED_BASES
+               and dp is not None and dp >= ENRICH_DEAL_MARGIN)
+
+
+def _is_unenriched(r):
+    eng = r.get("engagement") or {}
+    det = r.get("details") or {}
+    has_eng = eng.get("comments") is not None or eng.get("watchers") is not None
+    has_det = det.get("miles") is not None or bool(det.get("condition"))
+    return not (has_eng or has_det)
+
+
+def _engagement_age(r, now):
+    ts = _iso_to_unix((r.get("enrichment") or {}).get("engagement_updated_at"))
+    return (now - ts) if ts is not None else None
+
+
+def _select_enrichment_targets(scored, now, *, cap=ENRICH_CAP, quotas=ENRICH_QUOTAS):
+    """Deterministic, category-agnostic, quota-based target set, hard-capped at `cap`.
+
+    Buckets (priority order):
+      urgent     ending within 48h OR a trusted no-reserve deal candidate
+                 -> trusted deal candidates first, then soonest-ending
+      unenriched no meaningful engagement AND no usable details
+                 -> ending farthest out first (so activity accrues before the final day), id tie-break
+      stale      cached engagement older than 72h -> oldest first
+      sample     deterministic daily rotation by id (broad coverage over time)
+
+    Each record is taken by at most one bucket (deduped by id). Unused quota from a short
+    bucket flows to the others until the cap is filled or candidates run out.
+    """
     doy = _dt.datetime.fromtimestamp(now, tz=_dt.timezone.utc).timetuple().tm_yday
-    rest.sort(key=lambda r: r.get("id") or 0)
-    step = max(1, len(rest) // ENRICH_SAMPLE_TARGET) if rest else 1
-    sample = [r for i, r in enumerate(rest) if (i + doy) % step == 0]
-    return (soon + deal_cands + sample)[:ENRICH_CAP]
+
+    urgent, unenriched, stale = [], [], []
+    for r in scored:
+        ends = _ends_ts_of(r)
+        is_soon = ends is not None and 0 <= ends - now <= ENRICH_ENDS_SOON_SECONDS
+        if is_soon or _is_deal_candidate(r):
+            urgent.append(r)
+        if _is_unenriched(r):
+            unenriched.append(r)
+        age = _engagement_age(r, now)
+        if age is not None and age > ENRICH_STALE_SECONDS:
+            stale.append(r)
+
+    _far = float("inf")
+    urgent.sort(key=lambda r: (0 if _is_deal_candidate(r) else 1,
+                               _ends_ts_of(r) if _ends_ts_of(r) is not None else _far,
+                               r.get("id") or 0))
+    unenriched.sort(key=lambda r: (-(_ends_ts_of(r) if _ends_ts_of(r) is not None else 0),
+                                    r.get("id") or 0))
+    stale.sort(key=lambda r: (_engagement_age(r, now) or 0) * -1)  # oldest (largest age) first
+    # daily-rotating sample: order the whole board by id, then rotate the start by day-of-year
+    # so a different slice leads each day and coverage cycles through the board over time.
+    by_id = sorted(scored, key=lambda r: (r.get("id") or 0))
+    off = doy % len(by_id) if by_id else 0
+    sample = by_id[off:] + by_id[:off]
+
+    streams = {"urgent": urgent, "unenriched": unenriched, "stale": stale, "sample": sample}
+    selected, seen = [], set()
+
+    def _take(lst, limit):
+        for r in lst:
+            if len(selected) >= cap or (limit is not None and limit <= 0):
+                break
+            rid = r.get("id")
+            if rid is None or rid in seen:
+                continue
+            seen.add(rid)
+            selected.append(r)
+            if limit is not None:
+                limit -= 1
+
+    for name, quota in quotas:                       # pass 1: honor each bucket's reserved quota
+        _take(streams.get(name, []), quota)
+    for name, _ in quotas:                            # pass 2: redistribute leftover up to the cap
+        if len(selected) >= cap:
+            break
+        _take(streams.get(name, []), None)
+    return selected
 
 
 def run(args) -> int:
@@ -185,9 +266,17 @@ def run(args) -> int:
     # The whole board is scored. --only still restricts to those categories for focused runs.
     scored = [r for r in live if r["category_ids"]] if only else live
 
+    # 4b. carry cached enrichment forward (engagement / mileage / condition) from the previous
+    #     snapshot. Runs BEFORE value scoring so cached mileage/condition affect the score, and
+    #     runs regardless of --no-enrich (that flag means "no network refresh", not "erase").
+    prev_snapshot, cache_warn = enrichment_cache.load_prev_snapshot(out_path)
+    cache_warnings = [cache_warn] if cache_warn else []
+    cache_stats = enrichment_cache.carry_forward_enrichment(live, prev_snapshot)
+
     # 5. comps loaded BEFORE scoring — deal scoring is free from board price + comps, so the
     #    whole board can be scored without any per-listing enrichment.
     now = time.time()
+    now_iso = parse.unix_to_iso(int(now))
     comps_path = args.comps_out or os.path.join(_repo_root(), "data", "comps.json")
     comp_pool = comps.load_comps(comps_path)
     harvested = 0
@@ -215,6 +304,7 @@ def run(args) -> int:
     enrich_requests = 0
     enrich_method = "off"
     enriched_ids = set()
+    refreshed_ids = set()
     targets, target_ids = [], []
     source = _resolve_enrich_source(args)
     if source != "off":
@@ -235,15 +325,27 @@ def run(args) -> int:
                 enrich_method = "listings-filter"
             enrichment_available = True
             by_id = {r["id"]: r for r in scored if r["id"] is not None}
-            for iid, e in eng.items():
-                if iid in by_id:
-                    by_id[iid]["engagement"] = e
+            details_changed_ids = set()
+            for iid in set(eng) | set(det):
+                rec = by_id.get(iid)
+                if rec is None:
+                    continue
+                e, dd = eng.get(iid), det.get(iid)
+                got_eng = bool(e) and (e.get("comments") is not None or e.get("watchers") is not None)
+                got_det = bool(dd) and (dd.get("miles") is not None or bool(dd.get("condition")))
+                if got_eng:
+                    rec["engagement"] = e
                     enriched_ids.add(iid)
-            for iid, dd in det.items():
-                if iid in by_id:
-                    by_id[iid]["details"] = dd
-            # value pass 2 — only enriched cars, so the tilt re-ranks deal_score
-            for iid in enriched_ids:
+                if got_det:
+                    rec["details"] = dd
+                    details_changed_ids.add(iid)
+                if got_eng or got_det:
+                    refreshed_ids.add(iid)
+                    # stamp only the portions that actually parsed this run
+                    enrichment_cache.stamp_enrichment(rec, now_iso=now_iso,
+                                                      engagement=got_eng, details=got_det)
+            # value pass 2 — recompute only where DETAILS changed (mileage/condition tilt)
+            for iid in details_changed_ids:
                 by_id[iid]["value"] = value.compute_value(by_id[iid], comp_pool, now=now)
         except BlockedError as e:
             print(f"Note: enrichment stopped (blocked): {e}", file=sys.stderr)
@@ -262,8 +364,24 @@ def run(args) -> int:
     valued = sum(1 for r in scored if (r.get("value") or {}).get("fair_value") is not None)
     deals = sum(1 for r in scored if (r.get("value") or {}).get("is_deal"))
 
-    # 7. build + validate
-    warnings = []
+    # whole-board availability (cached + freshly fetched), for the snapshot's source block.
+    def _has_eng(r):
+        e = r.get("engagement") or {}
+        return e.get("comments") is not None or e.get("watchers") is not None
+
+    def _has_det(r):
+        d = r.get("details") or {}
+        return d.get("miles") is not None or bool(d.get("condition"))
+
+    engagement_available_count = sum(1 for r in live if _has_eng(r))
+    details_available_count = sum(1 for r in live if _has_det(r))
+    # engagement present whose timestamp isn't this run = carried from a prior run (cached)
+    engagement_cached_count = sum(
+        1 for r in live if _has_eng(r)
+        and (r.get("enrichment") or {}).get("engagement_updated_at") != now_iso)
+
+    # 8. build + validate
+    warnings = list(cache_warnings)
     if parse_failures:
         warnings.append(f"{parse_failures} of {reported} board items failed to parse.")
     snapshot = build_snapshot(
@@ -271,6 +389,10 @@ def run(args) -> int:
         reported_live_count=reported,
         parsed_live_count=len(live),
         enriched_count=enriched_count,
+        enrichment_refreshed_count=len(refreshed_ids),
+        engagement_available_count=engagement_available_count,
+        engagement_cached_count=engagement_cached_count,
+        details_available_count=details_available_count,
         warnings=warnings,
     )
     metrics = {
@@ -291,7 +413,9 @@ def run(args) -> int:
                    warnings=snapshot["warnings"], enrich_method=enrich_method,
                    enrich_requests=enrich_requests, comp_pool=len(comp_pool),
                    harvested=harvested, valued=valued, deals=deals,
-                   det_miles=det_miles, det_tmu=det_tmu, det_cond=det_cond)
+                   det_miles=det_miles, det_tmu=det_tmu, det_cond=det_cond,
+                   carried=cache_stats.get("matched", 0),
+                   eng_avail=engagement_available_count, eng_cached=engagement_cached_count)
 
     # 8. write or fail
     if errors:
@@ -321,17 +445,19 @@ def _resolve_enrich_source(args) -> str:
 
 def _print_summary(*, source, reported, parsed_live, scored, targets, enriched, ended, warnings,
                    enrich_method, enrich_requests, comp_pool, harvested, valued, deals,
-                   det_miles, det_tmu, det_cond, wrote, out_path=None):
+                   det_miles, det_tmu, det_cond, carried, eng_avail, eng_cached, wrote, out_path=None):
     print(f"Source: {source}")
     print(f"Reported live: {reported}")
     print(f"Parsed live: {parsed_live}")
     print(f"Scored (whole board): {scored}")
     print(f"Excluded as ended: {ended}")
+    print(f"Enrichment carried forward from cache: {carried} record(s)")
     if enrich_method != "off":
         print(f"Enrichment: {enrich_method} ({enrich_requests} request(s)) · "
-              f"bounded targets: {targets} → enriched {enriched}")
+              f"bounded targets: {targets} → refreshed {enriched}")
         pct = f" ({round(100*det_miles/targets)}%)" if targets else ""
         print(f"Mileage parsed: {det_miles}/{targets}{pct} · TMU: {det_tmu} · condition flags: {det_cond}")
+    print(f"Engagement available (board): {eng_avail} ({eng_cached} from cache)")
     print(f"Comp pool: {comp_pool}" + (f" (+{harvested} harvested)" if harvested else ""))
     print(f"Valued (fair price): {valued} · deals flagged: {deals}")
     print(f"Warnings: {len(warnings)}")

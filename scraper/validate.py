@@ -93,6 +93,23 @@ def validate_snapshot(snapshot: dict, metrics: dict | None = None) -> tuple[list
     if unknown_currency:
         warnings.append(f"Unknown/missing currency codes: {sorted(str(c) for c in unknown_currency)}.")
 
+    # enrichment timestamps: optional, must be null or an ISO-ish string. Malformed stamps are
+    # a soft problem (a temporary enrichment hiccup must never block the write).
+    bad_stamp = 0
+    for a in auctions:
+        enr = a.get("enrichment")
+        if enr is None:
+            continue
+        if not isinstance(enr, dict):
+            bad_stamp += 1
+            continue
+        for k in ("engagement_updated_at", "details_updated_at"):
+            v = enr.get(k)
+            if v is not None and not isinstance(v, str):
+                bad_stamp += 1
+    if bad_stamp:
+        warnings.append(f"Malformed enrichment timestamps on {bad_stamp} record(s).")
+
     # parse coverage (needs pre-filter counts)
     reported = metrics.get("reported_live_count")
     parsed_ok = metrics.get("parsed_ok_count")

@@ -16,15 +16,32 @@ def _now_iso() -> str:
 
 def build_snapshot(auctions: list, *, reported_live_count: int, parsed_live_count: int,
                    enriched_count: int, warnings: list | None = None,
-                   scraped_at: str | None = None) -> dict:
+                   scraped_at: str | None = None,
+                   enrichment_refreshed_count: int | None = None,
+                   engagement_available_count: int | None = None,
+                   engagement_cached_count: int | None = None,
+                   details_available_count: int | None = None) -> dict:
+    # enriched_count keeps its meaning: records that got engagement THIS run. The additive
+    # counts below describe whole-board availability (cached + fresh); the frontend can still
+    # derive availability from the auction records themselves and never depends on these.
+    source = {
+        "reported_live_count": reported_live_count,
+        "parsed_live_count": parsed_live_count,
+        "enriched_count": enriched_count,
+    }
+    extra = {
+        "enrichment_refreshed_count": enrichment_refreshed_count,
+        "engagement_available_count": engagement_available_count,
+        "engagement_cached_count": engagement_cached_count,
+        "details_available_count": details_available_count,
+    }
+    for k, v in extra.items():
+        if v is not None:
+            source[k] = v
     return {
         "schema_version": SCHEMA_VERSION,
         "scraped_at": scraped_at or _now_iso(),
-        "source": {
-            "reported_live_count": reported_live_count,
-            "parsed_live_count": parsed_live_count,
-            "enriched_count": enriched_count,
-        },
+        "source": source,
         "warnings": list(warnings or []),
         "auctions": auctions,
     }
