@@ -1,34 +1,44 @@
-# BaT Value Map — scraper (v0.2, Phase 0/1)
+# BaT Value Map
 
-Data layer for a personal tool that maps live Bring a Trailer auctions by price vs
-engagement. This phase builds only the **data pipeline**: fetch the live board,
-parse it into structured records, tag them by category, enrich the target category
-with engagement, validate, and write a snapshot. **No frontend, no comps/deal
-scoring, no Cars & Bids, no image downloads** (thumbnail URLs only).
+A personal tool that maps the **entire live Bring a Trailer board** so you can spot a good
+car at a glance. Two parts, both in this repo:
+
+- a dependency-free Python **scraper** that snapshots the whole live board, scores it against
+  a comp pool, enriches a capped subset with engagement/mileage/condition (and **carries that
+  enrichment forward** between runs), and writes `data/auctions.json`.
+- a no-build **ECharts map** (`web/`) that GitHub Pages serves. The default map is **current
+  bid vs time remaining** — every active auction, not a curated subset.
+
+Key product facts:
+
+- The **complete live board is stored and shown by default.** The five categories
+  (`scraper/categories.py`) are **optional placeholder metadata** — they never decide which
+  auctions appear, get enriched, or how the map/search work, and they're gone from the UI's
+  primary navigation. `category_ids` still rides along for old saved views.
+- **Activity views (comments/watchers) use partial, cached enrichment.** Engagement is
+  refreshed under a **300-request/run cap** and carried forward, so the board fills in over
+  time. Missing engagement is shown explicitly (hollow dot / "Activity not scanned yet"),
+  never faked as zero.
+- **Natural-language search will use a server-side interpreter** that returns a *validated
+  filter spec* — it does not match cars itself. The frontend always matches locally through
+  the one filter engine (`web/filters.js`). **No LLM provider is wired up in this pass and no
+  LLM secret lives in the frontend or repo;** the endpoint URL is a public, empty config.
+  Until an endpoint is set, search is honest basic keyword matching over titles/makes/models.
+
+No Cars & Bids, no image downloads (thumbnail URLs only), no build step.
 
 ## Run
 
 ```bash
 python -m scraper                # fetch live, write data/auctions.json
 python -m scraper --offline      # build from fixtures/ (no network)
-python -m scraper --no-enrich    # skip engagement enrichment
+python -m scraper --no-enrich    # no network refresh, but cached enrichment is PRESERVED
 python -m scraper --enrich-source bulk   # use listings-filter instead of per-listing
-python -m scraper --only air-cooled-911-family
+python -m scraper --only air-cooled-911-family   # focus a run (metadata only; not a board gate)
 ```
 
-Example output (real run, 2026-06-20):
-
-```
-Source: live bringatrailer.com/auctions/
-Reported live: 1194
-Parsed live: 1169
-Target-category matches: 33
-Enriched with comments: 33
-Excluded as ended: 25
-Enrichment: per-listing (33 request(s))
-Warnings: 0
-Wrote: data/auctions.json
-```
+`--no-enrich` means "don't hit the network this run," **not** "erase enrichment": the cache
+from the previous snapshot is still carried forward.
 
 ## Tests
 
@@ -42,9 +52,26 @@ Tests run entirely against committed fixtures (no network).
 
 ## Map (web/)
 
-`web/index.html` is a self-contained map (ECharts, no build step): live auctions plotted
-by bid price (X, log) vs engagement heat (Y, comments or watchers), each dot a car photo,
-colored by category, click → BaT listing, legend toggles categories, scroll/drag to zoom.
+`web/index.html` is a self-contained map (ECharts, no build step). Files:
+
+- `web/map-data.js` — pure map logic (active/metric/no-bid-lane/marker-density/freshness),
+  shared by the browser and Node tests (`web/map-data.test.js`).
+- `web/filters.js` — the **one** filter engine (`matchesFilter`/`filterCars`). Map, search,
+  saved views, and a future LLM interpreter all produce the same spec and match here.
+- `web/search.js` — search-spec sanitizer + the safe interpreter adapter (`web/search.test.js`).
+
+The default map is **current bid (X, log) vs time remaining (Y, soonest at the top)** for
+**every active auction**. Other "Map" axes: Comments, Watchers, Comp discount — those only
+plot cars that actually have that data (the count readout says how many don't). Visual state
+comes from the data, not categories: filled dot = has activity data, **hollow dot = no
+activity scanned yet**, faded = cached >72h, **gold ring = trusted ending-soon deal**.
+Zero/no-bid cars sit in a labelled **"No bid" lane** on the left (never faked as a $1 bid).
+Marker density is automatic (photos only for a small set; the full board uses dots).
+
+One prominent **search** box (titles/makes/models/taxonomy keyword search today; LLM-ready,
+see below), a collapsible **Advanced filters & display** section, a **Map/List** toggle (the
+List is a sortable table of the active board), and a click-to-pin **detail card** with a
+live countdown and a "View on BaT" button.
 
 ```bash
 python -m scraper            # refresh data/auctions.json
@@ -52,13 +79,21 @@ python3 -m http.server       # from the repo root
 # open http://localhost:8000/web/
 ```
 
-It must be served over http (a browser blocks `file://` from fetching the JSON). deck.gl
-+ a build step is the planned upgrade if/when GPU overlap-declutter is needed; for a
-two-person tool this single file does the job.
+It must be served over http (a browser blocks `file://` from fetching the JSON). Run the
+no-hardcoded-totals sanity report any time with `node tools/verify_snapshot.js`.
 
-The map also shows value: a **Deal % vs comps** heat axis, fair-value / comp count /
-trend in each car's tooltip, and a gold ring on cars flagged as deals (under comps **and**
-ending soon — see Comps below).
+### Natural-language search (LLM-ready, not wired up this pass)
+
+The search box is **basic keyword AND-search** by default and labelled honestly. To enable
+natural-language search later, point `<meta name="bat-search-endpoint">` (or
+`window.BAT_SEARCH_ENDPOINT`) at a **server-side** endpoint. The browser POSTs
+`{version, query, catalog}` (the catalog is just the unique makes + currencies, not the
+dataset); the endpoint returns `{version, summary, spec}`. That spec is run through
+`normalizeSearchSpec` + `validateSearchSpec` before it is applied — and on any failure
+(timeout, bad JSON, invalid/empty spec) the UI shows a quiet note and falls back to keyword
+search. **The LLM is only an interpreter; matching always happens locally through
+`BATFilters.filterCars`.** No provider is implemented here and **no API key is in the
+frontend, the JS, GitHub Pages config, or any committed file.**
 
 ## Deploy (GitHub Pages + daily auto-refresh)
 
@@ -107,10 +142,10 @@ BaT has no official public API. The pipeline uses:
 - `GET /auctions/` — the page embeds the entire live board as a JSON blob
   (`var auctionsCurrentInitialData`). One request snapshots all live auctions.
   Engagement (`comments`/`watchers`/`views`) is **null** on this blob.
-- Engagement enrichment (the heat axis) is read **per listing page** for the small
-  matched-category set — one request per matched car. Each listing page exposes
-  `N watchers` and `N Comments` reliably. `views` is not published on the page, so
-  it stays null.
+- Engagement enrichment is read **per listing page** for the bounded target set (quota-
+  based, ≤300/run; see above) — one request per car. Each listing page exposes `N watchers`
+  and `N Comments` reliably, plus the mileage/condition `details`. `views` is not published on
+  the page, so it stays null. Everything not refreshed this run keeps its carried-forward cache.
 - `POST /wp-json/bringatrailer/1.0/data/listings-filter` also carries engagement
   and is available via `--enrich-source bulk`, but its default ordering does not
   surface live auctions in a pageable way (observed ~0% live coverage on
@@ -133,17 +168,34 @@ block/challenge.
 {
   "schema_version": 1,
   "scraped_at": "ISO-8601 UTC",
-  "source": { "reported_live_count": 0, "parsed_live_count": 0, "enriched_count": 0 },
+  "source": {
+    "reported_live_count": 0, "parsed_live_count": 0,
+    "enriched_count": 0,                 // got engagement THIS run
+    "enrichment_refreshed_count": 0,     // listings successfully re-fetched this run
+    "engagement_available_count": 0,     // whole board: have engagement (cached + fresh)
+    "engagement_cached_count": 0,        // of those, carried from a prior run
+    "details_available_count": 0
+  },
   "warnings": [],
-  "auctions": [ /* one per LIVE auction, each tagged with category_ids */ ]
+  "auctions": [ /* one per LIVE auction */ ]
 }
 ```
+
+`schema_version` stays `1`: the new `source` fields and the per-auction `enrichment` block are
+**additive and optional**, so existing consumers keep working. The frontend never reads these
+counts — it derives availability from the auction records themselves.
 
 Each auction: `id, title, year, make{id,name,slug}, models[{id,name,slug}],
 taxonomy_paths, category_ids, bid{amount,currency,status},
 engagement{comments,views,watchers}, started_at, ends_at,
 flags{no_reserve,premium,alumni}, listing_url, thumbnail_url,
-details{miles,odometer_raw,tmu,condition[]}, value{...}`.
+details{miles,odometer_raw,tmu,condition[]}, value{...},
+enrichment{engagement_updated_at, details_updated_at}`.
+
+`enrichment` (optional, auction-level) timestamps when engagement / details were last
+successfully fetched, so the map can fade stale activity and say "Activity updated 2h ago".
+Stored separately from `engagement`/`details` so the parser return contracts don't change.
+Legacy cached records with no timestamps fall back to the previous snapshot's `scraped_at`.
 
 `details` (mileage + condition) is parsed from the matched car's listing page during the
 same per-listing enrichment fetch (no extra requests). It comes from the "BaT Essentials →
@@ -155,17 +207,26 @@ trusted; `condition` is a list of flags (`numbers-matching`, `repaint`, `restore
 hit-rate on a live 20-car sample (2026-06-20): **mileage 90%, condition 30%** (condition is
 sparser but precise). The run summary prints this coverage each time.
 
-The snapshot stores **all** live auctions (not just the target category) so future
-categories need no re-scrape; `category_ids` tags which belong where. Engagement is
-fetched only for matched-category records to keep request volume low.
+The snapshot stores **all** live auctions and scores the whole board (board price + comps is
+free, no per-listing fetch). Engagement/mileage/condition enrichment is bounded:
 
-### Categories
+- **Carried forward** between runs (`scraper/enrichment_cache.py`): the previous snapshot's
+  engagement/details/timestamps are copied onto the matching current records (matched by **id
+  AND listing_url**) before scoring, so data never disappears when a listing isn't re-fetched.
+  Volatile board fields (bid, ends_at, flags, value, title) are never carried — only enrichment.
+- **Refreshed under a 300/run cap**, category-agnostic, via deterministic **quota** buckets
+  (`_select_enrichment_targets`): ~180 ending-soon/urgent-deal, ~90 unenriched, ~20 stale
+  (>72h), ~10 rotating sample; unused quota flows to the other buckets. Placeholder categories
+  have **no** effect on what gets enriched. A failed refresh keeps the last cached data.
 
-Five taste categories ship today (a record can match more than one). Defined in
-`scraper/categories.py` — `air-cooled-911-family` is a bespoke predicate; the rest are
-declarative specs (makes + model/body tokens + year range + exclusions), with
-collision-prone tokens scoped per-make (so a Honda "K20" engine swap isn't read as a
-Chevy "K20" truck). Live counts on a representative board: ~209 of ~1,170 live cars.
+### Categories (optional placeholder metadata)
+
+The five categories are **placeholders** — they do not gate the board, enrichment, the map, or
+search, and they're gone from the UI's primary navigation. They remain in `scraper/categories.py`
+and as `category_ids` only so old saved views keep working and a future filter can reuse them. A
+record can match more than one. `air-cooled-911-family` is a bespoke predicate; the rest are
+declarative specs (makes + model/body tokens + year range + exclusions), with collision-prone
+tokens scoped per-make (so a Honda "K20" engine swap isn't read as a Chevy "K20" truck).
 
 | id | what | year |
 |----|------|------|
