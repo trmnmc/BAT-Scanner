@@ -40,7 +40,7 @@
   .chip.preset { border-style: dashed; }
   /* --- ending-soon ticker (Phase 1) --- */
   #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex;
-            align-items: stretch; height: 64px; background: #12141a;
+            align-items: stretch; height: 46px; background: #12141a;
             border-top: 1px solid #1c1f27; border-bottom: 1px solid #1c1f27; }
   #ticker[hidden] { display: none; }
   .ticker-label { flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: 6px;
@@ -57,7 +57,7 @@
                  text-decoration: none; color: #e7e9ee; font-size: 12px; line-height: 1.2; }
   .ticker-chip:hover { background: #1a1d24; }
   .ticker-chip.deal { background: rgba(255,213,74,0.09); }
-  .ticker-chip img { width: 72px; height: 48px; object-fit: cover; border-radius: 4px;
+  .ticker-chip img { width: 40px; height: 28px; object-fit: cover; border-radius: 4px;
                      background: #1a1d24; flex: 0 0 auto; }
   .ticker-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
   .ticker-bid { color: #c7ccd6; }
@@ -69,6 +69,13 @@
   .ticker-flag { color: #ffb3a7; background: rgba(226,85,59,0.18); border-radius: 3px;
                  padding: 1px 5px; font-size: 10px; font-weight: 700; letter-spacing: .2px; }
   .ticker-good { color: #28b487; font-size: 10px; font-weight: 600; }
+  /* hover preview: big detailed photo when you hover a ticker chip */
+  #ticker-preview { position: fixed; z-index: 50; pointer-events: none;
+                    background: #16181f; border: 1px solid #2a2e38; border-radius: 10px;
+                    padding: 6px; box-shadow: 0 12px 32px rgba(0,0,0,.55); }
+  #ticker-preview[hidden] { display: none; }
+  #ticker-preview img { width: 460px; height: 307px; object-fit: cover; border-radius: 6px; display: block; background: #1a1d24; }
+  #ticker-preview .cap { font-size: 13px; color: #e7e9ee; margin-top: 6px; max-width: 460px; }
   .ticker-clock { color: #9aa0ad; font-variant-numeric: tabular-nums; min-width: 52px; }
   .ticker-clock.urgent { color: #e2553b; font-weight: 600; }
   .ticker-tag { background: #ffd54a; color: #0f1115; font-weight: 700; font-size: 10px;
@@ -131,6 +138,7 @@
 <div id="ticker" hidden></div>
 <div id="chart"></div>
 <div id="status"></div>
+<div id="ticker-preview" hidden><img alt="" referrerpolicy="no-referrer"><div class="cap"></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
 <script src="./filters.js"></script>
@@ -492,6 +500,30 @@ document.addEventListener("visibilitychange", () => {
   if (hidden) { if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; } }
   else if (el && !el.hidden) startTickerCountdown();
 });
+
+// hover preview: a big detailed photo when you hover a ticker chip. Lives on <body> (fixed)
+// so it escapes the ticker strip's overflow:hidden; pointer-events:none so it never flickers.
+(function setupTickerPreview() {
+  const el = document.getElementById("ticker");
+  const pv = document.getElementById("ticker-preview");
+  if (!el || !pv) return;
+  const img = pv.querySelector("img"), cap = pv.querySelector(".cap");
+  const W = 474;                                   // preview width + padding/border
+  el.addEventListener("mouseover", (e) => {
+    const chip = e.target.closest && e.target.closest(".ticker-chip");
+    if (!chip) return;
+    const chipImg = chip.querySelector("img");
+    const src = chipImg && chipImg.getAttribute("src");
+    if (!src) { pv.hidden = true; return; }
+    if (img.getAttribute("src") !== src) img.src = src;
+    cap.textContent = (chip.querySelector(".ticker-name") || {}).textContent || "";
+    const r = chip.getBoundingClientRect();
+    pv.style.left = Math.min(Math.max(8, r.left), window.innerWidth - W) + "px";
+    pv.style.top = (r.bottom + 8) + "px";
+    pv.hidden = false;
+  });
+  el.addEventListener("mouseleave", () => { pv.hidden = true; });
+})();
 
 chart.on("click", (p) => { if (p.data && p.data._url) window.open(p.data._url, "_blank"); });
 document.getElementById("ymetric").addEventListener("change", render);

@@ -38,5 +38,8 @@ jobs:
             echo "No data changes."
           else
             git commit -m "data: refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+            # integrate any commit pushed since checkout (a manual edit or overlapping run)
+            # so a moved main doesn't fail the push — data/ never conflicts with code edits.
+            git pull --rebase origin "${GITHUB_REF_NAME:-main}"
             git push
           fi
