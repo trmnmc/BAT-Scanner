@@ -175,3 +175,52 @@ test("formatDurationHours ticks", () => {
   assert.strictEqual(M.formatDurationHours(24), "1d");
   assert.strictEqual(M.formatDurationHours(120), "5d");
 });
+
+test("clampNum clamps and passes through nulls", () => {
+  assert.strictEqual(M.clampNum(1.5, -0.5, 0.9), 0.9);
+  assert.strictEqual(M.clampNum(-2, -0.5, 0.9), -0.5);
+  assert.strictEqual(M.clampNum(0.3, -0.5, 0.9), 0.3);
+  assert.strictEqual(M.clampNum(null, 0, 1), null);
+  assert.strictEqual(M.clampNum(NaN, 0, 1), null, "NaN normalizes to null so it never reaches a scale");
+});
+
+test("watcherSize: sqrt scale clamped to 6-26, null -> 8", () => {
+  assert.strictEqual(M.watcherSize(null), 8);
+  assert.strictEqual(M.watcherSize(150), 6, "domain floor -> min size");
+  assert.strictEqual(M.watcherSize(100), 6, "below floor clamps the ratio, never NaN");
+  assert.strictEqual(M.watcherSize(1200), 26, "domain ceiling -> max size");
+  assert.strictEqual(M.watcherSize(3000), 26, "above ceiling clamps to max");
+  const mid = M.watcherSize(675);                  // ratio 0.5 -> 6 + 20*sqrt(.5) ~= 20.14
+  assert.ok(mid > 19.5 && mid < 20.7, "midpoint sits high on the sqrt curve, got " + mid);
+});
+
+test("dealColorAt hits the exact palette stops and clamps the ends", () => {
+  assert.strictEqual(M.dealColorAt(-0.5), "#d9534f");
+  assert.strictEqual(M.dealColorAt(0), "#9aa0a8");
+  assert.strictEqual(M.dealColorAt(0.49), "#6fcf97");
+  assert.strictEqual(M.dealColorAt(0.9), "#1e9e5a");
+  assert.strictEqual(M.dealColorAt(2.0), "#1e9e5a", "above domain clamps to deep green");
+  assert.strictEqual(M.dealColorAt(-3.0), "#d9534f", "below domain clamps to red");
+  assert.strictEqual(M.dealColorAt(null), M.DEAL_NULL_COLOR, "null is the fixed neutral, not an extreme");
+});
+
+test("dealPaletteColors: low->high samples, ends match the stops", () => {
+  const c = M.dealPaletteColors(20);
+  assert.strictEqual(c.length, 21);
+  assert.strictEqual(c[0], "#d9534f", "index 0 = min value (-0.5) = red");
+  assert.strictEqual(c[c.length - 1], "#1e9e5a", "last = max value (0.9) = deep green");
+});
+
+test("clampNum winsorizes price to the fixed $1k-$1M band", () => {
+  // the X-axis winsor reuses clampNum(amount, 1000, 1_000_000)
+  assert.strictEqual(M.clampNum(300, 1000, 1000000), 1000, "a $300 bid pins UP to the $1k floor");
+  assert.strictEqual(M.clampNum(2500000, 1000, 1000000), 1000000, "a $2.5M bid pins DOWN to the $1M ceiling");
+  assert.strictEqual(M.clampNum(42000, 1000, 1000000), 42000, "a bid inside the band is untouched");
+});
+
+test("dealPctLabel: under / over / at comps / unknown", () => {
+  assert.strictEqual(M.dealPctLabel(0.49), "49% under");
+  assert.strictEqual(M.dealPctLabel(-0.068), "7% over");
+  assert.strictEqual(M.dealPctLabel(0), "at comps");
+  assert.strictEqual(M.dealPctLabel(null), "—");
+});

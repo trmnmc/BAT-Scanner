@@ -387,11 +387,6 @@ function metricAxisName(metric) {
   if (metric === "deal") return "% under comps →";
   return (metric === "watchers" ? "Watchers" : "Comments") + " (heat, log) →";
 }
-function snapshotAgeLabel() {
-  const t = SNAPSHOT && SNAPSHOT.scraped_at ? Date.parse(SNAPSHOT.scraped_at) : NaN;
-  if (isNaN(t)) return "age unknown";
-  return BATMapData.formatAge(Date.now() - t) || "just now";
-}
 
 // One scatter series, one point per active auction with the selected metric. Without a search
 // the board keeps its neutral data-state styling (filled/hollow/stale/deal-ring). WITH a search,
@@ -412,11 +407,41 @@ const CLASS_RANK = { neutral: 0, other: 0, similar: 1, match: 2 };   // higher =
 const Y_LOG_FLOOR = 0.6;
 function yIsLog(metric) { return metric === "comments" || metric === "watchers"; }
 
+// Every chart data item carries the auction payload the tooltip + click-card read back
+// (params.data). Shared by both series builders so click/card/tooltip work identically.
+function tagItem(item, a, pt, fresh) {
+  item._t = a.title; item._p = (a.bid && a.bid.amount); item._cur = a.bid && a.bid.currency;
+  item._c = (a.engagement && a.engagement.comments); item._w = (a.engagement && a.engagement.watchers);
+  item._img = a.thumbnail_url; item._url = a.listing_url; item._v = a.value; item._d = a.details;
+  item._nr = !!(a.flags && a.flags.no_reserve); item._end = a.ends_at || null;
+  item._noBid = pt.noBid; item._fresh = fresh;
+  return item;
+}
+
+// A no-bid car (zero/absent bid) has no meaningful position on a PRICE axis, so it is left OFF the
+// scatter entirely rather than parked at a fake near-$0 placeholder — which used to force ~4 empty
+// log decades (0.1→1→10→100→1000) just to show a few dots. No-bid cars stay reachable in the List
+// view and the ticker. The axis then starts just below the lowest REAL bid, giving the price range
+// the full width.
+// Winsorize the price axis to a fixed $1k–$1M band: a sub-$1k bid pins UP to $1k, an over-$1M bid
+// pins DOWN to $1M (plotted position only — the tooltip/card keep the true bid). This frames every
+// view on the same intuitive range and keeps low/high outliers as edge clusters instead of letting a
+// lone $1 (or $3M) bid stretch the log axis or be hidden.
+const WINSOR_FLOOR = 1000, WINSOR_CEIL = 1000000;
+function priceScatterPoints(pts) { return pts.filter(p => !p.noBid); }
+function winsorX(x) { return BATMapData.clampNum(x, WINSOR_FLOOR, WINSOR_CEIL); }
+function priceAxisMin(plotPts) {
+  if (!plotPts.length) return WINSOR_FLOOR;    // empty/over-filtered view: start at the floor
+  let lo = Infinity;
+  for (const p of plotPts) { const wx = winsorX(p.x); if (wx < lo) lo = wx; }
+  return lo / 1.1;                             // a hair below the lowest plotted (winsorized) bid
+}
+
 function buildSeries(cars, metric, markers, now, opts) {
   opts = opts || {};
   const search = !!opts.searchActive;
   const matchedIds = opts.matchedIds, similarMakes = opts.similarMakes;
-  const pts = BATMapData.buildPoints(cars, metric, now);
+  const pts = priceScatterPoints(BATMapData.buildPoints(cars, metric, now));   // no-bid cars sit out
   const mode = markers === "auto" ? BATMapData.chooseMarkerMode(pts.length, IS_MOBILE()) : markers;
   const usePhotos = mode === "photos";
   const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
@@ -424,9 +449,9 @@ function buildSeries(cars, metric, markers, now, opts) {
   const yLog = yIsLog(metric);
   const data = pts.map(pt => {
     const a = pt.car;
-    // A real 0 can't plot on a log axis — drop just the plotted coordinate to the floor lane.
-    // The tooltip reads the true count off the car, so the value is shown honestly, not as 0→floor.
-    const sp = yLog ? { x: pt.x, y: Math.max(pt.y, Y_LOG_FLOOR), car: a } : pt;
+    // Winsorize the plotted X into the $1k–$1M band and floor a real 0 on the log Y; the tooltip
+    // reads the TRUE bid/count off the car, so both are shown honestly, not as the placeholder.
+    const sp = { x: winsorX(pt.x), y: yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y, car: a };
     const isDeal = !!(a.value && a.value.is_deal);
     const fresh = BATMapData.getEngagementFreshness(a, now, scrapedAt);
     let cls = "neutral";
@@ -437,26 +462,95 @@ function buildSeries(cars, metric, markers, now, opts) {
     }
     const item = search ? styleSearch(sp, a, cls, isDeal, usePhotos, RING)
                         : styleNeutral(sp, isDeal, fresh.hasData, fresh.stale, usePhotos, RING);
-    item._t = a.title; item._p = (a.bid && a.bid.amount); item._cur = a.bid && a.bid.currency;
-    item._c = (a.engagement && a.engagement.comments); item._w = (a.engagement && a.engagement.watchers);
-    item._img = a.thumbnail_url; item._url = a.listing_url; item._v = a.value; item._d = a.details;
-    item._nr = !!(a.flags && a.flags.no_reserve); item._end = a.ends_at || null;
-    item._noBid = pt.noBid; item._fresh = fresh; item._cls = cls;
+    tagItem(item, a, pt, fresh); item._cls = cls;
     return item;
   });
   // ECharts ignores per-item z within ONE series, so we order the draw ourselves: matches last
   // (on top of the dimmed "other"/"similar"), which also makes them win item-hover hit-testing.
   if (search) data.sort((p, q) => CLASS_RANK[p._cls] - CLASS_RANK[q._cls]);
-  // X lower bound is dynamic: the no-bid lane if any zero/absent bids, else the smallest real bid.
-  const reals = pts.filter(p => !p.noBid).map(p => p.x);
-  const hasNoBid = pts.some(p => p.noBid);
-  const xMin = hasNoBid ? BATMapData.NO_BID_PLOT_VALUE : (reals.length ? Math.min.apply(null, reals) : 1);
+  // X lower bound = just below the lowest plotted (winsorized) bid; no-bid cars already excluded.
+  const xMin = priceAxisMin(pts);
   // Log y starts at the floor only when something actually sits there; otherwise let the data set it.
   const flooredZero = yLog && pts.some(p => p.y < Y_LOG_FLOOR);
   const yMin = yLog ? (flooredZero ? Y_LOG_FLOOR : "dataMin") : "dataMin";
   return { series: [{ type: "scatter", name: "auctions", data: data, large: false,
                       emphasis: { scale: 1.25 } }], usePhotos: usePhotos, xMin: xMin,
            yLog: yLog, yMin: yMin };
+}
+
+// Richly-encoded Comments field (the default home view, non-search, dots): price (log X) vs
+// comments (log Y), colored by deal_pct, sized by watchers, with deal stars and median guides.
+// Split into two scatter series so the visualMap colors ONLY the cars that have a deal_pct;
+// the rest get a fixed neutral and are never clamped to a palette extreme.
+function buildCommentsField(cars, now) {
+  const pts = priceScatterPoints(BATMapData.buildPoints(cars, "comments", now));  // no-bid cars sit out
+  const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
+  const withDeal = [], noDeal = [];
+  let flooredZero = false;
+  for (const pt of pts) {
+    const a = pt.car;
+    if (pt.y < Y_LOG_FLOOR) flooredZero = true;
+    const xv = winsorX(pt.x);                           // clamp into the $1k–$1M band (plot only)
+    const yv = Math.max(pt.y, Y_LOG_FLOOR);            // a real 0 can't sit on a log axis
+    const fresh = BATMapData.getEngagementFreshness(a, now, scrapedAt);
+    const w = a.engagement && a.engagement.watchers;
+    const rawDp = a.value && a.value.deal_pct;
+    const dp = (rawDp != null && isFinite(rawDp)) ? rawDp : null;   // NaN/Infinity -> treat as missing
+    const isDeal = !!(a.value && a.value.is_deal);
+    // size by watchers (deal stars get a floor so they never shrink below notice)
+    const size = isDeal ? Math.max(BATMapData.watcherSize(w), 16) : BATMapData.watcherSize(w);
+    // low opacity + a thin dark hairline border read as DENSITY where dots overlap; deals get a glow.
+    const style = isDeal
+      ? { opacity: 0.95, borderColor: "#fff1c2", borderWidth: 1.4, shadowBlur: 12, shadowColor: "rgba(255,213,74,0.75)" }
+      : { opacity: 0.55, borderColor: "#0f1115", borderWidth: 0.5 };
+    // is_deal cars ALWAYS join the colored series, so a deal is never a gray dot and never buried under
+    // the ungraded layer; a deal missing its deal_pct falls back to 0 ("at comps") for COLOR only —
+    // the tooltip still reads the true value off the record.
+    const dpColor = dp != null ? dp : (isDeal ? 0 : null);
+    if (dpColor != null) {
+      // visualMap (dimension 2) sets the FILL — store the value clamped to the palette domain so
+      // outliers (e.g. +0.99 / -6.8) land on the extreme color instead of being filtered out.
+      const item = { value: [xv, yv, BATMapData.clampNum(dpColor, BATMapData.DEAL_VMAP_MIN, BATMapData.DEAL_VMAP_MAX)],
+                     symbol: isDeal ? "star" : "circle", symbolSize: size, itemStyle: style };
+      tagItem(item, a, pt, fresh); item._cls = "neutral";
+      withDeal.push(item);
+    } else {
+      const item = { value: [xv, yv], symbol: "circle", symbolSize: size,
+                     itemStyle: Object.assign({ color: BATMapData.DEAL_NULL_COLOR }, style) };
+      tagItem(item, a, pt, fresh); item._cls = "neutral";
+      noDeal.push(item);
+    }
+  }
+  // draw stars last within the colored series so they sit on top of the circle cloud
+  withDeal.sort((p, q) => (p.symbol === "star" ? 1 : 0) - (q.symbol === "star" ? 1 : 0));
+  // faint median quadrant guides — attached to the lower series so they sit UNDER the dots
+  const markLine = {
+    silent: true, symbol: "none", animation: false,
+    lineStyle: { color: "#3a3f4b", type: "dashed", opacity: 0.5 },
+    label: { color: "#9aa0ad", fontSize: 10, formatter: (o) => o.name },
+    data: [
+      { name: "median heat", yAxis: 16, label: { position: "insideEndTop" } },
+      { name: "median price", xAxis: 11000, label: { position: "insideStartTop" } },
+    ],
+  };
+  // Series order IS paint order: the ungraded (gray) layer draws first/underneath, the deal-graded
+  // (colored + stars) layer draws on top — so deals and the color signal are never hidden by gray dots.
+  const series = [
+    { type: "scatter", name: "ungraded", data: noDeal, large: false, emphasis: { scale: 1.2 }, markLine: markLine },
+    { type: "scatter", name: "deal-graded", data: withDeal, large: false, emphasis: { scale: 1.2 } },
+  ];
+  const visualMap = {
+    show: true, type: "continuous", calculable: false, hoverLink: false,
+    min: BATMapData.DEAL_VMAP_MIN, max: BATMapData.DEAL_VMAP_MAX,
+    dimension: 2, seriesIndex: 1,                       // color ONLY the deal-graded series (now on top)
+    inRange: { color: BATMapData.dealPaletteColors(20) },
+    text: ["under comps", "over"], textGap: 8,
+    textStyle: { color: "#9aa0ad", fontSize: 10 },
+    itemWidth: 10, itemHeight: 118, right: 10, bottom: 46,
+  };
+  return { series: series, visualMap: visualMap,
+           xMin: priceAxisMin(pts),                     // just below the lowest plotted (winsorized) bid
+           yLog: true, yMin: flooredZero ? Y_LOG_FLOOR : "dataMin" };
 }
 
 // neutral (no search): the data-state styling — filled=activity, hollow=none, faded=stale, ring=deal.
@@ -501,59 +595,43 @@ function styleSearch(pt, a, cls, isDeal, usePhotos, RING) {
            itemStyle: { color: "#3a3f4a", opacity: 0.16, borderWidth: 0 } };
 }
 
+// Clean, currency-agnostic price ticks across the real range: 300, 1k, 10k, 100k, 1M.
 function xTickFormatter(v) {
-  if (v <= BATMapData.NO_BID_PLOT_VALUE * 2) return "No bid";
-  if (v < 1000) return "";                       // empty gap between the no-bid lane and real bids
   return BATMapData.compactNumber(v);
 }
 
+// Clean multi-row tooltip: title, price (+ time left, since a bid is meaningless without the
+// deadline), comments, watchers, deal %, mileage. Every value falls back to "—" when null.
+// The fuller comp/condition breakdown lives in the click-card, keeping the hover light.
 function tooltipFormatter(p) {
   const d = p.data;
-  const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : "";
-  const bidLine = d._noBid ? "No bid yet" : `Bid at last scan: ${fmtMoney(d._p, d._cur)}`;
-  let closeLine = "";
+  const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:208px;border-radius:6px;display:block;margin-bottom:6px">` : "";
+  const row = (label, val, color) =>
+    `<div style="display:flex;justify-content:space-between;gap:22px;line-height:1.55">`
+    + `<span style="color:#9aa0ad">${label}</span>`
+    + `<span style="color:${color || "#e7e9ee"};font-variant-numeric:tabular-nums">${val}</span></div>`;
+  let timeLeft = "";
   const endMs = d._end ? Date.parse(d._end) : NaN;
-  if (endMs) {
+  if (!isNaN(endMs)) {
     const left = endMs - Date.now();
-    closeLine = left > 0
-      ? `<span style="color:${left <= 3600000 ? "#e2553b" : "#c7ccd6"}">Closes in ${fmtCountdown(left)}</span>`
-        + ` <span style="color:#9aa0ad">· ${new Date(endMs).toLocaleString()}</span><br>`
-      : `<span style="color:#9aa0ad">Auction ended</span><br>`;
+    timeLeft = left > 0
+      ? ` <span style="color:${left <= 3600000 ? "#e2553b" : "#9aa0ad"}">· ${fmtCountdown(left)} left</span>`
+      : ` <span style="color:#9aa0ad">· ended</span>`;
   }
-  let dline = "";
-  const det = d._d;
-  if (det) {
-    const miles = fmtMiles(det), cs = condSplit(det.condition), parts = [];
-    if (miles) parts.push(escapeHTML(miles));
-    if (cs.bad.length) parts.push(`<span style="color:#e2553b">🚩 ${cs.bad.join(", ")}</span>`);
-    if (cs.good.length) parts.push(`<span style="color:#28b487">${cs.good.join(", ")}</span>`);
-    if (parts.length) dline = parts.join(" · ") + "<br>";
-  }
-  const fresh = d._fresh || {};
-  let actLine;
-  if (d._c != null || d._w != null) {
-    actLine = `${d._c ?? "—"} comments · ${d._w ?? "—"} watchers`;
-    if (fresh.label) actLine += ` <span style="color:#9aa0ad">· updated ${escapeHTML(fresh.label)}</span>`;
-  } else {
-    actLine = `<span style="color:#9aa0ad">Activity not scanned yet</span>`;
-  }
-  let compLine = "";
-  const v = d._v;
-  if (v && v.fair_value && SCOREABLE_BASES[v.basis]) {       // only trusted comp bases quote a median
-    compLine = `Comp median: ${fmtMoney(v.fair_value, d._cur)} <span style="color:#9aa0ad">(${v.n_comps} comps, ${escapeHTML(friendlyBasis(v.basis))})</span>`;
-    const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
-    if (d._nr && below != null) {                            // discount only on a no-reserve car
-      compLine += `<br>Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
-        + (v.is_deal ? ` · <b style="color:#ffd54a">DEAL — closing soon</b>` : "");
-    } else if (!d._nr) {
-      compLine += `<br><span style="color:#9aa0ad">Reserve auction — bid may be below reserve, not a discount</span>`;
-    }
-    compLine += "<br>";
-  }
-  return `${img}<b>${escapeHTML(d._t)}</b><br>`
-    + bidLine + "<br>" + closeLine + dline + actLine + "<br>" + compLine
-    + `<span style="color:#7b8190">Snapshot scanned ${snapshotAgeLabel()}</span><br>`
-    + `<span style="color:#9aa0ad">click for details</span>`;
+  const price = (d._noBid ? "No bid yet" : fmtMoney(d._p, d._cur)) + timeLeft;
+  const comments = d._c != null ? Number(d._c).toLocaleString() : "—";
+  const watchers = d._w != null ? Number(d._w).toLocaleString() : "—";
+  const dp = d._v && d._v.deal_pct;
+  const dealColor = dp == null ? "#9aa0ad" : (dp > 0 ? "#6fcf97" : (dp < 0 ? "#e2553b" : "#9aa0a8"));
+  const miles = (d._d && fmtMiles(d._d)) ? escapeHTML(fmtMiles(d._d)) : "—";
+  return img
+    + `<div style="font-weight:600;max-width:230px;margin-bottom:5px">${escapeHTML(d._t || "")}</div>`
+    + row("Price", price)
+    + row("Comments", comments)
+    + row("Watchers", watchers)
+    + row("Deal", BATMapData.dealPctLabel(dp), dealColor)
+    + row("Miles", miles)
+    + `<div style="color:#7b8190;margin-top:6px">click for details</div>`;
 }
 
 function render() {
@@ -590,7 +668,23 @@ function render() {
   buildTicker(FILTERED, now);
   if (listView) renderList();
   toggleColorLegend(searchActive);
-  const built = buildSeries(displayCars, metric, markers, now, { searchActive, matchedIds, similarMakes });
+  // The default home view (non-search Comments in dots mode) gets the rich encoding: deal-pct
+  // color, watcher size, deal stars, median guides, and a deal-pct visualMap legend. Everything
+  // else (search overlay, other Y-metrics, photo mode) keeps the existing single-series styling
+  // and drops the visualMap — so the legend is hidden the moment you switch away from Comments.
+  let useRich = !searchActive && metric === "comments" && markers !== "photos";
+  if (useRich && markers === "auto") {
+    const n = BATMapData.buildPoints(displayCars, "comments", now).length;
+    if (BATMapData.chooseMarkerMode(n, mobile) === "photos") useRich = false;
+  }
+  let built, visualMap = null;
+  if (useRich) {
+    const r = buildCommentsField(displayCars, now);
+    built = { series: r.series, xMin: r.xMin, yLog: r.yLog, yMin: r.yMin };
+    visualMap = r.visualMap;
+  } else {
+    built = buildSeries(displayCars, metric, markers, now, { searchActive, matchedIds, similarMakes });
+  }
   const yInverse = metric === "closing";    // soonest-ending at the TOP
   const yLog = built.yLog;                  // comments/watchers spread on a log axis
   chart.setOption({
@@ -600,8 +694,8 @@ function render() {
       backgroundColor: "#16181f", borderColor: "#2a2e38", textStyle: { color: "#e7e9ee" },
       formatter: tooltipFormatter,
     },
-    legend: { show: false },                  // categories are gone from primary navigation
-    grid: { left: 70, right: 24, top: 18, bottom: 56 },
+    legend: { show: false },                  // no series legend; the visualMap (Comments) or per-point styling carries the key
+    grid: { left: 70, right: visualMap ? 76 : 24, top: 18, bottom: 56 },  // room for the color legend
     xAxis: {
       // multi-currency board: native amount, no hardcoded $ sign on ticks.
       type: "log", name: "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,
@@ -639,6 +733,8 @@ function render() {
       { type: "inside", xAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: true, moveOnMouseWheel: false },
       { type: "inside", yAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: true, moveOnMouseWheel: false },
     ],
+    // deal-pct color legend, only on the rich Comments view (notMerge below clears it otherwise)
+    visualMap: visualMap ? [visualMap] : [],
     series: built.series,
   }, true);
 }

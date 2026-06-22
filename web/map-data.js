@@ -169,6 +169,71 @@
     return Math.floor(hrs / 24) + "d ago";
   }
 
+  // ---- Richer encoding for the Comments field (color/size/legend) -------------------
+  // These are pure so they can be unit-tested outside the browser; index.html wires them
+  // into the ECharts visualMap + per-point symbolSize.
+
+  function clampNum(n, lo, hi) {
+    if (n == null || isNaN(n)) return null;   // normalize null/NaN to null so it never reaches a scale
+    return n < lo ? lo : (n > hi ? hi : n);
+  }
+
+  // Marker size from watcher count: sqrt so the crowded low end still separates, clamped to a
+  // 6–26px range over the [150, 1200] (~p10..p95) band. Unknown watchers get a neutral 8px.
+  // The input ratio is clamped to [0,1] first (the spec clamps the output, but a watcher below
+  // 150 would make the sqrt argument negative → NaN; clamping the ratio is the same intent).
+  var WATCHER_SIZE_MIN = 6, WATCHER_SIZE_MAX = 26, WATCHER_DOMAIN_LO = 150, WATCHER_DOMAIN_HI = 1200;
+  function watcherSize(watchers) {
+    if (watchers == null || isNaN(watchers)) return 8;
+    var r = clampNum((watchers - WATCHER_DOMAIN_LO) / (WATCHER_DOMAIN_HI - WATCHER_DOMAIN_LO), 0, 1);
+    return clampNum(WATCHER_SIZE_MIN + 20 * Math.sqrt(r), WATCHER_SIZE_MIN, WATCHER_SIZE_MAX);
+  }
+
+  // Diverging deal-quality palette as a piecewise-linear gradient over deal_pct.
+  // Stops: -0.5 red (overpriced) -> 0 gray (at comps) -> 0.49 light green (median deal) -> 0.9 deep green.
+  var DEAL_VMAP_MIN = -0.5, DEAL_VMAP_MAX = 0.9, DEAL_NULL_COLOR = "#6b7280";
+  var DEAL_STOPS = [
+    [-0.5, [217, 83, 79]],    // #d9534f
+    [0.0,  [154, 160, 168]],  // #9aa0a8
+    [0.49, [111, 207, 151]],  // #6fcf97
+    [0.9,  [30, 158, 90]],    // #1e9e5a
+  ];
+  function _hex2(n) { var s = Math.round(n).toString(16); return s.length < 2 ? "0" + s : s; }
+  function _rgbHex(a) { return "#" + _hex2(a[0]) + _hex2(a[1]) + _hex2(a[2]); }
+  function _mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  // Color for a single deal_pct value (clamped to the palette domain at the ends).
+  function dealColorAt(value) {
+    var s = DEAL_STOPS;
+    if (value == null || isNaN(value)) return DEAL_NULL_COLOR;
+    if (value <= s[0][0]) return _rgbHex(s[0][1]);
+    if (value >= s[s.length - 1][0]) return _rgbHex(s[s.length - 1][1]);
+    for (var i = 0; i < s.length - 1; i++) {
+      if (value >= s[i][0] && value <= s[i + 1][0]) {
+        var t = (value - s[i][0]) / (s[i + 1][0] - s[i][0]);
+        return _rgbHex(_mix(s[i][1], s[i + 1][1], t));
+      }
+    }
+    return _rgbHex(s[s.length - 1][1]);
+  }
+  // Evenly-spaced color samples (low->high) for ECharts visualMap.inRange.color, which interpolates
+  // its array evenly across [min,max]; sampling our non-even stops reproduces the intended curve.
+  function dealPaletteColors(steps) {
+    steps = steps || 20;
+    var out = [];
+    for (var i = 0; i <= steps; i++) {
+      out.push(dealColorAt(DEAL_VMAP_MIN + (DEAL_VMAP_MAX - DEAL_VMAP_MIN) * i / steps));
+    }
+    return out;
+  }
+  // Human deal label for the tooltip: 0.49 -> "49% under", -0.07 -> "7% over", 0 -> "at comps".
+  function dealPctLabel(pct) {
+    if (pct == null || isNaN(pct)) return "—";
+    var p = Math.round(pct * 100);
+    if (p > 0) return p + "% under";
+    if (p < 0) return (-p) + "% over";
+    return "at comps";
+  }
+
   // One chart point per auction id (never duplicated by category). Returns
   // [{ id, x, y, car, noBid }] for every active car that has the metric.
   function buildPoints(cars, metric, nowMs) {
@@ -209,6 +274,14 @@
     formatDurationHours: formatDurationHours,
     formatAge: formatAge,
     buildPoints: buildPoints,
+    clampNum: clampNum,
+    watcherSize: watcherSize,
+    dealColorAt: dealColorAt,
+    dealPaletteColors: dealPaletteColors,
+    dealPctLabel: dealPctLabel,
+    DEAL_VMAP_MIN: DEAL_VMAP_MIN,
+    DEAL_VMAP_MAX: DEAL_VMAP_MAX,
+    DEAL_NULL_COLOR: DEAL_NULL_COLOR,
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api; // node tests
   global.BATMapData = api;                                                    // browser
