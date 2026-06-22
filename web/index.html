@@ -243,9 +243,12 @@
 <div id="card" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
-<script src="./filters.js"></script>
-<script src="./map-data.js"></script>
-<script src="./search.js"></script>
+<!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
+     returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
+     would call functions the old script lacks → render() throws → blank chart). -->
+<script src="./filters.js?v=20260622b"></script>
+<script src="./map-data.js?v=20260622b"></script>
+<script src="./search.js?v=20260622b"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 // The five categories are placeholder metadata only — they no longer color the map,
@@ -1365,7 +1368,16 @@ function setupFilters(cars) {
     return;
   }
   setupFilters(all);
-  render();                 // render() builds the ticker from the active filter set
+  try {
+    render();               // render() builds the ticker from the active filter set
+  } catch (e) {
+    // Never leave a silent blank map. The usual culprit is a stale cached script paired with a
+    // freshly-deployed page, so point the user at a hard refresh first.
+    if (window.console) console.error("render() failed:", e);
+    statusEl.innerHTML = "Couldn't draw the map. If the site just updated, hard-refresh to clear a "
+      + "stale cached script: <b>Cmd/Ctrl + Shift + R</b>.<br><br><code>"
+      + escapeHTML(String((e && e.message) || e)) + "</code>";
+  }
 })();
 </script>
 </body>
