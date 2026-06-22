@@ -265,13 +265,14 @@ const MOBILE_MQ = window.matchMedia("(max-width: 480px), (pointer: coarse)");
 (MOBILE_MQ.addEventListener || MOBILE_MQ.addListener).call(MOBILE_MQ,
   "change", () => { if (SNAPSHOT) render(); });
 
-// --- Cursor-anchored zoom (wheel + trackpad pinch). ECharts' built-in inside-zoom
-// anchors at the pointer for a plain wheel but IGNORES a Mac trackpad pinch (which
-// Chrome delivers as ctrl+wheel) — the browser then page-zooms toward a fixed point,
-// which is the "it always zooms into the same spot" complaint. We disable the built-in
-// wheel zoom (see dataZoom config) and drive zoom ourselves in DATA space via
-// startValue/endValue so the point under the cursor stays put — correctly on both the
-// log and linear x-axis. Drag-to-pan (moveOnMouseMove) is left to ECharts.
+// --- Cursor-anchored zoom (wheel + trackpad scroll + pinch). ECharts' built-in wheel zoom
+// has a fixed, aggressive step that feels "way too fast" on a trackpad, where a two-finger
+// scroll fires a BURST of momentum events that compound. So native wheel zoom is OFF (see the
+// dataZoom config) and we drive every zoom gesture ourselves: normalize the delta across devices
+// (mouse lines/px, trackpad px, pinch), take a SMALL bite per event, and clamp it so no single
+// event (or a momentum spike) jumps the view. Zoom is in DATA space via startValue/endValue, so
+// the point under the cursor stays put on both the log and linear axes. Drag-to-pan
+// (moveOnMouseMove) is left to ECharts; box-zoom + double-click reset are backstops.
 (function setupCursorZoom() {
   const dom = chart.getDom();
   const full = {};                 // full data extent per axis, cached while fully zoomed out
@@ -309,21 +310,23 @@ const MOBILE_MQ = window.matchMedia("(max-width: 480px), (pointer: coarse)");
     if (nmax > nmin) chart.dispatchAction({ type: "dataZoom", dataZoomIndex: dzIdx, startValue: nmin, endValue: nmax });
   }
 
-  // We ONLY intercept trackpad pinch (Mac delivers it as ctrl+wheel), which ECharts'
-  // native zoom ignores — letting the browser page-zoom to a fixed point. Plain wheel /
-  // two-finger scroll is left to ECharts' native, reliable cursor zoom. dispatchAction
-  // updates the scale synchronously, so a burst of pinch events still anchors exactly.
+  // Per-event zoom step. Lower = slower/smoother. Plain wheel/trackpad scroll is gentle; a Mac
+  // pinch (ctrl+wheel) sends much smaller deltas so it gets a larger coefficient to stay responsive.
+  // The clamp caps any one event to ~12% so a fast flick or momentum spike can't jump the view.
+  const WHEEL_COEF = 0.0018, PINCH_COEF = 0.0075, STEP_MIN = 0.89, STEP_MAX = 1.12;
   dom.addEventListener("wheel", (e) => {
-    if (!e.ctrlKey) return;          // plain wheel -> ECharts native zoom handles it
     const gc = chart.getModel().getComponent("grid", 0);
     const cs = gc && gc.coordinateSystem;
     if (!cs) return;
     const r = cs.getRect(), b = dom.getBoundingClientRect();
     const px = e.clientX - b.left, py = e.clientY - b.top;
     if (px < r.x || px > r.x + r.width || py < r.y || py > r.y + r.height) return;  // over margins: let the page scroll
-    e.preventDefault();             // stop the browser page-zoom on pinch
-    let f = Math.exp(e.deltaY * 0.012);      // pinch deltas are tiny; deltaY<0 (pinch out) -> f<1 -> zoom in
-    f = Math.min(1.4, Math.max(0.7, f));     // clamp per event so a fast pinch can't jump
+    e.preventDefault();             // over the plot we own the gesture (no page scroll / pinch page-zoom)
+    let dy = e.deltaY;
+    if (e.deltaMode === 1) dy *= 16;        // lines -> ~px, so wheel speed is consistent across mice
+    else if (e.deltaMode === 2) dy *= 100;  // pages -> ~px
+    let f = Math.exp(dy * (e.ctrlKey ? PINCH_COEF : WHEEL_COEF));   // dy<0 (scroll up / pinch out) -> f<1 -> zoom in
+    f = Math.min(STEP_MAX, Math.max(STEP_MIN, f));                  // small, jump-proof bite per event
     const { dz, xi, yi } = axisDZ();
     if (xi >= 0) zoomAxis("xAxis", xi, px, py, f, dz);
     if (yi >= 0) zoomAxis("yAxis", yi, px, py, f, dz);
@@ -733,8 +736,10 @@ function render() {
       },
     },
     dataZoom: [
-      { type: "inside", xAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: true, moveOnMouseWheel: false },
-      { type: "inside", yAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: true, moveOnMouseWheel: false },
+      // native wheel zoom OFF — setupCursorZoom drives it at a controlled speed. Drag-to-pan
+      // (moveOnMouseMove, default true) stays with ECharts; box-zoom + reset are in the toolbox.
+      { type: "inside", xAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: false, moveOnMouseWheel: false },
+      { type: "inside", yAxisIndex: 0, filterMode: "none", zoomOnMouseWheel: false, moveOnMouseWheel: false },
     ],
     // deal-pct color legend, only on the rich Comments view (notMerge below clears it otherwise)
     visualMap: visualMap ? [visualMap] : [],
