@@ -380,7 +380,7 @@ function buildTicker(snapshot) {
   const label = `<div class="ticker-label">⏱ Ending soon`
     + (totalDeals ? ` · <span class="deals">${totalDeals} deal${totalDeals > 1 ? "s" : ""}</span>` : "")
     + `</div>`;
-  const dur = Math.max(30, items.length * 2.4);                  // ~constant speed regardless of count
+  const dur = Math.max(60, items.length * 4.8);                  // half-speed marquee (~constant regardless of count)
   // chips rendered twice so translateX(-50%) loops seamlessly
   el.innerHTML = label
     + `<div class="ticker-viewport"><div class="ticker-track" style="animation-duration:${dur}s">`
