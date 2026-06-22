@@ -385,7 +385,7 @@ function friendlyBasis(b) { return FRIENDLY_BASIS[b] || b || ""; }
 function metricAxisName(metric) {
   if (metric === "closing") return "Time remaining, soonest first";
   if (metric === "deal") return "% under comps →";
-  return (metric === "watchers" ? "Watchers" : "Comments") + " (heat) →";
+  return (metric === "watchers" ? "Watchers" : "Comments") + " (heat, log) →";
 }
 function snapshotAgeLabel() {
   const t = SNAPSHOT && SNAPSHOT.scraped_at ? Date.parse(SNAPSHOT.scraped_at) : NaN;
@@ -403,6 +403,15 @@ const TIER_SYMBOL = { under: "triangle", fair: "circle", over: "diamond", unknow
 const TIER_GLYPH = { under: "▲", fair: "●", over: "◆", unknown: "○" };
 const CLASS_RANK = { neutral: 0, other: 0, similar: 1, match: 2 };   // higher = drawn later = on top
 
+// Engagement counts (comments/watchers) are heavily right-skewed — a linear axis crushes the
+// dense low end (median 17 comments squashed under a lone 90+). Those two metrics plot on a LOG
+// y-axis, which spreads the 2–90 bulk and naturally compresses any outlier without a hard cap.
+// closing-time and deal-% stay linear (deal can be negative, which a log axis can't render).
+// A real 0 can't sit on a log axis, so it drops to this floor lane (mirrors the no-bid X lane);
+// the tooltip still shows the true count, so nothing is faked or hidden.
+const Y_LOG_FLOOR = 0.6;
+function yIsLog(metric) { return metric === "comments" || metric === "watchers"; }
+
 function buildSeries(cars, metric, markers, now, opts) {
   opts = opts || {};
   const search = !!opts.searchActive;
@@ -412,8 +421,12 @@ function buildSeries(cars, metric, markers, now, opts) {
   const usePhotos = mode === "photos";
   const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
   const RING = "#ffd54a";
+  const yLog = yIsLog(metric);
   const data = pts.map(pt => {
     const a = pt.car;
+    // A real 0 can't plot on a log axis — drop just the plotted coordinate to the floor lane.
+    // The tooltip reads the true count off the car, so the value is shown honestly, not as 0→floor.
+    const sp = yLog ? { x: pt.x, y: Math.max(pt.y, Y_LOG_FLOOR), car: a } : pt;
     const isDeal = !!(a.value && a.value.is_deal);
     const fresh = BATMapData.getEngagementFreshness(a, now, scrapedAt);
     let cls = "neutral";
@@ -422,8 +435,8 @@ function buildSeries(cars, metric, markers, now, opts) {
       else if (a.make && a.make.slug && similarMakes.has(a.make.slug)) cls = "similar";
       else cls = "other";
     }
-    const item = search ? styleSearch(pt, a, cls, isDeal, usePhotos, RING)
-                        : styleNeutral(pt, isDeal, fresh.hasData, fresh.stale, usePhotos, RING);
+    const item = search ? styleSearch(sp, a, cls, isDeal, usePhotos, RING)
+                        : styleNeutral(sp, isDeal, fresh.hasData, fresh.stale, usePhotos, RING);
     item._t = a.title; item._p = (a.bid && a.bid.amount); item._cur = a.bid && a.bid.currency;
     item._c = (a.engagement && a.engagement.comments); item._w = (a.engagement && a.engagement.watchers);
     item._img = a.thumbnail_url; item._url = a.listing_url; item._v = a.value; item._d = a.details;
@@ -438,8 +451,12 @@ function buildSeries(cars, metric, markers, now, opts) {
   const reals = pts.filter(p => !p.noBid).map(p => p.x);
   const hasNoBid = pts.some(p => p.noBid);
   const xMin = hasNoBid ? BATMapData.NO_BID_PLOT_VALUE : (reals.length ? Math.min.apply(null, reals) : 1);
+  // Log y starts at the floor only when something actually sits there; otherwise let the data set it.
+  const flooredZero = yLog && pts.some(p => p.y < Y_LOG_FLOOR);
+  const yMin = yLog ? (flooredZero ? Y_LOG_FLOOR : "dataMin") : "dataMin";
   return { series: [{ type: "scatter", name: "auctions", data: data, large: false,
-                      emphasis: { scale: 1.25 } }], usePhotos: usePhotos, xMin: xMin };
+                      emphasis: { scale: 1.25 } }], usePhotos: usePhotos, xMin: xMin,
+           yLog: yLog, yMin: yMin };
 }
 
 // neutral (no search): the data-state styling — filled=activity, hollow=none, faded=stale, ring=deal.
@@ -451,8 +468,10 @@ function styleNeutral(pt, isDeal, hasActivity, stale, usePhotos, RING) {
                           borderWidth: isDeal ? 3 : 1.5, opacity: stale ? 0.5 : 1 } };
   }
   if (hasActivity) {
-    return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 10,
-             itemStyle: { color: "#8b92a0", opacity: stale ? 0.4 : 0.85,
+    // smaller + more translucent so the dense ~300-dot cloud reads as heat instead of occluding;
+    // deals stay big with the gold ring so they still pop out of the cluster.
+    return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 9,
+             itemStyle: { color: "#8b92a0", opacity: stale ? 0.4 : 0.7,
                           borderColor: isDeal ? RING : "#0f1115", borderWidth: isDeal ? 3 : 1 } };
   }
   return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 10,
@@ -573,6 +592,7 @@ function render() {
   toggleColorLegend(searchActive);
   const built = buildSeries(displayCars, metric, markers, now, { searchActive, matchedIds, similarMakes });
   const yInverse = metric === "closing";    // soonest-ending at the TOP
+  const yLog = built.yLog;                  // comments/watchers spread on a log axis
   chart.setOption({
     animationDurationUpdate: 0,   // instant, cursor-tight zoom/pan response
     tooltip: {
@@ -593,11 +613,14 @@ function render() {
       max: "dataMax",
     },
     yAxis: {
-      type: "value", inverse: yInverse, name: metricAxisName(metric),
+      // log for the right-skewed engagement metrics, linear (with a duration formatter) for
+      // closing-time, linear for deal-% (it can be negative). Same axis-generic cursor zoom drives both.
+      type: yLog ? "log" : "value", inverse: yInverse, name: metricAxisName(metric),
       nameLocation: "middle", nameGap: 48,
-      axisLabel: metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) } : {},
+      axisLabel: metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) }
+               : (yLog ? { formatter: (v) => BATMapData.compactNumber(v) } : {}),
       splitLine: { lineStyle: { color: "#1c1f27" } },
-      min: "dataMin", max: "dataMax",
+      min: built.yMin, max: "dataMax",
     },
     // Three ways to zoom, so it never feels broken: ECharts' native wheel zoom
     // (reliable across mice/trackpads), the box-zoom tool below (drag a rectangle —
@@ -1129,8 +1152,12 @@ function updateFilterReadout(metric, now, ctx) {
     } else if (metric === "deal") {
       msg = `${fmt(plottable)} trusted no-reserve comp matches shown · ${fmt(active - plottable)} other active auctions`;
     } else {
+      // Only ~300 cars get enriched per scan, so the rest have no comment/watcher number YET —
+      // they're un-scanned, not dropped. Say so plainly and point to the axis that shows all of them.
       const label = metric === "watchers" ? "watcher" : "comment";
-      msg = `${fmt(plottable)} shown · ${fmt(active - plottable)} matching auctions do not have ${label} data`;
+      const missing = active - plottable;
+      msg = `${fmt(plottable)} shown · ${fmt(missing)} live auctions not yet scanned for ${label}s`
+        + (missing > 0 ? ` — pick “Closing soon” to see all ${fmt(active)}` : "");
     }
   }
   const man = currentSpec();
