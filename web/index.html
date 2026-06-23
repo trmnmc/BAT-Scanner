@@ -8,86 +8,102 @@
 <meta name="bat-search-endpoint" content="" />
 <title>BaT Value Map</title>
 <style>
-  :root { color-scheme: light dark; }
+  /* === BaT Value Map theme: "K" hybrid — calm near-white MONO canvas, amber accent, flat (no
+     rounding, hairline rules), loud green/red deal signals. Tokens drive everything. === */
+  :root {
+    color-scheme: light;
+    --bg: #fafafa;        /* page canvas */         --panel: #ffffff;     /* surfaces (inputs/cards) */
+    --panel-2: #f1f1ee;   /* subtle fill strips */  --hover: #ececE8;      /* hover */
+    --ink: #16181d;       /* primary text */        --ink-2: #44474e;      /* secondary text */
+    --muted: #8a9099;     /* labels */              --faint: #aeb2b8;      /* placeholders/faint */
+    --line: #e6e6e1;      /* hairline dividers/grid */  --line-2: #d7d7d2;  /* control borders */
+    --accent: #ffb000;    /* amber — hot deals + primary action */
+    --accent-ink: #16181d;  --accent-hover: #e69f00;
+    --green: #1f9d57;     /* under market / good */ --red: #d2452f;        /* over market / urgent */
+    --amber2: #c98a1e;    /* warning (mileage/fair) */
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
   * { box-sizing: border-box; }
+  select, input, button, textarea { font-family: var(--mono); }
   body {
-    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #0f1115; color: #e7e9ee;
+    margin: 0; font-family: var(--mono);
+    background: var(--bg); color: var(--ink);
+    -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1;
   }
   header { padding: 14px 18px 6px; }
-  h1 { font-size: 18px; font-weight: 600; margin: 0; }
-  .sub { font-size: 12px; color: #9aa0ad; margin-top: 3px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 8px 18px 4px; font-size: 13px; }
-  .controls label { color: #9aa0ad; }
-  select { background: #1a1d24; color: #e7e9ee; border: 1px solid #2a2e38; border-radius: 6px; padding: 5px 8px; font-size: 13px; }
+  h1 { font-size: 16px; font-weight: 700; margin: 0; letter-spacing: 0.01em; text-transform: uppercase; }
+  .sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 8px 18px 4px; font-size: 12px; }
+  .controls label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; font-size: 11px; }
+  select { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2); border-radius: 0; padding: 5px 8px; font-size: 12px; }
   #chart { width: 100%; height: 78vh; min-height: 480px; }
-  #status { padding: 24px 18px; color: #9aa0ad; font-size: 14px; line-height: 1.6; }
-  code { background: #1a1d24; padding: 1px 6px; border-radius: 4px; }
-  .hint { padding: 2px 18px 10px; font-size: 12px; color: #7b8190; }
-  /* --- filter bar + saved-view / preset chips (pivot) --- */
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 18px; font-size: 13px; }
+  #status { padding: 24px 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  code { background: var(--panel-2); padding: 1px 6px; border-radius: 0; }
+  .hint { padding: 2px 18px 10px; font-size: 11px; color: var(--faint); }
+  /* --- filter bar + saved-view / preset chips --- */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 18px; font-size: 12px; }
   .filters input[type=number] { width: 92px; }
-  .filters input, .filters button { background: #1a1d24; color: #e7e9ee; border: 1px solid #2a2e38;
-                                     border-radius: 6px; padding: 5px 8px; font-size: 13px; }
-  .filters input::placeholder { color: #6b7280; }
-  .filters label { color: #9aa0ad; display: inline-flex; align-items: center; gap: 4px; }
+  .filters input, .filters button { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2);
+                                     border-radius: 0; padding: 5px 8px; font-size: 12px; }
+  .filters input::placeholder { color: var(--faint); }
+  .filters label { color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
   .filters button { cursor: pointer; }
-  .filters button:hover { background: #22262f; }
+  .filters button:hover { background: var(--hover); }
   #f-count { padding: 0; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 18px 8px; }
-  .chip { cursor: pointer; font-size: 12px; padding: 3px 10px; border-radius: 999px;
-          background: #1a1d24; color: #c7ccd6; border: 1px solid #2a2e38; }
-  .chip:hover { background: #22262f; }
-  .chip.active { background: #5b8def; color: #0f1115; border-color: #5b8def; font-weight: 600; }
-  .chip .x { color: #7b8190; margin-left: 6px; }
+  .chip { cursor: pointer; font-size: 11px; padding: 3px 10px; border-radius: 0;
+          background: var(--panel); color: var(--ink-2); border: 1px solid var(--line-2); }
+  .chip:hover { background: var(--hover); }
+  .chip.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+  .chip .x { color: var(--faint); margin-left: 6px; }
   .chip.preset { border-style: dashed; }
-  /* --- ending-soon ticker (Phase 1) --- */
+  /* --- ending-soon ticker --- */
   #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex;
-            align-items: stretch; height: 46px; background: #12141a;
-            border-top: 1px solid #1c1f27; border-bottom: 1px solid #1c1f27; }
+            align-items: stretch; height: 46px; background: var(--panel-2);
+            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   #ticker[hidden] { display: none; }
   .ticker-label { flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: 6px;
-                  padding: 0 14px; font-size: 12px; font-weight: 600; color: #c7ccd6;
-                  background: #12141a; border-right: 1px solid #1c1f27; }
-  .ticker-label .deals { color: #ffd54a; }
+                  padding: 0 14px; font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase;
+                  background: var(--panel-2); border-right: 1px solid var(--line); }
+  .ticker-label .deals { color: var(--amber2); }
   .ticker-viewport { overflow: hidden; flex: 1 1 auto; display: flex; align-items: center; }
   .ticker-track { display: inline-flex; align-items: center;
                   animation: ticker-marquee linear infinite; will-change: transform; }
   #ticker:hover .ticker-track, #ticker.paused .ticker-track { animation-play-state: paused; }
   @keyframes ticker-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .ticker-chip { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto;
-                 padding: 4px 14px; border-right: 1px solid #1c1f27;
-                 text-decoration: none; color: #e7e9ee; font-size: 12px; line-height: 1.2; }
-  .ticker-chip:hover { background: #1a1d24; }
-  .ticker-chip.deal { background: rgba(255,213,74,0.09); }
-  .ticker-chip img { width: 40px; height: 28px; object-fit: cover; border-radius: 4px;
-                     background: #1a1d24; flex: 0 0 auto; }
-  .ticker-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
-  .ticker-bid { color: #c7ccd6; }
-  .ticker-deal { color: #ffd54a; font-weight: 600; }
-  .ticker-deal.above { color: #9aa0ad; font-weight: 400; }
-  .ticker-thin { color: #6b7280; }
-  .ticker-miles { color: #c7ccd6; background: #1f232c; border-radius: 3px; padding: 1px 5px; font-size: 11px; }
-  .ticker-miles.tmu { color: #e0a13a; }
-  .ticker-flag { color: #ffb3a7; background: rgba(226,85,59,0.18); border-radius: 3px;
+                 padding: 4px 14px; border-right: 1px solid var(--line);
+                 text-decoration: none; color: var(--ink); font-size: 12px; line-height: 1.2; }
+  .ticker-chip:hover { background: var(--hover); }
+  .ticker-chip.deal { background: rgba(255,176,0,0.12); }
+  .ticker-chip img { width: 40px; height: 28px; object-fit: cover; border-radius: 0;
+                     background: var(--panel-2); flex: 0 0 auto; }
+  .ticker-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+  .ticker-bid { color: var(--ink-2); }
+  .ticker-deal { color: var(--green); font-weight: 700; }
+  .ticker-deal.above { color: var(--muted); font-weight: 400; }
+  .ticker-thin { color: var(--faint); }
+  .ticker-miles { color: var(--ink-2); background: var(--panel-2); border-radius: 0; padding: 1px 5px; font-size: 11px; }
+  .ticker-miles.tmu { color: var(--amber2); }
+  .ticker-flag { color: var(--red); background: rgba(210,69,47,0.12); border-radius: 0;
                  padding: 1px 5px; font-size: 10px; font-weight: 700; letter-spacing: .2px; }
-  .ticker-good { color: #28b487; font-size: 10px; font-weight: 600; }
+  .ticker-good { color: var(--green); font-size: 10px; font-weight: 700; }
   /* hover preview: big detailed photo when you hover a ticker chip */
   #ticker-preview { position: fixed; z-index: 50; pointer-events: none;
-                    background: #16181f; border: 1px solid #2a2e38; border-radius: 10px;
-                    padding: 6px; box-shadow: 0 12px 32px rgba(0,0,0,.55); }
+                    background: var(--panel); border: 1px solid var(--line-2); border-radius: 0;
+                    padding: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
   #ticker-preview[hidden] { display: none; }
-  #ticker-preview img { width: 460px; height: 307px; object-fit: cover; border-radius: 6px; display: block; background: #1a1d24; }
-  #ticker-preview .cap { font-size: 13px; color: #e7e9ee; margin-top: 6px; max-width: 460px; }
-  .ticker-clock { color: #9aa0ad; font-variant-numeric: tabular-nums; min-width: 52px; }
-  .ticker-clock.urgent { color: #e2553b; font-weight: 600; }
-  .ticker-tag { background: #ffd54a; color: #0f1115; font-weight: 700; font-size: 10px;
-                padding: 1px 5px; border-radius: 3px; }
+  #ticker-preview img { width: 460px; height: 307px; object-fit: cover; border-radius: 0; display: block; background: var(--panel-2); }
+  #ticker-preview .cap { font-size: 13px; color: var(--ink); margin-top: 6px; max-width: 460px; }
+  .ticker-clock { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 52px; }
+  .ticker-clock.urgent { color: var(--red); font-weight: 700; }
+  .ticker-tag { background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 10px;
+                padding: 1px 5px; border-radius: 0; }
   .ticker-delta { font-size: 10px; font-weight: 700; margin-left: 1px; }
-  .ticker-delta.up { color: #28b487; }
-  .ticker-delta.down { color: #e2553b; }
-  @keyframes chip-flash-up   { from { background: rgba(40,180,135,0.45); } to { background: transparent; } }
-  @keyframes chip-flash-down { from { background: rgba(226,85,59,0.45);  } to { background: transparent; } }
+  .ticker-delta.up { color: var(--green); }
+  .ticker-delta.down { color: var(--red); }
+  @keyframes chip-flash-up   { from { background: rgba(31,157,87,0.30); } to { background: transparent; } }
+  @keyframes chip-flash-down { from { background: rgba(210,69,47,0.30);  } to { background: transparent; } }
   .ticker-chip.flash-up   { animation: chip-flash-up   1.8s ease-out 1; }
   .ticker-chip.flash-down { animation: chip-flash-down 1.8s ease-out 1; }
   @media (prefers-reduced-motion: reduce) {
@@ -96,64 +112,64 @@
     .ticker-chip.flash-up, .ticker-chip.flash-down { animation: none; }
   }
   /* --- Map / List view toggle --- */
-  .seg { display: inline-flex; border: 1px solid #2a2e38; border-radius: 6px; overflow: hidden; }
-  .seg button { background: #1a1d24; color: #c7ccd6; border: 0; padding: 5px 12px; font-size: 13px; cursor: pointer; }
-  .seg button.active { background: #5b8def; color: #0f1115; font-weight: 600; }
+  .seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 0; overflow: hidden; }
+  .seg button { background: var(--panel); color: var(--ink-2); border: 0; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+  .seg button.active { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
   /* --- clickable car detail card (stays until dismissed) --- */
   #card { position: fixed; top: 64px; right: 16px; z-index: 60; width: 340px; max-width: calc(100vw - 32px);
-          background: #16181f; border: 1px solid #2a2e38; border-radius: 12px; padding: 12px;
-          box-shadow: 0 16px 40px rgba(0,0,0,.55); font-size: 13px; }
+          background: var(--panel); border: 1px solid var(--line-2); border-radius: 0; padding: 12px;
+          box-shadow: 0 10px 30px rgba(0,0,0,.12); font-size: 13px; }
   #card[hidden] { display: none; }
-  #card .card-img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; background: #1a1d24; display: block; }
+  #card .card-img { width: 100%; height: 200px; object-fit: cover; border-radius: 0; background: var(--panel-2); display: block; }
   #card .card-close { position: absolute; top: 8px; right: 10px; cursor: pointer; color: #fff;
                       background: rgba(0,0,0,.55); border-radius: 50%; width: 26px; height: 26px;
                       display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
-  #card .card-title { font-weight: 600; font-size: 15px; margin: 10px 0 6px; }
-  #card .card-row { color: #c7ccd6; margin: 4px 0; }
-  #card .card-bid { font-size: 18px; font-weight: 700; color: #e7e9ee; }
-  #card .card-clock { font-variant-numeric: tabular-nums; font-weight: 600; }
-  #card .card-clock.urgent { color: #e2553b; }
-  #card .card-deal { color: #ffd54a; font-weight: 600; }
-  #card .card-flag { color: #ffb3a7; }
-  #card .card-good { color: #28b487; }
-  .card-muted { color: #9aa0ad; }
-  .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 8px;
-              background: #5b8def; color: #0f1115; font-weight: 600; text-decoration: none; }
-  .btn-link:hover { background: #6f9bf0; }
+  #card .card-title { font-weight: 700; font-size: 15px; margin: 10px 0 6px; }
+  #card .card-row { color: var(--ink-2); margin: 4px 0; }
+  #card .card-bid { font-size: 18px; font-weight: 700; color: var(--ink); }
+  #card .card-clock { font-variant-numeric: tabular-nums; font-weight: 700; }
+  #card .card-clock.urgent { color: var(--red); }
+  #card .card-deal { color: var(--green); font-weight: 700; }
+  #card .card-flag { color: var(--red); }
+  #card .card-good { color: var(--green); }
+  .card-muted { color: var(--muted); }
+  .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 0;
+              background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; }
+  .btn-link:hover { background: var(--accent-hover); }
   /* --- sortable list view --- */
   #listpanel { padding: 4px 18px 28px; }
   #listpanel[hidden] { display: none; }
-  table.listtbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-  table.listtbl th { text-align: left; color: #9aa0ad; font-weight: 600; padding: 8px 10px;
-                     border-bottom: 1px solid #2a2e38; cursor: pointer; white-space: nowrap;
-                     position: sticky; top: 0; background: #0f1115; }
+  table.listtbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.listtbl th { text-align: left; color: var(--muted); font-weight: 700; padding: 8px 10px;
+                     border-bottom: 1px solid var(--line-2); cursor: pointer; white-space: nowrap;
+                     position: sticky; top: 0; background: var(--bg); text-transform: uppercase; }
   table.listtbl th.num { text-align: right; }
-  table.listtbl th:hover { color: #e7e9ee; }
-  table.listtbl th.sorted { color: #e7e9ee; }
-  table.listtbl th.sorted::after { content: " ▾"; color: #5b8def; }
+  table.listtbl th:hover { color: var(--ink); }
+  table.listtbl th.sorted { color: var(--ink); }
+  table.listtbl th.sorted::after { content: " ▾"; color: var(--accent); }
   table.listtbl th.sorted.asc::after { content: " ▴"; }
-  table.listtbl td { padding: 7px 10px; border-bottom: 1px solid #181b22; vertical-align: middle; }
+  table.listtbl td { padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
   table.listtbl td.num { text-align: right; font-variant-numeric: tabular-nums; }
   table.listtbl tbody tr { cursor: pointer; }
-  table.listtbl tbody tr:hover { background: #1a1d24; }
-  .lt-img { width: 56px; height: 40px; object-fit: cover; border-radius: 4px; background: #1a1d24; flex: 0 0 auto; }
-  .lt-name { font-weight: 500; max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .lt-deal { color: #ffd54a; font-weight: 600; }
-  .lt-over { color: #9aa0ad; }
-  .lt-urgent { color: #e2553b; font-weight: 600; }
+  table.listtbl tbody tr:hover { background: var(--panel-2); }
+  .lt-img { width: 56px; height: 40px; object-fit: cover; border-radius: 0; background: var(--panel-2); flex: 0 0 auto; }
+  .lt-name { font-weight: 600; max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lt-deal { color: var(--green); font-weight: 700; }
+  .lt-over { color: var(--muted); }
+  .lt-urgent { color: var(--red); font-weight: 700; }
   /* --- primary search --- */
   .search { display: flex; gap: 8px; padding: 10px 18px 4px; }
-  .search input { flex: 1 1 auto; min-width: 0; background: #1a1d24; color: #e7e9ee;
-                  border: 1px solid #2a2e38; border-radius: 8px; padding: 9px 12px; font-size: 15px; }
-  .search input::placeholder { color: #6b7280; }
-  .search button { background: #5b8def; color: #0f1115; border: 0; border-radius: 8px;
-                   padding: 9px 14px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-  .search button#q-clear { background: #1a1d24; color: #c7ccd6; border: 1px solid #2a2e38; font-weight: 500; }
-  .search-summary { padding: 2px 18px 0; font-size: 12px; color: #9aa0ad; }
+  .search input { flex: 1 1 auto; min-width: 0; background: var(--panel); color: var(--ink);
+                  border: 1px solid var(--line-2); border-radius: 0; padding: 9px 12px; font-size: 14px; }
+  .search input::placeholder { color: var(--faint); }
+  .search button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 0;
+                   padding: 9px 14px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em; }
+  .search button#q-clear { background: var(--panel); color: var(--ink-2); border: 1px solid var(--line-2); font-weight: 600; }
+  .search-summary { padding: 2px 18px 0; font-size: 12px; color: var(--muted); }
   .search-summary:empty { display: none; }
-  .search-summary.err { color: #e2553b; }
+  .search-summary.err { color: var(--red); }
   details.advanced { padding: 2px 18px; }
-  details.advanced > summary { cursor: pointer; color: #9aa0ad; font-size: 13px; padding: 4px 0; list-style: none; }
+  details.advanced > summary { cursor: pointer; color: var(--muted); font-size: 12px; padding: 4px 0; list-style: none; }
   details.advanced > summary::-webkit-details-marker { display: none; }
   details.advanced > summary::before { content: "▸ "; }
   details.advanced[open] > summary::before { content: "▾ "; }
@@ -161,20 +177,66 @@
   .maphint { padding: 2px 18px 8px; }
   #q-chips .chip .x { cursor: pointer; }
   /* color key (shown only while a search is active) */
-  #colorlegend { display: none; flex-wrap: wrap; gap: 3px 14px; padding: 2px 18px 6px; font-size: 11px; color: #9aa0ad; }
+  #colorlegend { display: none; flex-wrap: wrap; gap: 3px 14px; padding: 2px 18px 6px; font-size: 11px; color: var(--muted); }
   #colorlegend.on { display: flex; }
   #colorlegend .sw { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-  #colorlegend .dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; border: 1px solid #0f1115; }
-  #colorlegend .dot.ring { box-shadow: 0 0 0 2px #ffd54a; }
+  #colorlegend .dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; border: 1px solid var(--line-2); }
+  #colorlegend .dot.ring { box-shadow: 0 0 0 2px var(--accent); }
   #colorlegend .dot.hollow { background: transparent !important; }
   #colorlegend .glyph { font-size: 12px; line-height: 1; flex: 0 0 auto; width: 11px; text-align: center; }
+  /* deal-vs-market legend bar (Phase 2): the big horizontal color scale under the map */
+  #deallegend { display: none; padding: 8px 18px 12px; }
+  #deallegend.on { display: block; }
+  #deallegend .dl-bar { height: 12px; border: 1px solid var(--line-2);
+    background: linear-gradient(to right, #1e9e5a 0%, #6fcf97 29%, #9aa0a8 64%, #d2452f 100%); }
+  #deallegend .dl-labels { display: flex; justify-content: space-between; margin-top: 5px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  #deallegend .dl-labels .under { color: var(--green); }
+  #deallegend .dl-labels .fair { color: var(--muted); }
+  #deallegend .dl-labels .over { color: var(--red); }
+  #deallegend .dl-hot { margin-top: 8px; display: inline-block; font-size: 11px; font-weight: 700;
+    background: var(--accent); color: var(--accent-ink); padding: 3px 9px;
+    text-transform: uppercase; letter-spacing: 0.03em; }
+  /* --- Phase 3: chart + "Ending soon" deal-card rail side by side --- */
+  #stage { display: flex; gap: 14px; align-items: stretch; padding: 0 18px; }
+  #stage[hidden] { display: none; }
+  #mapcol { flex: 1 1 auto; min-width: 0; }   /* min-width:0 lets the chart shrink beside the rail */
+  #rail { flex: 0 0 312px; height: 78vh; min-height: 480px; overflow-y: auto;
+          border: 1px solid var(--line-2); background: var(--panel); }
+  .rail-head { position: sticky; top: 0; z-index: 1; background: var(--panel-2);
+               padding: 9px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase;
+               letter-spacing: 0.04em; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+  .rail-dealcount { color: var(--amber2); }
+  .rail-empty { padding: 16px 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .deal-card { display: flex; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line);
+               cursor: pointer; align-items: flex-start; }
+  .deal-card:hover { background: var(--panel-2); }
+  .deal-card.is-deal { background: rgba(255,176,0,0.07); }
+  .dc-img { width: 86px; height: 62px; flex: 0 0 auto; object-fit: cover; background: var(--panel-2); border: 1px solid var(--line); }
+  .dc-body { min-width: 0; flex: 1 1 auto; }
+  .dc-title { font-size: 12px; font-weight: 700; line-height: 1.25; margin-bottom: 2px;
+              display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .dc-bid { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+  .dc-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 5px 0 4px; }
+  .dc-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; text-transform: uppercase; letter-spacing: 0.02em; }
+  .dc-badge.under { background: var(--green); color: #fff; }
+  .dc-badge.over { background: var(--red); color: #fff; }
+  .dc-badge.muted { background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
+  .dc-hot { font-size: 10px; font-weight: 700; background: var(--accent); color: var(--accent-ink);
+            padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.02em; }
+  .dc-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 11px; color: var(--muted); }
+  .dc-clock { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink-2); margin-left: auto; }
+  .dc-clock.urgent { color: var(--red); }
   /* --- mobile (~390px) --- */
   html, body { max-width: 100%; overflow-x: hidden; }
   @media (max-width: 480px) {
     header { padding: 10px 12px 4px; }
     .search, .search-summary, .controls, details.advanced, .chips, #q-chips, .maphint { padding-left: 12px; padding-right: 12px; }
     .controls { gap: 10px; }
-    #chart { height: 64vh; min-height: 360px; }
+    #chart { height: 56vh; min-height: 340px; }
+    /* rail stacks below the chart on a phone */
+    #stage { flex-direction: column; gap: 10px; padding-left: 12px; padding-right: 12px; }
+    #rail { flex-basis: auto; height: auto; max-height: 60vh; min-height: 0; }
     /* ticker: real horizontal scroll instead of a clipped marquee */
     #ticker .ticker-track { animation: none; }
     #ticker .ticker-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -182,6 +244,9 @@
     #card { top: auto; bottom: 8px; right: 8px; left: 8px; width: auto; }
   }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -189,7 +254,7 @@
   <div class="sub" id="meta">loading…</div>
 </header>
 <form class="search" id="searchform" autocomplete="off">
-  <input id="q" type="search" placeholder="Search titles, makes, and models" aria-label="Search cars">
+  <input id="q" type="search" placeholder="What car are you looking for?" aria-label="Search cars">
   <button id="q-go" type="submit">Find cars</button>
   <button id="q-clear" type="button">Clear</button>
 </form>
@@ -236,7 +301,17 @@
 <div class="chips" id="chips"></div>
 <div class="hint maphint">Scroll or pinch to zoom · box-zoom &amp; reset top-right · double-click to reset · click a car for details</div>
 <div id="ticker" hidden></div>
-<div id="chart"></div>
+<div id="stage">
+  <div id="mapcol">
+    <div id="chart"></div>
+    <div id="deallegend">
+      <div class="dl-bar"></div>
+      <div class="dl-labels"><span class="under">40% under market</span><span class="fair">fair</span><span class="over">20% over</span></div>
+      <div class="dl-hot">★ Hot deal = 20%+ under market</div>
+    </div>
+  </div>
+  <aside id="rail" aria-label="Auctions ending soon"></aside>
+</div>
 <div id="listpanel" hidden></div>
 <div id="status"></div>
 <div id="ticker-preview" hidden><img alt="" referrerpolicy="no-referrer"><div class="cap"></div></div>
@@ -257,7 +332,7 @@ const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 
 const statusEl = document.getElementById("status");
 const metaEl = document.getElementById("meta");
-const chart = echarts.init(document.getElementById("chart"), "dark");
+const chart = echarts.init(document.getElementById("chart"));   // light theme (page is near-white)
 window.addEventListener("resize", () => chart.resize());
 // Re-render when we cross the mobile/desktop boundary so the declutter + coloring re-evaluate
 // for the new platform (IS_MOBILE is read inside render/buildSeries). Guarded against pre-init.
@@ -336,6 +411,12 @@ const MOBILE_MQ = window.matchMedia("(max-width: 480px), (pointer: coarse)");
 let SNAPSHOT = null;
 let FILTERED = [];                       // cars passing the current filter (drives map + list)
 let listView = false;                    // Map vs List view
+let dealLegendActive = false;            // is the deal-color legend bar relevant to the current view
+// The big green->red deal legend shows only on the deal-colored map (not List, not other metrics/search).
+function syncDealLegend() {
+  const el = document.getElementById("deallegend");
+  if (el) el.classList.toggle("on", dealLegendActive && !listView);
+}
 let listSort = { key: "ends", dir: "asc" };   // List default: ending soonest first
 
 async function loadData() {
@@ -451,7 +532,7 @@ function buildSeries(cars, metric, markers, now, opts) {
   const mode = markers === "auto" ? BATMapData.chooseMarkerMode(pts.length, IS_MOBILE()) : markers;
   const usePhotos = mode === "photos";
   const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
-  const RING = "#ffd54a";
+  const RING = "#ffb000";   // amber deal ring (accent)
   const yLog = yIsLog(metric);
   const data = pts.map(pt => {
     const a = pt.car;
@@ -507,7 +588,7 @@ function buildCommentsField(cars, now) {
     const size = isDeal ? Math.max(BATMapData.watcherSize(w), 16) : BATMapData.watcherSize(w);
     // low opacity + a thin dark hairline border read as DENSITY where dots overlap; deals get a glow.
     const style = isDeal
-      ? { opacity: 0.95, borderColor: "#fff1c2", borderWidth: 1.4, shadowBlur: 12, shadowColor: "rgba(255,213,74,0.75)" }
+      ? { opacity: 0.98, borderColor: "#8a5a00", borderWidth: 1.4, shadowBlur: 10, shadowColor: "rgba(255,176,0,0.55)" }
       : { opacity: 0.55, borderColor: "#0f1115", borderWidth: 0.5 };
     // is_deal cars ALWAYS join the colored series, so a deal is never a gray dot and never buried under
     // the ungraded layer; a deal missing its deal_pct falls back to 0 ("at comps") for COLOR only —
@@ -532,7 +613,7 @@ function buildCommentsField(cars, now) {
   // faint median quadrant guides — attached to the lower series so they sit UNDER the dots
   const markLine = {
     silent: true, symbol: "none", animation: false,
-    lineStyle: { color: "#3a3f4b", type: "dashed", opacity: 0.5 },
+    lineStyle: { color: "#c4c8cc", type: "dashed", opacity: 0.9 },
     label: { color: "#9aa0ad", fontSize: 10, formatter: (o) => o.name },
     data: [
       { name: "median heat", yAxis: 16, label: { position: "insideEndTop" } },
@@ -546,7 +627,7 @@ function buildCommentsField(cars, now) {
     { type: "scatter", name: "deal-graded", data: withDeal, large: false, emphasis: { scale: 1.2 } },
   ];
   const visualMap = {
-    show: true, type: "continuous", calculable: false, hoverLink: false,
+    show: false, type: "continuous", calculable: false, hoverLink: false,   // widget hidden; #deallegend bar is the key
     min: BATMapData.DEAL_VMAP_MIN, max: BATMapData.DEAL_VMAP_MAX,
     dimension: 2, seriesIndex: 1,                       // color ONLY the deal-graded series (now on top)
     inRange: { color: BATMapData.dealPaletteColors(20) },
@@ -615,7 +696,7 @@ function tooltipFormatter(p) {
   const row = (label, val, color) =>
     `<div style="display:flex;justify-content:space-between;gap:22px;line-height:1.55">`
     + `<span style="color:#9aa0ad">${label}</span>`
-    + `<span style="color:${color || "#e7e9ee"};font-variant-numeric:tabular-nums">${val}</span></div>`;
+    + `<span style="color:${color || "#16181d"};font-variant-numeric:tabular-nums">${val}</span></div>`;
   let timeLeft = "";
   const endMs = d._end ? Date.parse(d._end) : NaN;
   if (!isNaN(endMs)) {
@@ -628,7 +709,7 @@ function tooltipFormatter(p) {
   const comments = d._c != null ? Number(d._c).toLocaleString() : "—";
   const watchers = d._w != null ? Number(d._w).toLocaleString() : "—";
   const dp = d._v && d._v.deal_pct;
-  const dealColor = dp == null ? "#9aa0ad" : (dp > 0 ? "#6fcf97" : (dp < 0 ? "#e2553b" : "#9aa0a8"));
+  const dealColor = dp == null ? "#8a9099" : (dp > 0 ? "#1f9d57" : (dp < 0 ? "#d2452f" : "#8a8f96"));
   const miles = (d._d && fmtMiles(d._d)) ? escapeHTML(fmtMiles(d._d)) : "—";
   return img
     + `<div style="font-weight:600;max-width:230px;margin-bottom:5px">${escapeHTML(d._t || "")}</div>`
@@ -671,7 +752,7 @@ function render() {
 
   FILTERED = searchActive ? matched : baseCars;      // List + ticker follow the searched cars
   updateFilterReadout(metric, now, { searchActive, matched, baseCars, similarMakes, mobile });
-  buildTicker(FILTERED, now);
+  buildRail(FILTERED, now);          // vertical "Ending soon" rail beside the chart (replaces the ticker)
   if (listView) renderList();
   toggleColorLegend(searchActive);
   // The default home view (non-search Comments in dots mode) gets the rich encoding: deal-pct
@@ -691,22 +772,24 @@ function render() {
   } else {
     built = buildSeries(displayCars, metric, markers, now, { searchActive, matchedIds, similarMakes });
   }
+  dealLegendActive = !!visualMap;          // the big deal-color bar belongs to the deal-colored view
+  syncDealLegend();
   const yInverse = metric === "closing";    // soonest-ending at the TOP
   const yLog = built.yLog;                  // comments/watchers spread on a log axis
   chart.setOption({
     animationDurationUpdate: 0,   // instant, cursor-tight zoom/pan response
     tooltip: {
       trigger: "item",
-      backgroundColor: "#16181f", borderColor: "#2a2e38", textStyle: { color: "#e7e9ee" },
+      backgroundColor: "#ffffff", borderColor: "#d7d7d2", textStyle: { color: "#16181d" },
       formatter: tooltipFormatter,
     },
     legend: { show: false },                  // no series legend; the visualMap (Comments) or per-point styling carries the key
-    grid: { left: 70, right: visualMap ? 76 : 24, top: 18, bottom: 56 },  // room for the color legend
+    grid: { left: 70, right: 24, top: 18, bottom: 56 },   // visualMap widget hidden, so no extra right margin
     xAxis: {
       // multi-currency board: native amount, no hardcoded $ sign on ticks.
       type: "log", name: "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,
       axisLabel: { formatter: xTickFormatter },
-      splitLine: { lineStyle: { color: "#1c1f27" } },
+      splitLine: { lineStyle: { color: "#e6e6e1" } },
       min: built.xMin,            // dynamic: no-bid lane or smallest real bid (no hardcoded $1,000)
       // Pin the top to the data. The "nice" max sits above the priciest car, and ECharts snaps
       // any zoom whose endValue lands in that empty band back to full — which broke zoom-in.
@@ -719,7 +802,7 @@ function render() {
       nameLocation: "middle", nameGap: 48,
       axisLabel: metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) }
                : (yLog ? { formatter: (v) => BATMapData.compactNumber(v) } : {}),
-      splitLine: { lineStyle: { color: "#1c1f27" } },
+      splitLine: { lineStyle: { color: "#e6e6e1" } },
       min: built.yMin, max: "dataMax",
     },
     // Three ways to zoom, so it never feels broken: ECharts' native wheel zoom
@@ -729,7 +812,7 @@ function render() {
     toolbox: {
       show: true, right: 10, top: 2, itemGap: 10,
       iconStyle: { borderColor: "#9aa0ad" },
-      emphasis: { iconStyle: { borderColor: "#e7e9ee" } },
+      emphasis: { iconStyle: { borderColor: "#16181d" } },
       feature: {
         dataZoom: { filterMode: "none", title: { zoom: "Box zoom — drag a box", back: "Undo zoom" } },
         restore: { title: "Reset zoom" },
@@ -753,6 +836,79 @@ function render() {
 const TICKER_WINDOW_MS = 48 * 3600 * 1000;
 const TICKER_MAX = 60;            // cap chips so the marquee stays glanceable (deals sort first)
 let tickerTimer = null;
+
+// --- Phase 3: vertical "Ending soon" deal-card rail (replaces the horizontal marquee). Same 48h
+// window + deals-first order; LOUD cards (oversized bid, solid-green % badge, amber hot tag,
+// countdown). A click opens the persistent detail card — it never jumps straight to BaT. Live
+// clocks reuse the shared [data-ends] updater (tickCountdowns), so there's no separate timer.
+const RAIL_WINDOW_MS = 48 * 3600 * 1000;
+const RAIL_MAX = 16;
+function buildRail(cars, now) {
+  const el = document.getElementById("rail");
+  if (!el) return;
+  now = now || Date.now();
+  const items = [];
+  for (const a of (cars || [])) {
+    const price = a.bid && a.bid.amount;
+    if (!price || price <= 0) continue;
+    const endMs = a.ends_at ? Date.parse(a.ends_at) : NaN;
+    if (!endMs || endMs <= now || endMs - now > RAIL_WINDOW_MS) continue;   // live + ending within 48h
+    const v = a.value || null, scoreable = isScoreable(v);
+    items.push({ a, endMs, price, cur: a.bid && a.bid.currency, scoreable,
+      isDeal: !!(scoreable && v.is_deal),
+      dealPct: scoreable ? Math.round(v.deal_pct * 100) : null,
+      dealScore: scoreable && v.deal_score != null ? v.deal_score : null,
+      fairValue: scoreable ? v.fair_value : null,
+      noReserve: !!(a.flags && a.flags.no_reserve) });
+  }
+  const totalDeals = items.reduce((n, i) => n + (i.isDeal ? 1 : 0), 0);
+  const head = `<div class="rail-head">⏱ Ending soon`
+    + (totalDeals ? ` · <span class="rail-dealcount">${totalDeals} deal${totalDeals > 1 ? "s" : ""}</span>` : "")
+    + `</div>`;
+  if (!items.length) {
+    el.innerHTML = head + `<div class="rail-empty">No live auctions ending within 48 hours in this view. Search or clear filters to widen it.</div>`;
+    return;
+  }
+  const score = (it) => it.dealScore != null ? it.dealScore : (it.dealPct != null ? it.dealPct / 100 : 0);
+  items.sort((x, y) => {                          // deals first (biggest discount), then soonest-ending
+    if (x.isDeal !== y.isDeal) return x.isDeal ? -1 : 1;
+    if (x.isDeal && y.isDeal) return score(y) - score(x);
+    return x.endMs - y.endMs;
+  });
+  const top = items.slice(0, RAIL_MAX);
+  el.innerHTML = head + `<div class="rail-list">` + top.map(railCardHTML).join("") + `</div>`;
+  el.querySelectorAll(".deal-card").forEach((cardEl, i) => {
+    cardEl.addEventListener("click", () => openCard(carToCard(top[i].a)));   // persistent card, not a jump
+  });
+  startTickerCountdown();                          // live clocks for the rail's [data-ends]
+}
+
+function railCardHTML(it) {
+  const a = it.a;
+  const img = a.thumbnail_url
+    ? `<img class="dc-img" src="${escapeHTML(a.thumbnail_url)}" loading="lazy" referrerpolicy="no-referrer" alt="">`
+    : `<div class="dc-img"></div>`;
+  let badge = "";
+  if (it.scoreable && it.noReserve && it.dealPct != null) {            // discount only on a no-reserve car
+    const under = it.dealPct >= 0;
+    badge = `<span class="dc-badge ${under ? "under" : "over"}">${under ? it.dealPct + "% under" : (-it.dealPct) + "% over"}</span>`;
+  } else if (it.scoreable) {
+    badge = `<span class="dc-badge muted">comps ~${fmtMoney(it.fairValue, it.cur)}</span>`;
+  }
+  const hot = it.isDeal ? `<span class="dc-hot">★ Hot deal</span>` : "";
+  const w = a.engagement && a.engagement.watchers;
+  const wHTML = w != null ? `<span>${Number(w).toLocaleString()} watching</span>` : "";
+  const milesTxt = fmtMiles(a.details);
+  const milesHTML = milesTxt ? `<span>${escapeHTML(milesTxt)}</span>` : "";
+  return `<div class="deal-card${it.isDeal ? " is-deal" : ""}">`
+    + img
+    + `<div class="dc-body">`
+      + `<div class="dc-title">${escapeHTML(a.title || "")}</div>`
+      + `<div class="dc-bid">${fmtMoney(it.price, it.cur)}</div>`
+      + `<div class="dc-meta">${badge}${hot}</div>`
+      + `<div class="dc-foot">${wHTML}${milesHTML}<span class="dc-clock" data-ends="${it.endMs}"></span></div>`
+    + `</div></div>`;
+}
 
 function buildTicker(cars, now) {
   const el = document.getElementById("ticker");
@@ -1093,10 +1249,12 @@ function renderList() {
 }
 function setView(v) {
   listView = (v === "list");
-  document.getElementById("chart").hidden = listView;
+  document.getElementById("stage").hidden = listView;   // hides chart + rail together
   document.getElementById("listpanel").hidden = !listView;
   document.getElementById("view-map").classList.toggle("active", !listView);
   document.getElementById("view-list").classList.toggle("active", listView);
+  syncDealLegend();                        // hide the deal bar in List view, restore it on the map
+  if (!listView) chart.resize();           // chart was display:none; remeasure its container width
   if (listView) renderList();
   else chart.resize();                      // chart was display:none; re-measure on return
 }
@@ -1302,7 +1460,7 @@ function toggleColorLegend(on) {
       + tier(TIER_GLYPH.fair, "#e0a13a", "match · fair")
       + tier(TIER_GLYPH.unknown, "#5b8def", "match · comps pending")
       + `<span class="sw"><span class="dot" style="background:#8b92a0"></span>similar (same make)</span>`
-      + `<span class="sw"><span class="dot" style="background:#3a3f4a"></span>rest of board</span>`
+      + `<span class="sw"><span class="dot" style="background:#cfd2d6"></span>rest of board</span>`
       + `<span class="sw"><span class="dot ring" style="background:#28b487"></span>gold ring = deal, closing soon</span>`;
     el.dataset.built = "1";
   }
