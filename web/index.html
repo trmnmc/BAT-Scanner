@@ -15,7 +15,7 @@
     --bg: #fafafa;        /* page canvas */         --panel: #ffffff;     /* surfaces (inputs/cards) */
     --panel-2: #f1f1ee;   /* subtle fill strips */  --hover: #ececE8;      /* hover */
     --ink: #16181d;       /* primary text */        --ink-2: #44474e;      /* secondary text */
-    --muted: #8a9099;     /* labels */              --faint: #aeb2b8;      /* placeholders/faint */
+    --muted: #5d636b;     /* labels (WCAG AA on bg) */  --faint: #9499a1;      /* placeholders */
     --line: #e6e6e1;      /* hairline dividers/grid */  --line-2: #d7d7d2;  /* control borders */
     --accent: #ffb000;    /* amber — hot deals + primary action */
     --accent-ink: #16181d;  --accent-hover: #e69f00;
@@ -39,7 +39,7 @@
   #chart { width: 100%; height: 78vh; min-height: 480px; }
   #status { padding: 24px 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
   code { background: var(--panel-2); padding: 1px 6px; border-radius: 0; }
-  .hint { padding: 2px 18px 10px; font-size: 11px; color: var(--faint); }
+  .hint { padding: 2px 18px 10px; font-size: 11px; color: var(--muted); }
   /* --- filter bar + saved-view / preset chips --- */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 18px; font-size: 12px; }
   .filters input[type=number] { width: 92px; }
