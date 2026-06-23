@@ -2,7 +2,9 @@
 
 ## Product
 
-BaT Scanner is an AI-assisted auction companion and complete live-market scanner.
+BaT Scanner is a live-market scanner first: a complete, always-on view of the entire
+live Bring a Trailer board. AI assistance is a companion that supports the scanner,
+never replaces it.
 
 The map remains the primary discovery interface. It must continue showing the entire
 live BaT board by default. The Auction Brief, watchlists, scoring, historical context,
