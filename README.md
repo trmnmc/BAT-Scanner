@@ -239,6 +239,35 @@ free, no per-listing fetch). Engagement/mileage/condition enrichment is bounded:
   (>72h), ~10 rotating sample; unused quota flows to the other buckets. Placeholder categories
   have **no** effect on what gets enriched. A failed refresh keeps the last cached data.
 
+### Normalized model (optional, additive — `web/auction-model.js`)
+
+`web/auction-model.js` exposes a backward-compatible *normalized* view over both live auctions
+and historical comps. It is **purely additive**: it layers a few normalized fields on top of the
+existing raw record without removing or rewriting any raw field, so `schema_version` stays `1`
+and every existing consumer keeps working. Legacy records that carry **none** of the new blocks
+normalize fine — what's missing is reported honestly as `null`/`ambiguous`, never invented or
+treated as zero. Stage 1 only *defines and normalizes* these blocks; it does not compute scores,
+draw badges, change map rendering, or rewrite `data/auctions.json`.
+
+- **Marketplace-qualified auction keys** — `auction_key` is `"<marketplace>:<id>"`, e.g.
+  `bat:115717336` (built by `auctionKey(marketplace, id)`). `marketplace` defaults to `bat`. A
+  record with no `id` gets a `null` key (it can't be deduped or enriched — the same rule the
+  validation gate uses). This lets live auctions and historical sales share one keyspace.
+- **`historical_status`** — `"live"` for an active board auction, `"sold"` for a historical comp.
+- **`vehicle_identity`** (optional) — `{ year, make{slug,name}, model{slug,name}, trim, vin,
+  source, ambiguous }`. Built from an explicit `vehicle_identity` block when present, otherwise
+  derived from the legacy `year` / `make` / `models` (or a comp's `make` / `model` slug). `source`
+  is `"explicit"`, `"legacy"`, or `null`; `ambiguous` is `true` whenever year + make + model can't
+  all be pinned down — a later stage must not hang a *confident* valuation on an ambiguous
+  identity. An absent or malformed block is valid (it falls back to the legacy fields).
+- **`analysis`** (optional) — `{ score, confidence, summary, basis, flags, updated_at }`, all
+  `null` until a later stage computes them. `score` is **`null` when unknown — never `0`** (a real
+  `0` is a value; missing is not). An absent or malformed `analysis` normalizes to `null`.
+
+The scraper validation emits a soft **warning** for a malformed optional `vehicle_identity` or
+`analysis` block (wrong shape, or a `year`/`score` of the wrong type) but never blocks the write;
+**absence is always valid**.
+
 ### Categories (optional placeholder metadata)
 
 The five categories are **placeholders** — they do not gate the board, enrichment, the map, or
