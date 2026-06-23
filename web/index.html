@@ -233,6 +233,8 @@
     header { padding: 10px 12px 4px; }
     .search, .search-summary, .controls, details.advanced, .chips, #q-chips, .maphint { padding-left: 12px; padding-right: 12px; }
     .controls { gap: 10px; }
+    /* touch targets: primary controls reach the 44px minimum on a phone */
+    .search input, .search button, .seg button, select { min-height: 44px; }
     #chart { height: 56vh; min-height: 340px; }
     /* rail stacks below the chart on a phone */
     #stage { flex-direction: column; gap: 10px; padding-left: 12px; padding-right: 12px; }
