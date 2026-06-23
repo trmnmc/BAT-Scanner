@@ -855,7 +855,7 @@ function buildHistoricalSeries(specs) {
 }
 
 function render() {
-  const metric = document.getElementById("ymetric").value;
+  let metric = document.getElementById("ymetric").value;
   const markers = document.getElementById("markers").value;
   const now = Date.now();
   const mobile = IS_MOBILE();
@@ -881,6 +881,18 @@ function render() {
     // empty search: desktop = whole board; mobile = a low-population teaser (today's deals, or
     // "closing within 24h" when comps are too thin to surface deals) + the prompt to search.
     displayCars = mobile ? mobileDefaultCars(baseCars, now) : baseCars;
+  }
+
+  // Mobile fallback: Comments is the desktop deal-colored hero, but on a phone the teaser cars
+  // mostly haven't been scanned for comments yet, so the Comments axis plots only a handful of
+  // dots — a near-empty map. When that happens (and the user hasn't deliberately chosen Comments),
+  // fall back to "Closing soon", which plots every live auction. We switch the AXIS only — no
+  // missing comment count is ever invented as zero. Desktop (mobile === false) is untouched.
+  if (mobile && !searchActive && metric === "comments" && !userPickedMetric
+      && BATMapData.buildPoints(displayCars, "comments", now).length < MOBILE_COMMENTS_MIN) {
+    metric = "closing";
+    const sel = document.getElementById("ymetric");
+    if (sel && sel.value !== "closing") sel.value = "closing";   // keep the dropdown honest; setting .value fires no change event
   }
 
   FILTERED = searchActive ? matched : baseCars;      // List + ticker follow the searched cars
@@ -1429,7 +1441,9 @@ function setView(v) {
 document.getElementById("view-map").onclick = () => setView("map");
 document.getElementById("view-list").onclick = () => setView("list");
 
-document.getElementById("ymetric").addEventListener("change", render);
+// Track a deliberate Y-metric choice so the mobile Comments→Closing fallback never overrides it.
+let userPickedMetric = false;
+document.getElementById("ymetric").addEventListener("change", () => { userPickedMetric = true; render(); });
 document.getElementById("markers").addEventListener("change", render);
 document.getElementById("show-comps").addEventListener("change", render);   // toggle past comps on the market map
 
@@ -1612,6 +1626,9 @@ function endsWithin(car, now, hours) {
 // Mobile, no search: a small high-value teaser so the phone isn't a wall of dots. Today's
 // deals if there are enough; otherwise everything closing within 24h.
 const MOBILE_DEALS_MIN = 12;
+// Below this many dots actually plottable on the Comments axis, the mobile default falls back to
+// "Closing soon" (see render()) so the phone never opens to a near-empty map.
+const MOBILE_COMMENTS_MIN = 6;
 function activeDeals(cars, now) {                  // is_deal AND still live (matches what the map plots)
   return BATMapData.getActiveAuctions(cars, now).filter(c => c.value && c.value.is_deal);
 }
