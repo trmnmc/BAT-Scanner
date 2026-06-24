@@ -310,6 +310,9 @@
       <button id="view-list" type="button">List</button>
     </span></span>
   <span id="f-count" class="hint"></span>
+  <span><label for="profile">Profile:</label>
+    <select id="profile"><option value="me">Me</option><option value="dad">Dad</option><option value="shared">Shared</option></select></span>
+  <span id="wl-filter-wrap" hidden><label><input type="checkbox" id="wl-filter"> Filter by watchlists</label></span>
 </div>
 <details class="advanced" id="advanced">
   <summary>Advanced filters &amp; display</summary>
@@ -363,10 +366,14 @@
 <script src="./comps.js?v=20260623c"></script>
 <script src="./auction-model.js?v=20260623c"></script>
 <script src="./auction-brief.js?v=20260623c"></script>
+<script src="./storage.js?v=20260623c"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 const COMPS_PATHS = ["../data/comps.json", "./comps.json"];   // past sold comps, loaded separately
 let COMPS = [];                                               // raw comp rows; [] when missing/empty/broken
+let STORE = null;                  // Stage 5 versioned persistence (created in init once BATStorage loads)
+let activeProfile = "me";          // me | dad | shared
+let ENABLED_WLS = [];              // enabled watchlists visible to the active profile (recomputed each render)
 // The five categories are placeholder metadata only — they no longer color the map,
 // drive a legend, or appear as preset chips. category_ids still ride along in the snapshot
 // and BATFilters still understands `category` so old saved views keep working.
@@ -572,7 +579,18 @@ function yIsLog(metric) { return metric === "comments" || metric === "watchers";
 // Badges a record may display (≤1 main + ≤1 status). Guarded so a missing/old badges.js degrades
 // to "no badges" — the map keeps working exactly as before rather than throwing (spec rule 12).
 function carBadges(a) {
-  return (window.BATBadges && typeof BATBadges.selectBadges === "function") ? BATBadges.selectBadges(a) : [];
+  if (!(window.BATBadges && typeof BATBadges.selectBadges === "function")) return [];
+  // Stage 5: a live auction that matches an enabled watchlist gets the Radar badge, carrying the
+  // human "why it matched" reason. Radar appears ONLY for actual matches against enabled watchlists.
+  let extra = null;
+  if (STORE && ENABLED_WLS.length) {
+    const hits = STORE.matchingWatchlists(a, ENABLED_WLS, Date.now());
+    if (hits.length) extra = { code: "watchlist", reason: hits.map(w => STORE.matchReason(w, a)).join(" · ") };
+  }
+  if (!extra) return BATBadges.selectBadges(a);
+  const codes = (Array.isArray(a.badges) ? a.badges.slice() : []);
+  codes.push(extra);                                            // inject Radar without mutating the car
+  return BATBadges.selectBadges(Object.assign({}, a, { badges: codes }));
 }
 
 function tagItem(item, a, pt, fresh) {
@@ -882,8 +900,13 @@ function render() {
   const now = Date.now();
   const mobile = IS_MOBILE();
   const all = SNAPSHOT.auctions;
+  // Enabled watchlists drive both the Radar badge (in carBadges) and the optional board filter.
+  ENABLED_WLS = STORE ? STORE.enabledWatchlists(activeProfile) : [];
   // Advanced filters always hard-filter the board; search is layered on top as highlight + dim.
-  const baseCars = window.BATFilters ? BATFilters.filterCars(all, currentSpec(), now) : all;
+  let baseCars = window.BATFilters ? BATFilters.filterCars(all, currentSpec(), now) : all;
+  // "Filter by watchlists": narrow the board to cars matching ANY enabled watchlist (reuses BATFilters).
+  const wlFilterOn = (document.getElementById("wl-filter") || {}).checked && ENABLED_WLS.length;
+  if (STORE && wlFilterOn) baseCars = baseCars.filter(c => STORE.matchingWatchlists(c, ENABLED_WLS, now).length);
   const searchActive = !!(window.BATSearch && !BATSearch.isEmptySpec(SEARCH_SPEC));
 
   let displayCars, matchedIds = null, similarMakes = null, matched = baseCars;
@@ -1713,20 +1736,48 @@ function toggleColorLegend(on) {
 function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
 function storeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list.slice(0, 20))); } catch (e) {} }
 
+// Stage 5: the chip rail now shows WATCHLISTS (manual for the active profile + shared, plus the
+// suggested templates). A chip toggles enable (drives Radar + the optional board filter); ↧ loads
+// the watchlist's normalized constraints into the Advanced filters (inspect/edit); ✎ renames a
+// manual list; ✕ deletes a manual list (suggested templates can only be disabled). The legacy
+// saved-views key is migrated into manual watchlists by BATStorage and preserved (never erased).
 function renderChips() {
   const wrap = document.getElementById("chips");
   if (!wrap) return;
   wrap.innerHTML = "";
-  // Category presets are gone from primary navigation (the board is no longer organized by the
-  // five placeholder categories). Only the user's own saved views remain as chips.
-  for (const view of loadSaved()) {
+  if (!STORE) return;
+  const wls = STORE.listWatchlists(activeProfile, true);
+  const fw = document.getElementById("wl-filter-wrap");
+  if (fw) fw.hidden = !wls.some(w => w.enabled);
+  const mini = (txt, title, fn) => { const s = document.createElement("span"); s.className = "x"; s.textContent = txt; s.title = title; s.onclick = (e) => { e.stopPropagation(); fn(); }; return s; };
+  for (const w of wls) {
     const c = document.createElement("span");
-    c.className = "chip"; c.textContent = view.name;
-    c.onclick = () => { if (typeof clearSearch === "function") clearSearch(); applySpec(view.spec); renderChips(); render(); };
-    const x = document.createElement("span");
-    x.className = "x"; x.textContent = "✕";
-    x.onclick = (e) => { e.stopPropagation(); storeSaved(loadSaved().filter(v => v.name !== view.name)); renderChips(); };
-    c.appendChild(x);
+    c.className = "chip" + (w.enabled ? " active" : "");      // accent highlight = enabled
+    c.title = STORE.matchReason(w, {});                       // normalized constraints = the "why"
+    const tag = document.createElement("span");
+    tag.textContent = (w.origin === "suggested" ? "✦ " : "") + w.name + (w.enabled ? " ●" : "");
+    tag.onclick = () => { STORE.setWatchlistEnabled(w.id, !w.enabled); renderChips(); render(); };  // enable/disable
+    c.appendChild(tag);
+    c.appendChild(mini("↧", "Load editable constraints into the Advanced filters", () => {
+      if (typeof clearSearch === "function") clearSearch();
+      applySpec(w.spec); document.getElementById("advanced").open = true; render();
+      // The Advanced form can't represent every spec field; be honest about which ones it dropped
+      // (they still drive this watchlist's matching — the chip tooltip lists the full constraints).
+      const FORM_KEYS = ["makes", "yearMin", "yearMax", "priceMax", "milesMax", "noReserve", "dealsOnly", "category"];
+      const dropped = Object.keys(w.spec || {}).filter(k => FORM_KEYS.indexOf(k) === -1);
+      if (dropped.length) alert('Loaded the editable filters. These constraints can’t be edited in the form (they still drive matching): ' + dropped.join(", ") + ".");
+    }));
+    if (w.origin === "manual") {
+      c.appendChild(mini("✎", "Rename", () => {
+        const name = (prompt("Rename watchlist:", w.name) || "").trim();
+        if (name) { STORE.renameWatchlist(w.id, name); renderChips(); }
+      }));
+      c.appendChild(mini("✕", "Delete", () => {
+        if (confirm('Delete watchlist "' + w.name + '"?')) { STORE.deleteWatchlist(w.id); renderChips(); render(); }
+      }));
+    } else {
+      c.appendChild(mini("−", "Hide this suggested watchlist", () => { STORE.setWatchlistEnabled(w.id, false); renderChips(); render(); }));
+    }
     wrap.appendChild(c);
   }
 }
@@ -1743,12 +1794,20 @@ function setupFilters(cars) {
   ["f-noreserve", "f-deals"].forEach(id => document.getElementById(id).addEventListener("change", render));
   document.getElementById("f-clear").onclick = () => { applySpec({}); renderChips(); render(); };
   document.getElementById("f-save").onclick = () => {
-    const name = (prompt("Name this view (e.g. \"Dad: cheap trucks\"):") || "").trim();
+    if (!STORE) return;
+    const name = (prompt('Save current filters as a watchlist for "' + activeProfile + '":') || "").trim();
     if (!name) return;
-    const list = loadSaved().filter(v => v.name !== name);
-    list.unshift({ name, spec: currentSpec() });
-    storeSaved(list); renderChips();
+    const saved = STORE.saveWatchlist({ name: name, spec: currentSpec(), profile_id: activeProfile, origin: "manual", enabled: true });
+    if (!saved) { alert("Couldn't save the watchlist — browser storage is full or unavailable (private mode?)."); return; }
+    renderChips(); render();
   };
+  const prof = document.getElementById("profile");
+  if (prof) {
+    prof.value = activeProfile;
+    prof.onchange = () => { activeProfile = STORE ? STORE.setActiveProfile(prof.value) : prof.value; renderChips(); render(); };
+  }
+  const wlf = document.getElementById("wl-filter");
+  if (wlf) wlf.addEventListener("change", render);
   renderChips();
 }
 
@@ -1762,6 +1821,8 @@ function setupFilters(cars) {
                     || !window.BATComps || typeof BATComps.buildCompPoints !== "function"
                     || !window.BATAuctionModel || !window.BATAuctionBrief
                     || typeof BATAuctionBrief.buildBrief !== "function";
+  // NOTE: BATStorage is intentionally NOT in this guard — it is OPTIONAL (every consumer guards on
+  // STORE), so a missing storage.js must still render the whole live board, not a hard-refresh page.
   const alreadyRetried = location.search.indexOf("fresh=") !== -1;
   if (scriptsStale && !alreadyRetried) {
     location.replace(location.pathname + "?fresh=" + Date.now());   // fresh index.html + fresh ?v= scripts
@@ -1794,6 +1855,12 @@ function setupFilters(cars) {
     return;
   }
   COMPS = await loadComps();   // best-effort; [] if comps.json is missing/empty/malformed (page still works)
+  // Stage 5: versioned persistence. createStorage migrates legacy saved views and recovers from
+  // corruption on its own; guard the whole thing so a storage failure never blocks the map.
+  if (window.BATStorage) {
+    try { STORE = BATStorage.createStorage(window.localStorage); activeProfile = STORE.getActiveProfile(); }
+    catch (e) { STORE = null; if (window.console) console.error("storage init failed:", e); }
+  }
   setupFilters(all);
   try {
     render();               // render() builds the ticker from the active filter set
