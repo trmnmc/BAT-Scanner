@@ -175,6 +175,15 @@
   #card .bc-row.bc-muted { color: var(--muted); }
   #card .bc-warn { color: var(--accent-hover); font-size: 12px; margin: 4px 0; }
   #card .bc-err { color: var(--red); }
+  /* Stage 8 optional AI-assisted brief layer — a clearly-labeled, separate explanation (never overwrites) */
+  #card .ai-assist .ai-mode { font-size: 11px; color: var(--muted); }
+  #card .ai-assist .ai-mode.ai-on { color: var(--ink); font-weight: 700; }
+  #card .ai-assist .ai-note { font-weight: 400; color: var(--muted); }
+  #card .ai-summary { margin: 6px 0; color: var(--ink); }
+  #card .ai-grp { margin: 6px 0; } #card .ai-grp > b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 2px; }
+  #card .ai-claim { margin: 2px 0; font-size: 12px; color: var(--ink-2); }
+  #card .ai-ev { color: var(--faint); font-size: 11px; }
+  #card .ai-grp.ai-muted { color: var(--muted); font-size: 12px; }
   .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 0;
               background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; }
   .btn-link:hover { background: var(--accent-hover); }
@@ -405,16 +414,17 @@
 <!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
      returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
      would call functions the old script lacks → render() throws → blank chart). -->
-<script src="./filters.js?v=20260624b"></script>
-<script src="./map-data.js?v=20260624b"></script>
-<script src="./search.js?v=20260624b"></script>
-<script src="./badges.js?v=20260624b"></script>
-<script src="./comps.js?v=20260624b"></script>
-<script src="./auction-model.js?v=20260624b"></script>
-<script src="./auction-brief.js?v=20260624b"></script>
-<script src="./user-state.js?v=20260624b"></script>
-<script src="./watchlists.js?v=20260624b"></script>
-<script src="./bid-calculator.js?v=20260624b"></script>
+<script src="./filters.js?v=20260624c"></script>
+<script src="./map-data.js?v=20260624c"></script>
+<script src="./search.js?v=20260624c"></script>
+<script src="./badges.js?v=20260624c"></script>
+<script src="./comps.js?v=20260624c"></script>
+<script src="./auction-model.js?v=20260624c"></script>
+<script src="./auction-brief.js?v=20260624c"></script>
+<script src="./user-state.js?v=20260624c"></script>
+<script src="./watchlists.js?v=20260624c"></script>
+<script src="./bid-calculator.js?v=20260624c"></script>
+<script src="./assistant.js?v=20260624c"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 const COMPS_PATHS = ["../data/comps.json", "./comps.json"];   // past sold comps, loaded separately
@@ -1432,6 +1442,49 @@ function renderBrief(brief, d) {
     + `<div class="brief-body">${secHTML}</div>`;
 }
 
+// Stage 8: OPTIONAL AI-assisted brief layer. Runs only when a public endpoint is configured. It shows a
+// "Rule-based brief" label immediately, then asynchronously requests an AI-assisted brief (public data
+// only, via BATAssistant). On success it renders a SEPARATE, clearly-labeled "AI-assisted brief" that
+// only EXPLAINS the deterministic brief (every claim cites an evidence id) and never overwrites a
+// deterministic field. On any failure it quietly keeps the rule-based brief. All AI text is escaped.
+function mountAiAssist(card, norm) {
+  const body = card.querySelector(".brief-body");
+  if (!body || !norm || norm.historical_status === "sold") return;
+  const ak = norm.auction_key || "";
+  // a labeled mount at the TOP of the body — the deterministic sections below are never touched
+  const mount = document.createElement("section");
+  mount.className = "brief-sec ai-assist";
+  mount.dataset.ak = ak;
+  mount.innerHTML = `<h3>Brief</h3><div class="ai-mode">Rule-based brief · checking for AI assist…</div>`;
+  body.insertBefore(mount, body.firstChild);
+
+  // evidence comps = the comps the deterministic estimate actually used (capped); else none.
+  const ids = (norm.estimate && Array.isArray(norm.estimate.comp_ids)) ? norm.estimate.comp_ids : [];
+  const comps = ids.map(id => (COMPS || []).find(c => c && c.id === id)).filter(Boolean).slice(0, BATAssistant.CAP.compsSent);
+
+  BATAssistant.requestBrief(norm, comps).then(res => {
+    // guard against a stale async resolve (card closed or a different auction opened since)
+    if (!mount.isConnected || mount.dataset.ak !== ak) return;
+    if (!res || !res.ok) {
+      mount.querySelector(".ai-mode").textContent = "Rule-based brief · AI assist unavailable";
+      return;
+    }
+    const b = res.brief, esc = escapeHTML;
+    const claim = (c) => `<div class="ai-claim">• ${esc(c.text)} <span class="ai-ev">[${esc(c.evidence)}]</span></div>`;
+    let html = `<div class="ai-mode ai-on">🤖 AI-assisted brief <span class="ai-note">— explains the rule-based brief; does not change it</span></div>`;
+    if (b.summary) html += `<div class="ai-summary">${esc(b.summary)}</div>`;
+    if (b.reasons && b.reasons.length) html += `<div class="ai-grp"><b>Why</b>${b.reasons.map(claim).join("")}</div>`;
+    if (b.risks && b.risks.length) html += `<div class="ai-grp"><b>Risks</b>${b.risks.map(claim).join("")}</div>`;
+    if (b.unanswered_questions && b.unanswered_questions.length)
+      html += `<div class="ai-grp"><b>Questions</b>${b.unanswered_questions.map(q => `<div class="ai-claim">• ${esc(q)}</div>`).join("")}</div>`;
+    if (b.seller_notes) html += `<div class="ai-grp"><b>Seller notes</b><div class="ai-claim">${esc(b.seller_notes)}</div></div>`;
+    if (b.suggested_posture) html += `<div class="ai-grp ai-muted">Suggested posture: ${esc(b.suggested_posture)}</div>`;
+    mount.innerHTML = `<h3>Brief</h3>` + html;
+  }).catch(() => {
+    if (mount.isConnected && mount.dataset.ak === ak) mount.querySelector(".ai-mode").textContent = "Rule-based brief · AI assist unavailable";
+  });
+}
+
 // Stage 7: the personal bid calculator, mounted into the Auction Brief's "Your plan" section. It is
 // PRIVATE and LOCAL — inputs persist per auction + profile via BATUserState, never over the network,
 // and it never touches the Opportunity Score, market estimate, or badges. Bidding still happens only
@@ -1555,6 +1608,12 @@ function openCard(d) {
   card.querySelector(".brief-close").onclick = closeCard;
   // Stage 7: mount the personal bid calculator into the "Your plan" section (live auctions only).
   if (!brief.historical && normRec) { try { mountBidCalc(card, normRec); } catch (e3) { if (window.console) console.error("bid calc mount failed:", e3); } }
+  // Stage 8: OPTIONAL AI-assisted brief. Inert unless an endpoint is configured — with none, the brief
+  // is byte-for-byte the prior behavior. The deterministic brief is always shown; AI only adds a
+  // separate, clearly-labeled layer and never overwrites a deterministic field.
+  if (!brief.historical && normRec && window.BATAssistant && BATAssistant.endpoint()) {
+    try { mountAiAssist(card, normRec); } catch (e4) { if (window.console) console.error("AI assist mount failed:", e4); }
+  }
   _briefLastFocus = (document.activeElement && document.activeElement !== document.body) ? document.activeElement : null;
   card.classList.add("open");
   card.setAttribute("aria-hidden", "false");
