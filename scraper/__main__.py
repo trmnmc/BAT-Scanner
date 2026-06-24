@@ -25,7 +25,7 @@ import os
 import sys
 import time
 
-from . import categories, comps, enrichment_cache, identity, parse, value
+from . import categories, comps, enrichment_cache, identity, opportunity, parse, value
 from .fetch import (
     BlockedError,
     FetchError,
@@ -365,6 +365,18 @@ def run(args) -> int:
         except (FetchError, OSError) as e:
             print(f"Note: enrichment unavailable: {e}", file=sys.stderr)
 
+    # 7b. Stage 6B — opportunity scoring + scarce production badges. Runs AFTER enrichment (so
+    #     engagement/condition land first) and BEFORE _ends_ts is dropped (the below-market timing
+    #     needs it). Market-only inputs (value/identity/engagement/flags + comps); NO network, and
+    #     NO personal data (watchlists/notes/budgets are never read here).
+    board_stats = opportunity.build_board_stats(scored)
+    for car in scored:
+        res = opportunity.evaluate_car(car, score_pool, now=now, board_stats=board_stats, now_iso=now_iso)
+        car["estimate"] = res["estimate"]
+        car["opportunity"] = res["opportunity"]
+        car["analysis"] = res["analysis"]
+    badge_tally = opportunity.assign_badges(scored)
+
     for r in scored:
         r.pop("_ends_ts", None)
 
@@ -427,7 +439,7 @@ def run(args) -> int:
                    enrich_requests=enrich_requests, comp_pool=len(comp_pool),
                    harvested=harvested, valued=valued, deals=deals,
                    det_miles=det_miles, det_tmu=det_tmu, det_cond=det_cond,
-                   carried=cache_stats.get("matched", 0), low_conf=low_conf,
+                   carried=cache_stats.get("matched", 0), low_conf=low_conf, badges=badge_tally,
                    eng_avail=engagement_available_count, eng_cached=engagement_cached_count)
 
     # 8. write or fail
@@ -458,8 +470,8 @@ def _resolve_enrich_source(args) -> str:
 
 def _print_summary(*, source, reported, parsed_live, scored, targets, enriched, ended, warnings,
                    enrich_method, enrich_requests, comp_pool, harvested, valued, deals,
-                   det_miles, det_tmu, det_cond, carried, low_conf, eng_avail, eng_cached, wrote,
-                   out_path=None):
+                   det_miles, det_tmu, det_cond, carried, low_conf, badges, eng_avail, eng_cached,
+                   wrote, out_path=None):
     print(f"Source: {source}")
     print(f"Reported live: {reported}")
     print(f"Parsed live: {parsed_live}")
@@ -475,6 +487,9 @@ def _print_summary(*, source, reported, parsed_live, scored, targets, enriched, 
     print(f"Comp pool: {comp_pool}" + (f" (+{harvested} harvested)" if harvested else ""))
     print(f"Valued (fair price): {valued} · deals flagged: {deals}")
     print(f"Low-confidence identities (valuation suppressed): {low_conf}")
+    if badges:
+        glyph = {"opportunity": "💎", "trophy": "🏆", "hot": "🔥", "warning": "⚠️"}
+        print("Badges: " + " · ".join(f"{glyph.get(k, k)} {k} {v}" for k, v in sorted(badges.items())))
     print(f"Warnings: {len(warnings)}")
     for w in warnings:
         print(f"  - {w}")

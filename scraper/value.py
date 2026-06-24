@@ -93,6 +93,13 @@ def _select_comps(car, comps):
     return tier2, "insufficient"
 
 
+def select_comps(car, comps):
+    """Public access to the tiered comp selection (the SAME engine valuation uses), so opportunity.py
+    can build an estimate band + liquidity signal from the very comps that set fair_value — without a
+    second matching implementation. Returns (selected_comps, basis_string)."""
+    return _select_comps(car, comps)
+
+
 def _mileage_tilt(details, year, now_year):
     """+ for below-average miles/year, - for above; 0 if TMU/missing/no year."""
     if not details or details.get("tmu"):
