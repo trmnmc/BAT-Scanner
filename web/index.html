@@ -160,6 +160,21 @@
   #card .btn-link { display: inline-block; margin-top: 10px; padding: 8px 12px; background: var(--accent);
           color: var(--accent-ink); font-weight: 700; text-decoration: none; }
   .card-muted { color: var(--muted); }
+  /* Stage 7 personal bid calculator (in the Auction Brief "Your plan" section) — static, no transitions */
+  #card .bid-calc { display: flex; flex-direction: column; gap: 6px; }
+  #card .bc-note { font-size: 11px; margin-bottom: 2px; }
+  #card .bc-f { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
+  #card .bc-f > span { flex: 1 1 auto; }
+  #card .bc-f input, #card .bc-f select, #card .bc-f textarea { flex: 0 0 130px; background: var(--panel); color: var(--ink);
+          border: 1px solid var(--line-2); border-radius: 0; padding: 5px 7px; font-size: 12px; font-family: inherit; }
+  #card .bc-f.bc-col { flex-direction: column; align-items: stretch; gap: 3px; }
+  #card .bc-f.bc-col textarea { flex: 1 1 auto; resize: vertical; }
+  #card .bc-out { margin: 8px 0 2px; padding: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+  #card .bc-row { display: flex; justify-content: space-between; gap: 12px; margin: 2px 0; font-size: 12px; }
+  #card .bc-row.bc-key { font-size: 14px; }  #card .bc-row.bc-key b { color: var(--ink); }
+  #card .bc-row.bc-muted { color: var(--muted); }
+  #card .bc-warn { color: var(--accent-hover); font-size: 12px; margin: 4px 0; }
+  #card .bc-err { color: var(--red); }
   .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 0;
               background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; }
   .btn-link:hover { background: var(--accent-hover); }
@@ -390,15 +405,16 @@
 <!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
      returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
      would call functions the old script lacks → render() throws → blank chart). -->
-<script src="./filters.js?v=20260624a"></script>
-<script src="./map-data.js?v=20260624a"></script>
-<script src="./search.js?v=20260624a"></script>
-<script src="./badges.js?v=20260624a"></script>
-<script src="./comps.js?v=20260624a"></script>
-<script src="./auction-model.js?v=20260624a"></script>
-<script src="./auction-brief.js?v=20260624a"></script>
-<script src="./user-state.js?v=20260624a"></script>
-<script src="./watchlists.js?v=20260624a"></script>
+<script src="./filters.js?v=20260624b"></script>
+<script src="./map-data.js?v=20260624b"></script>
+<script src="./search.js?v=20260624b"></script>
+<script src="./badges.js?v=20260624b"></script>
+<script src="./comps.js?v=20260624b"></script>
+<script src="./auction-model.js?v=20260624b"></script>
+<script src="./auction-brief.js?v=20260624b"></script>
+<script src="./user-state.js?v=20260624b"></script>
+<script src="./watchlists.js?v=20260624b"></script>
+<script src="./bid-calculator.js?v=20260624b"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 const COMPS_PATHS = ["../data/comps.json", "./comps.json"];   // past sold comps, loaded separately
@@ -1397,6 +1413,11 @@ function renderBrief(brief, d) {
     ? `<a class="btn-link" href="${esc(brief.deepLink)}" target="_blank" rel="noopener noreferrer">View on BaT →</a>`
     : (brief.historical ? "" : `<div class="brief-line card-muted">No listing link</div>`);
   const secHTML = (brief.sections || []).map(sec => {
+    // Stage 7: the "Your plan" section hosts the personal bid calculator (mounted after render). It
+    // replaces the empty "No plan saved yet" state — a live, private planning tool, never market data.
+    if (sec.id === "plan" && !brief.historical) {
+      return `<section class="brief-sec"><h3>${esc(sec.title)}</h3><div id="bid-calc"></div></section>`;
+    }
     let body = sec.id === "risks"
       ? sec.rows.map(r => `<div class="brief-risk">• ${esc(r.value)}</div>`).join("")
       : sec.rows.map(r => `<div class="brief-row"><span class="brief-k">${esc(r.label)}</span><span class="brief-v">${esc(r.value)}</span></div>`).join("");
@@ -1411,6 +1432,96 @@ function renderBrief(brief, d) {
     + `<div class="brief-body">${secHTML}</div>`;
 }
 
+// Stage 7: the personal bid calculator, mounted into the Auction Brief's "Your plan" section. It is
+// PRIVATE and LOCAL — inputs persist per auction + profile via BATUserState, never over the network,
+// and it never touches the Opportunity Score, market estimate, or badges. Bidding still happens only
+// via the "View on BaT" link. Empty optional fields stay null (the engine's documented 0 default);
+// budget/tax must be entered explicitly (no silent zero).
+function mountBidCalc(card, norm) {
+  const mount = card.querySelector("#bid-calc");
+  if (!mount) return;
+  if (!window.BATBidCalc) { mount.innerHTML = '<div class="hint">Bid calculator unavailable.</div>'; return; }
+  const ak = norm && norm.auction_key;
+  const prof = activeProfile;
+  const stt = (US && ak) ? US.resolveUserState(ak, prof) : {};
+  const saved = (stt && stt.bid_plan) || {};
+  const cur = (norm && norm.bid && norm.bid.currency) || "USD";
+  const curBid = (norm && norm.bid && typeof norm.bid.amount === "number") ? norm.bid.amount : null;
+  const sv = (k) => (saved[k] != null ? saved[k] : "");
+  const feeOpts = Object.keys(BATBidCalc.FEE_RULES).map(id =>
+    `<option value="${id}"${(saved.fee_rule || "bat-standard") === id ? " selected" : ""}>${escapeHTML(BATBidCalc.FEE_RULES[id].label)}</option>`).join("");
+  const numRow = (id, label, value) =>
+    `<label class="bc-f"><span>${escapeHTML(label)}</span><input id="bc-${id}" type="number" inputmode="decimal" min="0" value="${value === "" ? "" : escapeHTML(String(value))}"></label>`;
+  mount.innerHTML =
+    `<div class="bid-calc" role="group" aria-label="Personal bid calculator">`
+    + `<div class="hint bc-note">Private to you · never sent anywhere · never changes the market score. Bidding still happens on BaT.</div>`
+    + `<label class="bc-f"><span>Buyer fee rule</span><select id="bc-fee_rule">${feeOpts}</select></label>`
+    + numRow("total_budget", "All-in budget (" + cur + ")", sv("total_budget"))
+    // tax is stored as a fraction; show a clean percent (avoid 7.000000000000001 float noise on reload)
+    + numRow("tax_pct", "Tax rate %", saved.tax_rate != null ? Math.round(saved.tax_rate * 1e6) / 1e4 : "")
+    // prefer the FRESH live bid over a stale persisted one, so the all-in math always reflects the current bid
+    + numRow("current_bid", "Current bid", curBid != null ? curBid : (saved.current_bid != null ? saved.current_bid : ""))
+    + numRow("shipping", "Shipping", sv("shipping"))
+    + numRow("title_reg", "Title & registration", sv("title_reg"))
+    + numRow("inspection", "Inspection / PPI", sv("inspection"))
+    + numRow("repairs", "Immediate repairs", sv("repairs"))
+    + numRow("deferred_reserve", "Deferred-maintenance reserve", sv("deferred_reserve"))
+    + numRow("contingency", "Uncertainty contingency", sv("contingency"))
+    + `<div id="bc-out" class="bc-out" aria-live="polite"></div>`
+    + `<label class="bc-f bc-col"><span>Questions to ask</span><textarea id="bc-questions" rows="2">${escapeHTML(stt.questions || "")}</textarea></label>`
+    + `<label class="bc-f bc-col"><span>Inspection findings</span><textarea id="bc-inspection_findings" rows="2">${escapeHTML(stt.inspection_findings || "")}</textarea></label>`
+    + `<label class="bc-f bc-col"><span>Decision rationale</span><textarea id="bc-decision_rationale" rows="2">${escapeHTML(stt.decision_rationale || "")}</textarea></label>`
+    + `</div>`;
+  const q = (id) => mount.querySelector("#bc-" + id);
+  const num = (id) => { const el = q(id); if (!el) return null; const v = el.value.trim(); if (v === "") return null; const n = Number(v); return isFinite(n) ? n : NaN; };
+  function gather() {
+    const taxp = num("tax_pct");
+    return {
+      total_budget: num("total_budget"),
+      tax_rate: taxp == null ? null : (isFinite(taxp) ? taxp / 100 : NaN),
+      shipping: num("shipping"), title_reg: num("title_reg"), inspection: num("inspection"),
+      repairs: num("repairs"), deferred_reserve: num("deferred_reserve"), contingency: num("contingency"),
+      current_bid: num("current_bid"), fee_rule: q("fee_rule").value,
+    };
+  }
+  const m = (v) => (v == null ? "—" : fmtMoney(v, cur));
+  function renderOut(r) {
+    const out = q("out"); if (!out) return;
+    if (!r.ok) {
+      out.innerHTML = '<div class="hint">Enter your all-in budget and tax rate to see your maximum bid.'
+        + (r.errors && r.errors.length ? ' <span class="bc-err">(' + escapeHTML(r.errors[0]) + ")</span>" : "") + "</div>";
+      return;
+    }
+    const room = r.remaining_room;
+    out.innerHTML =
+      `<div class="bc-row bc-key"><span>Maximum hammer bid</span><b>${m(r.max_hammer)}</b></div>`
+      + (r.budget_too_low ? `<div class="bc-warn">Budget too low to cover the fixed costs — raise the budget or trim costs.</div>` : "")
+      + `<div class="bc-row"><span>Estimated all-in at current bid</span><span>${m(r.all_in_at_bid)}</span></div>`
+      + `<div class="bc-row"><span>Remaining bidding room</span><span class="${room != null && room < 0 ? "bc-err" : ""}">${room == null ? "—" : (room < 0 ? "over by " + fmtMoney(-room, cur) : m(room))}</span></div>`
+      + `<div class="bc-row"><span>Walk-away threshold</span><span>${m(r.walk_away)}</span></div>`
+      + `<div class="bc-row bc-muted"><span>Cost at current bid (best–conservative)</span><span>${m(r.best_case_estimate)} – ${m(r.conservative_estimate)}</span></div>`;
+  }
+  let timer;
+  function persist(inputs, r) {
+    if (!(US && ak)) return;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const plan = Object.assign({}, inputs, { max_hammer: (r && r.ok) ? r.max_hammer : null });
+      US.setUserState(ak, prof, { bid_plan: plan,
+        questions: q("questions").value, inspection_findings: q("inspection_findings").value,
+        decision_rationale: q("decision_rationale").value });
+    }, 400);
+  }
+  function recompute(persistChanges) {
+    const inputs = gather();
+    const r = BATBidCalc.calculate(inputs);
+    renderOut(r);
+    if (persistChanges) persist(inputs, r);   // only on a real user edit — opening a brief writes nothing
+  }
+  mount.querySelectorAll("input, select, textarea").forEach(el => el.addEventListener("input", () => recompute(true)));
+  recompute(false);   // initial render of any saved plan, without persisting (no spurious record on open)
+}
+
 // COMPATIBILITY ADAPTER: every existing call site (map click, list row, rail card) still calls
 // openCard(payload). The payload carries the raw record at _car, which we normalize (BATAuctionModel)
 // and turn into a structured brief (BATAuctionBrief). Falls back to a payload-only brief if a module
@@ -1418,12 +1529,13 @@ function renderBrief(brief, d) {
 function openCard(d) {
   const card = document.getElementById("card");
   if (!card || !d) return;
-  let brief;
+  let brief, normRec = null;
   try {
     const raw = d._car || null;
     if (window.BATAuctionBrief && window.BATAuctionModel && raw) {
       const norm = d._hist ? BATAuctionModel.normalizeHistoricalComp(raw)
                            : BATAuctionModel.normalizeLiveAuction(raw, SNAPSHOT);
+      normRec = norm;
       brief = BATAuctionBrief.buildBrief(norm, { nowMs: Date.now(), freshnessLabel: d._fresh && d._fresh.label });
       // Stage 5: record that the active profile opened this LIVE auction (last_viewed). Guarded +
       // best-effort — a persistence failure must never block the brief from opening.
@@ -1441,6 +1553,8 @@ function openCard(d) {
   card.setAttribute("aria-label", brief.historical ? "Past sale details" : "Auction Brief");
   card.innerHTML = renderBrief(brief, d);
   card.querySelector(".brief-close").onclick = closeCard;
+  // Stage 7: mount the personal bid calculator into the "Your plan" section (live auctions only).
+  if (!brief.historical && normRec) { try { mountBidCalc(card, normRec); } catch (e3) { if (window.console) console.error("bid calc mount failed:", e3); } }
   _briefLastFocus = (document.activeElement && document.activeElement !== document.body) ? document.activeElement : null;
   card.classList.add("open");
   card.setAttribute("aria-hidden", "false");

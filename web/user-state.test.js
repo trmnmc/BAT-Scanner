@@ -152,7 +152,34 @@ test("a user-state patch can't smuggle large/extraneous fields into storage", ()
   const fatCar = { title: "x".repeat(5000), raw_html: "y".repeat(10000) };
   const s = st.setUserState("bat:1", "me", { status: "watch", notes: "ok", car: fatCar, bogus: 123 });
   assert.ok(!("car" in s) && !("bogus" in s), "extraneous user-state keys dropped");
-  assert.deepStrictEqual(Object.keys(s).sort(), ["auction_key", "last_viewed", "max_bid", "max_bid_currency", "notes", "profile_id", "status", "tags", "updated_at"]);
+  assert.deepStrictEqual(Object.keys(s).sort(), ["auction_key", "bid_plan", "decision_rationale",
+    "inspection_findings", "last_viewed", "max_bid", "max_bid_currency", "notes", "profile_id",
+    "questions", "status", "tags", "updated_at"]);
+});
+
+// --- Stage 7: bid plan + private fields persist (per auction + profile) ---------------------
+
+test("a bid plan + private fields persist, whitelisted and survive reload", () => {
+  const be = US.memoryBackend();
+  const a = US.createUserState(be, opts());
+  a.setUserState("bat:1", "me", {
+    bid_plan: { total_budget: 80000, tax_rate: 0.08, shipping: 1500, fee_rule: "bat-standard",
+                junk: { huge: "x".repeat(9000) }, raw_html: "y".repeat(9000) },   // junk must be dropped
+    questions: "Service history? Accident-free?", inspection_findings: "Minor oil seep",
+    decision_rationale: "Strong comps, clean title",
+  });
+  const s = US.createUserState(be, opts()).getUserState("bat:1", "me");   // reload over the same backend
+  assert.deepStrictEqual(Object.keys(s.bid_plan).sort(), ["fee_rule", "shipping", "tax_rate", "total_budget"]);
+  assert.strictEqual(s.bid_plan.total_budget, 80000);
+  assert.strictEqual(s.bid_plan.fee_rule, "bat-standard");
+  assert.ok(!("junk" in s.bid_plan) && !("raw_html" in s.bid_plan), "no large/extraneous plan keys persisted");
+  assert.strictEqual(s.questions, "Service history? Accident-free?");
+  assert.strictEqual(s.inspection_findings, "Minor oil seep");
+  assert.strictEqual(s.decision_rationale, "Strong comps, clean title");
+  // null clears the plan; default record (no plan) reads null, never undefined
+  a.setUserState("bat:1", "me", { bid_plan: null });
+  assert.strictEqual(a.getUserState("bat:1", "me").bid_plan, null);
+  assert.strictEqual(a.getUserState("bat:404", "me").bid_plan, null);
 });
 
 // --- mutation returns null when the persist fails (so the UI can warn) ----------------------
