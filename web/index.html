@@ -57,6 +57,18 @@
   .chip.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
   .chip .x { color: var(--faint); margin-left: 6px; }
   .chip.preset { border-style: dashed; }
+  /* Stage 5 watchlist save panel — static (no transitions) inline box under the chip rail. */
+  .wl-save { margin: 0 18px 8px; padding: 10px 12px; background: var(--panel);
+             border: 1px solid var(--line-2); max-width: 560px; }
+  .wl-save[hidden] { display: none; }
+  .wl-save-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0; align-items: center; }
+  .wl-save input[type="text"] { flex: 1 1 200px; min-width: 0; background: var(--panel); color: var(--ink);
+             border: 1px solid var(--line-2); border-radius: 0; padding: 6px 8px; font-size: 12px; }
+  .wl-save button { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2);
+             border-radius: 0; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+  .wl-save #wl-save-go { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+  .wl-save-rules { font-size: 12px; color: var(--ink-2); margin: 6px 0; }
+  .wl-save-rules .chips { display: inline-flex; padding: 0; }
   /* --- ending-soon ticker --- */
   #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex;
             align-items: stretch; height: 46px; background: var(--panel-2);
@@ -312,7 +324,11 @@
   <span id="f-count" class="hint"></span>
   <span><label for="profile">Profile:</label>
     <select id="profile"><option value="me">Me</option><option value="dad">Dad</option><option value="shared">Shared</option></select></span>
-  <span id="wl-filter-wrap" hidden><label><input type="checkbox" id="wl-filter"> Filter by watchlists</label></span>
+  <span id="wl-mode-wrap" hidden><label for="wl-mode">Matches:</label>
+    <select id="wl-mode" title="Highlight keeps the whole board and flags matches; Show only narrows to matches">
+      <option value="highlight">Highlight</option>
+      <option value="only">Show only</option>
+    </select></span>
 </div>
 <details class="advanced" id="advanced">
   <summary>Advanced filters &amp; display</summary>
@@ -336,6 +352,21 @@
   </div>
 </details>
 <div class="chips" id="chips"></div>
+<!-- Stage 5: save a watchlist with a structured-rule PREVIEW you can edit before committing. The
+     phrase box runs the deterministic (no-AI) BATWatchlists.parsePhrase; the chips show exactly what
+     was understood and each ✕ removes a rule. Hidden until "★ Save view" opens it. -->
+<div id="wl-save" class="wl-save" hidden>
+  <div class="wl-save-row">
+    <input id="wl-phrase" type="text" autocomplete="off"
+      placeholder="Describe in words (optional), e.g. Porsche under $100k">
+  </div>
+  <div class="wl-save-rules">Understood rules: <span id="wl-rules" class="chips"></span></div>
+  <div class="wl-save-row">
+    <input id="wl-name" type="text" autocomplete="off" placeholder="Watchlist name">
+    <button id="wl-save-go" type="button">Save watchlist</button>
+    <button id="wl-save-cancel" type="button">Cancel</button>
+  </div>
+</div>
 <div class="hint maphint">Scroll or pinch to zoom · box-zoom &amp; reset top-right · double-click to reset · click a car for details</div>
 <div id="ticker" hidden></div>
 <div id="stage">
@@ -359,19 +390,21 @@
 <!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
      returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
      would call functions the old script lacks → render() throws → blank chart). -->
-<script src="./filters.js?v=20260623c"></script>
-<script src="./map-data.js?v=20260623c"></script>
-<script src="./search.js?v=20260623c"></script>
-<script src="./badges.js?v=20260623c"></script>
-<script src="./comps.js?v=20260623c"></script>
-<script src="./auction-model.js?v=20260623c"></script>
-<script src="./auction-brief.js?v=20260623c"></script>
-<script src="./storage.js?v=20260623c"></script>
+<script src="./filters.js?v=20260624a"></script>
+<script src="./map-data.js?v=20260624a"></script>
+<script src="./search.js?v=20260624a"></script>
+<script src="./badges.js?v=20260624a"></script>
+<script src="./comps.js?v=20260624a"></script>
+<script src="./auction-model.js?v=20260624a"></script>
+<script src="./auction-brief.js?v=20260624a"></script>
+<script src="./user-state.js?v=20260624a"></script>
+<script src="./watchlists.js?v=20260624a"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 const COMPS_PATHS = ["../data/comps.json", "./comps.json"];   // past sold comps, loaded separately
 let COMPS = [];                                               // raw comp rows; [] when missing/empty/broken
-let STORE = null;                  // Stage 5 versioned persistence (created in init once BATStorage loads)
+let US = null;                     // Stage 5 personal state + store-core (BATUserState; created in init)
+let WL = null;                     // Stage 5 watchlists (BATWatchlists; shares US's backend)
 let activeProfile = "me";          // me | dad | shared
 let ENABLED_WLS = [];              // enabled watchlists visible to the active profile (recomputed each render)
 // The five categories are placeholder metadata only — they no longer color the map,
@@ -583,9 +616,9 @@ function carBadges(a) {
   // Stage 5: a live auction that matches an enabled watchlist gets the Radar badge, carrying the
   // human "why it matched" reason. Radar appears ONLY for actual matches against enabled watchlists.
   let extra = null;
-  if (STORE && ENABLED_WLS.length) {
-    const hits = STORE.matchingWatchlists(a, ENABLED_WLS, Date.now());
-    if (hits.length) extra = { code: "watchlist", reason: hits.map(w => STORE.matchReason(w, a)).join(" · ") };
+  if (WL && ENABLED_WLS.length) {
+    const hits = WL.matchingWatchlists(a, ENABLED_WLS, Date.now());
+    if (hits.length) extra = { code: "watchlist", reason: hits.map(w => WL.matchReason(w, a)).join(" · ") };
   }
   if (!extra) return BATBadges.selectBadges(a);
   const codes = (Array.isArray(a.badges) ? a.badges.slice() : []);
@@ -900,13 +933,15 @@ function render() {
   const now = Date.now();
   const mobile = IS_MOBILE();
   const all = SNAPSHOT.auctions;
-  // Enabled watchlists drive both the Radar badge (in carBadges) and the optional board filter.
-  ENABLED_WLS = STORE ? STORE.enabledWatchlists(activeProfile) : [];
+  // Enabled watchlists drive the Radar badge (in carBadges) and the optional "Show only" narrowing.
+  ENABLED_WLS = WL ? WL.enabledWatchlists(activeProfile) : [];
   // Advanced filters always hard-filter the board; search is layered on top as highlight + dim.
   let baseCars = window.BATFilters ? BATFilters.filterCars(all, currentSpec(), now) : all;
-  // "Filter by watchlists": narrow the board to cars matching ANY enabled watchlist (reuses BATFilters).
-  const wlFilterOn = (document.getElementById("wl-filter") || {}).checked && ENABLED_WLS.length;
-  if (STORE && wlFilterOn) baseCars = baseCars.filter(c => STORE.matchingWatchlists(c, ENABLED_WLS, now).length);
+  // Match mode: "highlight" (default) keeps the WHOLE board and only flags matches via Radar — a
+  // watchlist never hides the board by default. "only" narrows to cars matching ANY enabled watchlist.
+  const wlModeEl = document.getElementById("wl-mode");
+  const wlOnly = wlModeEl && wlModeEl.value === "only" && ENABLED_WLS.length;
+  if (WL && wlOnly) baseCars = baseCars.filter(c => WL.matchingWatchlists(c, ENABLED_WLS, now).length);
   const searchActive = !!(window.BATSearch && !BATSearch.isEmptySpec(SEARCH_SPEC));
 
   let displayCars, matchedIds = null, similarMakes = null, matched = baseCars;
@@ -1390,6 +1425,9 @@ function openCard(d) {
       const norm = d._hist ? BATAuctionModel.normalizeHistoricalComp(raw)
                            : BATAuctionModel.normalizeLiveAuction(raw, SNAPSHOT);
       brief = BATAuctionBrief.buildBrief(norm, { nowMs: Date.now(), freshnessLabel: d._fresh && d._fresh.label });
+      // Stage 5: record that the active profile opened this LIVE auction (last_viewed). Guarded +
+      // best-effort — a persistence failure must never block the brief from opening.
+      if (US && !d._hist && norm && norm.auction_key) { try { US.touchLastViewed(norm.auction_key, activeProfile); } catch (e2) {} }
     }
   } catch (e) { if (window.console) console.error("buildBrief failed:", e); }
   if (!brief) {
@@ -1737,26 +1775,26 @@ function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) |
 function storeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list.slice(0, 20))); } catch (e) {} }
 
 // Stage 5: the chip rail now shows WATCHLISTS (manual for the active profile + shared, plus the
-// suggested templates). A chip toggles enable (drives Radar + the optional board filter); ↧ loads
-// the watchlist's normalized constraints into the Advanced filters (inspect/edit); ✎ renames a
+// suggested templates). A chip toggles enable (drives Radar + the optional Show-only narrowing); ↧
+// loads the watchlist's normalized constraints into the Advanced filters (inspect/edit); ✎ renames a
 // manual list; ✕ deletes a manual list (suggested templates can only be disabled). The legacy
-// saved-views key is migrated into manual watchlists by BATStorage and preserved (never erased).
+// saved-views key is migrated into manual watchlists by the watchlist store and preserved (never erased).
 function renderChips() {
   const wrap = document.getElementById("chips");
   if (!wrap) return;
   wrap.innerHTML = "";
-  if (!STORE) return;
-  const wls = STORE.listWatchlists(activeProfile, true);
-  const fw = document.getElementById("wl-filter-wrap");
-  if (fw) fw.hidden = !wls.some(w => w.enabled);
+  if (!WL) return;
+  const wls = WL.listWatchlists(activeProfile, true);
+  const fw = document.getElementById("wl-mode-wrap");
+  if (fw) fw.hidden = !wls.some(w => w.enabled);       // the match-mode control only matters once something is enabled
   const mini = (txt, title, fn) => { const s = document.createElement("span"); s.className = "x"; s.textContent = txt; s.title = title; s.onclick = (e) => { e.stopPropagation(); fn(); }; return s; };
   for (const w of wls) {
     const c = document.createElement("span");
     c.className = "chip" + (w.enabled ? " active" : "");      // accent highlight = enabled
-    c.title = STORE.matchReason(w, {});                       // normalized constraints = the "why"
+    c.title = WL.matchReason(w, {});                          // normalized constraints = the "why"
     const tag = document.createElement("span");
-    tag.textContent = (w.origin === "suggested" ? "✦ " : "") + w.name + (w.enabled ? " ●" : "");
-    tag.onclick = () => { STORE.setWatchlistEnabled(w.id, !w.enabled); renderChips(); render(); };  // enable/disable
+    tag.textContent = (w.source === "suggested" ? "✦ " : "") + w.name + (w.enabled ? " ●" : "");
+    tag.onclick = () => { WL.setWatchlistEnabled(w.id, !w.enabled); renderChips(); render(); };  // enable/disable
     c.appendChild(tag);
     c.appendChild(mini("↧", "Load editable constraints into the Advanced filters", () => {
       if (typeof clearSearch === "function") clearSearch();
@@ -1767,19 +1805,83 @@ function renderChips() {
       const dropped = Object.keys(w.spec || {}).filter(k => FORM_KEYS.indexOf(k) === -1);
       if (dropped.length) alert('Loaded the editable filters. These constraints can’t be edited in the form (they still drive matching): ' + dropped.join(", ") + ".");
     }));
-    if (w.origin === "manual") {
+    if (w.source === "manual") {
       c.appendChild(mini("✎", "Rename", () => {
         const name = (prompt("Rename watchlist:", w.name) || "").trim();
-        if (name) { STORE.renameWatchlist(w.id, name); renderChips(); }
+        if (name) { WL.renameWatchlist(w.id, name); renderChips(); }
       }));
       c.appendChild(mini("✕", "Delete", () => {
-        if (confirm('Delete watchlist "' + w.name + '"?')) { STORE.deleteWatchlist(w.id); renderChips(); render(); }
+        if (confirm('Delete watchlist "' + w.name + '"?')) { WL.deleteWatchlist(w.id); renderChips(); render(); }
       }));
     } else {
-      c.appendChild(mini("−", "Hide this suggested watchlist", () => { STORE.setWatchlistEnabled(w.id, false); renderChips(); render(); }));
+      c.appendChild(mini("−", "Hide this suggested watchlist", () => { WL.setWatchlistEnabled(w.id, false); renderChips(); render(); }));
     }
     wrap.appendChild(c);
   }
+}
+
+// --- Stage 5 save panel: build a watchlist from the current filters and/or a plain-language phrase,
+// with a STRUCTURED, EDITABLE preview of the understood rules shown BEFORE saving. The phrase runs the
+// deterministic (no-AI) BATWatchlists.parsePhrase; rules render as removable chips. WL_DRAFT is the
+// working spec actually saved; WL_BASE is the Advanced-filter spec captured when the panel opened.
+let WL_DRAFT = {}, WL_BASE = {}, WL_DELETED = new Set();   // WL_DELETED: base rules the user removed, kept removed across phrase edits
+function renderSaveRules() {
+  const wrap = document.getElementById("wl-rules");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  const chips = (window.BATSearch && BATSearch.specConstraints) ? BATSearch.specConstraints(WL_DRAFT) : [];
+  if (!chips.length) {
+    const em = document.createElement("span");
+    em.className = "hint"; em.textContent = "none yet — would match the whole live board";
+    wrap.appendChild(em); return;
+  }
+  for (const ch of chips) {
+    const el = document.createElement("span");
+    el.className = "chip active"; el.textContent = ch.label;
+    const x = document.createElement("span");
+    x.className = "x"; x.textContent = "✕"; x.title = "Remove this rule";
+    x.onclick = () => { deleteDraftField(ch); renderSaveRules(); };
+    el.appendChild(x);
+    wrap.appendChild(el);
+  }
+}
+function deleteDraftField(ch) {
+  if (ch.field === "termGroups" && typeof ch.index === "number") {
+    WL_DRAFT.termGroups = (WL_DRAFT.termGroups || []).filter((_, i) => i !== ch.index);
+    if (!WL_DRAFT.termGroups.length) delete WL_DRAFT.termGroups;
+  } else { WL_DELETED.add(ch.field); delete WL_DRAFT[ch.field]; }
+}
+function recomputeDraft() {
+  const phrase = (document.getElementById("wl-phrase").value || "").trim();
+  const parsed = (phrase && WL && WL.parsePhrase) ? WL.parsePhrase(phrase) : {};
+  const base = Object.assign({}, WL_BASE);
+  WL_DELETED.forEach(k => delete base[k]);          // a base rule the user removed must NOT be resurrected by a phrase edit
+  WL_DRAFT = Object.assign(base, parsed);           // phrase rules augment/override the (pruned) base
+  renderSaveRules();
+}
+function openSavePanel() {
+  if (!WL) return;
+  WL_BASE = currentSpec();
+  WL_DRAFT = Object.assign({}, WL_BASE);
+  WL_DELETED = new Set();
+  const panel = document.getElementById("wl-save");
+  const phrase = document.getElementById("wl-phrase");
+  const name = document.getElementById("wl-name");
+  if (phrase) phrase.value = "";
+  if (name) { name.value = ""; name.placeholder = 'Watchlist name for "' + activeProfile + '"'; }
+  renderSaveRules();
+  if (panel) panel.hidden = false;
+  if (phrase) phrase.focus();
+}
+function closeSavePanel() { const p = document.getElementById("wl-save"); if (p) p.hidden = true; }
+function commitSavePanel() {
+  if (!WL) return;
+  const name = (document.getElementById("wl-name").value || "").trim();
+  if (!name) { alert("Give the watchlist a name."); return; }
+  const phrase = (document.getElementById("wl-phrase").value || "").trim();
+  const saved = WL.saveWatchlist({ name: name, spec: WL_DRAFT, profile: activeProfile, source: "manual", enabled: true, original_query: phrase || null });
+  if (!saved) { alert("Couldn't save the watchlist — browser storage is full or unavailable (private mode?)."); return; }
+  closeSavePanel(); renderChips(); render();
 }
 
 function setupFilters(cars) {
@@ -1793,21 +1895,24 @@ function setupFilters(cars) {
     id => document.getElementById(id).addEventListener("input", debounce(render, 200)));
   ["f-noreserve", "f-deals"].forEach(id => document.getElementById(id).addEventListener("change", render));
   document.getElementById("f-clear").onclick = () => { applySpec({}); renderChips(); render(); };
-  document.getElementById("f-save").onclick = () => {
-    if (!STORE) return;
-    const name = (prompt('Save current filters as a watchlist for "' + activeProfile + '":') || "").trim();
-    if (!name) return;
-    const saved = STORE.saveWatchlist({ name: name, spec: currentSpec(), profile_id: activeProfile, origin: "manual", enabled: true });
-    if (!saved) { alert("Couldn't save the watchlist — browser storage is full or unavailable (private mode?)."); return; }
-    renderChips(); render();
-  };
+  // "★ Save view" opens the structured-rule save panel (preview + edit before committing).
+  document.getElementById("f-save").onclick = () => { if (WL) openSavePanel(); };
+  const phraseEl = document.getElementById("wl-phrase");
+  if (phraseEl) {
+    phraseEl.addEventListener("input", debounce(recomputeDraft, 150));
+    phraseEl.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSavePanel(); });
+  }
+  const nameEl = document.getElementById("wl-name");
+  if (nameEl) nameEl.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commitSavePanel(); } else if (e.key === "Escape") closeSavePanel(); });
+  const goEl = document.getElementById("wl-save-go"); if (goEl) goEl.onclick = commitSavePanel;
+  const cancelEl = document.getElementById("wl-save-cancel"); if (cancelEl) cancelEl.onclick = closeSavePanel;
   const prof = document.getElementById("profile");
   if (prof) {
     prof.value = activeProfile;
-    prof.onchange = () => { activeProfile = STORE ? STORE.setActiveProfile(prof.value) : prof.value; renderChips(); render(); };
+    prof.onchange = () => { activeProfile = US ? US.setActiveProfile(prof.value) : prof.value; renderChips(); render(); };
   }
-  const wlf = document.getElementById("wl-filter");
-  if (wlf) wlf.addEventListener("change", render);
+  const wlm = document.getElementById("wl-mode");
+  if (wlm) wlm.addEventListener("change", render);
   renderChips();
 }
 
@@ -1821,8 +1926,8 @@ function setupFilters(cars) {
                     || !window.BATComps || typeof BATComps.buildCompPoints !== "function"
                     || !window.BATAuctionModel || !window.BATAuctionBrief
                     || typeof BATAuctionBrief.buildBrief !== "function";
-  // NOTE: BATStorage is intentionally NOT in this guard — it is OPTIONAL (every consumer guards on
-  // STORE), so a missing storage.js must still render the whole live board, not a hard-refresh page.
+  // NOTE: BATUserState / BATWatchlists are intentionally NOT in this guard — persistence is OPTIONAL
+  // (every consumer guards on US/WL), so a missing module must still render the whole live board.
   const alreadyRetried = location.search.indexOf("fresh=") !== -1;
   if (scriptsStale && !alreadyRetried) {
     location.replace(location.pathname + "?fresh=" + Date.now());   // fresh index.html + fresh ?v= scripts
@@ -1855,11 +1960,15 @@ function setupFilters(cars) {
     return;
   }
   COMPS = await loadComps();   // best-effort; [] if comps.json is missing/empty/malformed (page still works)
-  // Stage 5: versioned persistence. createStorage migrates legacy saved views and recovers from
-  // corruption on its own; guard the whole thing so a storage failure never blocks the map.
-  if (window.BATStorage) {
-    try { STORE = BATStorage.createStorage(window.localStorage); activeProfile = STORE.getActiveProfile(); }
-    catch (e) { STORE = null; if (window.console) console.error("storage init failed:", e); }
+  // Stage 5: versioned persistence. BATUserState owns the store-core + status migration; BATWatchlists
+  // shares the SAME backend (one persistence layer) and migrates legacy saved views. Both recover from
+  // corruption on their own; guard the whole thing so a storage failure never blocks the map.
+  if (window.BATUserState && window.BATWatchlists) {
+    try {
+      US = BATUserState.createUserState(window.localStorage);
+      WL = BATWatchlists.createWatchlists(window.localStorage, { userState: US });
+      activeProfile = US.getActiveProfile();
+    } catch (e) { US = null; WL = null; if (window.console) console.error("storage init failed:", e); }
   }
   setupFilters(all);
   try {
