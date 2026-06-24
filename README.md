@@ -155,6 +155,73 @@ to category if sparse) and records, in the car's `value` block:
 Thresholds live at the top of `value.py`; everything stays `null`/`false` when comps are
 too thin to trust.
 
+### Canonical vehicle identity (Stage 6A)
+
+The board has no structured make/model, so titles are parsed best-effort — and a naive "first
+word after the make" reading turns **El Camino** into model "El", **Land Cruiser** into "Land",
+and **Grand Wagoneer** into "Grand". Those fragments then pollute the comp pool (every "Grand"
+on the board comping together). `scraper/identity.py` fixes this with a **canonical identity**:
+
+- A **data-driven registry** (per-make multiword model names + per-make patterns like Mercedes
+  `<number><body-code>`) recognizes multiword models, so the identity is "el-camino", not "el".
+  Model knowledge lives in one place — not scattered `if`s through the pipeline.
+- A conservative **collision-prefix net** (`el`, `land`, `grand`, `gran`, `monte`, `santa`)
+  catches *unregistered* truncations: a bare "grand" with nothing the registry knows after it is
+  flagged **low-confidence** rather than silently comped. (Legit standalone models like Regal,
+  Sierra, or Ford GT are NOT in the net, so they're never wrongly suppressed.)
+- A **low-confidence identity suppresses a trusted valuation** (`value.basis` becomes
+  `low-confidence-identity`; no `fair_value`, no `is_deal`) — an ambiguous car never gets a
+  confident price.
+- **Comp matching prefers the canonical make+model** (legacy comps are upgraded in-memory from
+  their title, so the on-disk pool keeps working), and `value.match_reasons` always explains how
+  comps were matched — or why they weren't. Comps are **never** blended into a category median.
+- **Manual overrides** for genuine one-offs live in `data/identity_overrides.json`, keyed by a
+  stable id (`bat:<id>` or the listing URL). Systematic fixes belong in the registry, not here.
+
+Each live record carries a `vehicle_identity` block (additive/optional): `canonical_make`,
+`canonical_model`, `generation`, `chassis_code`, `trim`, `body_style`, `engine`, `transmission`,
+`drivetrain`, `market`, `originality`, `confidence`, `ambiguity_reasons`, `source`,
+`manually_overridden`. The legacy `make`/`models` fields are unchanged. Identity is derived from
+the **already-parsed title — no extra network requests**, and `python tools/identity_report.py`
+audits low-confidence identities, model collisions, overrides, and cars with no reliable identity.
+
+### Opportunity scoring, estimate ranges & production badges (Stage 6B)
+
+`scraper/opportunity.py` builds **on top of** the `value` block (it never recomputes it) to add three
+cautious, explainable, **market-only** things per live car — personal data (watchlists, notes,
+budgets) is never an input:
+
+- **`estimate`** — a final-price **band** `{low, high, currency, confidence, model_version,
+  comp_ids, adjustment_reasons, reserve_uncertainty}`, never a single point. It's an interdecile
+  (p10–p90) comp band, floored to ±12% of the median (one specific car's trim/condition is
+  irreducible), **clamped to never fall below the current bid**, and shifted by the deterministic
+  mileage/condition tilt. A trusted band requires a trusted comp basis **and** a confident,
+  unambiguous identity; otherwise `low/high` are `null` and the status is *Too early to estimate*.
+  Reserve auctions carry a separate `reserve_uncertainty` note and a lower confidence. Watchers and
+  comments **never** move the value band.
+- **`opportunity`** — an Opportunity Score (0–100 | `null`) from four weighted components in one
+  config object (`OPPORTUNITY_WEIGHTS`, validated to total 1.0): investment quality 0.40, enthusiast
+  appeal 0.25, below-market chance 0.20, auction interestingness 0.15. Each component returns a
+  score/confidence/coverage plus machine + readable reasons and the missing inputs. **Missing data
+  lowers confidence, never zeroes a score.** A low *early* bid is **not** an opportunity — below-market
+  chance is scaled by time-to-close and withheld on reserve lots. Tracking status is one of
+  `too_early_to_estimate` / `trading_below_expected` / `tracking_near_expected` /
+  `tracking_above_expected`.
+- **`analysis`** — fills the Stage-1 placeholder `{score, confidence, summary, basis, flags,
+  updated_at}` with the Opportunity Score and a single **approved** cautious phrase.
+
+**Production badges** are selected **board-wide** and emitted as `badges` codes the frontend renders:
+Diamond (`opportunity`), Flame (`hot`), Trophy (`trophy`) are scarce **main** badges — each needs
+both an absolute score floor **and** a board-percentile, the total is capped at ~12% of the live
+board, and **at most one main badge per auction**. Ambiguous/low-confidence identity gets **no
+Diamond or Trophy** (and no trusted range). Warning (`warning`, a status badge) flags concrete risk
+(bad condition/title, TMU, replica, unconfirmable identity). Radar stays watchlist-driven and Ghost
+stays historical. Language is cautious throughout — never "undervalued/overpriced/buy/bargain".
+
+`tools/evaluate_estimates.py` backtests the ranges against **real** sold prices (each comp as a
+leave-one-out, no lookahead) and reports the share inside-range, midpoint error, and accuracy by
+confidence and by make/model — so estimate quality is measured, not asserted.
+
 ## Data source
 
 BaT has no official public API. The pipeline uses:
@@ -210,7 +277,12 @@ taxonomy_paths, category_ids, bid{amount,currency,status},
 engagement{comments,views,watchers}, started_at, ends_at,
 flags{no_reserve,premium,alumni}, listing_url, thumbnail_url,
 details{miles,odometer_raw,tmu,condition[]}, value{...},
-enrichment{engagement_updated_at, details_updated_at}`.
+vehicle_identity{canonical_make,canonical_model,…,confidence,ambiguity_reasons} (Stage 6A; see
+"Canonical vehicle identity"), enrichment{engagement_updated_at, details_updated_at}`. `value`
+also carries `identity_confidence` and `match_reasons`. Stage 6B adds (scored cars only)
+`estimate{low,high,currency,confidence,model_version,comp_ids,adjustment_reasons,reserve_uncertainty}`,
+`opportunity{score,confidence,tracking,components,…}`, the filled `analysis{score,confidence,summary,
+basis,flags,updated_at}`, and a scarce `badges[]` code array — all additive (schema stays `1`).
 
 `enrichment` (optional, auction-level) timestamps when engagement / details were last
 successfully fetched, so the map can fade stale activity and say "Activity updated 2h ago".

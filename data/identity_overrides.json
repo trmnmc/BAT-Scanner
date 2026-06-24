@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "_documentation": {
+    "purpose": "Manual, human-vetted corrections to a car's canonical vehicle_identity. Use this ONLY for genuine one-offs the data-driven registry in scraper/identity.py cannot reasonably infer (a mistitled listing, an obscure build). Systematic model knowledge belongs in the REGISTRY, not here.",
+    "key": "Each override key is a STABLE identifier for one listing. Use, in order of preference: the BaT auction key 'bat:<id>' (e.g. 'bat:116070319'), or the exact stable listing URL ('https://bringatrailer.com/listing/<slug>/'). A bare numeric id string also matches. Keys are matched exactly against a record's id / listing_url.",
+    "value_fields": ["canonical_make", "canonical_model", "generation", "chassis_code", "trim", "body_style", "engine", "transmission", "drivetrain", "market", "originality"],
+    "effect": "Listed fields replace the title-derived values; the identity is marked manually_overridden=true, source='override', and confidence is raised to 'high' (a human vetted it).",
+    "example": {
+      "bat:0000000000": {
+        "canonical_make": "chevrolet",
+        "canonical_model": "el-camino",
+        "_note": "example only — id 0 matches no real listing"
+      }
+    }
+  },
+  "overrides": {}
+}
