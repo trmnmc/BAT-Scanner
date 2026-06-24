@@ -115,23 +115,38 @@
   .seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 0; overflow: hidden; }
   .seg button { background: var(--panel); color: var(--ink-2); border: 0; padding: 5px 12px; font-size: 12px; cursor: pointer; }
   .seg button.active { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
-  /* --- clickable car detail card (stays until dismissed) --- */
-  #card { position: fixed; top: 64px; right: 16px; z-index: 60; width: 340px; max-width: calc(100vw - 32px);
-          background: var(--panel); border: 1px solid var(--line-2); border-radius: 0; padding: 12px;
-          box-shadow: 0 10px 30px rgba(0,0,0,.12); font-size: 13px; }
-  #card[hidden] { display: none; }
-  #card .card-img { width: 100%; height: 200px; object-fit: cover; border-radius: 0; background: var(--panel-2); display: block; }
-  #card .card-close { position: absolute; top: 8px; right: 10px; cursor: pointer; color: #fff;
-                      background: rgba(0,0,0,.55); border-radius: 50%; width: 26px; height: 26px;
-                      display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
-  #card .card-title { font-weight: 700; font-size: 15px; margin: 10px 0 6px; }
-  #card .card-row { color: var(--ink-2); margin: 4px 0; }
-  #card .card-bid { font-size: 18px; font-weight: 700; color: var(--ink); }
-  #card .card-clock { font-variant-numeric: tabular-nums; font-weight: 700; }
-  #card .card-clock.urgent { color: var(--red); }
-  #card .card-deal { color: var(--green); font-weight: 700; }
-  #card .card-flag { color: var(--red); }
-  #card .card-good { color: var(--green); }
+  /* --- Auction Brief panel: right drawer (desktop) / bottom sheet (mobile), slides + dismissable --- */
+  #card { position: fixed; top: 0; right: 0; height: 100vh; width: 480px; max-width: calc(100vw - 12px);
+          background: var(--panel); border-left: 1px solid var(--line-2); z-index: 60;
+          display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,.10); font-size: 13px; }
+  /* Open/closed state is set INSTANTLY via opacity + transform (no transition on these visibility-
+     critical props, so the panel is always correctly shown/hidden). The closed transform sits on
+     :not(.open) so the open element only ever matches the .open rule. */
+  #card:not(.open) { transform: translateX(100%); opacity: 0; visibility: hidden; pointer-events: none; }
+  #card.open { transform: translate(0, 0); opacity: 1; visibility: visible; }
+  #card .brief-close { position: absolute; top: 10px; right: 12px; cursor: pointer; color: var(--ink);
+          background: var(--panel-2); border: 1px solid var(--line-2); width: 30px; height: 30px;
+          display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1; }
+  #card .brief-head { padding: 16px 16px 12px; border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+  #card .brief-title { font-weight: 700; font-size: 16px; margin: 2px 40px 2px 0; }
+  #card .brief-sub { color: var(--muted); margin-bottom: 8px; }
+  #card .brief-hist { display: inline-block; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  #card .brief-bid { font-size: 20px; font-weight: 700; color: var(--ink); }
+  #card .brief-line { color: var(--ink-2); margin: 5px 0; }
+  #card .brief-clock { font-variant-numeric: tabular-nums; font-weight: 700; }
+  #card .brief-clock.urgent { color: var(--red); }
+  #card .brief-body { padding: 2px 16px 24px; overflow-y: auto; flex: 1 1 auto; }
+  #card .brief-sec { padding: 11px 0; border-bottom: 1px solid var(--line); }
+  #card .brief-sec h3 { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; font-weight: 700; }
+  #card .brief-row { display: flex; justify-content: space-between; gap: 18px; margin: 3px 0; }
+  #card .brief-k { color: var(--muted); flex: 0 0 auto; }
+  #card .brief-v { color: var(--ink); text-align: right; }
+  #card .brief-state { color: var(--faint); font-style: italic; }
+  #card .brief-ph { color: var(--faint); margin: 3px 0; font-size: 12px; }
+  #card .brief-risk { color: var(--ink-2); margin: 3px 0; }
+  #card .brief-flag { color: var(--red); }  #card .brief-good { color: var(--green); }
+  #card .btn-link { display: inline-block; margin-top: 10px; padding: 8px 12px; background: var(--accent);
+          color: var(--accent-ink); font-weight: 700; text-decoration: none; }
   .card-muted { color: var(--muted); }
   .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 0;
               background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; }
@@ -255,7 +270,10 @@
     #ticker .ticker-track { animation: none; }
     #ticker .ticker-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .maphint { display: none; }
-    #card { top: auto; bottom: 8px; right: 8px; left: 8px; width: auto; }
+    /* mobile: full-width bottom sheet instead of a side drawer */
+    #card { top: auto; bottom: 0; right: 0; left: 0; width: auto; height: auto; max-height: 88vh;
+            border-left: none; border-top: 1px solid var(--line-2); box-shadow: 0 -10px 30px rgba(0,0,0,.14); }
+    #card:not(.open) { transform: translateY(100%); }   /* closed: off the bottom; .open => transform:none slides up */
   }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -292,6 +310,9 @@
       <button id="view-list" type="button">List</button>
     </span></span>
   <span id="f-count" class="hint"></span>
+  <span><label for="profile">Profile:</label>
+    <select id="profile"><option value="me">Me</option><option value="dad">Dad</option><option value="shared">Shared</option></select></span>
+  <span id="wl-filter-wrap" hidden><label><input type="checkbox" id="wl-filter"> Filter by watchlists</label></span>
 </div>
 <details class="advanced" id="advanced">
   <summary>Advanced filters &amp; display</summary>
@@ -332,21 +353,27 @@
 <div id="listpanel" hidden></div>
 <div id="status"></div>
 <div id="ticker-preview" hidden><img alt="" referrerpolicy="no-referrer"><div class="cap"></div></div>
-<div id="card" hidden></div>
+<div id="card" role="dialog" aria-label="Auction Brief" aria-hidden="true" tabindex="-1"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
 <!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
      returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
      would call functions the old script lacks → render() throws → blank chart). -->
-<script src="./filters.js?v=20260623b"></script>
-<script src="./map-data.js?v=20260623b"></script>
-<script src="./search.js?v=20260623b"></script>
-<script src="./badges.js?v=20260623b"></script>
-<script src="./comps.js?v=20260623b"></script>
+<script src="./filters.js?v=20260623c"></script>
+<script src="./map-data.js?v=20260623c"></script>
+<script src="./search.js?v=20260623c"></script>
+<script src="./badges.js?v=20260623c"></script>
+<script src="./comps.js?v=20260623c"></script>
+<script src="./auction-model.js?v=20260623c"></script>
+<script src="./auction-brief.js?v=20260623c"></script>
+<script src="./storage.js?v=20260623c"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 const COMPS_PATHS = ["../data/comps.json", "./comps.json"];   // past sold comps, loaded separately
 let COMPS = [];                                               // raw comp rows; [] when missing/empty/broken
+let STORE = null;                  // Stage 5 versioned persistence (created in init once BATStorage loads)
+let activeProfile = "me";          // me | dad | shared
+let ENABLED_WLS = [];              // enabled watchlists visible to the active profile (recomputed each render)
 // The five categories are placeholder metadata only — they no longer color the map,
 // drive a legend, or appear as preset chips. category_ids still ride along in the snapshot
 // and BATFilters still understands `category` so old saved views keep working.
@@ -552,7 +579,18 @@ function yIsLog(metric) { return metric === "comments" || metric === "watchers";
 // Badges a record may display (≤1 main + ≤1 status). Guarded so a missing/old badges.js degrades
 // to "no badges" — the map keeps working exactly as before rather than throwing (spec rule 12).
 function carBadges(a) {
-  return (window.BATBadges && typeof BATBadges.selectBadges === "function") ? BATBadges.selectBadges(a) : [];
+  if (!(window.BATBadges && typeof BATBadges.selectBadges === "function")) return [];
+  // Stage 5: a live auction that matches an enabled watchlist gets the Radar badge, carrying the
+  // human "why it matched" reason. Radar appears ONLY for actual matches against enabled watchlists.
+  let extra = null;
+  if (STORE && ENABLED_WLS.length) {
+    const hits = STORE.matchingWatchlists(a, ENABLED_WLS, Date.now());
+    if (hits.length) extra = { code: "watchlist", reason: hits.map(w => STORE.matchReason(w, a)).join(" · ") };
+  }
+  if (!extra) return BATBadges.selectBadges(a);
+  const codes = (Array.isArray(a.badges) ? a.badges.slice() : []);
+  codes.push(extra);                                            // inject Radar without mutating the car
+  return BATBadges.selectBadges(Object.assign({}, a, { badges: codes }));
 }
 
 function tagItem(item, a, pt, fresh) {
@@ -561,6 +599,7 @@ function tagItem(item, a, pt, fresh) {
   item._img = a.thumbnail_url; item._url = a.listing_url; item._v = a.value; item._d = a.details;
   item._nr = !!(a.flags && a.flags.no_reserve); item._end = a.ends_at || null;
   item._noBid = pt.noBid; item._fresh = fresh; item._badges = carBadges(a);   // hover/tooltip + click-card read these
+  item._car = a;                                                              // raw record -> Auction Brief adapter
   return item;
 }
 
@@ -845,6 +884,7 @@ function buildHistoricalSeries(specs) {
       itemStyle: { color: "#9aa3ad", opacity: 0.3, borderWidth: 0 },   // faded gray = historical treatment
     };
     item._hist = true; item._t = p.comp.title; item._p = p.x; item._year = p.y; item._soldMs = p.soldMs;
+    item._car = p.comp;            // raw comp -> historical Auction Brief
     return item;
   });
   return {
@@ -860,8 +900,13 @@ function render() {
   const now = Date.now();
   const mobile = IS_MOBILE();
   const all = SNAPSHOT.auctions;
+  // Enabled watchlists drive both the Radar badge (in carBadges) and the optional board filter.
+  ENABLED_WLS = STORE ? STORE.enabledWatchlists(activeProfile) : [];
   // Advanced filters always hard-filter the board; search is layered on top as highlight + dim.
-  const baseCars = window.BATFilters ? BATFilters.filterCars(all, currentSpec(), now) : all;
+  let baseCars = window.BATFilters ? BATFilters.filterCars(all, currentSpec(), now) : all;
+  // "Filter by watchlists": narrow the board to cars matching ANY enabled watchlist (reuses BATFilters).
+  const wlFilterOn = (document.getElementById("wl-filter") || {}).checked && ENABLED_WLS.length;
+  if (STORE && wlFilterOn) baseCars = baseCars.filter(c => STORE.matchingWatchlists(c, ENABLED_WLS, now).length);
   const searchActive = !!(window.BATSearch && !BATSearch.isEmptySpec(SEARCH_SPEC));
 
   let displayCars, matchedIds = null, similarMakes = null, matched = baseCars;
@@ -1271,84 +1316,115 @@ function carToCard(a) {
     _noBid: !(a.bid && a.bid.amount > 0),
     _fresh: BATMapData.getEngagementFreshness(a, Date.now(), SNAPSHOT && SNAPSHOT.scraped_at),
     _badges: carBadges(a),
+    _car: a,                       // raw record -> Auction Brief adapter
   };
 }
-function closeCard() { const c = document.getElementById("card"); if (c) c.hidden = true; }
+let _briefLastFocus = null;
+function closeCard() {
+  const c = document.getElementById("card");
+  if (!c || !c.classList.contains("open")) return;
+  c.classList.remove("open");
+  c.setAttribute("aria-hidden", "true");
+  // restore focus to whatever opened the panel (keyboard accessibility)
+  if (_briefLastFocus && typeof _briefLastFocus.focus === "function" && document.contains(_briefLastFocus)) _briefLastFocus.focus();
+  _briefLastFocus = null;
+}
+
+// Render the structured brief into the drawer. The live countdown is a [data-ends] span so the
+// shared ticker keeps it ticking; badges + BaT link come from the brief/payload. Everything is
+// escaped and only present facts are rendered (the brief already dropped missing/garbage values).
+function renderBrief(brief, d) {
+  const esc = escapeHTML, h = brief.header || {};
+  const badges = Array.isArray(d && d._badges) ? d._badges : [];
+  const badgeHTML = badges.length
+    ? `<div class="card-badges">` + badges.map(b =>
+        `<span class="card-badge"><span class="cb-glyph">${b.glyph}</span> <b>${esc(b.label)}</b>`
+        + (b.reason ? ` <span class="brief-state">— ${esc(b.reason)}</span>` : "") + `</span>`).join("") + `</div>`
+    : "";
+  let headHTML;
+  if (brief.historical) {
+    headHTML = `<div class="brief-hist">👻 ${esc(h.label || "Past sale")}</div>`
+      + (h.soldText ? `<div class="brief-bid">${esc(h.soldText)}</div>` : "")
+      + (h.soldAtMs ? `<div class="brief-line">Sold ${esc(new Date(h.soldAtMs).toLocaleDateString())}</div>` : "");
+  } else {
+    headHTML = `<div class="brief-bid">${esc(h.bidText || "—")}</div>`
+      + (h.bidNote ? `<div class="brief-line card-muted">${esc(h.bidNote)}</div>` : "");
+    if (h.endsAtMs) {
+      const left = h.endsAtMs - Date.now();
+      headHTML += left > 0
+        ? `<div class="brief-line">Ends in <span class="brief-clock" data-ends="${h.endsAtMs}">${fmtCountdown(left)}</span>`
+          + ` <span class="card-muted">· ${esc(new Date(h.endsAtMs).toLocaleString())}</span></div>`
+        : `<div class="brief-line card-muted">Auction ended</div>`;
+    }
+    if (h.reserveText) headHTML += `<div class="brief-line">${esc(h.reserveText)}</div>`;
+  }
+  const linkHTML = brief.deepLink
+    ? `<a class="btn-link" href="${esc(brief.deepLink)}" target="_blank" rel="noopener noreferrer">View on BaT →</a>`
+    : (brief.historical ? "" : `<div class="brief-line card-muted">No listing link</div>`);
+  const secHTML = (brief.sections || []).map(sec => {
+    let body = sec.id === "risks"
+      ? sec.rows.map(r => `<div class="brief-risk">• ${esc(r.value)}</div>`).join("")
+      : sec.rows.map(r => `<div class="brief-row"><span class="brief-k">${esc(r.label)}</span><span class="brief-v">${esc(r.value)}</span></div>`).join("");
+    if (sec.state) body += `<div class="brief-state">${esc(sec.state)}</div>`;
+    (sec.placeholders || []).forEach(p => { body += `<div class="brief-ph">${esc(p)}: <span>— not yet computed</span></div>`; });
+    return `<section class="brief-sec"><h3>${esc(sec.title)}</h3>${body}</section>`;
+  }).join("");
+  return `<button class="brief-close" type="button" aria-label="Close">✕</button>`
+    + `<div class="brief-head"><div class="brief-title">${esc(brief.title || "")}</div>`
+    +   (brief.subtitle ? `<div class="brief-sub">${esc(brief.subtitle)}</div>` : "")
+    +   badgeHTML + headHTML + linkHTML + `</div>`
+    + `<div class="brief-body">${secHTML}</div>`;
+}
+
+// COMPATIBILITY ADAPTER: every existing call site (map click, list row, rail card) still calls
+// openCard(payload). The payload carries the raw record at _car, which we normalize (BATAuctionModel)
+// and turn into a structured brief (BATAuctionBrief). Falls back to a payload-only brief if a module
+// is missing (self-heal will reload) — it NEVER throws and never blanks.
 function openCard(d) {
   const card = document.getElementById("card");
   if (!card || !d) return;
-  const safeUrl = /^https?:\/\//i.test(d._url || "") ? d._url : null;
-  const img = d._img ? `<img class="card-img" src="${escapeHTML(d._img)}" referrerpolicy="no-referrer" alt="">` : "";
-  let clock = "";
-  const endMs = d._end ? Date.parse(d._end) : NaN;
-  if (endMs) {
-    const left = endMs - Date.now();
-    clock = left > 0
-      ? `<div class="card-row">Ends in <span class="card-clock" data-ends="${endMs}">${fmtCountdown(left)}</span>`
-        + ` <span class="card-muted">· ${new Date(endMs).toLocaleString()}</span></div>`
-      : `<div class="card-row card-muted">Auction ended</div>`;
-  }
-  let vline = "";
-  const v = d._v;
-  if (v && v.fair_value && SCOREABLE_BASES[v.basis]) {        // only trusted comp bases quote a median
-    const below = v.deal_pct != null ? Math.round(v.deal_pct * 100) : null;
-    vline = `<div class="card-row">Comp median: <b>${fmtMoney(v.fair_value, d._cur)}</b> `
-      + `<span class="card-muted">(${v.n_comps} comps, ${escapeHTML(friendlyBasis(v.basis))})</span></div>`;
-    if (d._nr && below != null) {
-      vline += `<div class="card-row">Bid is <b>${below >= 0 ? below + "% below" : (-below) + "% above"}</b> comps`
-        + (v.is_deal ? ` · <span class="card-deal">DEAL — ending soon</span>` : "") + `</div>`;
-    } else if (!d._nr) {
-      vline += `<div class="card-row card-muted">Reserve auction — bid may be below reserve, not a discount</div>`;
+  let brief;
+  try {
+    const raw = d._car || null;
+    if (window.BATAuctionBrief && window.BATAuctionModel && raw) {
+      const norm = d._hist ? BATAuctionModel.normalizeHistoricalComp(raw)
+                           : BATAuctionModel.normalizeLiveAuction(raw, SNAPSHOT);
+      brief = BATAuctionBrief.buildBrief(norm, { nowMs: Date.now(), freshnessLabel: d._fresh && d._fresh.label });
     }
-    if (v.appreciation_pct != null) {
-      vline += `<div class="card-row card-muted">Recent trend: ${v.appreciation_pct >= 0 ? "+" : ""}${Math.round(v.appreciation_pct * 100)}%</div>`;
-    }
+  } catch (e) { if (window.console) console.error("buildBrief failed:", e); }
+  if (!brief) {
+    brief = { historical: !!d._hist, title: d._t || "Listing", subtitle: null,
+      deepLink: /^https?:\/\//i.test(d._url || "") ? d._url : null,
+      header: { kind: d._hist ? "historical" : "live", bidText: d._noBid ? "No bid yet" : fmtMoney(d._p, d._cur),
+        bidNote: "bid at last scan", endsAtMs: d._end ? Date.parse(d._end) : null, reserveText: d._nr ? "No reserve" : "Reserve",
+        soldText: d._hist ? fmtMoney(d._p, d._cur) : null, soldAtMs: d._soldMs || null, label: "Past sale" },
+      sections: [] };
   }
-  let dline = "";
-  const det = d._d;
-  if (det) {
-    const miles = fmtMiles(det), cs = condSplit(det.condition), parts = [];
-    if (miles) parts.push(escapeHTML(miles));
-    if (cs.bad.length) parts.push(`<span class="card-flag">🚩 ${escapeHTML(cs.bad.join(", "))}</span>`);
-    if (cs.good.length) parts.push(`<span class="card-good">${escapeHTML(cs.good.join(", "))}</span>`);
-    if (parts.length) dline = `<div class="card-row">${parts.join(" · ")}</div>`;
-  }
-  const btn = safeUrl
-    ? `<a class="btn-link" href="${escapeHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">View on BaT →</a>`
-    : `<div class="card-row card-muted">No listing link</div>`;
-  const badges = Array.isArray(d._badges) ? d._badges : [];
-  const bline = badges.length
-    ? `<div class="card-badges">` + badges.map(b =>
-        `<span class="card-badge"><span class="cb-glyph">${b.glyph}</span> <b>${escapeHTML(b.label)}</b>`
-        + (b.reason ? ` <span class="card-muted">— ${escapeHTML(b.reason)}</span>` : "") + `</span>`).join("") + `</div>`
-    : "";
-  card.innerHTML =
-    `<div class="card-close" role="button" aria-label="Close">✕</div>`
-    + img
-    + `<div class="card-title">${escapeHTML(d._t || "")}</div>`
-    + bline
-    + `<div class="card-row">` + (d._noBid
-        ? `<span class="card-bid">No bid yet</span>`
-        : `<span class="card-bid">${fmtMoney(d._p, d._cur)}</span> <span class="card-muted">bid at last scan</span>`)
-      + `</div>`
-    + clock + dline + vline
-    + `<div class="card-row card-muted">` + ((d._c != null || d._w != null)
-        ? `${d._c ?? "—"} comments · ${d._w ?? "—"} watchers`
-          + (d._fresh && d._fresh.label ? ` · updated ${escapeHTML(d._fresh.label)}` : "")
-        : `Activity not scanned yet`)
-      + `</div>`
-    + btn;
-  card.querySelector(".card-close").onclick = closeCard;
-  card.hidden = false;
-  startTickerCountdown();                   // keep the card's countdown ticking even if the ticker is hidden
+  card.setAttribute("aria-label", brief.historical ? "Past sale details" : "Auction Brief");
+  card.innerHTML = renderBrief(brief, d);
+  card.querySelector(".brief-close").onclick = closeCard;
+  _briefLastFocus = (document.activeElement && document.activeElement !== document.body) ? document.activeElement : null;
+  card.classList.add("open");
+  card.setAttribute("aria-hidden", "false");
+  const closeBtn = card.querySelector(".brief-close");
+  if (closeBtn) closeBtn.focus();
+  startTickerCountdown();                   // keep the live countdown ticking even if the ticker is hidden
 }
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeCard(); });
+
+// keyboard: Escape closes. The panel is a NON-MODAL companion drawer (the map + search stay visible
+// and interactive by design), so Tab is intentionally NOT trapped — focus may flow back to the board.
+// Focus is moved into the panel on open and restored to the opener on close (see openCard/closeCard).
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  const card = document.getElementById("card");
+  if (card && card.classList.contains("open")) closeCard();
+});
 
 function resetZoom() {
   chart.dispatchAction({ type: "dataZoom", batch: [
     { dataZoomIndex: 0, start: 0, end: 100 }, { dataZoomIndex: 1, start: 0, end: 100 }] });
 }
-chart.on("click", (p) => { if (p.data && !p.data._hist) openCard(p.data); });   // comps show a tooltip, not the live card
+chart.on("click", (p) => { if (p.data) openCard(p.data); });   // live -> full brief, comp -> simplified historical brief
 chart.getZr().on("dblclick", resetZoom);   // double-click anywhere to reset the zoom
 
 // --- List view: a sortable table of the filtered cars (zoom-free drill-down).
@@ -1660,20 +1736,48 @@ function toggleColorLegend(on) {
 function loadSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
 function storeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list.slice(0, 20))); } catch (e) {} }
 
+// Stage 5: the chip rail now shows WATCHLISTS (manual for the active profile + shared, plus the
+// suggested templates). A chip toggles enable (drives Radar + the optional board filter); ↧ loads
+// the watchlist's normalized constraints into the Advanced filters (inspect/edit); ✎ renames a
+// manual list; ✕ deletes a manual list (suggested templates can only be disabled). The legacy
+// saved-views key is migrated into manual watchlists by BATStorage and preserved (never erased).
 function renderChips() {
   const wrap = document.getElementById("chips");
   if (!wrap) return;
   wrap.innerHTML = "";
-  // Category presets are gone from primary navigation (the board is no longer organized by the
-  // five placeholder categories). Only the user's own saved views remain as chips.
-  for (const view of loadSaved()) {
+  if (!STORE) return;
+  const wls = STORE.listWatchlists(activeProfile, true);
+  const fw = document.getElementById("wl-filter-wrap");
+  if (fw) fw.hidden = !wls.some(w => w.enabled);
+  const mini = (txt, title, fn) => { const s = document.createElement("span"); s.className = "x"; s.textContent = txt; s.title = title; s.onclick = (e) => { e.stopPropagation(); fn(); }; return s; };
+  for (const w of wls) {
     const c = document.createElement("span");
-    c.className = "chip"; c.textContent = view.name;
-    c.onclick = () => { if (typeof clearSearch === "function") clearSearch(); applySpec(view.spec); renderChips(); render(); };
-    const x = document.createElement("span");
-    x.className = "x"; x.textContent = "✕";
-    x.onclick = (e) => { e.stopPropagation(); storeSaved(loadSaved().filter(v => v.name !== view.name)); renderChips(); };
-    c.appendChild(x);
+    c.className = "chip" + (w.enabled ? " active" : "");      // accent highlight = enabled
+    c.title = STORE.matchReason(w, {});                       // normalized constraints = the "why"
+    const tag = document.createElement("span");
+    tag.textContent = (w.origin === "suggested" ? "✦ " : "") + w.name + (w.enabled ? " ●" : "");
+    tag.onclick = () => { STORE.setWatchlistEnabled(w.id, !w.enabled); renderChips(); render(); };  // enable/disable
+    c.appendChild(tag);
+    c.appendChild(mini("↧", "Load editable constraints into the Advanced filters", () => {
+      if (typeof clearSearch === "function") clearSearch();
+      applySpec(w.spec); document.getElementById("advanced").open = true; render();
+      // The Advanced form can't represent every spec field; be honest about which ones it dropped
+      // (they still drive this watchlist's matching — the chip tooltip lists the full constraints).
+      const FORM_KEYS = ["makes", "yearMin", "yearMax", "priceMax", "milesMax", "noReserve", "dealsOnly", "category"];
+      const dropped = Object.keys(w.spec || {}).filter(k => FORM_KEYS.indexOf(k) === -1);
+      if (dropped.length) alert('Loaded the editable filters. These constraints can’t be edited in the form (they still drive matching): ' + dropped.join(", ") + ".");
+    }));
+    if (w.origin === "manual") {
+      c.appendChild(mini("✎", "Rename", () => {
+        const name = (prompt("Rename watchlist:", w.name) || "").trim();
+        if (name) { STORE.renameWatchlist(w.id, name); renderChips(); }
+      }));
+      c.appendChild(mini("✕", "Delete", () => {
+        if (confirm('Delete watchlist "' + w.name + '"?')) { STORE.deleteWatchlist(w.id); renderChips(); render(); }
+      }));
+    } else {
+      c.appendChild(mini("−", "Hide this suggested watchlist", () => { STORE.setWatchlistEnabled(w.id, false); renderChips(); render(); }));
+    }
     wrap.appendChild(c);
   }
 }
@@ -1690,12 +1794,20 @@ function setupFilters(cars) {
   ["f-noreserve", "f-deals"].forEach(id => document.getElementById(id).addEventListener("change", render));
   document.getElementById("f-clear").onclick = () => { applySpec({}); renderChips(); render(); };
   document.getElementById("f-save").onclick = () => {
-    const name = (prompt("Name this view (e.g. \"Dad: cheap trucks\"):") || "").trim();
+    if (!STORE) return;
+    const name = (prompt('Save current filters as a watchlist for "' + activeProfile + '":') || "").trim();
     if (!name) return;
-    const list = loadSaved().filter(v => v.name !== name);
-    list.unshift({ name, spec: currentSpec() });
-    storeSaved(list); renderChips();
+    const saved = STORE.saveWatchlist({ name: name, spec: currentSpec(), profile_id: activeProfile, origin: "manual", enabled: true });
+    if (!saved) { alert("Couldn't save the watchlist — browser storage is full or unavailable (private mode?)."); return; }
+    renderChips(); render();
   };
+  const prof = document.getElementById("profile");
+  if (prof) {
+    prof.value = activeProfile;
+    prof.onchange = () => { activeProfile = STORE ? STORE.setActiveProfile(prof.value) : prof.value; renderChips(); render(); };
+  }
+  const wlf = document.getElementById("wl-filter");
+  if (wlf) wlf.addEventListener("change", render);
   renderChips();
 }
 
@@ -1706,7 +1818,11 @@ function setupFilters(cars) {
   const scriptsStale = !window.BATMapData || typeof BATMapData.clampNum !== "function"
                     || !window.BATFilters || !window.BATSearch
                     || !window.BATBadges || typeof BATBadges.selectBadges !== "function"
-                    || !window.BATComps || typeof BATComps.buildCompPoints !== "function";
+                    || !window.BATComps || typeof BATComps.buildCompPoints !== "function"
+                    || !window.BATAuctionModel || !window.BATAuctionBrief
+                    || typeof BATAuctionBrief.buildBrief !== "function";
+  // NOTE: BATStorage is intentionally NOT in this guard — it is OPTIONAL (every consumer guards on
+  // STORE), so a missing storage.js must still render the whole live board, not a hard-refresh page.
   const alreadyRetried = location.search.indexOf("fresh=") !== -1;
   if (scriptsStale && !alreadyRetried) {
     location.replace(location.pathname + "?fresh=" + Date.now());   // fresh index.html + fresh ?v= scripts
@@ -1739,6 +1855,12 @@ function setupFilters(cars) {
     return;
   }
   COMPS = await loadComps();   // best-effort; [] if comps.json is missing/empty/malformed (page still works)
+  // Stage 5: versioned persistence. createStorage migrates legacy saved views and recovers from
+  // corruption on its own; guard the whole thing so a storage failure never blocks the map.
+  if (window.BATStorage) {
+    try { STORE = BATStorage.createStorage(window.localStorage); activeProfile = STORE.getActiveProfile(); }
+    catch (e) { STORE = null; if (window.console) console.error("storage init failed:", e); }
+  }
   setupFilters(all);
   try {
     render();               // render() builds the ticker from the active filter set
