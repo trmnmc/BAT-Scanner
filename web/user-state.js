@@ -92,15 +92,23 @@
     function _key(auction_key, profile) { return profile + "|" + auction_key; }
     function _default(auction_key, profile) {
       return { auction_key: auction_key, profile_id: profile, status: "none", notes: null,
-        tags: [], max_bid: null, max_bid_currency: null, last_viewed: null, updated_at: 0 };
+        tags: [], max_bid: null, max_bid_currency: null, last_viewed: null,
+        // Stage 7: a personal bid plan + private fields (per auction + profile). Never market data.
+        bid_plan: null, questions: null, inspection_findings: null, decision_rationale: null,
+        updated_at: 0 };
     }
-    // Normalize a persisted record on READ: coerce status (old->new / unknown->none) and ensure a
-    // tags array. Never mutates storage — a stale/foreign record is shown corrected, not rewritten.
+    // Normalize a persisted record on READ: coerce status (old->new / unknown->none), ensure a tags
+    // array, and give old records (pre-Stage-7) sane null defaults for the bid plan + private fields.
+    // Never mutates storage — a stale/foreign record is shown corrected, not rewritten.
     function _coerce(rec) {
       var out = Object.assign({}, rec);
       out.status = coerceStatus(rec.status);
       out.tags = Array.isArray(rec.tags) ? rec.tags.filter(function (t) { return typeof t === "string"; }) : [];
       out.last_viewed = (typeof rec.last_viewed === "number" && isFinite(rec.last_viewed)) ? rec.last_viewed : null;
+      out.bid_plan = _isObj(rec.bid_plan) ? rec.bid_plan : null;
+      out.questions = typeof rec.questions === "string" ? rec.questions : null;
+      out.inspection_findings = typeof rec.inspection_findings === "string" ? rec.inspection_findings : null;
+      out.decision_rationale = typeof rec.decision_rationale === "string" ? rec.decision_rationale : null;
       return out;
     }
     function getUserState(auction_key, profile) {
@@ -132,6 +140,28 @@
       return out;
     }
 
+    // bid_plan: a bounded, FLAT object of the calculator's inputs — only known numeric keys (finite
+    // or null) + a short fee_rule id. An arbitrary object can never be stored as a plan, so "no large
+    // records" still holds. `null` clears; a non-object keeps the prior plan.
+    var BID_PLAN_NUM = ["total_budget", "tax_rate", "fixed_tax", "shipping", "title_reg", "inspection",
+      "repairs", "deferred_reserve", "contingency", "current_bid", "max_hammer",
+      "fee_percentage", "fee_min", "fee_max", "fee_fixed"];
+    function _cleanBidPlan(plan, prev) {
+      if (plan === null) return null;
+      if (!_isObj(plan)) return prev;
+      var out = {};
+      BID_PLAN_NUM.forEach(function (k) {
+        var v = plan[k];
+        if (typeof v === "number" && isFinite(v)) out[k] = v;
+        else if (v === null) out[k] = null;
+      });
+      if (typeof plan.fee_rule === "string") out.fee_rule = plan.fee_rule.slice(0, 40);
+      return out;
+    }
+    function _cleanText(v, prev) {
+      return typeof v === "string" ? v.slice(0, MAX_NOTES) : (v === null ? null : prev);
+    }
+
     function setUserState(auction_key, profile, patch) {
       profile = _isProfile(profile) ? profile : getActiveProfile();
       patch = patch || {};
@@ -152,6 +182,11 @@
         max_bid: typeof patch.max_bid === "number" && isFinite(patch.max_bid) ? patch.max_bid : (patch.max_bid === null ? null : prev.max_bid),
         max_bid_currency: typeof patch.max_bid_currency === "string" ? patch.max_bid_currency : (patch.max_bid_currency === null ? null : prev.max_bid_currency),
         last_viewed: typeof patch.last_viewed === "number" && isFinite(patch.last_viewed) ? patch.last_viewed : (patch.last_viewed === null ? null : prev.last_viewed),
+        // Stage 7 personal plan + private fields (whitelisted; never market data, never networked).
+        bid_plan: ("bid_plan" in patch) ? _cleanBidPlan(patch.bid_plan, prev.bid_plan) : prev.bid_plan,
+        questions: _cleanText(patch.questions, prev.questions),
+        inspection_findings: _cleanText(patch.inspection_findings, prev.inspection_findings),
+        decision_rationale: _cleanText(patch.decision_rationale, prev.decision_rationale),
         updated_at: now(),
       };
       if (STATUSES.indexOf(next.status) === -1) next.status = "none";
