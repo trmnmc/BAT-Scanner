@@ -110,6 +110,35 @@ def validate_snapshot(snapshot: dict, metrics: dict | None = None) -> tuple[list
     if bad_stamp:
         warnings.append(f"Malformed enrichment timestamps on {bad_stamp} record(s).")
 
+    # optional normalized blocks (Stage 1): vehicle_identity + analysis are additive and may be
+    # absent. Absence is ALWAYS valid; only a malformed block earns a soft warning — these blocks
+    # must never block the write. We check the block shape plus the one field whose type matters
+    # most: an identity `year` must be int/None, and an analysis `score` must be number/None
+    # (a missing score is null, never 0 — bool is rejected so True/False can't pose as a score).
+    bad_identity = 0
+    bad_analysis = 0
+    for a in auctions:
+        vi = a.get("vehicle_identity")
+        if vi is not None:
+            if not isinstance(vi, dict):
+                bad_identity += 1
+            else:
+                year = vi.get("year")
+                if year is not None and (isinstance(year, bool) or not isinstance(year, int)):
+                    bad_identity += 1
+        an = a.get("analysis")
+        if an is not None:
+            if not isinstance(an, dict):
+                bad_analysis += 1
+            else:
+                score = an.get("score")
+                if score is not None and (isinstance(score, bool) or not isinstance(score, (int, float))):
+                    bad_analysis += 1
+    if bad_identity:
+        warnings.append(f"Malformed optional vehicle_identity on {bad_identity} record(s).")
+    if bad_analysis:
+        warnings.append(f"Malformed optional analysis on {bad_analysis} record(s).")
+
     # parse coverage (needs pre-filter counts)
     reported = metrics.get("reported_live_count")
     parsed_ok = metrics.get("parsed_ok_count")
