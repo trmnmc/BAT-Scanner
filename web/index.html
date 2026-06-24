@@ -185,6 +185,18 @@
   #colorlegend .dot.hollow { background: transparent !important; }
   #colorlegend .glyph { font-size: 12px; line-height: 1; flex: 0 0 auto; width: 11px; text-align: center; }
   /* deal-vs-market legend bar (Phase 2): the big horizontal color scale under the map */
+  /* small badge key — shown only when badges are on the map */
+  #badgelegend { display: none; flex-wrap: wrap; gap: 4px 14px; padding: 4px 18px 8px; font-size: 11px; color: var(--muted); }
+  #badgelegend.on { display: flex; }
+  #badgelegend .bl-item { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #badgelegend .bl-glyph { font-size: 13px; line-height: 1; }
+  /* badges inside the detail card + list rows */
+  #card .card-badges { display: flex; flex-wrap: wrap; gap: 4px 8px; margin: 2px 0 8px; }
+  #card .card-badge { font-size: 12px; color: var(--ink-2); }
+  #card .card-badge .cb-glyph { font-size: 13px; }
+  .lt-badge { display: inline-flex; align-items: center; gap: 3px; margin-right: 6px; padding: 1px 6px;
+    border: 1px solid var(--line-2); font-size: 11px; color: var(--ink-2); vertical-align: middle; white-space: nowrap; }
+
   #deallegend { display: none; padding: 8px 18px 12px; }
   #deallegend.on { display: block; }
   #deallegend .dl-bar { height: 12px; border: 1px solid var(--line-2);
@@ -311,6 +323,7 @@
       <div class="dl-labels"><span class="under">40% under market</span><span class="fair">fair</span><span class="over">20% over</span></div>
       <div class="dl-hot">★ Hot deal = 20%+ under market</div>
     </div>
+    <div id="badgelegend" aria-label="Badge key"></div>
   </div>
   <aside id="rail" aria-label="Auctions ending soon"></aside>
 </div>
@@ -323,9 +336,10 @@
 <!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
      returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
      would call functions the old script lacks → render() throws → blank chart). -->
-<script src="./filters.js?v=20260622b"></script>
-<script src="./map-data.js?v=20260622b"></script>
-<script src="./search.js?v=20260622b"></script>
+<script src="./filters.js?v=20260623a"></script>
+<script src="./map-data.js?v=20260623a"></script>
+<script src="./search.js?v=20260623a"></script>
+<script src="./badges.js?v=20260623a"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
 // The five categories are placeholder metadata only — they no longer color the map,
@@ -414,10 +428,24 @@ let SNAPSHOT = null;
 let FILTERED = [];                       // cars passing the current filter (drives map + list)
 let listView = false;                    // Map vs List view
 let dealLegendActive = false;            // is the deal-color legend bar relevant to the current view
+let badgeLegendActive = false;           // are badges currently on the map (drives the small badge key)
 // The big green->red deal legend shows only on the deal-colored map (not List, not other metrics/search).
 function syncDealLegend() {
   const el = document.getElementById("deallegend");
   if (el) el.classList.toggle("on", dealLegendActive && !listView);
+}
+// The small badge key: built once from the badge registry, shown only when badges are on the map
+// (and not in List view) — mirrors syncDealLegend so a map/list toggle restores it correctly.
+function syncBadgeLegend() {
+  const el = document.getElementById("badgelegend");
+  if (!el) return;
+  const active = badgeLegendActive && !listView;
+  if (active && !el.dataset.built && window.BATBadges) {
+    el.innerHTML = BATBadges.legend().map(b =>
+      `<span class="bl-item"><span class="bl-glyph">${b.glyph}</span>${escapeHTML(b.label)}</span>`).join("");
+    el.dataset.built = "1";
+  }
+  el.classList.toggle("on", active);
 }
 let listSort = { key: "ends", dir: "asc" };   // List default: ending soonest first
 
@@ -498,12 +526,18 @@ function yIsLog(metric) { return metric === "comments" || metric === "watchers";
 
 // Every chart data item carries the auction payload the tooltip + click-card read back
 // (params.data). Shared by both series builders so click/card/tooltip work identically.
+// Badges a record may display (≤1 main + ≤1 status). Guarded so a missing/old badges.js degrades
+// to "no badges" — the map keeps working exactly as before rather than throwing (spec rule 12).
+function carBadges(a) {
+  return (window.BATBadges && typeof BATBadges.selectBadges === "function") ? BATBadges.selectBadges(a) : [];
+}
+
 function tagItem(item, a, pt, fresh) {
   item._t = a.title; item._p = (a.bid && a.bid.amount); item._cur = a.bid && a.bid.currency;
   item._c = (a.engagement && a.engagement.comments); item._w = (a.engagement && a.engagement.watchers);
   item._img = a.thumbnail_url; item._url = a.listing_url; item._v = a.value; item._d = a.details;
   item._nr = !!(a.flags && a.flags.no_reserve); item._end = a.ends_at || null;
-  item._noBid = pt.noBid; item._fresh = fresh;
+  item._noBid = pt.noBid; item._fresh = fresh; item._badges = carBadges(a);   // hover/tooltip + click-card read these
   return item;
 }
 
@@ -689,6 +723,36 @@ function xTickFormatter(v) {
   return BATMapData.compactNumber(v);
 }
 
+// Badge overlay (Stage 2): a SEPARATE scatter series drawn on top of the auction dots. Each badged
+// car gets a small chip at the SAME coordinate as its dot (the dot is never moved); symbolOffset
+// renders the chip just above the dot, and the chip carries the dot's payload so clicking a badge
+// still opens the right auction. With no supplied badges this returns null → no series is added →
+// the map looks and behaves exactly as before (spec rule 12).
+function buildBadgeOverlay(cars, metric, now) {
+  const yLog = yIsLog(metric);
+  const pts = priceScatterPoints(BATMapData.buildPoints(cars, metric, now));   // the same points the dots use
+  const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
+  const data = [];
+  for (const pt of pts) {
+    const a = pt.car;
+    const badges = carBadges(a);
+    if (!badges.length) continue;
+    const wide = badges.length > 1;
+    const item = {
+      // identical coordinate to the dot — winsorized X, floored log Y — so the dot does not move
+      value: [winsorX(pt.x), yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y],
+      symbol: "roundRect", symbolSize: [wide ? 34 : 21, 18], symbolOffset: [0, -16],   // chip sits ABOVE the dot
+      itemStyle: { color: "#fafafa", borderColor: "#b9bdc4", borderWidth: 1, opacity: 0.97 },
+      label: { show: true, position: "inside", formatter: badges.map(b => b.glyph).join(" "), fontSize: 12, color: "#16181d" },
+      emphasis: { scale: 1.12 },
+    };
+    tagItem(item, a, pt, BATMapData.getEngagementFreshness(a, now, scrapedAt));   // payload → click opens the auction
+    data.push(item);
+  }
+  // drawn LAST (top of the series array = top of the paint order) so chips sit above every dot
+  return data.length ? { type: "scatter", name: "badges", data: data, large: false, z: 6 } : null;
+}
+
 // Clean multi-row tooltip: title, price (+ time left, since a bid is meaningless without the
 // deadline), comments, watchers, deal %, mileage. Every value falls back to "—" when null.
 // The fuller comp/condition breakdown lives in the click-card, keeping the hover light.
@@ -713,8 +777,15 @@ function tooltipFormatter(p) {
   const dp = d._v && d._v.deal_pct;
   const dealColor = dp == null ? "#8a9099" : (dp > 0 ? "#1f9d57" : (dp < 0 ? "#d2452f" : "#8a8f96"));
   const miles = (d._d && fmtMiles(d._d)) ? escapeHTML(fmtMiles(d._d)) : "—";
+  const badges = Array.isArray(d._badges) ? d._badges : [];
+  const badgeRow = badges.length
+    ? `<div style="margin-bottom:5px;font-weight:600">`
+      + badges.map(b => `${b.glyph} ${escapeHTML(b.label)}`).join(`<span style="color:#c4c8cc"> · </span>`)
+      + `</div>`
+    : "";
   return img
     + `<div style="font-weight:600;max-width:230px;margin-bottom:5px">${escapeHTML(d._t || "")}</div>`
+    + badgeRow
     + row("Price", price)
     + row("Comments", comments)
     + row("Watchers", watchers)
@@ -776,6 +847,12 @@ function render() {
   }
   dealLegendActive = !!visualMap;          // the big deal-color bar belongs to the deal-colored view
   syncDealLegend();
+  // Badge overlay: a separate top series, only when some displayed car actually carries badges.
+  // Empty -> not added, so a snapshot with no badges renders byte-for-byte as before.
+  const badgeSeries = buildBadgeOverlay(displayCars, metric, now);
+  built.series = badgeSeries ? built.series.concat([badgeSeries]) : built.series;
+  badgeLegendActive = !!badgeSeries;
+  syncBadgeLegend();                       // the small badge key shows only when badges are on the map
   const yInverse = metric === "closing";    // soonest-ending at the TOP
   const yLog = built.yLog;                  // comments/watchers spread on a log axis
   chart.setOption({
@@ -1105,6 +1182,7 @@ function carToCard(a) {
     _nr: !!(a.flags && a.flags.no_reserve), _end: a.ends_at || null,
     _noBid: !(a.bid && a.bid.amount > 0),
     _fresh: BATMapData.getEngagementFreshness(a, Date.now(), SNAPSHOT && SNAPSHOT.scraped_at),
+    _badges: carBadges(a),
   };
 }
 function closeCard() { const c = document.getElementById("card"); if (c) c.hidden = true; }
@@ -1150,10 +1228,17 @@ function openCard(d) {
   const btn = safeUrl
     ? `<a class="btn-link" href="${escapeHTML(safeUrl)}" target="_blank" rel="noopener noreferrer">View on BaT →</a>`
     : `<div class="card-row card-muted">No listing link</div>`;
+  const badges = Array.isArray(d._badges) ? d._badges : [];
+  const bline = badges.length
+    ? `<div class="card-badges">` + badges.map(b =>
+        `<span class="card-badge"><span class="cb-glyph">${b.glyph}</span> <b>${escapeHTML(b.label)}</b>`
+        + (b.reason ? ` <span class="card-muted">— ${escapeHTML(b.reason)}</span>` : "") + `</span>`).join("") + `</div>`
+    : "";
   card.innerHTML =
     `<div class="card-close" role="button" aria-label="Close">✕</div>`
     + img
     + `<div class="card-title">${escapeHTML(d._t || "")}</div>`
+    + bline
     + `<div class="card-row">` + (d._noBid
         ? `<span class="card-bid">No bid yet</span>`
         : `<span class="card-bid">${fmtMoney(d._p, d._cur)}</span> <span class="card-muted">bid at last scan</span>`)
@@ -1225,8 +1310,12 @@ function renderList() {
     const miles = fmtMiles(a.details);
     const img = a.thumbnail_url
       ? `<img class="lt-img" src="${escapeHTML(a.thumbnail_url)}" loading="lazy" referrerpolicy="no-referrer" alt="">` : "";
+    const badges = carBadges(a);
+    const badgeTags = badges.length
+      ? badges.map(b => `<span class="lt-badge" title="${escapeHTML(b.label + (b.reason ? " — " + b.reason : ""))}">${b.glyph} ${escapeHTML(b.label)}</span>`).join("")
+      : "";
     return `<tr data-i="${i}">`
-      + `<td><div style="display:flex;align-items:center;gap:8px">${img}<span class="lt-name">${escapeHTML(a.title || "")}`
+      + `<td><div style="display:flex;align-items:center;gap:8px">${img}<span class="lt-name">${badgeTags}${escapeHTML(a.title || "")}`
         + `${miles ? ` <span class="card-muted">· ${escapeHTML(miles)}</span>` : ""}</span></div></td>`
       + `<td class="num">${a.bid && a.bid.amount > 0 ? fmtMoney(a.bid.amount, a.bid.currency) : "<span class='card-muted'>No bid</span>"}</td>`
       + `<td class="num">${clock}</td>`
@@ -1256,6 +1345,7 @@ function setView(v) {
   document.getElementById("view-map").classList.toggle("active", !listView);
   document.getElementById("view-list").classList.toggle("active", listView);
   syncDealLegend();                        // hide the deal bar in List view, restore it on the map
+  syncBadgeLegend();                       // same for the small badge key
   if (!listView) chart.resize();           // chart was display:none; remeasure its container width
   if (listView) renderList();
   else chart.resize();                      // chart was display:none; re-measure on return
@@ -1515,7 +1605,8 @@ function setupFilters(cars) {
   // map-data.js that lacks newer exports (e.g. clampNum) -> render() throws -> blank chart. Detect
   // the mismatch and do ONE cache-busted reload; the ?fresh= already in the URL guards the loop.
   const scriptsStale = !window.BATMapData || typeof BATMapData.clampNum !== "function"
-                    || !window.BATFilters || !window.BATSearch;
+                    || !window.BATFilters || !window.BATSearch
+                    || !window.BATBadges || typeof BATBadges.selectBadges !== "function";
   const alreadyRetried = location.search.indexOf("fresh=") !== -1;
   if (scriptsStale && !alreadyRetried) {
     location.replace(location.pathname + "?fresh=" + Date.now());   // fresh index.html + fresh ?v= scripts
