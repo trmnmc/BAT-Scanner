@@ -282,8 +282,10 @@
       <option value="closing">Closing soon</option>
       <option value="watchers">Watchers</option>
       <option value="deal">Comp discount</option>
+      <option value="marketcontext">Market context</option>
     </select>
   </span>
+  <span id="comps-toggle" hidden><label><input type="checkbox" id="show-comps" checked> Show past comps</label></span>
   <span><label>View:</label>
     <span class="seg">
       <button id="view-map" class="active" type="button">Map</button>
@@ -336,12 +338,15 @@
 <!-- ?v= cache-buster: BUMP this token whenever filters.js / map-data.js / search.js change, so a
      returning browser never pairs a freshly-deployed index.html with a STALE cached script (which
      would call functions the old script lacks → render() throws → blank chart). -->
-<script src="./filters.js?v=20260623a"></script>
-<script src="./map-data.js?v=20260623a"></script>
-<script src="./search.js?v=20260623a"></script>
-<script src="./badges.js?v=20260623a"></script>
+<script src="./filters.js?v=20260623b"></script>
+<script src="./map-data.js?v=20260623b"></script>
+<script src="./search.js?v=20260623b"></script>
+<script src="./badges.js?v=20260623b"></script>
+<script src="./comps.js?v=20260623b"></script>
 <script>
 const DATA_PATHS = ["../data/auctions.json", "./auctions.json"];
+const COMPS_PATHS = ["../data/comps.json", "./comps.json"];   // past sold comps, loaded separately
+let COMPS = [];                                               // raw comp rows; [] when missing/empty/broken
 // The five categories are placeholder metadata only — they no longer color the map,
 // drive a legend, or appear as preset chips. category_ids still ride along in the snapshot
 // and BATFilters still understands `category` so old saved views keep working.
@@ -459,6 +464,23 @@ async function loadData() {
   return null;
 }
 
+// Past comps load SEPARATELY from auctions and are best-effort: a missing file, a non-JSON body,
+// or a malformed top-level all resolve to [] so the rest of the page is unaffected (spec rule 10).
+// Individual bad rows are skipped later by BATComps.buildCompPoints (rule 11).
+async function loadComps() {
+  for (const p of COMPS_PATHS) {
+    try {
+      const r = await fetch(p, { cache: "no-store" });
+      if (!r.ok) continue;
+      const j = await r.json();
+      if (Array.isArray(j)) return j;
+      if (j && Array.isArray(j.comps)) return j.comps;
+      return [];                       // reachable file but unexpected shape -> no comps, no crash
+    } catch (e) { /* try next path */ }
+  }
+  return [];
+}
+
 const CURRENCY_SYMBOLS = { USD: "$", EUR: "€", GBP: "£" };
 function fmtMoney(n, currency) {
   if (n == null) return "—";
@@ -502,6 +524,7 @@ function friendlyBasis(b) { return FRIENDLY_BASIS[b] || b || ""; }
 function metricAxisName(metric) {
   if (metric === "closing") return "Time remaining, soonest first";
   if (metric === "deal") return "% under comps →";
+  if (metric === "marketcontext") return "Vehicle year";
   return (metric === "watchers" ? "Watchers" : "Comments") + " (heat, log) →";
 }
 
@@ -763,6 +786,17 @@ function tooltipFormatter(p) {
     `<div style="display:flex;justify-content:space-between;gap:22px;line-height:1.55">`
     + `<span style="color:#9aa0ad">${label}</span>`
     + `<span style="color:${color || "#16181d"};font-variant-numeric:tabular-nums">${val}</span></div>`;
+  // Historical comp (a PAST sale): a distinct, clearly-labelled tooltip — no live-auction fields,
+  // no invented data. Sale date only when sold_ts was present.
+  if (d._hist) {
+    const ghost = (window.BATBadges && BATBadges.badgeGlyph("historical")) || "👻";
+    const soldDate = d._soldMs ? new Date(d._soldMs).toLocaleDateString() : null;
+    return `<div style="font-weight:600;max-width:230px;margin-bottom:4px">${escapeHTML(d._t || "")}</div>`
+      + `<div style="margin-bottom:5px;color:#6b7280;font-weight:600">${ghost} Past sale</div>`
+      + row("Sold price", d._p != null ? fmtMoney(d._p, "USD") : "—")
+      + row("Year", d._year != null ? String(d._year) : "—")
+      + (soldDate ? row("Sold", escapeHTML(soldDate)) : "");
+  }
   let timeLeft = "";
   const endMs = d._end ? Date.parse(d._end) : NaN;
   if (!isNaN(endMs)) {
@@ -792,6 +826,32 @@ function tooltipFormatter(p) {
     + row("Deal", BATMapData.dealPctLabel(dp), dealColor)
     + row("Miles", miles)
     + `<div style="color:#7b8190;margin-top:6px">click for details</div>`;
+}
+
+// Historical comps as faded gray context for the Market-context map (price X vs year Y). Built from
+// the SEPARATE comps feed, validated (bad rows skipped), and narrowed by the active specs (rule 9).
+// Drawn small + translucent and placed UNDER the live dots so live auctions stay easy to see/click.
+// `specs` is the list of filter specs a comp must satisfy (manual filters + the search spec).
+function buildHistoricalSeries(specs) {
+  specs = (specs || []).filter(Boolean);
+  const pts = BATComps.buildCompPoints(COMPS).filter(p => specs.every(s => BATComps.compMatchesSpec(p.comp, s)));
+  let minWX = Infinity;
+  const data = pts.map(p => {
+    const wx = winsorX(p.x);                          // same $1k–$1M band as live; year is the REAL year
+    if (wx < minWX) minWX = wx;
+    const item = {
+      value: [wx, p.y],
+      symbol: "circle", symbolSize: 5,
+      itemStyle: { color: "#9aa3ad", opacity: 0.3, borderWidth: 0 },   // faded gray = historical treatment
+    };
+    item._hist = true; item._t = p.comp.title; item._p = p.x; item._year = p.y; item._soldMs = p.soldMs;
+    return item;
+  });
+  return {
+    series: data.length ? { type: "scatter", name: "historical", data: data, large: false, z: 1, silent: false } : null,
+    minX: isFinite(minWX) ? minWX / 1.1 : Infinity,   // extend the price axis to fit cheap comps
+    count: data.length,
+  };
 }
 
 function render() {
@@ -847,10 +907,25 @@ function render() {
   }
   dealLegendActive = !!visualMap;          // the big deal-color bar belongs to the deal-colored view
   syncDealLegend();
+  // Past comps: ONLY on the Market-context map (price vs year) and only when the toggle is on. Other
+  // metrics (comments/watchers/closing/deal) have no compatible axis for a sold price, so historical
+  // dots never appear there (rule 5). Drawn first => underneath the live dots (rule 3, rule 8).
+  const showComps = document.getElementById("show-comps");
+  document.getElementById("comps-toggle").hidden = metric !== "marketcontext";
+  let histSeries = null, histCount = 0;
+  if (metric === "marketcontext" && showComps && showComps.checked) {
+    const h = buildHistoricalSeries([currentSpec(), searchActive ? SEARCH_SPEC : null]);  // narrow by filters + search
+    histSeries = h.series; histCount = h.count;
+    if (histSeries && isFinite(h.minX)) built.xMin = Math.min(built.xMin, h.minX);   // fit cheap comps on the price axis
+  }
   // Badge overlay: a separate top series, only when some displayed car actually carries badges.
   // Empty -> not added, so a snapshot with no badges renders byte-for-byte as before.
   const badgeSeries = buildBadgeOverlay(displayCars, metric, now);
-  built.series = badgeSeries ? built.series.concat([badgeSeries]) : built.series;
+  // Paint order = array order: historical (bottom) -> live auctions -> badges (top).
+  let allSeries = built.series;
+  if (histSeries) allSeries = [histSeries].concat(allSeries);
+  if (badgeSeries) allSeries = allSeries.concat([badgeSeries]);
+  built.series = allSeries;
   badgeLegendActive = !!badgeSeries;
   syncBadgeLegend();                       // the small badge key shows only when badges are on the map
   const yInverse = metric === "closing";    // soonest-ending at the TOP
@@ -880,6 +955,7 @@ function render() {
       type: yLog ? "log" : "value", inverse: yInverse, name: metricAxisName(metric),
       nameLocation: "middle", nameGap: 48,
       axisLabel: metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) }
+               : metric === "marketcontext" ? { formatter: (v) => String(Math.round(v)) }   // plain year, no thousands comma
                : (yLog ? { formatter: (v) => BATMapData.compactNumber(v) } : {}),
       splitLine: { lineStyle: { color: "#e6e6e1" } },
       min: built.yMin, max: "dataMax",
@@ -1260,7 +1336,7 @@ function resetZoom() {
   chart.dispatchAction({ type: "dataZoom", batch: [
     { dataZoomIndex: 0, start: 0, end: 100 }, { dataZoomIndex: 1, start: 0, end: 100 }] });
 }
-chart.on("click", (p) => { if (p.data) openCard(p.data); });
+chart.on("click", (p) => { if (p.data && !p.data._hist) openCard(p.data); });   // comps show a tooltip, not the live card
 chart.getZr().on("dblclick", resetZoom);   // double-click anywhere to reset the zoom
 
 // --- List view: a sortable table of the filtered cars (zoom-free drill-down).
@@ -1355,6 +1431,7 @@ document.getElementById("view-list").onclick = () => setView("list");
 
 document.getElementById("ymetric").addEventListener("change", render);
 document.getElementById("markers").addEventListener("change", render);
+document.getElementById("show-comps").addEventListener("change", render);   // toggle past comps on the market map
 
 // --- search controller. Two layers, matched LOCALLY (the LLM, when wired, only returns a spec;
 // it never matches cars). currentSpec() = the Advanced manual filters, which HARD-filter the
@@ -1495,7 +1572,12 @@ function updateFilterReadout(metric, now, ctx) {
     const cars = ctx.baseCars;
     const active = BATMapData.getActiveAuctions(cars, now).length;
     const plottable = BATMapData.buildPoints(cars, metric, now).length;
-    if (ctx.mobile) {
+    if (metric === "marketcontext") {
+      const showComps = document.getElementById("show-comps");
+      const compCount = (showComps && showComps.checked && window.BATComps)
+        ? BATComps.filterComps(COMPS, currentSpec()).length : 0;
+      msg = `${fmt(plottable)} live auctions · ${fmt(compCount)} past sales (faded gray)`;
+    } else if (ctx.mobile) {
       const deals = activeDeals(cars, now).length;
       msg = (deals >= MOBILE_DEALS_MIN)
         ? `${fmt(deals)} deals shown · search to see the whole board`
@@ -1606,7 +1688,8 @@ function setupFilters(cars) {
   // the mismatch and do ONE cache-busted reload; the ?fresh= already in the URL guards the loop.
   const scriptsStale = !window.BATMapData || typeof BATMapData.clampNum !== "function"
                     || !window.BATFilters || !window.BATSearch
-                    || !window.BATBadges || typeof BATBadges.selectBadges !== "function";
+                    || !window.BATBadges || typeof BATBadges.selectBadges !== "function"
+                    || !window.BATComps || typeof BATComps.buildCompPoints !== "function";
   const alreadyRetried = location.search.indexOf("fresh=") !== -1;
   if (scriptsStale && !alreadyRetried) {
     location.replace(location.pathname + "?fresh=" + Date.now());   // fresh index.html + fresh ?v= scripts
@@ -1638,6 +1721,7 @@ function setupFilters(cars) {
     statusEl.innerHTML = "Snapshot loaded but no cars to plot.";
     return;
   }
+  COMPS = await loadComps();   // best-effort; [] if comps.json is missing/empty/malformed (page still works)
   setupFilters(all);
   try {
     render();               // render() builds the ticker from the active filter set
