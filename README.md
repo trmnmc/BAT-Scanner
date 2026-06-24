@@ -115,6 +115,20 @@ search. **The LLM is only an interpreter; matching always happens locally throug
 `BATFilters.filterCars`.** No provider is implemented here and **no API key is in the
 frontend, the JS, GitHub Pages config, or any committed file.**
 
+### AI-assisted Auction Brief (optional hook, off by default)
+
+The Auction Brief is **rule-based and deterministic** by default. The same key-free pattern lets an
+optional server-side endpoint *explain* it: point `<meta name="bat-brief-endpoint">` (or
+`window.BAT_BRIEF_ENDPOINT`) at a server endpoint and the brief POSTs **only public + deterministic
+data** (auction facts, the computed value/estimate/opportunity/badges, selected comps, public
+activity) — **never** private notes/budget/max-bid/status/tags/findings. The response must match a
+strict, size-capped shape where **every claim cites a supplied evidence id**; it may only *explain*
+the deterministic fields and **never overwrites** the current bid, estimated range, Opportunity Score,
+confidence, badges, reserve status, or risk flags. Any timeout/failure/invalid response keeps the
+deterministic brief. The AI layer is rendered separately and labeled **"AI-assisted brief"**. With no
+endpoint configured the site behaves exactly as before. Full contract: [`docs/auction-brief-api.md`](docs/auction-brief-api.md)
+(`web/assistant.js`). No provider SDK or API key ships in the browser or the repo.
+
 ## Deploy (GitHub Pages + daily auto-refresh)
 
 The repo is git-initialized with a GitHub Actions workflow that refreshes the data daily
