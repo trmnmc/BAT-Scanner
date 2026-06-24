@@ -25,7 +25,7 @@ import os
 import sys
 import time
 
-from . import categories, comps, enrichment_cache, parse, value
+from . import categories, comps, enrichment_cache, identity, parse, value
 from .fetch import (
     BlockedError,
     FetchError,
@@ -260,6 +260,14 @@ def run(args) -> int:
     live = [r for r in parsed if r["bid"]["status"] == "live"]
     excluded_as_ended = parsed_ok - len(live)
 
+    # 3b. canonical vehicle_identity (Stage 6A): recognize multiword models, flag ambiguous ones,
+    #     apply manual overrides. Derived from the already-parsed title — NO extra network requests.
+    overrides_path = args.identity_overrides or os.path.join(_repo_root(), "data", "identity_overrides.json")
+    overrides = identity.load_overrides(overrides_path)
+    for r in live:
+        r["vehicle_identity"] = identity.derive_identity(r, overrides)
+    low_conf = sum(1 for r in live if identity.is_low_confidence(r.get("vehicle_identity")))
+
     # 4. categorize (metadata tags + filter presets; pivot 2026-06-21: no longer a gate).
     for r in live:
         r["category_ids"] = categories.match_categories(r, only=only)
@@ -293,9 +301,14 @@ def run(args) -> int:
     for r in scored:
         r["_ends_ts"] = ends_by_id.get(r["id"])
 
+    # Stage 6A: annotate the comp pool with canonical identity ONCE (from each comp's title; no
+    # network), so canonical comp matching is consistent and fast for the whole board. Legacy comps
+    # (no canonical fields on disk) are upgraded in-memory; the saved comps.json is left untouched.
+    score_pool = [identity.annotate_comp(c) for c in comp_pool]
+
     # 6. value pass 1 — score the WHOLE board for free (no enrichment yet).
     for car in scored:
-        car["value"] = value.compute_value(car, comp_pool, now=now)
+        car["value"] = value.compute_value(car, score_pool, now=now)
 
     # 7. bounded enrichment — fetch engagement/mileage/condition only for a capped
     #    high-value set (ending soon OR deal candidate OR a rolling sample), to keep the
@@ -346,7 +359,7 @@ def run(args) -> int:
                                                       engagement=got_eng, details=got_det)
             # value pass 2 — recompute only where DETAILS changed (mileage/condition tilt)
             for iid in details_changed_ids:
-                by_id[iid]["value"] = value.compute_value(by_id[iid], comp_pool, now=now)
+                by_id[iid]["value"] = value.compute_value(by_id[iid], score_pool, now=now)
         except BlockedError as e:
             print(f"Note: enrichment stopped (blocked): {e}", file=sys.stderr)
         except (FetchError, OSError) as e:
@@ -414,7 +427,7 @@ def run(args) -> int:
                    enrich_requests=enrich_requests, comp_pool=len(comp_pool),
                    harvested=harvested, valued=valued, deals=deals,
                    det_miles=det_miles, det_tmu=det_tmu, det_cond=det_cond,
-                   carried=cache_stats.get("matched", 0),
+                   carried=cache_stats.get("matched", 0), low_conf=low_conf,
                    eng_avail=engagement_available_count, eng_cached=engagement_cached_count)
 
     # 8. write or fail
@@ -445,7 +458,8 @@ def _resolve_enrich_source(args) -> str:
 
 def _print_summary(*, source, reported, parsed_live, scored, targets, enriched, ended, warnings,
                    enrich_method, enrich_requests, comp_pool, harvested, valued, deals,
-                   det_miles, det_tmu, det_cond, carried, eng_avail, eng_cached, wrote, out_path=None):
+                   det_miles, det_tmu, det_cond, carried, low_conf, eng_avail, eng_cached, wrote,
+                   out_path=None):
     print(f"Source: {source}")
     print(f"Reported live: {reported}")
     print(f"Parsed live: {parsed_live}")
@@ -460,6 +474,7 @@ def _print_summary(*, source, reported, parsed_live, scored, targets, enriched, 
     print(f"Engagement available (board): {eng_avail} ({eng_cached} from cache)")
     print(f"Comp pool: {comp_pool}" + (f" (+{harvested} harvested)" if harvested else ""))
     print(f"Valued (fair price): {valued} · deals flagged: {deals}")
+    print(f"Low-confidence identities (valuation suppressed): {low_conf}")
     print(f"Warnings: {len(warnings)}")
     for w in warnings:
         print(f"  - {w}")
@@ -481,6 +496,8 @@ def main(argv=None) -> int:
                    help="harvest recent sold results into data/comps.json before scoring")
     p.add_argument("--comp-pages", type=int, default=60, help="pages of recent sold to harvest")
     p.add_argument("--comps-out", default=None, help="comps DB path (default ./data/comps.json)")
+    p.add_argument("--identity-overrides", default=None,
+                   help="manual identity overrides JSON (default ./data/identity_overrides.json)")
     args = p.parse_args(argv)
     return run(args)
 

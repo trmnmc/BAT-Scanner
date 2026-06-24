@@ -155,6 +155,36 @@ to category if sparse) and records, in the car's `value` block:
 Thresholds live at the top of `value.py`; everything stays `null`/`false` when comps are
 too thin to trust.
 
+### Canonical vehicle identity (Stage 6A)
+
+The board has no structured make/model, so titles are parsed best-effort — and a naive "first
+word after the make" reading turns **El Camino** into model "El", **Land Cruiser** into "Land",
+and **Grand Wagoneer** into "Grand". Those fragments then pollute the comp pool (every "Grand"
+on the board comping together). `scraper/identity.py` fixes this with a **canonical identity**:
+
+- A **data-driven registry** (per-make multiword model names + per-make patterns like Mercedes
+  `<number><body-code>`) recognizes multiword models, so the identity is "el-camino", not "el".
+  Model knowledge lives in one place — not scattered `if`s through the pipeline.
+- A conservative **collision-prefix net** (`el`, `land`, `grand`, `gran`, `monte`, `santa`)
+  catches *unregistered* truncations: a bare "grand" with nothing the registry knows after it is
+  flagged **low-confidence** rather than silently comped. (Legit standalone models like Regal,
+  Sierra, or Ford GT are NOT in the net, so they're never wrongly suppressed.)
+- A **low-confidence identity suppresses a trusted valuation** (`value.basis` becomes
+  `low-confidence-identity`; no `fair_value`, no `is_deal`) — an ambiguous car never gets a
+  confident price.
+- **Comp matching prefers the canonical make+model** (legacy comps are upgraded in-memory from
+  their title, so the on-disk pool keeps working), and `value.match_reasons` always explains how
+  comps were matched — or why they weren't. Comps are **never** blended into a category median.
+- **Manual overrides** for genuine one-offs live in `data/identity_overrides.json`, keyed by a
+  stable id (`bat:<id>` or the listing URL). Systematic fixes belong in the registry, not here.
+
+Each live record carries a `vehicle_identity` block (additive/optional): `canonical_make`,
+`canonical_model`, `generation`, `chassis_code`, `trim`, `body_style`, `engine`, `transmission`,
+`drivetrain`, `market`, `originality`, `confidence`, `ambiguity_reasons`, `source`,
+`manually_overridden`. The legacy `make`/`models` fields are unchanged. Identity is derived from
+the **already-parsed title — no extra network requests**, and `python tools/identity_report.py`
+audits low-confidence identities, model collisions, overrides, and cars with no reliable identity.
+
 ## Data source
 
 BaT has no official public API. The pipeline uses:
@@ -210,7 +240,9 @@ taxonomy_paths, category_ids, bid{amount,currency,status},
 engagement{comments,views,watchers}, started_at, ends_at,
 flags{no_reserve,premium,alumni}, listing_url, thumbnail_url,
 details{miles,odometer_raw,tmu,condition[]}, value{...},
-enrichment{engagement_updated_at, details_updated_at}`.
+vehicle_identity{canonical_make,canonical_model,…,confidence,ambiguity_reasons} (Stage 6A; see
+"Canonical vehicle identity"), enrichment{engagement_updated_at, details_updated_at}`. `value`
+also carries `identity_confidence` and `match_reasons`.
 
 `enrichment` (optional, auction-level) timestamps when engagement / details were last
 successfully fetched, so the map can fade stale activity and say "Activity updated 2h ago".

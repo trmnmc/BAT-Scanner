@@ -144,6 +144,39 @@ def test_is_deal_unaffected_by_tilt():
     assert v["tilt"] < 0
 
 
+# --- Stage 6A: identity-aware comp matching + low-confidence suppression -------------------
+
+def test_low_confidence_identity_suppresses_trusted_valuation():
+    # even with plenty of matching comps, a low-confidence identity gets NO trusted value/deal.
+    comps = [_comp(p) for p in (50000, 55000, 60000, 65000, 70000)]
+    car = _car(price=20000, ends_in_h=1)
+    car["vehicle_identity"] = {"canonical_make": "porsche", "canonical_model": "911",
+                               "confidence": "low", "ambiguity_reasons": ["truncated multiword model: 'grand'"]}
+    v = value.compute_value(car, comps, now=NOW)
+    assert v["basis"] == "low-confidence-identity"
+    assert v["fair_value"] is None and v["is_deal"] is False
+    assert v["identity_confidence"] == "low"
+    assert any("suppressed" in r for r in v["match_reasons"])
+
+
+def test_canonical_identity_matches_not_the_broken_legacy_fragment():
+    # the car's LEGACY model slug is the broken "el"; its canonical_model is "el-camino".
+    car = {"make": {"slug": "chevrolet"}, "models": [{"slug": "el"}], "year": 1972,
+           "vehicle_identity": {"canonical_make": "chevrolet", "canonical_model": "el-camino",
+                                "confidence": "high"},
+           "bid": {"amount": 20000, "currency": "USD", "status": "live"},
+           "flags": {"no_reserve": True}, "details": None, "_ends_ts": NOW + 3600}
+    # comps carry titles -> canonical derived: five El Caminos + a "Grand Wagoneer" (model "grand").
+    el = [{"title": "1972 Chevrolet El Camino SS", "make": "chevrolet", "model": "el",
+           "year": 1971 + i % 3, "price": 30000 + i * 1000, "sold_ts": NOW - 30 * DAY} for i in range(5)]
+    decoy = {"title": "1972 Jeep Grand Wagoneer", "make": "jeep", "model": "grand",
+             "year": 1972, "price": 90000, "sold_ts": NOW - 30 * DAY}
+    v = value.compute_value(car, el + [decoy], now=NOW)
+    assert v["basis"] == "make-model-y3" and v["n_comps"] == 5   # the decoy "grand" never matched
+    assert v["fair_value"] == 32000
+    assert any("el-camino" in r for r in v["match_reasons"])
+
+
 def test_appreciation_recent_vs_older():
     older = [_comp(p, days_ago=400) for p in (40000, 42000, 44000)]    # median 42000
     recent = [_comp(p, days_ago=30) for p in (50000, 52000, 54000)]    # median 52000

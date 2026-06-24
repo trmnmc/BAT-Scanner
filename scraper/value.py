@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import datetime as _dt
 
+from . import identity
+
 YEAR_BAND = 3                 # tier 1: same make+model within +/- this many years
 YEAR_BAND_WIDE = 7            # tier 2/3: widen the year window
 MIN_COMPS = 5                 # need at least this many comps to trust a fair value
@@ -53,22 +55,36 @@ def _median(xs):
 
 
 def _select_comps(car, comps):
-    """Tiered comp selection: prefer same make+model+tight year, widen if too few.
-    Returns (list_of_comps, basis_string)."""
-    make = (car.get("make") or {}).get("slug")
-    model = (car["models"][0]["slug"] if car.get("models") else None)
+    """Tiered comp selection on CANONICAL make+model: prefer a tight year band, widen if too few.
+
+    Matching prefers each record's canonical identity (so "El Camino" comps against "El Camino",
+    never the broken fragment "El"), with a graceful fall-back to legacy slugs for records that
+    carry no identity. Returns (list_of_comps, basis_string).
+    """
+    cmake, cmodel = identity.car_canonical(car)
     year = car.get("year")
     if not isinstance(year, int):
         return [], "no-year"
+    if not (cmake and cmodel):
+        return [], "no-identity"
 
-    def mm(c, band):
-        return (c.get("make") == make and c.get("model") == model and make and model
-                and isinstance(c.get("year"), int) and abs(c["year"] - year) <= band)
+    tier1, tier2 = [], []
+    for c in comps:
+        ccm, ccmod = identity.comp_canonical(c)
+        if ccm != cmake or ccmod != cmodel:
+            continue                                   # different car — never a category blend
+        cy = c.get("year")
+        if not isinstance(cy, int):
+            continue
+        dy = abs(cy - year)
+        if dy <= YEAR_BAND:
+            tier1.append(c)
+            tier2.append(c)
+        elif dy <= YEAR_BAND_WIDE:
+            tier2.append(c)
 
-    tier1 = [c for c in comps if mm(c, YEAR_BAND)]
     if len(tier1) >= MIN_COMPS:
         return tier1, "make-model-y3"
-    tier2 = [c for c in comps if mm(c, YEAR_BAND_WIDE)]
     if len(tier2) >= MIN_COMPS:
         return tier2, "make-model-y7"
     # Not enough same-model comps. We deliberately do NOT fall back to a whole-category
@@ -109,7 +125,25 @@ def _deal_tilt(details, year, now_year):
     return max(-TILT_CLAMP, min(TILT_CLAMP, t))
 
 
+def _suppressed_value(reasons):
+    """A trusted valuation is SUPPRESSED for a low-confidence identity: no fair value, no deal.
+    The basis is its own non-trusted string so the frontend (which trusts only the y3/y7 bases)
+    never shows a confident price for a car we can't reliably identify."""
+    return {
+        "fair_value": None, "n_comps": 0, "basis": "low-confidence-identity",
+        "deal_pct": None, "is_deal": False, "tilt": None, "deal_score": None,
+        "appreciation_pct": None, "identity_confidence": "low", "match_reasons": reasons,
+    }
+
+
 def compute_value(car, comps, *, now: float):
+    # Stage 6A: a low-confidence vehicle_identity (a chopped multiword model, a bare Mercedes
+    # number, an unrecognized make+model) must NOT receive a trusted valuation — suppress it.
+    vi = car.get("vehicle_identity")
+    if identity.is_low_confidence(vi):
+        reasons = [r for r in ((vi or {}).get("ambiguity_reasons") or [])] or ["identity confidence low"]
+        return _suppressed_value(["valuation suppressed (" + r + ")" for r in reasons])
+
     selected, basis = _select_comps(car, comps)
     n = len(selected)
     prices = [c["price"] for c in selected if c.get("price")]
@@ -150,6 +184,22 @@ def compute_value(car, comps, *, now: float):
         tilt = round(_deal_tilt(car.get("details"), car.get("year"), now_year), 4)
         deal_score = round(deal_pct + tilt, 4)
 
+    # match_reasons: ALWAYS explain how (or why not) comps were matched — and make the
+    # never-blend-a-category-median rule explicit when comps are too thin (Stage 6A tasks 15/16).
+    cmake, cmodel = identity.car_canonical(car)
+    if basis in ("make-model-y3", "make-model-y7"):
+        band = YEAR_BAND if basis == "make-model-y3" else YEAR_BAND_WIDE
+        match_reasons = [f"{n} comps matched on canonical make+model {cmake}/{cmodel} within ±{band}y"]
+    elif basis == "insufficient":
+        match_reasons = [f"only {n} same-model ({cmake}/{cmodel}) comps (< {MIN_COMPS}); "
+                         f"not enough to trust — never blended with a broad-category median"]
+    elif basis == "no-year":
+        match_reasons = ["no usable year on the listing"]
+    elif basis == "no-identity":
+        match_reasons = ["no canonical make/model could be resolved from the title"]
+    else:
+        match_reasons = []
+
     return {
         "fair_value": int(fair) if fair else None,
         "n_comps": n,
@@ -159,4 +209,6 @@ def compute_value(car, comps, *, now: float):
         "tilt": tilt,
         "deal_score": deal_score,
         "appreciation_pct": appreciation_pct,
+        "identity_confidence": (vi or {}).get("confidence"),
+        "match_reasons": match_reasons,
     }

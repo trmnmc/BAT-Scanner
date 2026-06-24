@@ -18,7 +18,7 @@ import json
 import os
 import tempfile
 
-from . import categories, parse
+from . import categories, identity, parse
 from .fetch import fetch_listings_filter_page
 
 COMP_SCHEMA_VERSION = 1
@@ -46,16 +46,20 @@ def parse_completed_item(raw_item: dict) -> dict | None:
         sold_ts = int(sold_ts) if sold_ts is not None else None
     except (TypeError, ValueError):
         sold_ts = None
-    return {
+    base = {
         "id": rec["id"],
         "title": rec["title"],
-        "make": (rec["make"] or {}).get("slug"),
+        "make": (rec["make"] or {}).get("slug"),       # legacy slug, kept for compatibility
         "model": (rec["models"][0]["slug"] if rec["models"] else None),
         "year": year,
         "price": price,
         "sold_ts": sold_ts,
         "category_ids": cats,
+        "listing_url": rec.get("listing_url"),
     }
+    # Stage 6A: add optional canonical identity (canonical_make/model, generation, trim, body_style,
+    # transmission) derived from the title — same title we already parsed, so NO extra network.
+    return identity.annotate_comp(base)
 
 
 def harvest_recent_sold(pages: int, *, fetch_page=None) -> list:
