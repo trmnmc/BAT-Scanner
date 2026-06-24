@@ -224,3 +224,12 @@ test("dealPctLabel: under / over / at comps / unknown", () => {
   assert.strictEqual(M.dealPctLabel(0), "at comps");
   assert.strictEqual(M.dealPctLabel(null), "—");
 });
+
+test("marketcontext metric plots vehicle year, and never invents a missing one", () => {
+  assert.strictEqual(M.getMetricValue(car({ year: 1974 }), "marketcontext", NOW), 1974);
+  assert.strictEqual(M.hasMetric(car({ year: 1974 }), "marketcontext", NOW), true);
+  // a car with no usable year is left off the market-context axis (not faked)
+  assert.strictEqual(M.getMetricValue(car({ year: null }), "marketcontext", NOW), null);
+  assert.strictEqual(M.getMetricValue(car({ year: "1974" }), "marketcontext", NOW), null);
+  assert.strictEqual(M.hasMetric(car({ year: undefined }), "marketcontext", NOW), false);
+});

@@ -90,6 +90,10 @@
       case "comments": return _engagement(car, "comments");
       case "watchers": return _engagement(car, "watchers");
       case "deal": return _dealValue(car);
+      case "marketcontext": {           // price (X) vs vehicle year (Y); year is never invented
+        var y = car && car.year;
+        return (typeof y === "number" && isFinite(y)) ? y : null;
+      }
       default: return null;
     }
   }
