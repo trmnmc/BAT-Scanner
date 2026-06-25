@@ -35,6 +35,7 @@ python -m scraper --offline      # build from fixtures/ (no network)
 python -m scraper --no-enrich    # no network refresh, but cached enrichment is PRESERVED
 python -m scraper --enrich-source bulk   # use listings-filter instead of per-listing
 python -m scraper --only air-cooled-911-family   # focus a run (metadata only; not a board gate)
+python -m scraper --no-history   # skip recording auction-change events (data/history.json) this run
 ```
 
 `--no-enrich` means "don't hit the network this run," **not** "erase enrichment": the cache
@@ -235,6 +236,37 @@ stays historical. Language is cautious throughout — never "undervalued/overpri
 `tools/evaluate_estimates.py` backtests the ranges against **real** sold prices (each comp as a
 leave-one-out, no lookahead) and reports the share inside-range, midpoint error, and accuracy by
 confidence and by make/model — so estimate quality is measured, not asserted.
+
+### Auction history events (Stage 9)
+
+`scraper/history.py` begins recording **useful changes** between runs into `data/history.json` —
+a small, bounded log, **not** a database and **not** a duplicate copy of the board each run. After
+a valid snapshot is written, the pipeline compares the previous valid auction state to the new one
+and appends an event only when something important changed:
+
+- `auction_seen` · `bid_changed` · `comments_changed` · `watchers_changed` · `end_time_changed`
+- `reserve_status_changed` · `listing_ended` · `sold` · `reserve_not_met`
+
+Each event is exactly `{event_version, auction_key, observed_at, event_type, previous, current,
+source}`. `previous`/`current` may be `null` — a missing value is **never** coerced to `0`.
+
+- **Idempotent.** `observed_at`/`source` come from the snapshot's frozen `scraped_at` (never the
+  wall clock), so reprocessing the same snapshot adds **no** duplicate events.
+- **Atomic + safe.** History is written atomically and **only after** a valid snapshot — a failed
+  scrape or validation never changes or overwrites a valid history.
+- **Bounded.** Events older than `HISTORY_RETENTION_DAYS` (90) age out, with a per-auction cap.
+- **Honest limits — not real-time.** The board carries only *live* cars, so a finished listing
+  usually just disappears and is logged as `listing_ended` (outcome unknown). `sold`/`reserve_not_met`
+  fire only when a car we previously saw *live* is still on the fetched board after flipping — a real
+  live→terminal transition — so they are comparatively rare; a car whose whole life we missed is not
+  logged (it would otherwise re-fire every run with no real prior bid).
+- **Daily movement, not live velocity.** `daily_movement(history, key, metric)` returns `None`
+  unless there are ≥2 valid-timestamp observations with a positive window, and the result always
+  shows the window it was measured over. These are sparse daily observations, never a live rate.
+
+`tools/history_report.py` is a read-only summary (total events, file size, auctions tracked, counts
+by type, oldest/newest event, and optional per-auction daily movement). Skip the log for a run with
+`--no-history`; redirect it with `--history-out PATH` (defaults to `history.json` beside `--out`).
 
 ## Data source
 

@@ -25,7 +25,7 @@ import os
 import sys
 import time
 
-from . import categories, comps, enrichment_cache, identity, opportunity, parse, value
+from . import categories, comps, enrichment_cache, history, identity, opportunity, parse, value
 from .fetch import (
     BlockedError,
     FetchError,
@@ -258,6 +258,10 @@ def run(args) -> int:
 
     # 3. live vs ended
     live = [r for r in parsed if r["bid"]["status"] == "live"]
+    # ended records (sold / reserve_not_met / ended) are not written to the snapshot, but Stage 9
+    # uses them as terminal observations so the history log can record outcomes when a finished
+    # car is still on the fetched board this run.
+    ended_records = [r for r in parsed if r["bid"]["status"] != "live"]
     excluded_as_ended = parsed_ok - len(live)
 
     # 3b. canonical vehicle_identity (Stage 6A): recognize multiword models, flag ambiguous ones,
@@ -411,6 +415,7 @@ def run(args) -> int:
         warnings.append(f"{parse_failures} of {reported} board items failed to parse.")
     snapshot = build_snapshot(
         live,
+        scraped_at=now_iso,   # one frozen run timestamp: scraped_at == history observed_at == now
         reported_live_count=reported,
         parsed_live_count=len(live),
         enriched_count=enriched_count,
@@ -457,6 +462,27 @@ def run(args) -> int:
         _print_summary(**summary, wrote=False)
         return 2
     _print_summary(**summary, wrote=True, out_path=out_path)
+
+    # 9. record auction-change events (Stage 9). Runs ONLY after a valid snapshot has been written,
+    #    so a failed scrape/validation never touches history. Reuses the already-loaded previous
+    #    snapshot as the prior valid state; the current observation is live + ended records so
+    #    terminal outcomes are detectable. Wrapped so a history hiccup can never fail the run or
+    #    corrupt the already-written snapshot.
+    if not args.no_history:
+        history_path = args.history_out or os.path.join(os.path.dirname(os.path.abspath(out_path)),
+                                                         "history.json")
+        try:
+            hist = history.load_history(history_path)
+            curr_records = list(live) + list(ended_records)
+            res = history.record_observation(
+                hist, (prev_snapshot or {}).get("auctions"), curr_records,
+                observed_at=snapshot["scraped_at"],
+                source=f"snapshot:{snapshot['scraped_at']}", valid=True, now=now)
+            history.save_history(hist, history_path, generated_at=now_iso)
+            print(f"History: +{res['added']} event(s), -{res['removed']} compacted "
+                  f"({len(hist['events'])} total) -> {history_path}")
+        except (OSError, ValueError) as e:
+            print(f"Note: history not updated ({e}); snapshot is unaffected.", file=sys.stderr)
     return 0
 
 
@@ -513,6 +539,10 @@ def main(argv=None) -> int:
     p.add_argument("--comps-out", default=None, help="comps DB path (default ./data/comps.json)")
     p.add_argument("--identity-overrides", default=None,
                    help="manual identity overrides JSON (default ./data/identity_overrides.json)")
+    p.add_argument("--history-out", default=None,
+                   help="auction history log path (default: history.json beside --out)")
+    p.add_argument("--no-history", action="store_true",
+                   help="skip recording auction-change events for this run")
     args = p.parse_args(argv)
     return run(args)
 
