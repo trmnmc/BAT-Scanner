@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-28T14:50:57Z",
-  "count": 1653,
+  "generated_at": "2026-06-29T16:39:55Z",
+  "count": 1673,
   "comps": [
     {
       "id": 115117526,
@@ -22030,6 +22030,300 @@
       "listing_url": "https://bringatrailer.com/listing/1959-ford-f-100-54/",
       "canonical_make": "ford",
       "canonical_model": "f-100"
+    },
+    {
+      "id": 116307725,
+      "title": "2001 BMW 740iL",
+      "make": "bmw",
+      "model": "740il",
+      "year": 2001,
+      "price": 11500,
+      "sold_ts": 1782669181,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2001-bmw-740il-160/",
+      "canonical_make": "bmw",
+      "canonical_model": "740il"
+    },
+    {
+      "id": 115938208,
+      "title": "289-Powered 1966 Ford Mustang Custom Limousine ",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1966,
+      "price": 40000,
+      "sold_ts": 1782667862,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1966-ford-mustang-1015/",
+      "canonical_make": "ford",
+      "canonical_model": "mustang"
+    },
+    {
+      "id": 113374825,
+      "title": "Original-Owner 2003 BMW M3 Convertible 6-Speed",
+      "make": "bmw",
+      "model": "m3",
+      "year": 2003,
+      "price": 37250,
+      "sold_ts": 1782667645,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2003-bmw-m3-convertible-175/",
+      "canonical_make": "bmw",
+      "canonical_model": "m3",
+      "body_style": "convertible",
+      "transmission": "manual"
+    },
+    {
+      "id": 116005553,
+      "title": "Big-Block-Powered 1970 Chevrolet Chevelle Malibu Sport Coupe",
+      "make": "chevrolet",
+      "model": "chevelle",
+      "year": 1970,
+      "price": 57000,
+      "sold_ts": 1782667510,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1970-chevrolet-chevelle-151/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "chevelle",
+      "trim": "sport",
+      "body_style": "coupe"
+    },
+    {
+      "id": 112124766,
+      "title": "M5-Swapped 2002 BMW 540i Sport Wagon 6-Speed",
+      "make": "bmw",
+      "model": "540i",
+      "year": 2002,
+      "price": 64000,
+      "sold_ts": 1782667451,
+      "category_ids": [
+        "german-wagons"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/2002-bmw-540i-114/",
+      "canonical_make": "bmw",
+      "canonical_model": "540i",
+      "trim": "sport",
+      "body_style": "wagon",
+      "transmission": "manual"
+    },
+    {
+      "id": 112866432,
+      "title": "43k-Mile 2004 Mercedes-Benz SL500",
+      "make": "mercedes-benz",
+      "model": "sl500",
+      "year": 2004,
+      "price": 17000,
+      "sold_ts": 1782667437,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2004-mercedes-benz-sl500-197/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "sl500"
+    },
+    {
+      "id": 116637674,
+      "title": "1991 Jeep Cherokee Laredo 4×4",
+      "make": "jeep",
+      "model": "cherokee",
+      "year": 1991,
+      "price": 9500,
+      "sold_ts": 1782667311,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1991-jeep-cherokee-42-2/",
+      "canonical_make": "jeep",
+      "canonical_model": "cherokee"
+    },
+    {
+      "id": 116207786,
+      "title": "3,200-Mile 2018 Lexus RC350 F Sport",
+      "make": "lexus",
+      "model": "rc350",
+      "year": 2018,
+      "price": 40000,
+      "sold_ts": 1782667290,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2018-lexus-rc300-3/",
+      "canonical_make": "lexus",
+      "canonical_model": "rc350",
+      "trim": "sport"
+    },
+    {
+      "id": 111619234,
+      "title": "2002 Porsche 911 Turbo Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 2002,
+      "price": 91996,
+      "sold_ts": 1782667170,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2002-porsche-911-turbo-coupe-96/",
+      "canonical_make": "porsche",
+      "canonical_model": "911",
+      "trim": "turbo",
+      "body_style": "coupe",
+      "transmission": "manual"
+    },
+    {
+      "id": 116056730,
+      "title": "23k-Mile 2012 Toyota Tacoma Double Cab V6 4×4",
+      "make": "toyota",
+      "model": "tacoma",
+      "year": 2012,
+      "price": 29250,
+      "sold_ts": 1782667131,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2012-toyota-tacoma-36/",
+      "canonical_make": "toyota",
+      "canonical_model": "tacoma"
+    },
+    {
+      "id": 116286310,
+      "title": "390-Powered 1974 Ford F-250 Ranger XLT Highboy 4&#215;4",
+      "make": "ford",
+      "model": "f-250",
+      "year": 1974,
+      "price": 40000,
+      "sold_ts": 1782667122,
+      "category_ids": [
+        "vintage-trucks"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1974-ford-f-250-60/",
+      "canonical_make": "ford",
+      "canonical_model": "f-250"
+    },
+    {
+      "id": 116108781,
+      "title": "2000 BMW 740iL",
+      "make": "bmw",
+      "model": "740il",
+      "year": 2000,
+      "price": 11000,
+      "sold_ts": 1782667014,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2000-bmw-740il-30/",
+      "canonical_make": "bmw",
+      "canonical_model": "740il"
+    },
+    {
+      "id": 115770574,
+      "title": "194-Powered 1953 Chevrolet 3600 5-Window Pickup 4-Speed",
+      "make": "chevrolet",
+      "model": "3600",
+      "year": 1953,
+      "price": 20500,
+      "sold_ts": 1782666985,
+      "category_ids": [
+        "vintage-trucks"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1953-chevrolet-3600-pickup-4/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "3600",
+      "body_style": "pickup",
+      "transmission": "manual"
+    },
+    {
+      "id": 115955591,
+      "title": "1986 Mercedes-Benz 560SL",
+      "make": "mercedes-benz",
+      "model": "560sl",
+      "year": 1986,
+      "price": 27750,
+      "sold_ts": 1782666889,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1986-mercedes-benz-560sl-415/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "560sl"
+    },
+    {
+      "id": 115818072,
+      "title": "43k-Mile 2012 Porsche 911 Carrera S Coupe",
+      "make": "porsche",
+      "model": "911",
+      "year": 2012,
+      "price": 76500,
+      "sold_ts": 1782666695,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2012-porsche-911-991-carrera-s-coupe-48/",
+      "canonical_make": "porsche",
+      "canonical_model": "911",
+      "trim": "carrera",
+      "body_style": "coupe"
+    },
+    {
+      "id": 115157597,
+      "title": "1.6L-Powered 1987 Suzuki Samurai 5-Speed",
+      "make": "suzuki",
+      "model": "samurai",
+      "year": 1987,
+      "price": 8273,
+      "sold_ts": 1782666540,
+      "category_ids": [
+        "80s-90s-japanese"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1987-suzuki-samurai-40/",
+      "canonical_make": "suzuki",
+      "canonical_model": "samurai",
+      "transmission": "manual"
+    },
+    {
+      "id": 115605507,
+      "title": "1965 Ford Mustang Fastback 289",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1965,
+      "price": 48670,
+      "sold_ts": 1782666224,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1965-ford-mustang-902/",
+      "canonical_make": "ford",
+      "canonical_model": "mustang",
+      "body_style": "coupe"
+    },
+    {
+      "id": 113830277,
+      "title": "One-Family-Owned 2014 Ford F-550 Super Duty 4×4 EarthRoamer XV-LTS",
+      "make": "ford",
+      "model": "f-550",
+      "year": 2014,
+      "price": 205000,
+      "sold_ts": 1782582357,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2014-ford-f-550-2/",
+      "canonical_make": "ford",
+      "canonical_model": "f-550"
+    },
+    {
+      "id": 113085271,
+      "title": "One-Family-Owned 1965 Ford Mustang Convertible 289",
+      "make": "ford",
+      "model": "mustang",
+      "year": 1965,
+      "price": 19000,
+      "sold_ts": 1782580741,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1965-ford-mustang-874/",
+      "canonical_make": "ford",
+      "canonical_model": "mustang",
+      "body_style": "convertible"
+    },
+    {
+      "id": 112851170,
+      "title": "One-Family-Owned 1957 Ford Thunderbird",
+      "make": "ford",
+      "model": "thunderbird",
+      "year": 1957,
+      "price": 14000,
+      "sold_ts": 1782580222,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1957-ford-thunderbird-440/",
+      "canonical_make": "ford",
+      "canonical_model": "thunderbird"
     }
   ]
 }
