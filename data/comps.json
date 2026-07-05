@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-04T14:41:08Z",
-  "count": 2351,
+  "generated_at": "2026-07-05T14:48:24Z",
+  "count": 2352,
   "comps": [
     {
       "id": 115117526,
@@ -31881,6 +31881,19 @@
       "trim": "targa",
       "body_style": "targa",
       "transmission": "manual"
+    },
+    {
+      "id": 115008517,
+      "title": "5,300-Mile 2018 Jeep Grand Cherokee Trackhawk",
+      "make": "jeep",
+      "model": "grand",
+      "year": 2018,
+      "price": 73600,
+      "sold_ts": 1783017654,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2018-jeep-grand-cherokee-trackhawk-43/",
+      "canonical_make": "jeep",
+      "canonical_model": "grand-cherokee"
     }
   ]
 }
