@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-28T22:58:08Z",
-  "count": 9336,
+  "generated_at": "2026-08-29T17:02:45Z",
+  "count": 9341,
   "comps": [
     {
       "id": 115117526,
@@ -130620,6 +130620,77 @@
       "listing_url": "https://bringatrailer.com/listing/2022-ford-bronco-4-door-408/",
       "canonical_make": "ford",
       "canonical_model": "bronco"
+    },
+    {
+      "id": 120984195,
+      "title": "1991 Ford Bronco XLT 5-Speed",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1991,
+      "price": 24500,
+      "sold_ts": 1787944133,
+      "category_ids": [
+        "vintage-trucks"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1991-ford-bronco-46/",
+      "canonical_make": "ford",
+      "canonical_model": "bronco",
+      "transmission": "manual"
+    },
+    {
+      "id": 120491418,
+      "title": "2006 Mercedes-Benz E55 AMG Sedan",
+      "make": "mercedes-benz",
+      "model": "e55",
+      "year": 2006,
+      "price": 11500,
+      "sold_ts": 1787943383,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2006-mercedes-benz-e55-amg-sedan-40/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "e55",
+      "trim": "amg",
+      "body_style": "sedan"
+    },
+    {
+      "id": 120434625,
+      "title": "1944 Ford GPW",
+      "make": "ford",
+      "model": "gpw",
+      "year": 1944,
+      "price": 18000,
+      "sold_ts": 1787940300,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1944-ford-gpw-9/",
+      "canonical_make": "ford",
+      "canonical_model": "gpw"
+    },
+    {
+      "id": 109303674,
+      "title": "1996 Land Rover Defender 90 300Tdi 5-Speed",
+      "make": "land-rover",
+      "model": "defender",
+      "year": 1996,
+      "price": 26000,
+      "sold_ts": 1787864145,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1996-land-rover-defender-90-86/",
+      "canonical_make": "land-rover",
+      "canonical_model": "rover",
+      "transmission": "manual"
+    },
+    {
+      "id": 117462447,
+      "title": "1972 Alfa Romeo Giulia 1300 Super Project",
+      "make": "alfa-romeo",
+      "model": "giulia",
+      "year": 1972,
+      "price": 32000,
+      "sold_ts": 1787857402,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1972-alfa-romeo-giulia-1300-super-2/",
+      "canonical_make": "alfa-romeo",
+      "canonical_model": "romeo"
     }
   ]
 }
