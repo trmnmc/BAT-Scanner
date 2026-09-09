@@ -8,102 +8,222 @@
 <meta name="bat-search-endpoint" content="" />
 <title>BaT Value Map</title>
 <style>
-  /* === BaT Value Map theme: "K" hybrid — calm near-white MONO canvas, amber accent, flat (no
-     rounding, hairline rules), loud green/red deal signals. Tokens drive everything. === */
+  /* === BaT Value Map theme: "terminal" — dark, dense, edge-to-edge map with a fixed control
+     rail (left), a docked ending-soon rail (right) and a closing-next ticker along the bottom.
+     Same vocabulary as before: JetBrains Mono, amber accent, hairline rules, square corners,
+     loud green/red deal signals. Tokens drive everything. === */
   :root {
-    color-scheme: light;
-    --bg: #fafafa;        /* page canvas */         --panel: #ffffff;     /* surfaces (inputs/cards) */
-    --panel-2: #f1f1ee;   /* subtle fill strips */  --hover: #ececE8;      /* hover */
-    --ink: #16181d;       /* primary text */        --ink-2: #44474e;      /* secondary text */
-    --muted: #5d636b;     /* labels (WCAG AA on bg) */  --faint: #9499a1;      /* placeholders */
-    --line: #e6e6e1;      /* hairline dividers/grid */  --line-2: #d7d7d2;  /* control borders */
+    color-scheme: dark;
+    --bg: #0d0f13;        /* page canvas */          --panel: #13161b;     /* surfaces (rails/cards) */
+    --panel-2: #191d23;   /* subtle fill strips */   --hover: #1f242c;     /* hover */
+    --ink: #e9ebef;       /* primary text */         --ink-2: #aeb4be;     /* secondary text */
+    --muted: #7c8390;     /* labels (AA on panel) */  --faint: #555c68;     /* placeholders */
+    --line: #252a32;      /* hairline dividers/grid */ --line-2: #303640;  /* control borders */
     --accent: #ffb000;    /* amber — hot deals + primary action */
-    --accent-ink: #16181d;  --accent-hover: #e69f00;
-    --green: #1f9d57;     /* under market / good */ --red: #d2452f;        /* over market / urgent */
-    --amber2: #c98a1e;    /* warning (mileage/fair) */
+    --accent-ink: #0d0f13;  --accent-hover: #ffc433;
+    --green: #27a866;     /* under market / good */  --red: #e0563f;       /* over market / urgent */
+    --amber2: #d9a03a;    /* warning (mileage/fair) */
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sidebar-w: 248px;  --rail-w: 336px;  --topbar-h: 48px;  --ticker-h: 36px;
   }
   * { box-sizing: border-box; }
   select, input, button, textarea { font-family: var(--mono); }
+  html, body { max-width: 100%; overflow-x: hidden; }
   body {
     margin: 0; font-family: var(--mono);
     background: var(--bg); color: var(--ink);
     -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1;
   }
-  header { padding: 14px 18px 6px; }
-  h1 { font-size: 16px; font-weight: 700; margin: 0; letter-spacing: 0.01em; text-transform: uppercase; }
-  .sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 8px 18px 4px; font-size: 12px; }
-  .controls label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; font-size: 11px; }
-  select { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2); border-radius: 0; padding: 5px 8px; font-size: 12px; }
-  #chart { width: 100%; height: 78vh; min-height: 480px; }
-  #status { padding: 24px 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  a { color: var(--accent); } a:hover { color: var(--accent-hover); }
   code { background: var(--panel-2); padding: 1px 6px; border-radius: 0; }
-  .hint { padding: 2px 18px 10px; font-size: 11px; color: var(--muted); }
-  /* --- filter bar + saved-view / preset chips --- */
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 18px; font-size: 12px; }
-  .filters input[type=number] { width: 92px; }
-  .filters input, .filters button { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2);
-                                     border-radius: 0; padding: 5px 8px; font-size: 12px; }
+  .hint { font-size: 11px; color: var(--muted); }
+  /* --- shell: topbar / (sidebar | main) / ticker. Desktop pins the shell to the viewport and
+     scrolls the rails + main column independently; the phone rules below let the page flow. --- */
+  #app { display: flex; flex-direction: column; height: 100vh; }
+  #topbar { flex: 0 0 auto; display: flex; align-items: center; gap: 16px; min-height: var(--topbar-h);
+            padding: 0 16px; border-bottom: 1px solid var(--line); background: var(--bg); }
+  .brand { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+  .brand-mark { width: 22px; height: 22px; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+  .brand-mark svg { width: 14px; height: 14px; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  h1 { font-size: 13px; font-weight: 700; margin: 0; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .brand-sub { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .live { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-2); min-width: 0; }
+  .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex: 0 0 auto;
+                  box-shadow: 0 0 0 3px rgba(39,168,102,0.22); }
+  .live .live-tag { font-weight: 700; color: var(--green); letter-spacing: 0.08em; flex: 0 0 auto; }
+  .sub { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 11px; }
+  .controls label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
+  select { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2); border-radius: 0; padding: 6px 8px; font-size: 12px; }
+  /* --- primary search (topbar) --- */
+  .search { display: flex; flex: 1 1 320px; min-width: 0; max-width: 560px; margin-left: auto; }
+  .search input { flex: 1 1 auto; min-width: 0; background: var(--panel); color: var(--ink);
+                  border: 1px solid var(--line-2); border-right: 0; border-radius: 0; padding: 7px 10px; font-size: 12px; height: 32px; }
+  .search input::placeholder { color: var(--faint); }
+  .search button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 0; height: 32px;
+                   padding: 0 14px; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.06em; }
+  .search button:hover { background: var(--accent-hover); }
+  .search button#q-clear { background: var(--panel); color: var(--ink-2); border: 1px solid var(--line-2); border-left: 0; font-weight: 600; }
+  .search button#q-clear:hover { background: var(--hover); }
+  /* --- Map / List view toggle --- */
+  .seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 0; overflow: hidden; height: 32px; }
+  .seg button { background: transparent; color: var(--ink-2); border: 0; padding: 0 12px; font-size: 11px; font-weight: 700;
+                letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+  .seg button:hover { background: var(--hover); }
+  .seg button.active { background: var(--accent); color: var(--accent-ink); }
+  /* --- body: sidebar | main --- */
+  #body { flex: 1 1 auto; min-height: 0; display: flex; }
+  #sidebar { flex: 0 0 var(--sidebar-w); width: var(--sidebar-w); border-right: 1px solid var(--line); background: var(--panel);
+             overflow-y: auto; display: flex; flex-direction: column; }
+  .sb-h { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; padding: 14px 14px 6px; }
+  .sb-sec { padding: 0 14px; display: flex; flex-direction: column; gap: 6px; }
+  .sb-sec select { width: 100%; }
+  .sb-sec label { color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; font-size: 11px; }
+  .sb-foot { margin-top: auto; padding: 12px 14px; border-top: 1px solid var(--line); display: flex; gap: 6px; }
+  .sb-foot button { flex: 1 1 auto; }
+  #main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; overflow: auto; background: var(--panel); }
+  /* --- filter bar (inside the sidebar) + saved-view / preset chips --- */
+  details.advanced { padding: 0; }
+  details.advanced > summary { cursor: pointer; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: 0.14em;
+                               text-transform: uppercase; padding: 14px 14px 6px; list-style: none; }
+  details.advanced > summary::-webkit-details-marker { display: none; }
+  details.advanced > summary::before { content: "▸ "; }
+  details.advanced[open] > summary::before { content: "▾ "; }
+  .filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; align-items: center; padding: 0 14px; font-size: 11px; }
+  .filters .span2 { grid-column: 1 / -1; }
+  .filters input, .filters button { width: 100%; min-width: 0; background: var(--bg); color: var(--ink); border: 1px solid var(--line-2);
+                                     border-radius: 0; padding: 6px 8px; font-size: 11px; height: 30px; }
   .filters input::placeholder { color: var(--faint); }
-  .filters label { color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
-  .filters button { cursor: pointer; }
+  .filters label { color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+  .filters button { cursor: pointer; background: var(--panel); color: var(--ink-2); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 10px; }
   .filters button:hover { background: var(--hover); }
-  #f-count { padding: 0; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 18px 8px; }
-  .chip { cursor: pointer; font-size: 11px; padding: 3px 10px; border-radius: 0;
-          background: var(--panel); color: var(--ink-2); border: 1px solid var(--line-2); }
+  .filters .fl-markers { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .filters .fl-markers select { flex: 1 1 auto; min-width: 0; height: 30px; padding: 4px 6px; font-size: 11px; }
+  input[type=checkbox] { accent-color: var(--accent); width: 13px; height: 13px; margin: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  #sidebar .chips { padding: 0 14px; }
+  .chips:empty { display: none; }
+  .chip { cursor: pointer; font-size: 10px; padding: 4px 8px; border-radius: 0;
+          background: transparent; color: var(--ink-2); border: 1px solid var(--line-2); }
   .chip:hover { background: var(--hover); }
   .chip.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
   .chip .x { color: var(--faint); margin-left: 6px; }
+  .chip.active .x { color: var(--accent-ink); }
   .chip.preset { border-style: dashed; }
   /* Stage 5 watchlist save panel — static (no transitions) inline box under the chip rail. */
-  .wl-save { margin: 0 18px 8px; padding: 10px 12px; background: var(--panel);
-             border: 1px solid var(--line-2); max-width: 560px; }
+  .wl-save { margin: 8px 14px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line-2); }
   .wl-save[hidden] { display: none; }
   .wl-save-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0; align-items: center; }
-  .wl-save input[type="text"] { flex: 1 1 200px; min-width: 0; background: var(--panel); color: var(--ink);
-             border: 1px solid var(--line-2); border-radius: 0; padding: 6px 8px; font-size: 12px; }
+  .wl-save input[type="text"] { flex: 1 1 140px; min-width: 0; background: var(--panel); color: var(--ink);
+             border: 1px solid var(--line-2); border-radius: 0; padding: 6px 8px; font-size: 11px; }
   .wl-save button { background: var(--panel); color: var(--ink); border: 1px solid var(--line-2);
-             border-radius: 0; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+             border-radius: 0; padding: 6px 10px; font-size: 11px; cursor: pointer; }
   .wl-save #wl-save-go { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
-  .wl-save-rules { font-size: 12px; color: var(--ink-2); margin: 6px 0; }
+  .wl-save-rules { font-size: 11px; color: var(--ink-2); margin: 6px 0; }
   .wl-save-rules .chips { display: inline-flex; padding: 0; }
-  /* --- ending-soon ticker --- */
-  #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex;
-            align-items: stretch; height: 46px; background: var(--panel-2);
-            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  /* --- main column: search summary strip, the map stage, list view, status --- */
+  .strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; min-height: 36px; padding: 6px 16px;
+           border-bottom: 1px solid var(--line); font-size: 11px; color: var(--ink-2); }
+  .strip #f-count { padding: 0; font-size: 11px; color: var(--ink-2); }
+  .strip .maphint { margin-left: auto; color: var(--muted); }
+  .search-summary { padding: 6px 16px 0; font-size: 11px; color: var(--muted); }
+  .search-summary:empty { display: none; }
+  .search-summary.err { color: var(--red); }
+  #q-chips { padding: 6px 16px 0; }
+  /* color key (shown only while a search is active) */
+  #colorlegend { display: none; flex-wrap: wrap; gap: 3px 14px; padding: 6px 16px 0; font-size: 11px; color: var(--muted); }
+  #colorlegend.on { display: flex; }
+  #colorlegend .sw { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #colorlegend .dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; border: 1px solid var(--line-2); }
+  #colorlegend .dot.ring { box-shadow: 0 0 0 2px var(--accent); }
+  #colorlegend .dot.hollow { background: transparent !important; }
+  #colorlegend .glyph { font-size: 12px; line-height: 1; flex: 0 0 auto; width: 11px; text-align: center; }
+  /* --- Phase 3: chart + "Ending soon" deal-card rail side by side --- */
+  #stage { display: flex; flex: 1 1 auto; min-height: 0; align-items: stretch; }
+  #stage[hidden] { display: none; }
+  #mapcol { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }   /* min-width:0 lets the chart shrink beside the rail */
+  #chart { flex: 1 1 auto; width: 100%; min-height: 440px; }
+  #status { padding: 24px 16px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  #status:empty { display: none; }
+  /* deal-vs-market legend bar (Phase 2): the horizontal color scale under the map */
+  #deallegend { display: none; padding: 0 16px; min-height: 40px; align-items: center; gap: 14px;
+                border-top: 1px solid var(--line); flex-wrap: wrap; }
+  #deallegend.on { display: flex; }
+  #deallegend .dl-bar { flex: 1 1 160px; height: 8px; border: 0;
+    background: linear-gradient(to right, #1e9e5a 0%, #6fcf97 29%, #9aa0a8 64%, #d9534f 100%); }
+  #deallegend .dl-labels { display: contents; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  #deallegend .dl-labels .under { color: var(--green); order: -1; }
+  #deallegend .dl-labels .fair { display: none; }
+  #deallegend .dl-labels .over { color: var(--red); }
+  #deallegend .dl-hot { display: inline-block; font-size: 10px; font-weight: 700; color: var(--ink-2);
+    padding-left: 14px; border-left: 1px solid var(--line-2); text-transform: uppercase; letter-spacing: 0.06em; }
+  /* small badge key — shown only when badges are on the map */
+  #badgelegend { display: none; flex-wrap: wrap; gap: 4px 14px; padding: 6px 16px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); }
+  #badgelegend.on { display: flex; }
+  #badgelegend .bl-item { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #badgelegend .bl-glyph { font-size: 13px; line-height: 1; }
+  #rail { flex: 0 0 var(--rail-w); width: var(--rail-w); min-height: 0; overflow-y: auto;
+          border-left: 1px solid var(--line); background: var(--panel); }
+  .rail-head { position: sticky; top: 0; z-index: 1; background: var(--panel-2);
+               padding: 0 12px; height: 36px; display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+               letter-spacing: 0.1em; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+  .rail-dealcount { color: var(--accent); }
+  .rail-empty { padding: 16px 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .deal-card { display: flex; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line);
+               cursor: pointer; align-items: flex-start; }
+  .deal-card:hover { background: var(--panel-2); }
+  .deal-card.is-deal { background: rgba(255,176,0,0.05); }
+  .dc-img { width: 64px; height: 46px; flex: 0 0 auto; object-fit: cover; background: var(--panel-2); border: 1px solid var(--line); }
+  .dc-body { min-width: 0; flex: 1 1 auto; }
+  .dc-title { font-size: 11px; font-weight: 700; line-height: 1.25; margin-bottom: 4px;
+              display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .dc-bid { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+  .dc-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0; }
+  .dc-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+  .dc-badge.under { background: var(--green); color: var(--accent-ink); }
+  .dc-badge.over { background: var(--red); color: #fff; }
+  .dc-badge.muted { background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
+  .dc-hot { font-size: 10px; font-weight: 700; background: var(--accent); color: var(--accent-ink);
+            padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+  .dc-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 10px; color: var(--muted); }
+  .dc-clock { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink-2); margin-left: auto; }
+  .dc-clock.urgent { color: var(--red); }
+  /* --- closing-next ticker (bottom strip) --- */
+  #ticker { position: relative; overflow: hidden; white-space: nowrap; display: flex; flex: 0 0 auto;
+            align-items: stretch; height: var(--ticker-h); background: var(--panel-2);
+            border-top: 1px solid var(--line); }
   #ticker[hidden] { display: none; }
   .ticker-label { flex: 0 0 auto; z-index: 2; display: flex; align-items: center; gap: 6px;
-                  padding: 0 14px; font-size: 11px; font-weight: 700; color: var(--ink-2); text-transform: uppercase;
+                  padding: 0 12px; font-size: 9px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.1em;
                   background: var(--panel-2); border-right: 1px solid var(--line); }
-  .ticker-label .deals { color: var(--amber2); }
+  .ticker-label .deals { color: var(--accent); }
   .ticker-viewport { overflow: hidden; flex: 1 1 auto; display: flex; align-items: center; }
   .ticker-track { display: inline-flex; align-items: center;
                   animation: ticker-marquee linear infinite; will-change: transform; }
   #ticker:hover .ticker-track, #ticker.paused .ticker-track { animation-play-state: paused; }
   @keyframes ticker-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .ticker-chip { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto;
-                 padding: 4px 14px; border-right: 1px solid var(--line);
-                 text-decoration: none; color: var(--ink); font-size: 12px; line-height: 1.2; }
-  .ticker-chip:hover { background: var(--hover); }
-  .ticker-chip.deal { background: rgba(255,176,0,0.12); }
-  .ticker-chip img { width: 40px; height: 28px; object-fit: cover; border-radius: 0;
-                     background: var(--panel-2); flex: 0 0 auto; }
-  .ticker-name { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+  .ticker-chip { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; height: var(--ticker-h);
+                 padding: 0 14px; border-right: 1px solid var(--line);
+                 text-decoration: none; color: var(--ink); font-size: 11px; line-height: 1.2; }
+  .ticker-chip:hover { background: var(--hover); color: var(--ink); }
+  .ticker-chip.deal { background: rgba(255,176,0,0.08); }
+  .ticker-chip img { width: 34px; height: 24px; object-fit: cover; border-radius: 0;
+                     background: var(--panel); flex: 0 0 auto; }
+  .ticker-name { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
   .ticker-bid { color: var(--ink-2); }
   .ticker-deal { color: var(--green); font-weight: 700; }
   .ticker-deal.above { color: var(--muted); font-weight: 400; }
   .ticker-thin { color: var(--faint); }
-  .ticker-miles { color: var(--ink-2); background: var(--panel-2); border-radius: 0; padding: 1px 5px; font-size: 11px; }
+  .ticker-miles { color: var(--ink-2); background: var(--panel); border-radius: 0; padding: 1px 5px; font-size: 10px; }
   .ticker-miles.tmu { color: var(--amber2); }
-  .ticker-flag { color: var(--red); background: rgba(210,69,47,0.12); border-radius: 0;
+  .ticker-flag { color: var(--red); background: rgba(224,86,63,0.14); border-radius: 0;
                  padding: 1px 5px; font-size: 10px; font-weight: 700; letter-spacing: .2px; }
   .ticker-good { color: var(--green); font-size: 10px; font-weight: 700; }
   /* hover preview: big detailed photo when you hover a ticker chip */
   #ticker-preview { position: fixed; z-index: 50; pointer-events: none;
                     background: var(--panel); border: 1px solid var(--line-2); border-radius: 0;
-                    padding: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+                    padding: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.45); }
   #ticker-preview[hidden] { display: none; }
   #ticker-preview img { width: 460px; height: 307px; object-fit: cover; border-radius: 0; display: block; background: var(--panel-2); }
   #ticker-preview .cap { font-size: 13px; color: var(--ink); margin-top: 6px; max-width: 460px; }
@@ -114,23 +234,20 @@
   .ticker-delta { font-size: 10px; font-weight: 700; margin-left: 1px; }
   .ticker-delta.up { color: var(--green); }
   .ticker-delta.down { color: var(--red); }
-  @keyframes chip-flash-up   { from { background: rgba(31,157,87,0.30); } to { background: transparent; } }
-  @keyframes chip-flash-down { from { background: rgba(210,69,47,0.30);  } to { background: transparent; } }
+  @keyframes chip-flash-up   { from { background: rgba(39,168,102,0.30); } to { background: transparent; } }
+  @keyframes chip-flash-down { from { background: rgba(224,86,63,0.30);  } to { background: transparent; } }
   .ticker-chip.flash-up   { animation: chip-flash-up   1.8s ease-out 1; }
   .ticker-chip.flash-down { animation: chip-flash-down 1.8s ease-out 1; }
   @media (prefers-reduced-motion: reduce) {
     .ticker-track { animation: none; }
     .ticker-viewport { overflow-x: auto; }
     .ticker-chip.flash-up, .ticker-chip.flash-down { animation: none; }
+    .live::before { box-shadow: none; }
   }
-  /* --- Map / List view toggle --- */
-  .seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 0; overflow: hidden; }
-  .seg button { background: var(--panel); color: var(--ink-2); border: 0; padding: 5px 12px; font-size: 12px; cursor: pointer; }
-  .seg button.active { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
   /* --- Auction Brief panel: right drawer (desktop) / bottom sheet (mobile), slides + dismissable --- */
   #card { position: fixed; top: 0; right: 0; height: 100vh; width: 480px; max-width: calc(100vw - 12px);
           background: var(--panel); border-left: 1px solid var(--line-2); z-index: 60;
-          display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,.10); font-size: 13px; }
+          display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,.45); font-size: 13px; }
   /* Open/closed state is set INSTANTLY via opacity + transform (no transition on these visibility-
      critical props, so the panel is always correctly shown/hidden). The closed transform sits on
      :not(.open) so the open element only ever matches the .open rule. */
@@ -143,13 +260,13 @@
   #card .brief-title { font-weight: 700; font-size: 16px; margin: 2px 40px 2px 0; }
   #card .brief-sub { color: var(--muted); margin-bottom: 8px; }
   #card .brief-hist { display: inline-block; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
-  #card .brief-bid { font-size: 20px; font-weight: 700; color: var(--ink); }
+  #card .brief-bid { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
   #card .brief-line { color: var(--ink-2); margin: 5px 0; }
   #card .brief-clock { font-variant-numeric: tabular-nums; font-weight: 700; }
   #card .brief-clock.urgent { color: var(--red); }
   #card .brief-body { padding: 2px 16px 24px; overflow-y: auto; flex: 1 1 auto; }
   #card .brief-sec { padding: 11px 0; border-bottom: 1px solid var(--line); }
-  #card .brief-sec h3 { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; font-weight: 700; }
+  #card .brief-sec h3 { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; font-weight: 700; }
   #card .brief-row { display: flex; justify-content: space-between; gap: 18px; margin: 3px 0; }
   #card .brief-k { color: var(--muted); flex: 0 0 auto; }
   #card .brief-v { color: var(--ink); text-align: right; }
@@ -165,7 +282,7 @@
   #card .bc-note { font-size: 11px; margin-bottom: 2px; }
   #card .bc-f { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
   #card .bc-f > span { flex: 1 1 auto; }
-  #card .bc-f input, #card .bc-f select, #card .bc-f textarea { flex: 0 0 130px; background: var(--panel); color: var(--ink);
+  #card .bc-f input, #card .bc-f select, #card .bc-f textarea { flex: 0 0 130px; background: var(--bg); color: var(--ink);
           border: 1px solid var(--line-2); border-radius: 0; padding: 5px 7px; font-size: 12px; font-family: inherit; }
   #card .bc-f.bc-col { flex-direction: column; align-items: stretch; gap: 3px; }
   #card .bc-f.bc-col textarea { flex: 1 1 auto; resize: vertical; }
@@ -184,16 +301,22 @@
   #card .ai-claim { margin: 2px 0; font-size: 12px; color: var(--ink-2); }
   #card .ai-ev { color: var(--faint); font-size: 11px; }
   #card .ai-grp.ai-muted { color: var(--muted); font-size: 12px; }
-  .btn-link { display: block; text-align: center; margin-top: 10px; padding: 9px; border-radius: 0;
-              background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; }
-  .btn-link:hover { background: var(--accent-hover); }
+  .btn-link { display: block; text-align: center; margin-top: 10px; padding: 10px; border-radius: 0;
+              background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; }
+  .btn-link:hover { background: var(--accent-hover); color: var(--accent-ink); }
+  /* badges inside the detail card + list rows */
+  #card .card-badges { display: flex; flex-wrap: wrap; gap: 4px 8px; margin: 2px 0 8px; }
+  #card .card-badge { font-size: 12px; color: var(--ink-2); }
+  #card .card-badge .cb-glyph { font-size: 13px; }
+  .lt-badge { display: inline-flex; align-items: center; gap: 3px; margin-right: 6px; padding: 1px 6px;
+    border: 1px solid var(--line-2); font-size: 11px; color: var(--ink-2); vertical-align: middle; white-space: nowrap; }
   /* --- sortable list view --- */
-  #listpanel { padding: 4px 18px 28px; }
+  #listpanel { padding: 4px 16px 28px; }
   #listpanel[hidden] { display: none; }
   table.listtbl { width: 100%; border-collapse: collapse; font-size: 12px; }
-  table.listtbl th { text-align: left; color: var(--muted); font-weight: 700; padding: 8px 10px;
+  table.listtbl th { text-align: left; color: var(--muted); font-weight: 700; padding: 8px 10px; font-size: 10px; letter-spacing: 0.08em;
                      border-bottom: 1px solid var(--line-2); cursor: pointer; white-space: nowrap;
-                     position: sticky; top: 0; background: var(--bg); text-transform: uppercase; }
+                     position: sticky; top: 0; background: var(--panel); text-transform: uppercase; }
   table.listtbl th.num { text-align: right; }
   table.listtbl th:hover { color: var(--ink); }
   table.listtbl th.sorted { color: var(--ink); }
@@ -208,107 +331,38 @@
   .lt-deal { color: var(--green); font-weight: 700; }
   .lt-over { color: var(--muted); }
   .lt-urgent { color: var(--red); font-weight: 700; }
-  /* --- primary search --- */
-  .search { display: flex; gap: 8px; padding: 10px 18px 4px; }
-  .search input { flex: 1 1 auto; min-width: 0; background: var(--panel); color: var(--ink);
-                  border: 1px solid var(--line-2); border-radius: 0; padding: 9px 12px; font-size: 14px; }
-  .search input::placeholder { color: var(--faint); }
-  .search button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 0;
-                   padding: 9px 14px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em; }
-  .search button#q-clear { background: var(--panel); color: var(--ink-2); border: 1px solid var(--line-2); font-weight: 600; }
-  .search-summary { padding: 2px 18px 0; font-size: 12px; color: var(--muted); }
-  .search-summary:empty { display: none; }
-  .search-summary.err { color: var(--red); }
-  details.advanced { padding: 2px 18px; }
-  details.advanced > summary { cursor: pointer; color: var(--muted); font-size: 12px; padding: 4px 0; list-style: none; }
-  details.advanced > summary::-webkit-details-marker { display: none; }
-  details.advanced > summary::before { content: "▸ "; }
-  details.advanced[open] > summary::before { content: "▾ "; }
-  details.advanced .filters { padding: 6px 0 8px; }
-  .maphint { padding: 2px 18px 8px; }
-  #q-chips .chip .x { cursor: pointer; }
-  /* color key (shown only while a search is active) */
-  #colorlegend { display: none; flex-wrap: wrap; gap: 3px 14px; padding: 2px 18px 6px; font-size: 11px; color: var(--muted); }
-  #colorlegend.on { display: flex; }
-  #colorlegend .sw { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-  #colorlegend .dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; border: 1px solid var(--line-2); }
-  #colorlegend .dot.ring { box-shadow: 0 0 0 2px var(--accent); }
-  #colorlegend .dot.hollow { background: transparent !important; }
-  #colorlegend .glyph { font-size: 12px; line-height: 1; flex: 0 0 auto; width: 11px; text-align: center; }
-  /* deal-vs-market legend bar (Phase 2): the big horizontal color scale under the map */
-  /* small badge key — shown only when badges are on the map */
-  #badgelegend { display: none; flex-wrap: wrap; gap: 4px 14px; padding: 4px 18px 8px; font-size: 11px; color: var(--muted); }
-  #badgelegend.on { display: flex; }
-  #badgelegend .bl-item { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-  #badgelegend .bl-glyph { font-size: 13px; line-height: 1; }
-  /* badges inside the detail card + list rows */
-  #card .card-badges { display: flex; flex-wrap: wrap; gap: 4px 8px; margin: 2px 0 8px; }
-  #card .card-badge { font-size: 12px; color: var(--ink-2); }
-  #card .card-badge .cb-glyph { font-size: 13px; }
-  .lt-badge { display: inline-flex; align-items: center; gap: 3px; margin-right: 6px; padding: 1px 6px;
-    border: 1px solid var(--line-2); font-size: 11px; color: var(--ink-2); vertical-align: middle; white-space: nowrap; }
-
-  #deallegend { display: none; padding: 8px 18px 12px; }
-  #deallegend.on { display: block; }
-  #deallegend .dl-bar { height: 12px; border: 1px solid var(--line-2);
-    background: linear-gradient(to right, #1e9e5a 0%, #6fcf97 29%, #9aa0a8 64%, #d2452f 100%); }
-  #deallegend .dl-labels { display: flex; justify-content: space-between; margin-top: 5px;
-    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-  #deallegend .dl-labels .under { color: var(--green); }
-  #deallegend .dl-labels .fair { color: var(--muted); }
-  #deallegend .dl-labels .over { color: var(--red); }
-  #deallegend .dl-hot { margin-top: 8px; display: inline-block; font-size: 11px; font-weight: 700;
-    background: var(--accent); color: var(--accent-ink); padding: 3px 9px;
-    text-transform: uppercase; letter-spacing: 0.03em; }
-  /* --- Phase 3: chart + "Ending soon" deal-card rail side by side --- */
-  #stage { display: flex; gap: 14px; align-items: stretch; padding: 0 18px; }
-  #stage[hidden] { display: none; }
-  #mapcol { flex: 1 1 auto; min-width: 0; }   /* min-width:0 lets the chart shrink beside the rail */
-  #rail { flex: 0 0 312px; height: 78vh; min-height: 480px; overflow-y: auto;
-          border: 1px solid var(--line-2); background: var(--panel); }
-  .rail-head { position: sticky; top: 0; z-index: 1; background: var(--panel-2);
-               padding: 9px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase;
-               letter-spacing: 0.04em; color: var(--ink-2); border-bottom: 1px solid var(--line); }
-  .rail-dealcount { color: var(--amber2); }
-  .rail-empty { padding: 16px 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-  .deal-card { display: flex; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--line);
-               cursor: pointer; align-items: flex-start; }
-  .deal-card:hover { background: var(--panel-2); }
-  .deal-card.is-deal { background: rgba(255,176,0,0.07); }
-  .dc-img { width: 86px; height: 62px; flex: 0 0 auto; object-fit: cover; background: var(--panel-2); border: 1px solid var(--line); }
-  .dc-body { min-width: 0; flex: 1 1 auto; }
-  .dc-title { font-size: 12px; font-weight: 700; line-height: 1.25; margin-bottom: 2px;
-              display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .dc-bid { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
-  .dc-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 5px 0 4px; }
-  .dc-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; text-transform: uppercase; letter-spacing: 0.02em; }
-  .dc-badge.under { background: var(--green); color: #fff; }
-  .dc-badge.over { background: var(--red); color: #fff; }
-  .dc-badge.muted { background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
-  .dc-hot { font-size: 10px; font-weight: 700; background: var(--accent); color: var(--accent-ink);
-            padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.02em; }
-  .dc-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 11px; color: var(--muted); }
-  .dc-clock { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink-2); margin-left: auto; }
-  .dc-clock.urgent { color: var(--red); }
-  /* --- mobile (~390px) --- */
-  html, body { max-width: 100%; overflow-x: hidden; }
+  /* --- phone (~390px): the shell flows as a page; sidebar stacks above the map, rail below it --- */
   @media (max-width: 480px) {
-    header { padding: 10px 12px 4px; }
-    .search, .search-summary, .controls, details.advanced, .chips, #q-chips, .maphint { padding-left: 12px; padding-right: 12px; }
-    .controls { gap: 10px; }
+    #app { height: auto; min-height: 100vh; }
+    #topbar { flex-wrap: wrap; padding: 8px 12px; gap: 10px; }
+    .brand-sub { display: none; }
+    .live { flex: 1 1 auto; }
+    .search { flex: 1 1 100%; max-width: none; margin-left: 0; order: 3; }
+    .controls { order: 4; }
     /* touch targets: primary controls reach the 44px minimum on a phone */
-    .search input, .search button, .seg button, select { min-height: 44px; }
-    #chart { height: 56vh; min-height: 340px; }
+    .search input, .search button, .seg, .seg button, select, .filters input, .filters button, .filters .fl-markers select { min-height: 44px; height: 44px; }
+    #body { flex-direction: column; }
+    #sidebar { flex-basis: auto; width: auto; border-right: 0; border-bottom: 1px solid var(--line); overflow: visible; }
+    details.advanced:not([open]) + .chips { margin-top: 4px; }
+    #sidebar .chips { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+    .chip { flex: 0 0 auto; min-height: 32px; display: inline-flex; align-items: center; }
+    .sb-foot { margin-top: 0; }
+    #main { overflow: visible; }
+    .strip { padding: 6px 12px; }
+    .search-summary, #q-chips, #colorlegend { padding-left: 12px; padding-right: 12px; }
+    .maphint { display: none; }
+    #chart { height: 56vh; min-height: 340px; flex: 0 0 auto; }
     /* rail stacks below the chart on a phone */
-    #stage { flex-direction: column; gap: 10px; padding-left: 12px; padding-right: 12px; }
-    #rail { flex-basis: auto; height: auto; max-height: 60vh; min-height: 0; }
+    #stage { flex-direction: column; }
+    #rail { flex-basis: auto; width: auto; height: auto; max-height: 60vh; min-height: 0; border-left: 0; border-top: 1px solid var(--line-2); }
+    #deallegend, #badgelegend { padding-left: 12px; padding-right: 12px; }
     /* ticker: real horizontal scroll instead of a clipped marquee */
     #ticker .ticker-track { animation: none; }
     #ticker .ticker-viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .maphint { display: none; }
+    #listpanel { padding-left: 12px; padding-right: 12px; }
     /* mobile: full-width bottom sheet instead of a side drawer */
     #card { top: auto; bottom: 0; right: 0; left: 0; width: auto; height: auto; max-height: 88vh;
-            border-left: none; border-top: 1px solid var(--line-2); box-shadow: 0 -10px 30px rgba(0,0,0,.14); }
+            border-left: none; border-top: 1px solid var(--line-2); box-shadow: 0 -10px 30px rgba(0,0,0,.5); }
     #card:not(.open) { transform: translateY(100%); }   /* closed: off the bottom; .open => transform:none slides up */
   }
 </style>
@@ -317,20 +371,31 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<header>
-  <h1>BaT Value Map</h1>
-  <div class="sub" id="meta">loading…</div>
+<div id="app">
+<header id="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0d0f13" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20L9 5l4 9 3-5 5 11z"></path></svg></span>
+    <span class="brand-text"><h1>BaT Value Map</h1><span class="brand-sub">Live board scanner</span></span>
+  </div>
+  <div class="live"><span class="live-tag">Live</span><span class="sub" id="meta">loading…</span></div>
+  <form class="search" id="searchform" autocomplete="off">
+    <input id="q" type="search" placeholder="What car are you looking for?" aria-label="Search cars">
+    <button id="q-go" type="submit">Find cars</button>
+    <button id="q-clear" type="button">Clear</button>
+  </form>
+  <div class="controls">
+    <span><label for="profile">Profile</label>
+      <select id="profile"><option value="me">Me</option><option value="dad">Dad</option><option value="shared">Shared</option></select></span>
+    <span class="seg" role="group" aria-label="View">
+      <button id="view-map" class="active" type="button">Map</button>
+      <button id="view-list" type="button">List</button>
+    </span>
+  </div>
 </header>
-<form class="search" id="searchform" autocomplete="off">
-  <input id="q" type="search" placeholder="What car are you looking for?" aria-label="Search cars">
-  <button id="q-go" type="submit">Find cars</button>
-  <button id="q-clear" type="button">Clear</button>
-</form>
-<div id="q-summary" class="search-summary"></div>
-<div class="chips" id="q-chips"></div>
-<div id="colorlegend"></div>
-<div class="controls">
-  <span><label for="ymetric">Map:</label>
+<div id="body">
+<aside id="sidebar" aria-label="Map controls">
+  <div class="sb-h"><label for="ymetric">Map by</label></div>
+  <div class="sb-sec">
     <select id="ymetric">
       <option value="comments" selected>Comments</option>
       <option value="closing">Closing soon</option>
@@ -338,75 +403,80 @@
       <option value="deal">Comp discount</option>
       <option value="marketcontext">Market context</option>
     </select>
-  </span>
-  <span id="comps-toggle" hidden><label><input type="checkbox" id="show-comps" checked> Show past comps</label></span>
-  <span><label>View:</label>
-    <span class="seg">
-      <button id="view-map" class="active" type="button">Map</button>
-      <button id="view-list" type="button">List</button>
-    </span></span>
-  <span id="f-count" class="hint"></span>
-  <span><label for="profile">Profile:</label>
-    <select id="profile"><option value="me">Me</option><option value="dad">Dad</option><option value="shared">Shared</option></select></span>
-  <span id="wl-mode-wrap" hidden><label for="wl-mode">Matches:</label>
-    <select id="wl-mode" title="Highlight keeps the whole board and flags matches; Show only narrows to matches">
-      <option value="highlight">Highlight</option>
-      <option value="only">Show only</option>
-    </select></span>
-</div>
-<details class="advanced" id="advanced">
-  <summary>Advanced filters &amp; display</summary>
-  <div class="filters">
-    <input id="f-make" placeholder="make(s), e.g. porsche toyota" list="makes" autocomplete="off">
-    <datalist id="makes"></datalist>
-    <input id="f-yearmin" type="number" inputmode="numeric" placeholder="year ≥">
-    <input id="f-yearmax" type="number" inputmode="numeric" placeholder="year ≤">
-    <input id="f-pricemax" type="number" inputmode="numeric" placeholder="max bid">
-    <input id="f-milesmax" type="number" inputmode="numeric" placeholder="max mi">
-    <label><input type="checkbox" id="f-noreserve"> No reserve</label>
-    <label><input type="checkbox" id="f-deals"> Deals only</label>
-    <span><label for="markers">Markers:</label>
-      <select id="markers">
-        <option value="auto">Auto</option>
-        <option value="dots">Dots</option>
-        <option value="photos">Photos</option>
+    <span id="comps-toggle" hidden><label><input type="checkbox" id="show-comps" checked> Show past comps</label></span>
+    <span id="wl-mode-wrap" hidden><label for="wl-mode">Matches</label>
+      <select id="wl-mode" title="Highlight keeps the whole board and flags matches; Show only narrows to matches">
+        <option value="highlight">Highlight</option>
+        <option value="only">Show only</option>
       </select></span>
-    <button id="f-clear" type="button">Clear filters</button>
-    <button id="f-save" type="button">★ Save view</button>
   </div>
-</details>
-<div class="chips" id="chips"></div>
-<!-- Stage 5: save a watchlist with a structured-rule PREVIEW you can edit before committing. The
-     phrase box runs the deterministic (no-AI) BATWatchlists.parsePhrase; the chips show exactly what
-     was understood and each ✕ removes a rule. Hidden until "★ Save view" opens it. -->
-<div id="wl-save" class="wl-save" hidden>
-  <div class="wl-save-row">
-    <input id="wl-phrase" type="text" autocomplete="off"
-      placeholder="Describe in words (optional), e.g. Porsche under $100k">
-  </div>
-  <div class="wl-save-rules">Understood rules: <span id="wl-rules" class="chips"></span></div>
-  <div class="wl-save-row">
-    <input id="wl-name" type="text" autocomplete="off" placeholder="Watchlist name">
-    <button id="wl-save-go" type="button">Save watchlist</button>
-    <button id="wl-save-cancel" type="button">Cancel</button>
-  </div>
-</div>
-<div class="hint maphint">Scroll or pinch to zoom · box-zoom &amp; reset top-right · double-click to reset · click a car for details</div>
-<div id="ticker" hidden></div>
-<div id="stage">
-  <div id="mapcol">
-    <div id="chart"></div>
-    <div id="deallegend">
-      <div class="dl-bar"></div>
-      <div class="dl-labels"><span class="under">40% under market</span><span class="fair">fair</span><span class="over">20% over</span></div>
-      <div class="dl-hot">★ Hot deal = 20%+ under market</div>
+  <details class="advanced" id="advanced" open>
+    <summary>Filters &amp; display</summary>
+    <div class="filters">
+      <input class="span2" id="f-make" placeholder="make(s), e.g. porsche toyota" list="makes" autocomplete="off">
+      <datalist id="makes"></datalist>
+      <input id="f-yearmin" type="number" inputmode="numeric" placeholder="year ≥">
+      <input id="f-yearmax" type="number" inputmode="numeric" placeholder="year ≤">
+      <input id="f-pricemax" type="number" inputmode="numeric" placeholder="max bid">
+      <input id="f-milesmax" type="number" inputmode="numeric" placeholder="max mi">
+      <label><input type="checkbox" id="f-noreserve"> No reserve</label>
+      <label><input type="checkbox" id="f-deals"> Deals only</label>
+      <span class="span2 fl-markers"><label for="markers">Markers</label>
+        <select id="markers">
+          <option value="auto">Auto</option>
+          <option value="dots">Dots</option>
+          <option value="photos">Photos</option>
+        </select></span>
     </div>
-    <div id="badgelegend" aria-label="Badge key"></div>
+  </details>
+  <div class="sb-h">Lenses &amp; saved views</div>
+  <div class="chips" id="chips"></div>
+  <!-- Stage 5: save a watchlist with a structured-rule PREVIEW you can edit before committing. The
+       phrase box runs the deterministic (no-AI) BATWatchlists.parsePhrase; the chips show exactly what
+       was understood and each ✕ removes a rule. Hidden until "★ Save view" opens it. -->
+  <div id="wl-save" class="wl-save" hidden>
+    <div class="wl-save-row">
+      <input id="wl-phrase" type="text" autocomplete="off"
+        placeholder="Describe in words (optional), e.g. Porsche under $100k">
+    </div>
+    <div class="wl-save-rules">Understood rules: <span id="wl-rules" class="chips"></span></div>
+    <div class="wl-save-row">
+      <input id="wl-name" type="text" autocomplete="off" placeholder="Watchlist name">
+      <button id="wl-save-go" type="button">Save watchlist</button>
+      <button id="wl-save-cancel" type="button">Cancel</button>
+    </div>
   </div>
-  <aside id="rail" aria-label="Auctions ending soon"></aside>
+  <div class="sb-foot filters">
+    <button id="f-save" type="button">★ Save view</button>
+    <button id="f-clear" type="button">Clear filters</button>
+  </div>
+</aside>
+<main id="main">
+  <div id="q-summary" class="search-summary"></div>
+  <div class="chips" id="q-chips"></div>
+  <div id="colorlegend"></div>
+  <div class="strip">
+    <span id="f-count" class="hint"></span>
+    <span class="hint maphint">Scroll or pinch to zoom · box-zoom &amp; reset top-right · double-click to reset · click a car for details</span>
+  </div>
+  <div id="stage">
+    <div id="mapcol">
+      <div id="chart"></div>
+      <div id="deallegend">
+        <div class="dl-bar"></div>
+        <div class="dl-labels"><span class="under">40% under market</span><span class="fair">fair</span><span class="over">20% over</span></div>
+        <div class="dl-hot">★ Hot deal = 20%+ under market</div>
+      </div>
+      <div id="badgelegend" aria-label="Badge key"></div>
+    </div>
+    <aside id="rail" aria-label="Auctions ending soon"></aside>
+  </div>
+  <div id="listpanel" hidden></div>
+  <div id="status"></div>
+</main>
 </div>
-<div id="listpanel" hidden></div>
-<div id="status"></div>
+<div id="ticker" hidden></div>
+</div>
 <div id="ticker-preview" hidden><img alt="" referrerpolicy="no-referrer"><div class="cap"></div></div>
 <div id="card" role="dialog" aria-label="Auction Brief" aria-hidden="true" tabindex="-1"></div>
 
@@ -439,8 +509,13 @@ let ENABLED_WLS = [];              // enabled watchlists visible to the active p
 
 const statusEl = document.getElementById("status");
 const metaEl = document.getElementById("meta");
-const chart = echarts.init(document.getElementById("chart"));   // light theme (page is near-white)
+const chart = echarts.init(document.getElementById("chart"));   // default theme; the option below carries the dark terminal palette
 window.addEventListener("resize", () => chart.resize());
+const AXIS_INK = "#7c8390", AXIS_LINE = "#303640";   // chart chrome on the dark canvas (matches --muted / --line-2)
+// The chart fills its flex column, so its box also changes when a legend strip toggles or the
+// rail wraps — not only on window resize. Re-measure on any container size change (guarded for
+// old browsers, where the window listener above still covers the common case).
+if (window.ResizeObserver) new ResizeObserver(() => chart.resize()).observe(document.getElementById("chart"));
 // Re-render when we cross the mobile/desktop boundary so the declutter + coloring re-evaluate
 // for the new platform (IS_MOBILE is read inside render/buildSeries). Guarded against pre-init.
 const MOBILE_MQ = window.matchMedia("(max-width: 480px), (pointer: coarse)");
@@ -605,6 +680,9 @@ function fmtMiles(d) {
 }
 
 const IS_MOBILE = () => MOBILE_MQ.matches;   // same media query as the re-render listener above
+// Phone: start with the filter block folded so the map sits near the top; applying a saved view
+// still opens it (see the watchlist click handler), and the summary toggles it as before.
+if (IS_MOBILE()) document.getElementById("advanced").open = false;
 const FRIENDLY_BASIS = { "make-model-y3": "same model, ±3 years", "make-model-y7": "same model, ±7 years" };
 function friendlyBasis(b) { return FRIENDLY_BASIS[b] || b || ""; }
 function metricAxisName(metric) {
@@ -770,8 +848,8 @@ function buildCommentsField(cars, now) {
   // faint median quadrant guides — attached to the lower series so they sit UNDER the dots
   const markLine = {
     silent: true, symbol: "none", animation: false,
-    lineStyle: { color: "#c4c8cc", type: "dashed", opacity: 0.9 },
-    label: { color: "#9aa0ad", fontSize: 10, formatter: (o) => o.name },
+    lineStyle: { color: "#3a414c", type: "dashed", opacity: 0.9 },
+    label: { color: "#7c8390", fontSize: 10, formatter: (o) => o.name },
     data: [
       { name: "median heat", yAxis: 16, label: { position: "insideEndTop" } },
       { name: "median price", xAxis: 11000, label: { position: "insideStartTop" } },
@@ -836,7 +914,7 @@ function styleSearch(pt, a, cls, isDeal, usePhotos, RING) {
              itemStyle: { color: "#8b92a0", opacity: 0.55, borderColor: "#0f1115", borderWidth: 0.5 } };
   }
   return { value: [pt.x, pt.y], symbol: "circle", symbolSize: 6,           // other = faint context
-           itemStyle: { color: "#3a3f4a", opacity: 0.16, borderWidth: 0 } };
+           itemStyle: { color: "#aeb4be", opacity: 0.16, borderWidth: 0 } };
 }
 
 // Clean, currency-agnostic price ticks across the real range: 300, 1k, 10k, 100k, 1M.
@@ -863,8 +941,8 @@ function buildBadgeOverlay(cars, metric, now) {
       // identical coordinate to the dot — winsorized X, floored log Y — so the dot does not move
       value: [winsorX(pt.x), yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y],
       symbol: "roundRect", symbolSize: [wide ? 34 : 21, 18], symbolOffset: [0, -16],   // chip sits ABOVE the dot
-      itemStyle: { color: "#fafafa", borderColor: "#b9bdc4", borderWidth: 1, opacity: 0.97 },
-      label: { show: true, position: "inside", formatter: badges.map(b => b.glyph).join(" "), fontSize: 12, color: "#16181d" },
+      itemStyle: { color: "#191d23", borderColor: "#3a414c", borderWidth: 1, opacity: 0.97 },
+      label: { show: true, position: "inside", formatter: badges.map(b => b.glyph).join(" "), fontSize: 12, color: "#e9ebef" },
       emphasis: { scale: 1.12 },
     };
     tagItem(item, a, pt, BATMapData.getEngagementFreshness(a, now, scrapedAt));   // payload → click opens the auction
@@ -883,7 +961,7 @@ function tooltipFormatter(p) {
   const row = (label, val, color) =>
     `<div style="display:flex;justify-content:space-between;gap:22px;line-height:1.55">`
     + `<span style="color:#9aa0ad">${label}</span>`
-    + `<span style="color:${color || "#16181d"};font-variant-numeric:tabular-nums">${val}</span></div>`;
+    + `<span style="color:${color || "#e9ebef"};font-variant-numeric:tabular-nums">${val}</span></div>`;
   // Historical comp (a PAST sale): a distinct, clearly-labelled tooltip — no live-auction fields,
   // no invented data. Sale date only when sold_ts was present.
   if (d._hist) {
@@ -907,12 +985,12 @@ function tooltipFormatter(p) {
   const comments = d._c != null ? Number(d._c).toLocaleString() : "—";
   const watchers = d._w != null ? Number(d._w).toLocaleString() : "—";
   const dp = d._v && d._v.deal_pct;
-  const dealColor = dp == null ? "#8a9099" : (dp > 0 ? "#1f9d57" : (dp < 0 ? "#d2452f" : "#8a8f96"));
+  const dealColor = dp == null ? "#8a9099" : (dp > 0 ? "#27a866" : (dp < 0 ? "#e0563f" : "#8a8f96"));
   const miles = (d._d && fmtMiles(d._d)) ? escapeHTML(fmtMiles(d._d)) : "—";
   const badges = Array.isArray(d._badges) ? d._badges : [];
   const badgeRow = badges.length
     ? `<div style="margin-bottom:5px;font-weight:600">`
-      + badges.map(b => `${b.glyph} ${escapeHTML(b.label)}`).join(`<span style="color:#c4c8cc"> · </span>`)
+      + badges.map(b => `${b.glyph} ${escapeHTML(b.label)}`).join(`<span style="color:#4a515c"> · </span>`)
       + `</div>`
     : "";
   return img
@@ -1052,7 +1130,7 @@ function render() {
     animationDurationUpdate: 0,   // instant, cursor-tight zoom/pan response
     tooltip: {
       trigger: "item",
-      backgroundColor: "#ffffff", borderColor: "#d7d7d2", textStyle: { color: "#16181d" },
+      backgroundColor: "#13161b", borderColor: "#303640", textStyle: { color: "#e9ebef" },
       formatter: tooltipFormatter,
     },
     legend: { show: false },                  // no series legend; the visualMap (Comments) or per-point styling carries the key
@@ -1060,8 +1138,9 @@ function render() {
     xAxis: {
       // multi-currency board: native amount, no hardcoded $ sign on ticks.
       type: "log", name: "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,
-      axisLabel: { formatter: xTickFormatter },
-      splitLine: { lineStyle: { color: "#e6e6e1" } },
+      axisLabel: { formatter: xTickFormatter, color: AXIS_INK },
+      axisLine: { lineStyle: { color: AXIS_LINE } }, axisTick: { lineStyle: { color: AXIS_LINE } }, nameTextStyle: { color: AXIS_INK },
+      splitLine: { lineStyle: { color: "#252a32" } },
       min: built.xMin,            // dynamic: no-bid lane or smallest real bid (no hardcoded $1,000)
       // Pin the top to the data. The "nice" max sits above the priciest car, and ECharts snaps
       // any zoom whose endValue lands in that empty band back to full — which broke zoom-in.
@@ -1072,10 +1151,12 @@ function render() {
       // closing-time, linear for deal-% (it can be negative). Same axis-generic cursor zoom drives both.
       type: yLog ? "log" : "value", inverse: yInverse, name: metricAxisName(metric),
       nameLocation: "middle", nameGap: 48,
-      axisLabel: metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) }
+      axisLabel: Object.assign({ color: AXIS_INK },
+                 metric === "closing" ? { formatter: (v) => BATMapData.formatDurationHours(v) }
                : metric === "marketcontext" ? { formatter: (v) => String(Math.round(v)) }   // plain year, no thousands comma
-               : (yLog ? { formatter: (v) => BATMapData.compactNumber(v) } : {}),
-      splitLine: { lineStyle: { color: "#e6e6e1" } },
+               : (yLog ? { formatter: (v) => BATMapData.compactNumber(v) } : {})),
+      axisLine: { lineStyle: { color: AXIS_LINE } }, axisTick: { lineStyle: { color: AXIS_LINE } }, nameTextStyle: { color: AXIS_INK },
+      splitLine: { lineStyle: { color: "#252a32" } },
       min: built.yMin, max: "dataMax",
     },
     // Three ways to zoom, so it never feels broken: ECharts' native wheel zoom
@@ -1085,7 +1166,7 @@ function render() {
     toolbox: {
       show: true, right: 10, top: 2, itemGap: 10,
       iconStyle: { borderColor: "#9aa0ad" },
-      emphasis: { iconStyle: { borderColor: "#16181d" } },
+      emphasis: { iconStyle: { borderColor: "#e9ebef" } },
       feature: {
         dataZoom: { filterMode: "none", title: { zoom: "Box zoom — drag a box", back: "Undo zoom" } },
         restore: { title: "Reset zoom" },
@@ -1938,7 +2019,7 @@ function toggleColorLegend(on) {
       + tier(TIER_GLYPH.fair, "#e0a13a", "match · fair")
       + tier(TIER_GLYPH.unknown, "#5b8def", "match · comps pending")
       + `<span class="sw"><span class="dot" style="background:#8b92a0"></span>similar (same make)</span>`
-      + `<span class="sw"><span class="dot" style="background:#cfd2d6"></span>rest of board</span>`
+      + `<span class="sw"><span class="dot" style="background:#4a515c"></span>rest of board</span>`
       + `<span class="sw"><span class="dot ring" style="background:#28b487"></span>gold ring = deal, closing soon</span>`;
     el.dataset.built = "1";
   }
