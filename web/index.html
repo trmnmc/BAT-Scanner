@@ -512,6 +512,7 @@ const metaEl = document.getElementById("meta");
 const chart = echarts.init(document.getElementById("chart"));   // default theme; the option below carries the dark terminal palette
 window.addEventListener("resize", () => chart.resize());
 const AXIS_INK = "#7c8390", AXIS_LINE = "#303640";   // chart chrome on the dark canvas (matches --muted / --line-2)
+const DEAL_RING = "#ffb000";                           // amber ring on is_deal dots (the --accent token)
 // The chart fills its flex column, so its box also changes when a legend strip toggles or the
 // rail wraps — not only on window resize. Re-measure on any container size change (guarded for
 // old browsers, where the window listener above still covers the common case).
@@ -767,7 +768,7 @@ function buildSeries(cars, metric, markers, now, opts) {
   const mode = markers === "auto" ? BATMapData.chooseMarkerMode(pts.length, IS_MOBILE()) : markers;
   const usePhotos = mode === "photos";
   const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
-  const RING = "#ffb000";   // amber deal ring (accent)
+  const RING = DEAL_RING;   // amber deal ring (accent)
   const yLog = yIsLog(metric);
   const data = pts.map(pt => {
     const a = pt.car;
@@ -820,11 +821,13 @@ function buildCommentsField(cars, now) {
     const dp = (rawDp != null && isFinite(rawDp)) ? rawDp : null;   // NaN/Infinity -> treat as missing
     const isDeal = !!(a.value && a.value.is_deal);
     // size by watchers (deal stars get a floor so they never shrink below notice)
-    const size = isDeal ? Math.max(BATMapData.watcherSize(w), 16) : BATMapData.watcherSize(w);
-    // low opacity + a thin dark hairline border read as DENSITY where dots overlap; deals get a glow.
+    const size = isDeal ? Math.max(BATMapData.watcherSize(w), 14) : BATMapData.watcherSize(w);
+    // low opacity + a canvas-colored hairline read as DENSITY where dots overlap; deals wear the
+    // amber ring (a shape channel, so a deal is never signalled by hue alone) with no blur — a
+    // glow on dozens of dots smears the cloud and costs paint time on every zoom frame.
     const style = isDeal
-      ? { opacity: 0.98, borderColor: "#8a5a00", borderWidth: 1.4, shadowBlur: 10, shadowColor: "rgba(255,176,0,0.55)" }
-      : { opacity: 0.55, borderColor: "#0f1115", borderWidth: 0.5 };
+      ? { opacity: 0.98, borderColor: DEAL_RING, borderWidth: 2 }
+      : { opacity: 0.6, borderColor: "#0d0f13", borderWidth: 1 };
     // is_deal cars ALWAYS join the colored series, so a deal is never a gray dot and never buried under
     // the ungraded layer; a deal missing its deal_pct falls back to 0 ("at comps") for COLOR only —
     // the tooltip still reads the true value off the record.
@@ -833,7 +836,7 @@ function buildCommentsField(cars, now) {
       // visualMap (dimension 2) sets the FILL — store the value clamped to the palette domain so
       // outliers (e.g. +0.99 / -6.8) land on the extreme color instead of being filtered out.
       const item = { value: [xv, yv, BATMapData.clampNum(dpColor, BATMapData.DEAL_VMAP_MIN, BATMapData.DEAL_VMAP_MAX)],
-                     symbol: isDeal ? "star" : "circle", symbolSize: size, itemStyle: style };
+                     symbol: "circle", symbolSize: size, itemStyle: style };
       tagItem(item, a, pt, fresh); item._cls = "neutral";
       withDeal.push(item);
     } else {
@@ -843,8 +846,8 @@ function buildCommentsField(cars, now) {
       noDeal.push(item);
     }
   }
-  // draw stars last within the colored series so they sit on top of the circle cloud
-  withDeal.sort((p, q) => (p.symbol === "star" ? 1 : 0) - (q.symbol === "star" ? 1 : 0));
+  // draw ringed deals last within the colored series so they sit on top of the circle cloud
+  withDeal.sort((p, q) => (p.itemStyle.borderColor === DEAL_RING ? 1 : 0) - (q.itemStyle.borderColor === DEAL_RING ? 1 : 0));
   // faint median quadrant guides — attached to the lower series so they sit UNDER the dots
   const markLine = {
     silent: true, symbol: "none", animation: false,
@@ -880,7 +883,7 @@ function styleNeutral(pt, isDeal, hasActivity, stale, usePhotos, RING) {
   const a = pt.car;
   if (usePhotos && a.thumbnail_url) {
     return { value: [pt.x, pt.y], symbol: "image://" + a.thumbnail_url, symbolSize: [46, 34],
-             itemStyle: { borderColor: isDeal ? RING : (hasActivity ? "#5b8def" : "#5a5f6b"),
+             itemStyle: { borderColor: isDeal ? RING : (hasActivity ? "#5b8def" : "#6b7280"),
                           borderWidth: isDeal ? 3 : 1.5, opacity: stale ? 0.5 : 1 } };
   }
   if (hasActivity) {
@@ -888,11 +891,11 @@ function styleNeutral(pt, isDeal, hasActivity, stale, usePhotos, RING) {
     // deals stay big with the gold ring so they still pop out of the cluster.
     return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 9,
              itemStyle: { color: "#8b92a0", opacity: stale ? 0.4 : 0.7,
-                          borderColor: isDeal ? RING : "#0f1115", borderWidth: isDeal ? 3 : 1 } };
+                          borderColor: isDeal ? RING : "#0d0f13", borderWidth: isDeal ? 2 : 1 } };
   }
   return { value: [pt.x, pt.y], symbol: "circle", symbolSize: isDeal ? 15 : 10,
-           itemStyle: { color: "transparent", borderColor: isDeal ? RING : "#5a5f6b",
-                        borderWidth: isDeal ? 3 : 1.4, opacity: 0.9 } };   // hollow = no activity
+           itemStyle: { color: "transparent", borderColor: isDeal ? RING : "#6b7280",
+                        borderWidth: isDeal ? 2 : 1.2, opacity: 0.9 } };   // hollow = no activity
 }
 
 // search: match (deal-tinted, shape-coded, prominent) / similar (muted) / other (faint context).
@@ -907,11 +910,11 @@ function styleSearch(pt, a, cls, isDeal, usePhotos, RING) {
     }
     return { value: [pt.x, pt.y], symbol: TIER_SYMBOL[tier], symbolSize: isDeal ? 16 : 12,  // shape carries buy/avoid
              itemStyle: { color: color, opacity: recessive ? 0.55 : 1,
-                          borderColor: isDeal ? RING : "#0f1115", borderWidth: isDeal ? 3 : 1 } };
+                          borderColor: isDeal ? RING : "#0d0f13", borderWidth: isDeal ? 2 : 1 } };
   }
   if (cls === "similar") {
     return { value: [pt.x, pt.y], symbol: "circle", symbolSize: 8,
-             itemStyle: { color: "#8b92a0", opacity: 0.55, borderColor: "#0f1115", borderWidth: 0.5 } };
+             itemStyle: { color: "#8b92a0", opacity: 0.55, borderColor: "#0d0f13", borderWidth: 0.5 } };
   }
   return { value: [pt.x, pt.y], symbol: "circle", symbolSize: 6,           // other = faint context
            itemStyle: { color: "#aeb4be", opacity: 0.16, borderWidth: 0 } };
@@ -940,9 +943,9 @@ function buildBadgeOverlay(cars, metric, now) {
     const item = {
       // identical coordinate to the dot — winsorized X, floored log Y — so the dot does not move
       value: [winsorX(pt.x), yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y],
-      symbol: "roundRect", symbolSize: [wide ? 34 : 21, 18], symbolOffset: [0, -16],   // chip sits ABOVE the dot
-      itemStyle: { color: "#191d23", borderColor: "#3a414c", borderWidth: 1, opacity: 0.97 },
-      label: { show: true, position: "inside", formatter: badges.map(b => b.glyph).join(" "), fontSize: 12, color: "#e9ebef" },
+      symbol: "roundRect", symbolSize: [wide ? 30 : 18, 16], symbolOffset: [0, -14],   // chip sits ABOVE the dot
+      itemStyle: { color: "#191d23", borderColor: "#303640", borderWidth: 1, opacity: 0.9 },
+      label: { show: true, position: "inside", formatter: badges.map(b => b.glyph).join(" "), fontSize: 10, color: "#e9ebef" },
       emphasis: { scale: 1.12 },
     };
     tagItem(item, a, pt, BATMapData.getEngagementFreshness(a, now, scrapedAt));   // payload → click opens the auction
@@ -957,10 +960,10 @@ function buildBadgeOverlay(cars, metric, now) {
 // The fuller comp/condition breakdown lives in the click-card, keeping the hover light.
 function tooltipFormatter(p) {
   const d = p.data;
-  const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:208px;border-radius:6px;display:block;margin-bottom:6px">` : "";
+  const img = d._img ? `<img src="${escapeHTML(d._img)}" style="width:208px;border-radius:0;display:block;margin-bottom:6px">` : "";
   const row = (label, val, color) =>
     `<div style="display:flex;justify-content:space-between;gap:22px;line-height:1.55">`
-    + `<span style="color:#9aa0ad">${label}</span>`
+    + `<span style="color:#7c8390">${label}</span>`
     + `<span style="color:${color || "#e9ebef"};font-variant-numeric:tabular-nums">${val}</span></div>`;
   // Historical comp (a PAST sale): a distinct, clearly-labelled tooltip — no live-auction fields,
   // no invented data. Sale date only when sold_ts was present.
@@ -1134,7 +1137,7 @@ function render() {
       formatter: tooltipFormatter,
     },
     legend: { show: false },                  // no series legend; the visualMap (Comments) or per-point styling carries the key
-    grid: { left: 70, right: 24, top: 18, bottom: 56 },   // visualMap widget hidden, so no extra right margin
+    grid: { left: 64, right: 20, top: 16, bottom: 52 },   // visualMap widget hidden, so no extra right margin
     xAxis: {
       // multi-currency board: native amount, no hardcoded $ sign on ticks.
       type: "log", name: "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,

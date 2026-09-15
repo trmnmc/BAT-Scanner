@@ -132,6 +132,19 @@ def test_parse_listing_engagement():
     assert eng == {"comments": 56, "views": None, "watchers": 1728}
 
 
+def test_parse_listing_engagement_comma_only_match_is_none_not_a_crash():
+    # Regression: a lone comma before the word "comments" used to satisfy "[\d,]+", and
+    # int("") aborted the whole enrichment run (update.yml, 2026-09-09/10). It must read
+    # as missing (None), never as zero and never as an exception.
+    html = "<html><body><p>Photos, comments and bids are below.</p></body></html>"
+    eng = parse.parse_listing_engagement(html)
+    assert eng["comments"] is None
+    assert eng["watchers"] is None
+    # ...and a real count later on the same page still wins.
+    html2 = html + '<span class="comments-updated.display">12 comments</span>'
+    assert parse.parse_listing_engagement(html2)["comments"] == 12
+
+
 def test_parse_listing_engagement_missing_fields():
     eng = parse.parse_listing_engagement("<html><body>no stats here</body></html>")
     assert eng == {"comments": None, "views": None, "watchers": None}
