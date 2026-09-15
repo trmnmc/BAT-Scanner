@@ -287,8 +287,10 @@ def parse_item(raw_item: dict, now: float | None = None) -> dict:
 
 _WATCHERS_RE = re.compile(r"(\d[\d,]*)\s*watchers\b", re.IGNORECASE)
 _BIDS_RE = re.compile(r">\s*Bids\s*</td>\s*<td[^>]*>\s*([\d,]+)", re.IGNORECASE)
-_COMMENTS_REALTIME_RE = re.compile(r'comments-updated\.display"[^>]*>\s*([\d,]+)\s*comments', re.IGNORECASE)
-_COMMENTS_RE = re.compile(r"([\d,]+)\s+comments\b", re.IGNORECASE)
+# Both comment patterns require a leading DIGIT: a bare "[\d,]+" also matches a lone comma
+# (", comments" in prose), whose capture strips to "" and crashed int() mid-run on 2026-09-09/10.
+_COMMENTS_REALTIME_RE = re.compile(r'comments-updated\.display"[^>]*>\s*(\d[\d,]*)\s*comments', re.IGNORECASE)
+_COMMENTS_RE = re.compile(r"(\d[\d,]*)\s+comments\b", re.IGNORECASE)
 
 
 def parse_listing_engagement(html: str) -> dict:
@@ -299,7 +301,13 @@ def parse_listing_engagement(html: str) -> dict:
     of the engagement schema, so it is not returned here.
     """
     def _num(m):
-        return int(m.group(1).replace(",", "")) if m else None
+        # Missing data is None, never 0 — and a capture that isn't a clean integer (defensive
+        # belt to the digit-anchored patterns above) is treated the same way rather than
+        # aborting the whole enrichment run for one odd page.
+        if not m:
+            return None
+        digits = m.group(1).replace(",", "")
+        return int(digits) if digits.isdigit() else None
 
     comments = _num(_COMMENTS_REALTIME_RE.search(html))
     if comments is None:
