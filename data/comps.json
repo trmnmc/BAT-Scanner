@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-15T03:14:14Z",
-  "count": 11343,
+  "generated_at": "2026-09-15T17:35:20Z",
+  "count": 11360,
   "comps": [
     {
       "id": 115117526,
@@ -159028,6 +159028,248 @@
       "listing_url": "https://bringatrailer.com/listing/2003-audi-rs6-175/",
       "canonical_make": "audi",
       "canonical_model": "rs6"
+    },
+    {
+      "id": 121978441,
+      "title": "2007 Porsche 911 GT3 Shark Werks 4.1",
+      "make": "porsche",
+      "model": "911",
+      "year": 2007,
+      "price": 297000,
+      "sold_ts": 1789493643,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2007-porsche-911-gt3-111/",
+      "canonical_make": "porsche",
+      "canonical_model": "911",
+      "trim": "gt3"
+    },
+    {
+      "id": 119899513,
+      "title": "27-Years-Owned 1948 Plymouth Special Deluxe Coupe",
+      "make": "plymouth",
+      "model": "special",
+      "year": 1948,
+      "price": 11250,
+      "sold_ts": 1789493499,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1948-plymouth-special-deluxe-29/",
+      "canonical_make": "plymouth",
+      "canonical_model": "special",
+      "body_style": "coupe"
+    },
+    {
+      "id": 120519874,
+      "title": "1978 Lincoln Continental Mark V",
+      "make": "lincoln",
+      "model": "continental",
+      "year": 1978,
+      "price": 13580,
+      "sold_ts": 1789493466,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1978-lincoln-continental-mark-v-48/",
+      "canonical_make": "lincoln",
+      "canonical_model": "continental"
+    },
+    {
+      "id": 121431500,
+      "title": "2018 Mercedes-Benz GLS550",
+      "make": "mercedes-benz",
+      "model": "gls550",
+      "year": 2018,
+      "price": 30670,
+      "sold_ts": 1789493283,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2018-mercedes-benz-gls550-9/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "gls550"
+    },
+    {
+      "id": 120085188,
+      "title": "1972 Chevrolet C20 Cheyenne Custom Camper Pickup",
+      "make": "chevrolet",
+      "model": "c20",
+      "year": 1972,
+      "price": 17000,
+      "sold_ts": 1789493259,
+      "category_ids": [
+        "vintage-trucks"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1972-chevrolet-c20-pickup-28/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "c20",
+      "body_style": "pickup"
+    },
+    {
+      "id": 120620143,
+      "title": "1975 Ford Bronco 3-Speed",
+      "make": "ford",
+      "model": "bronco",
+      "year": 1975,
+      "price": 48000,
+      "sold_ts": 1789493221,
+      "category_ids": [
+        "vintage-trucks"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1975-ford-bronco-200/",
+      "canonical_make": "ford",
+      "canonical_model": "bronco",
+      "transmission": "manual"
+    },
+    {
+      "id": 121579285,
+      "title": "2004 Chevrolet Tahoe 4&#215;4",
+      "make": "chevrolet",
+      "model": "tahoe",
+      "year": 2004,
+      "price": 11250,
+      "sold_ts": 1789493187,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2004-chevrolet-tahoe-53/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "tahoe"
+    },
+    {
+      "id": 122132386,
+      "title": "1967 Chevrolet Camaro RS",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1967,
+      "price": 38303,
+      "sold_ts": 1789493078,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1967-chevrolet-camaro-545/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "camaro",
+      "trim": "rs"
+    },
+    {
+      "id": 119789754,
+      "title": "2010 BMW 535i xDrive Sports Wagon",
+      "make": "bmw",
+      "model": "535i",
+      "year": 2010,
+      "price": 18000,
+      "sold_ts": 1789492983,
+      "category_ids": [
+        "german-wagons"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/2010-bmw-535i-xdrive-sports-wagon-48/",
+      "canonical_make": "bmw",
+      "canonical_model": "535i",
+      "body_style": "wagon"
+    },
+    {
+      "id": 120556194,
+      "title": "3,500-Mile 2020 BMW M2 CS",
+      "make": "bmw",
+      "model": "m2",
+      "year": 2020,
+      "price": 76500,
+      "sold_ts": 1789492888,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2020-bmw-m2-cs-73/",
+      "canonical_make": "bmw",
+      "canonical_model": "m2"
+    },
+    {
+      "id": 119919525,
+      "title": "1,600-Mile 2019 Chevrolet Corvette ZR1 Coupe 3ZR ZTK 7-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2019,
+      "price": 227000,
+      "sold_ts": 1789492805,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2019-chevrolet-corvette-zr1-coupe-202/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "corvette",
+      "body_style": "coupe",
+      "transmission": "manual"
+    },
+    {
+      "id": 121510034,
+      "title": "2009 Saab 9-3 Aero Convertible",
+      "make": "saab",
+      "model": "9-3",
+      "year": 2009,
+      "price": 4800,
+      "sold_ts": 1789492753,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2009-saab-9-3-30/",
+      "canonical_make": "saab",
+      "canonical_model": "9-3",
+      "body_style": "convertible"
+    },
+    {
+      "id": 121012722,
+      "title": "2024 Ferrari SF90 Spider",
+      "make": "ferrari",
+      "model": "sf90",
+      "year": 2024,
+      "price": 545000,
+      "sold_ts": 1789492671,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2024-ferrari-sf90-spider-8/",
+      "canonical_make": "ferrari",
+      "canonical_model": "sf90",
+      "body_style": "convertible"
+    },
+    {
+      "id": 122169630,
+      "title": "26-Years-Owned 1962 MG Midget",
+      "make": "mg",
+      "model": "midget",
+      "year": 1962,
+      "price": 12250,
+      "sold_ts": 1789492622,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1962-mg-midget-9-2/",
+      "canonical_make": "mg",
+      "canonical_model": "midget"
+    },
+    {
+      "id": 121721152,
+      "title": "41k-Mile 2004 Mercedes-Benz SL600",
+      "make": "mercedes-benz",
+      "model": "sl600",
+      "year": 2004,
+      "price": 19000,
+      "sold_ts": 1789492468,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2004-mercedes-benz-sl600-135/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "sl600"
+    },
+    {
+      "id": 122050589,
+      "title": "1967 Chevrolet Corvette Convertible 427 5-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 1967,
+      "price": 100000,
+      "sold_ts": 1789492422,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1967-chevrolet-corvette-convertible-358/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "corvette",
+      "body_style": "convertible",
+      "transmission": "manual"
+    },
+    {
+      "id": 107431458,
+      "title": "2018 Aston Martin DB4 GT Continuation",
+      "make": "aston-martin",
+      "model": "db4",
+      "year": 2018,
+      "price": 1000999,
+      "sold_ts": 1789491919,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1963-aston-martin-db4-gt-continuation/",
+      "canonical_make": "aston-martin",
+      "canonical_model": "martin",
+      "trim": "gt"
     }
   ]
 }
