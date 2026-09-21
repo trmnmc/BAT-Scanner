@@ -24,6 +24,14 @@ test("closing includes records with missing engagement", () => {
   assert.ok(M.getMetricValue(c, "closing", NOW) > 0, "returns positive hours remaining");
 });
 
+test("runway is the closing point set: same hours value, every active auction, no invented data", () => {
+  const c = car({ ends_at: inHours(4) });
+  assert.strictEqual(M.getMetricValue(c, "runway", NOW), M.getMetricValue(c, "closing", NOW));
+  assert.strictEqual(M.hasMetric(car({ ends_at: inHours(-1) }), "runway", NOW), false, "ended auctions drop off");
+  const pts = M.buildPoints([c, car({ id: 2, ends_at: inHours(30) })], "runway", NOW);
+  assert.strictEqual(pts.length, 2);
+});
+
 test("closing returns hours remaining, soonest is smallest", () => {
   assert.strictEqual(Math.round(M.getMetricValue(car({ ends_at: inHours(4) }), "closing", NOW)), 4);
   assert.strictEqual(Math.round(M.getMetricValue(car({ ends_at: inHours(120) }), "closing", NOW)), 120);

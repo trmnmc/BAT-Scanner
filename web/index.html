@@ -397,7 +397,8 @@
   <div class="sb-h"><label for="ymetric">Map by</label></div>
   <div class="sb-sec">
     <select id="ymetric">
-      <option value="comments" selected>Comments</option>
+      <option value="runway" selected>Closing runway</option>
+      <option value="comments">Comments</option>
       <option value="closing">Closing soon</option>
       <option value="watchers">Watchers</option>
       <option value="deal">Comp discount</option>
@@ -687,6 +688,7 @@ if (IS_MOBILE()) document.getElementById("advanced").open = false;
 const FRIENDLY_BASIS = { "make-model-y3": "same model, ±3 years", "make-model-y7": "same model, ±7 years" };
 function friendlyBasis(b) { return FRIENDLY_BASIS[b] || b || ""; }
 function metricAxisName(metric) {
+  if (metric === "runway") return "Current bid, native currency →";
   if (metric === "closing") return "Time remaining, soonest first";
   if (metric === "deal") return "% under comps →";
   if (metric === "marketcontext") return "Vehicle year";
@@ -711,6 +713,15 @@ const CLASS_RANK = { neutral: 0, other: 0, similar: 1, match: 2 };   // higher =
 // the tooltip still shows the true count, so nothing is faked or hidden.
 const Y_LOG_FLOOR = 0.6;
 function yIsLog(metric) { return metric === "comments" || metric === "watchers"; }
+// "runway" is the default home map: TIME UNTIL CLOSE runs across (log X, soonest at the left) and
+// the current bid runs up (log Y). It needs only ends_at, so EVERY live auction is on it — nothing
+// is hidden by missing enrichment. BATMapData builds its points as the closing metric (hours
+// remaining); only the axes swap here. Time is LINEAR (a BaT auction runs about a week and the
+// board closes in daily waves, so a log axis would cram days 3–7 into the right edge and blow up
+// the first hours); ticks every 24h read "now, 1d, 2d…". A car past its end at render time sits
+// at 0 (plot position only — the tooltip shows the true countdown).
+function isRunway(metric) { return metric === "runway"; }
+function runwayHours(h) { return Math.max(h, 0); }
 
 // Every chart data item carries the auction payload the tooltip + click-card read back
 // (params.data). Shared by both series builders so click/card/tooltip work identically.
@@ -769,12 +780,15 @@ function buildSeries(cars, metric, markers, now, opts) {
   const usePhotos = mode === "photos";
   const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
   const RING = DEAL_RING;   // amber deal ring (accent)
-  const yLog = yIsLog(metric);
+  const rw = isRunway(metric);
+  const yLog = rw || yIsLog(metric);
   const data = pts.map(pt => {
     const a = pt.car;
     // Winsorize the plotted X into the $1k–$1M band and floor a real 0 on the log Y; the tooltip
     // reads the TRUE bid/count off the car, so both are shown honestly, not as the placeholder.
-    const sp = { x: winsorX(pt.x), y: yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y, car: a };
+    // Runway swaps the axes: hours-to-close across, winsorized bid up.
+    const sp = rw ? { x: runwayHours(pt.y), y: winsorX(pt.x), car: a }
+                  : { x: winsorX(pt.x), y: yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y, car: a };
     const isDeal = !!(a.value && a.value.is_deal);
     const fresh = BATMapData.getEngagementFreshness(a, now, scrapedAt);
     let cls = "neutral";
@@ -792,10 +806,11 @@ function buildSeries(cars, metric, markers, now, opts) {
   // (on top of the dimmed "other"/"similar"), which also makes them win item-hover hit-testing.
   if (search) data.sort((p, q) => CLASS_RANK[p._cls] - CLASS_RANK[q._cls]);
   // X lower bound = just below the lowest plotted (winsorized) bid; no-bid cars already excluded.
-  const xMin = priceAxisMin(pts);
+  // (Runway: the price bound moves to Y and X starts at the soonest-closing car.)
+  const xMin = rw ? 0 : priceAxisMin(pts);
   // Log y starts at the floor only when something actually sits there; otherwise let the data set it.
-  const flooredZero = yLog && pts.some(p => p.y < Y_LOG_FLOOR);
-  const yMin = yLog ? (flooredZero ? Y_LOG_FLOOR : "dataMin") : "dataMin";
+  const flooredZero = !rw && yLog && pts.some(p => p.y < Y_LOG_FLOOR);
+  const yMin = rw ? priceAxisMin(pts) : (yLog ? (flooredZero ? Y_LOG_FLOOR : "dataMin") : "dataMin");
   return { series: [{ type: "scatter", name: "auctions", data: data, large: false,
                       emphasis: { scale: 1.25 } }], usePhotos: usePhotos, xMin: xMin,
            yLog: yLog, yMin: yMin };
@@ -878,6 +893,66 @@ function buildCommentsField(cars, now) {
            yLog: true, yMin: flooredZero ? Y_LOG_FLOOR : "dataMin" };
 }
 
+// The Closing runway (default home view, non-search, dots): hours-to-close (log X, soonest left)
+// vs current bid (log Y), colored by deal_pct, sized by watchers, deals ringed amber, with time
+// guides (1h/6h/1d/2d/7d) and a median-bid line. Same two-series split as the Comments field so
+// the visualMap colors ONLY cars that carry a deal_pct; the rest stay a fixed neutral gray.
+function buildRunwayField(cars, now) {
+  const pts = priceScatterPoints(BATMapData.buildPoints(cars, "runway", now));   // no-bid cars sit out
+  const scrapedAt = SNAPSHOT && SNAPSHOT.scraped_at;
+  const withDeal = [], noDeal = [], prices = [];
+  for (const pt of pts) {
+    const a = pt.car;
+    const xv = runwayHours(pt.y);                        // hours remaining, floored for the log axis
+    const yv = winsorX(pt.x);                            // bid clamped into the $1k–$1M band (plot only)
+    prices.push(yv);
+    const fresh = BATMapData.getEngagementFreshness(a, now, scrapedAt);
+    const w = a.engagement && a.engagement.watchers;
+    const rawDp = a.value && a.value.deal_pct;
+    const dp = (rawDp != null && isFinite(rawDp)) ? rawDp : null;
+    const isDeal = !!(a.value && a.value.is_deal);
+    const size = isDeal ? Math.max(BATMapData.watcherSize(w), 14) : BATMapData.watcherSize(w);
+    const style = isDeal
+      ? { opacity: 0.98, borderColor: DEAL_RING, borderWidth: 2 }
+      : { opacity: 0.6, borderColor: "#0d0f13", borderWidth: 1 };
+    const dpColor = dp != null ? dp : (isDeal ? 0 : null);   // a deal missing deal_pct colors as "at comps"
+    if (dpColor != null) {
+      const item = { value: [xv, yv, BATMapData.clampNum(dpColor, BATMapData.DEAL_VMAP_MIN, BATMapData.DEAL_VMAP_MAX)],
+                     symbol: "circle", symbolSize: size, itemStyle: style };
+      tagItem(item, a, pt, fresh); item._cls = "neutral";
+      withDeal.push(item);
+    } else {
+      const item = { value: [xv, yv], symbol: "circle", symbolSize: size,
+                     itemStyle: Object.assign({ color: BATMapData.DEAL_NULL_COLOR }, style) };
+      tagItem(item, a, pt, fresh); item._cls = "neutral";
+      noDeal.push(item);
+    }
+  }
+  withDeal.sort((p, q) => (p.itemStyle.borderColor === DEAL_RING ? 1 : 0) - (q.itemStyle.borderColor === DEAL_RING ? 1 : 0));
+  // median of the PLOTTED bids (this view's cars) — a real statistic of what's on screen, not a constant
+  prices.sort((a, b) => a - b);
+  const median = prices.length ? prices[Math.floor(prices.length / 2)] : null;
+  const guides = [];   // the 24h split lines carry the day rhythm; only the median needs a labelled guide
+  if (median != null) guides.push({ name: "median bid", yAxis: median, label: { position: "insideEndTop" } });
+  const markLine = {
+    silent: true, symbol: "none", animation: false,
+    lineStyle: { color: "#3a414c", type: "dashed", opacity: 0.9 },
+    label: { color: "#7c8390", fontSize: 10, formatter: (o) => o.name },
+    data: guides,
+  };
+  const series = [
+    { type: "scatter", name: "ungraded", data: noDeal, large: false, emphasis: { scale: 1.2 }, markLine: markLine },
+    { type: "scatter", name: "deal-graded", data: withDeal, large: false, emphasis: { scale: 1.2 } },
+  ];
+  const visualMap = {
+    show: false, type: "continuous", calculable: false, hoverLink: false,
+    min: BATMapData.DEAL_VMAP_MIN, max: BATMapData.DEAL_VMAP_MAX,
+    dimension: 2, seriesIndex: 1,
+    inRange: { color: BATMapData.dealPaletteColors(20) },
+  };
+  return { series: series, visualMap: visualMap, xMin: 0, yLog: true, yMin: priceAxisMin(pts) };
+}
+
 // neutral (no search): the data-state styling — filled=activity, hollow=none, faded=stale, ring=deal.
 function styleNeutral(pt, isDeal, hasActivity, stale, usePhotos, RING) {
   const a = pt.car;
@@ -942,7 +1017,8 @@ function buildBadgeOverlay(cars, metric, now) {
     const wide = badges.length > 1;
     const item = {
       // identical coordinate to the dot — winsorized X, floored log Y — so the dot does not move
-      value: [winsorX(pt.x), yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y],
+      value: isRunway(metric) ? [runwayHours(pt.y), winsorX(pt.x)]
+                              : [winsorX(pt.x), yLog ? Math.max(pt.y, Y_LOG_FLOOR) : pt.y],
       symbol: "roundRect", symbolSize: [wide ? 30 : 18, 16], symbolOffset: [0, -14],   // chip sits ABOVE the dot
       itemStyle: { color: "#191d23", borderColor: "#303640", borderWidth: 1, opacity: 0.9 },
       label: { show: true, position: "inside", formatter: badges.map(b => b.glyph).join(" "), fontSize: 10, color: "#e9ebef" },
@@ -1077,9 +1153,9 @@ function render() {
   // missing comment count is ever invented as zero. Desktop (mobile === false) is untouched.
   if (mobile && !searchActive && metric === "comments" && !userPickedMetric
       && BATMapData.buildPoints(displayCars, "comments", now).length < MOBILE_COMMENTS_MIN) {
-    metric = "closing";
+    metric = "runway";
     const sel = document.getElementById("ymetric");
-    if (sel && sel.value !== "closing") sel.value = "closing";   // keep the dropdown honest; setting .value fires no change event
+    if (sel && sel.value !== "runway") sel.value = "runway";   // keep the dropdown honest; setting .value fires no change event
   }
 
   FILTERED = searchActive ? matched : baseCars;      // List + ticker follow the searched cars
@@ -1091,14 +1167,14 @@ function render() {
   // color, watcher size, deal stars, median guides, and a deal-pct visualMap legend. Everything
   // else (search overlay, other Y-metrics, photo mode) keeps the existing single-series styling
   // and drops the visualMap — so the legend is hidden the moment you switch away from Comments.
-  let useRich = !searchActive && metric === "comments" && markers !== "photos";
+  let useRich = !searchActive && (metric === "comments" || isRunway(metric)) && markers !== "photos";
   if (useRich && markers === "auto") {
-    const n = BATMapData.buildPoints(displayCars, "comments", now).length;
+    const n = BATMapData.buildPoints(displayCars, metric, now).length;
     if (BATMapData.chooseMarkerMode(n, mobile) === "photos") useRich = false;
   }
   let built, visualMap = null;
   if (useRich) {
-    const r = buildCommentsField(displayCars, now);
+    const r = isRunway(metric) ? buildRunwayField(displayCars, now) : buildCommentsField(displayCars, now);
     built = { series: r.series, xMin: r.xMin, yLog: r.yLog, yMin: r.yMin };
     visualMap = r.visualMap;
   } else {
@@ -1128,7 +1204,8 @@ function render() {
   badgeLegendActive = !!badgeSeries;
   syncBadgeLegend();                       // the small badge key shows only when badges are on the map
   const yInverse = metric === "closing";    // soonest-ending at the TOP
-  const yLog = built.yLog;                  // comments/watchers spread on a log axis
+  const yLog = built.yLog;                  // comments/watchers (and the runway's bid axis) spread on a log axis
+  const rw = isRunway(metric);              // runway: time-to-close across, bid up
   chart.setOption({
     animationDurationUpdate: 0,   // instant, cursor-tight zoom/pan response
     tooltip: {
@@ -1140,8 +1217,9 @@ function render() {
     grid: { left: 64, right: 20, top: 16, bottom: 52 },   // visualMap widget hidden, so no extra right margin
     xAxis: {
       // multi-currency board: native amount, no hardcoded $ sign on ticks.
-      type: "log", name: "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,
-      axisLabel: { formatter: xTickFormatter, color: AXIS_INK },
+      type: rw ? "value" : "log", name: rw ? "Time until close →" : "Current bid amount, native currency", nameLocation: "middle", nameGap: 34,
+      interval: rw ? (mobile ? 6 : 24) : undefined,   // runway: a tick per day; per 6h on the phone's short default window
+      axisLabel: { formatter: rw ? (v) => (v === 0 ? "now" : BATMapData.formatDurationHours(v)) : xTickFormatter, color: AXIS_INK },
       axisLine: { lineStyle: { color: AXIS_LINE } }, axisTick: { lineStyle: { color: AXIS_LINE } }, nameTextStyle: { color: AXIS_INK },
       splitLine: { lineStyle: { color: "#252a32" } },
       min: built.xMin,            // dynamic: no-bid lane or smallest real bid (no hardcoded $1,000)
@@ -1967,9 +2045,9 @@ function updateFilterReadout(metric, now, ctx) {
       msg = (deals >= MOBILE_DEALS_MIN)
         ? `${fmt(deals)} deals shown · search to see the whole board`
         : `${fmt(cars.filter(c => endsWithin(c, now, 24)).length)} closing within 24h · search to see the whole board`;
-    } else if (metric === "closing") {
+    } else if (metric === "closing" || isRunway(metric)) {
       const ended = cars.length - active;
-      msg = `${fmt(active)} active auctions shown` + (ended > 0 ? ` · ${fmt(ended)} ended since the last scan` : "");
+      msg = `${fmt(active)} live auctions shown · whole board` + (ended > 0 ? ` · ${fmt(ended)} ended since the last scan` : "");
     } else if (metric === "deal") {
       msg = `${fmt(plottable)} trusted no-reserve comp matches shown · ${fmt(active - plottable)} other active auctions`;
     } else {
@@ -1978,7 +2056,7 @@ function updateFilterReadout(metric, now, ctx) {
       const label = metric === "watchers" ? "watcher" : "comment";
       const missing = active - plottable;
       msg = `${fmt(plottable)} shown · ${fmt(missing)} live auctions not yet scanned for ${label}s`
-        + (missing > 0 ? ` — pick “Closing soon” to see all ${fmt(active)}` : "");
+        + (missing > 0 ? ` — pick “Closing runway” to see all ${fmt(active)}` : "");
     }
   }
   const man = currentSpec();

@@ -6,6 +6,7 @@
 //
 // Metrics:
 //   closing  — hours remaining from ends_at (default). Every active auction qualifies.
+//   runway   — alias of closing (hours remaining); the map draws it as time-across, bid-up.
 //   comments — engagement.comments, only when not null (unknown is never 0).
 //   watchers — engagement.watchers, only when not null (unknown is never 0).
 //   deal     — value.deal_pct, only for a no-reserve auction on a trusted comp basis.
@@ -84,6 +85,7 @@
   // The plotted value for a metric, or null when this car can't be placed on it.
   function getMetricValue(car, metric, nowMs) {
     switch (metric) {
+      case "runway":                  // the home map's time axis: same value, the UI swaps the axes
       case "closing":
         if (!isActiveAuction(car, nowMs)) return null;
         return (endsAtMs(car) - _now(nowMs)) / HOUR_MS;   // hours remaining (positive)
