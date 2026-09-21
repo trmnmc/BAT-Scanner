@@ -52,12 +52,12 @@ test("layout hooks keep their nesting: chart + legends inside #mapcol, #mapcol +
   assert.match(markup, /<div id="card" role="dialog"/);
 });
 
-test("the y-metric select still offers the five map metrics with comments as default", () => {
+test("the metric select offers the six map metrics with the closing runway as default", () => {
   const sel = markup.match(/<select id="ymetric">([\s\S]*?)<\/select>/);
   assert.ok(sel, "#ymetric select present");
   const values = [...sel[1].matchAll(/value="([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(values, ["comments", "closing", "watchers", "deal", "marketcontext"]);
-  assert.match(sel[1], /value="comments" selected/);
+  assert.deepEqual(values, ["runway", "comments", "closing", "watchers", "deal", "marketcontext"]);
+  assert.match(sel[1], /value="runway" selected/);
 });
 
 test("mobile and reduced-motion rules survive in the stylesheet", () => {
