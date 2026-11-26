@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T22:16:57Z",
-  "count": 20908,
+  "generated_at": "2026-11-26T22:11:41Z",
+  "count": 20918,
   "comps": [
     {
       "id": 115117526,
@@ -294039,6 +294039,152 @@
       "canonical_make": "am",
       "canonical_model": "general",
       "body_style": "wagon"
+    },
+    {
+      "id": 126858781,
+      "title": "1968 Shelby Mustang GT350 Convertible 4-Speed",
+      "make": "shelby",
+      "model": "mustang",
+      "year": 1968,
+      "price": 140000,
+      "sold_ts": 1795641150,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1968-shelby-mustang-gt350-convertible-17/",
+      "canonical_make": "shelby",
+      "canonical_model": "mustang",
+      "body_style": "convertible",
+      "transmission": "manual"
+    },
+    {
+      "id": 125313799,
+      "title": "20-Years-Owned 1988 Porsche 944 PCA/NASA Race Car",
+      "make": "porsche",
+      "model": "944",
+      "year": 1988,
+      "price": 12500,
+      "sold_ts": 1795641054,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1988-porsche-944-59/",
+      "canonical_make": "porsche",
+      "canonical_model": "944"
+    },
+    {
+      "id": 126963999,
+      "title": "1977 Land Rover 88 Series III Santana Diesel",
+      "make": "land-rover",
+      "model": "88",
+      "year": 1977,
+      "price": 22000,
+      "sold_ts": 1795639678,
+      "category_ids": [
+        "vintage-trucks"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1977-land-rover-88-series-iii-10/",
+      "canonical_make": "land-rover",
+      "canonical_model": "rover"
+    },
+    {
+      "id": 126864016,
+      "title": "1973 DeTomaso Pantera",
+      "make": "detomaso",
+      "model": "pantera",
+      "year": 1973,
+      "price": 71000,
+      "sold_ts": 1795637237,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1973-detomaso-pantera-l-8/",
+      "canonical_make": "detomaso",
+      "canonical_model": "pantera"
+    },
+    {
+      "id": 127217008,
+      "title": "1999 Porsche 911 Carrera Coupe 6-Speed",
+      "make": "porsche",
+      "model": "911",
+      "year": 1999,
+      "price": 29750,
+      "sold_ts": 1795635963,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1999-porsche-911-carrera-coupe-234/",
+      "canonical_make": "porsche",
+      "canonical_model": "911",
+      "trim": "carrera",
+      "body_style": "coupe",
+      "transmission": "manual"
+    },
+    {
+      "id": 124879400,
+      "title": "LT4-Powered 1969 Chevrolet Camaro Coupe 6-Speed",
+      "make": "chevrolet",
+      "model": "camaro",
+      "year": 1969,
+      "price": 128000,
+      "sold_ts": 1795632375,
+      "category_ids": [
+        "60s-muscle"
+      ],
+      "listing_url": "https://bringatrailer.com/listing/1969-chevrolet-camaro-650/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "camaro",
+      "body_style": "coupe",
+      "transmission": "manual"
+    },
+    {
+      "id": 126316380,
+      "title": "27-Years-Owned 1970 Mercedes-Benz 280SL",
+      "make": "mercedes-benz",
+      "model": "280sl",
+      "year": 1970,
+      "price": 61500,
+      "sold_ts": 1795631558,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/1970-mercedes-benz-280sl-201/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "280sl"
+    },
+    {
+      "id": 126283147,
+      "title": "One-Owner, 21k-Mile 2005 Chevrolet Corvette Convertible 1SB 6-Speed",
+      "make": "chevrolet",
+      "model": "corvette",
+      "year": 2005,
+      "price": 18500,
+      "sold_ts": 1795630985,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2005-chevrolet-corvette-convertible-35/",
+      "canonical_make": "chevrolet",
+      "canonical_model": "corvette",
+      "body_style": "convertible",
+      "transmission": "manual"
+    },
+    {
+      "id": 126622153,
+      "title": "2016 Mercedes-Benz Sprinter Airstream Interstate",
+      "make": "mercedes-benz",
+      "model": "sprinter",
+      "year": 2016,
+      "price": 70000,
+      "sold_ts": 1795553388,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2016-mercedes-benz-sprinter-rv-conversion-13/",
+      "canonical_make": "mercedes-benz",
+      "canonical_model": "sprinter"
+    },
+    {
+      "id": 125870822,
+      "title": "2002 Mini Cooper S JCW 6-Speed",
+      "make": "mini",
+      "model": "cooper",
+      "year": 2002,
+      "price": 9700,
+      "sold_ts": 1795546559,
+      "category_ids": [],
+      "listing_url": "https://bringatrailer.com/listing/2002-mini-cooper-s-56/",
+      "canonical_make": "mini",
+      "canonical_model": "cooper",
+      "transmission": "manual"
     }
   ]
 }
